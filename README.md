@@ -1,5 +1,5 @@
 
-Reader is a basic newsreader that focus on content.
+Reader is a basic newsreader that focuses on content.
 
 Articles lists are sourced from RSS feeds and displayed via Google Material design cards.
 
