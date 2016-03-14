@@ -1,4 +1,3 @@
-### Reader [adrien-repo.github.io]
 
 Reader is a basic newsreader that get articles list from RSS feeds and display them via Google Material design cards.
 
