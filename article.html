@@ -1,89 +1,45 @@
 
 <html lang="en" >
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Angular Material style sheet -->
- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Angular Material style sheet -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-blue.min.css">
 <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
- 
-
-    <script type="text/javascript">
-
+<script type="text/javascript">
 var yy = localStorage.getItem("articlelink")
-
-
 var articlelink = yy.replace("#xtor=RSS-3208", "")
-
+//use your own free token at readability
 var url ='https://www.readability.com/api/content/v1/parser?url='+articlelink+'&token=081e876bc2c8db81715a111de5e3c1ea09134e97'+'&callback=foo'
-
-
 var script = document.createElement('script');
 script.src = url
-
 document.getElementsByTagName('head')[0].appendChild(script);
 // or document.head.appendChild(script) in modern browsers
-
 function foo(data)
 {
- 
- 
- document.getElementById("mytitle").innerHTML+=data.title
-  document.getElementById("myurl").innerHTML+='<button class="mdl-button mdl-js-button mdl-button--primary"><a href="#" onclick="backtolist()">Back to list</a></button><button class="mdl-button mdl-js-button mdl-button--primary"><a href="'+data.url+'">Original article</a></button>'
-  document.getElementById("mybody").innerHTML+=data.content
-
-
- 
-   // do stuff with JSON
+document.getElementById("mytitle").innerHTML+=data.title
+document.getElementById("myurl").innerHTML+='<button class="mdl-button mdl-js-button mdl-button--primary"><a href="#" onclick="backtolist()">Back to list</a></button><button class="mdl-button mdl-js-button mdl-button--primary"><a href="'+data.url+'">Original article</a></button>'
+document.getElementById("mybody").innerHTML+=data.content
 }
-
-    
-
-         function backtolist()
-  {
-
-
-
-
-  parent.document.getElementById("cardspannel").style.height = "100%"
-    parent.document.getElementById("article").style.visibility = "hidden"
-
-  
+function backtolist()
+{
+parent.document.getElementById("cardspannel").style.height = "100%"
+parent.document.getElementById("article").style.visibility = "hidden"
 }      
-
-
-
-
-    </script>
-
-	<style>
-	.full-width {
-    width: 100%;
-}
-	</style>
-	
+</script>
+<style>
+.full-width {width: 100%;}
+</style>
 </head>
 <body  ng-app="BlankApp" ng-cloak>
-  <!--
-    Your HTML content here
-  --> <h3>
-  <div id="mytitle"></div>
-  </h3>
-  <div id="mydate"></div>
-  <div id="myurl"></div>
-  <hr>
-
-  <br>
-  <div id="mybody"></div>
-  
-
-
-  
-
-  <!-- Your application bootstrap  -->
+<h3><div id="mytitle"></div></h3>
+<div id="mydate"></div>
+<div id="myurl"></div>
+<hr>
+<br>
+<div id="mybody"></div>
 </body>
 </html>
-
 <!--
 Copyright 2016 Google Inc. All Rights Reserved. 
 Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
