@@ -1,4 +1,4 @@
-####External APIs and library used
+External APIs/libraries/ressources I have borrowed from:
 
 Google Feed API
 https://developers.google.com/feed/
