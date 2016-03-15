@@ -17,7 +17,7 @@ document.getElementsByTagName('head')[0].appendChild(script);
 // or document.head.appendChild(script) in modern browsers
 function foo(data)
 {
-document.getElementById("mytitle").innerHTML+=' '+data.title
+document.getElementById("mytitle").innerHTML+=data.title
 document.getElementById("myurl").innerHTML+='<button class="mdl-button mdl-js-button mdl-button--primary"><a href="#" onclick="backtolist()">Back to list</a></button><button class="mdl-button mdl-js-button mdl-button--primary"><a href="'+data.url+'">Original article</a></button>'
 document.getElementById("mybody").innerHTML+=data.content
 document.getElementById("mybody").style.margin = "5px"
