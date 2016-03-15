@@ -1,14 +1,11 @@
-External APIs/libraries/ressources I have borrowed from:
+Below are the external APIs/libraries/ressources I have borrowed from.
 
-Google Feed API
-https://developers.google.com/feed/
 
-Google Material Design Lite
-http://www.getmdl.io/index.html
+Google Feed API: https://developers.google.com/feed/
 
-Readability
-https://www.readability.com/
+Google Material Design Lite: http://www.getmdl.io/index.html
 
-Icon
-https://icons8.com/
+Readability: https://www.readability.com/
+
+Icons: https://icons8.com/
 
