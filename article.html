@@ -20,6 +20,7 @@ function foo(data)
 document.getElementById("mytitle").innerHTML+=data.title
 document.getElementById("myurl").innerHTML+='<button class="mdl-button mdl-js-button mdl-button--primary"><a href="#" onclick="backtolist()">Back to list</a></button><button class="mdl-button mdl-js-button mdl-button--primary"><a href="'+data.url+'">Original article</a></button>'
 document.getElementById("mybody").innerHTML+=data.content
+document.getElementById("mybody").style.margin = "5px"
 }
 function backtolist()
 {
@@ -38,7 +39,7 @@ parent.document.getElementById("article").style.visibility = "hidden"
 <div id="myurl"></div>
 <hr>
 <br>
-<div id="mybody" style="margin:5px"></div>
+<div id="mybody"></div>
 <br>
 </body>
 </html>
