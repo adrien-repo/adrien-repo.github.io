@@ -16,9 +16,10 @@ var window.RSSfeed = '';
 var window.articleURL = '';
 </script>
 <script>
-function MyFunction(x)
+function MyFunction(x,y)
 {
 localStorage.setItem("RSSfeed",x);
+document.getElementById("mastertitle").innerHTML = 'Reader / '+y;
 window.open("cards.html", "content");
 var d = document.querySelector('.mdl-layout');
 d.MaterialLayout.toggleDrawer(); 
@@ -64,12 +65,12 @@ $(document.body).on('click', '.mdl-collapse__button', function(){$(this).parent(
         </a>
         <div class="mdl-collapse__content-wrapper">
           <div class="mdl-collapse__content mdl-animation--default">
-             <a class="mdl-navigation__link" href="#" onclick="MyFunction('https://api.breakingnews.com/api/v1/item/?format=rss');">Breaking News</a>
-             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml');">NY Times</a>
-             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.wsj.com/xml/rss/3_7085.xml');">WSJ</a>
-             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://rss.lemonde.fr/c/205/f/3050/index.rss');">Le Monde</a>
-             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.feedburner.com/TheAtlantic');">The Atlantic</a>
-             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.latimes.com/rss2.0.xml');">LA Times</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('https://api.breakingnews.com/api/v1/item/?format=rss','Breaking News');">Breaking News</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml','NY Times');">NY Times</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.wsj.com/xml/rss/3_7085.xml','WSJ');">WSJ</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://rss.lemonde.fr/c/205/f/3050/index.rss','Le Monde');">Le Monde</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.feedburner.com/TheAtlantic','The Atlantic');">The Atlantic</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.latimes.com/rss2.0.xml','LA Times');">LA Times</a>
           </div>
         </div>
       	</div>
@@ -80,8 +81,8 @@ $(document.body).on('click', '.mdl-collapse__button', function(){$(this).parent(
         </a>
         <div class="mdl-collapse__content-wrapper">
           <div class="mdl-collapse__content mdl-animation--default">
-            <a class="mdl-navigation__link" href="#" onclick="MyFunction('https://www.quantamagazine.org/feed/');">Quanta Magazine</a>
-            <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.symmetrymagazine.org/feed');">Symmetry Magazine</a>
+            <a class="mdl-navigation__link" href="#" onclick="MyFunction('https://www.quantamagazine.org/feed/','Quanta Magazine');">Quanta Magazine</a>
+            <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.symmetrymagazine.org/feed','Symmetry Magazine');">Symmetry Magazine</a>
           </div>
         </div>
       	</div>
@@ -92,12 +93,12 @@ $(document.body).on('click', '.mdl-collapse__button', function(){$(this).parent(
         </a>
         <div class="mdl-collapse__content-wrapper">
           <div class="mdl-collapse__content mdl-animation--default">
-            <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://export.arxiv.org/rss/q-fin');">Arxiv/Q-Fin</a>
-      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.bloombergview.com/rss/contributors/matt-levine.rss');">BBG Matt Levine</a>
-      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.bloombergview.com/rss/contributors/the-editors.rss');">BBG Editors</a>
-      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.euromoney.com/RSS.aspx?FeedID=13');">EuroMoney</a>
-      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.feedburner.com/zerohedge/feed');">Zerohedge</a>
-      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.benzinga.com/benzinga/news');">Benzinga</a>
+            <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://export.arxiv.org/rss/q-fin','Arxiv Q-fin');">Arxiv Q-Fin</a>
+      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.bloombergview.com/rss/contributors/matt-levine.rss','BBG Matt Levine');">BBG Matt Levine</a>
+      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.bloombergview.com/rss/contributors/the-editors.rss','BBG Editors');">BBG Editors</a>
+      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.euromoney.com/RSS.aspx?FeedID=13','EuroMoney');">EuroMoney</a>
+      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.feedburner.com/zerohedge/feed','Zerohedge');">Zerohedge</a>
+      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.benzinga.com/benzinga/news','Benzinga');">Benzinga</a>
 
           </div>
         </div>
