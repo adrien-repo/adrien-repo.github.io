@@ -7,6 +7,15 @@
 <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-blue.min.css">
 <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
 <script type="text/javascript">
+$(window).scroll(function() {
+    if ($(this).scrollTop()) {
+        $('#backtocards').fadeIn();
+    } else {
+        $('#backtocards').fadeOut();
+    }
+});
+</script>
+<script type="text/javascript">
 var yy = localStorage.getItem("articlelink")
 var articlelink = yy.replace("#xtor=RSS-3208", "")
 //use your own free token at readability
@@ -30,10 +39,15 @@ parent.document.getElementById("article").style.visibility = "hidden"
 </script>
 <style>
 .full-width {width: 100%;}
+ #backtocards {
+    display: none;
+}
 </style>
 </head>
 <body  ng-app="BlankApp" ng-cloak>
+<div id="backtocards">
 <a style="position: fixed; top:5px;right:5px;" href="#" onclick="backtolist()" title="Back to List"><img style="border: none;" src="/icons/Return.png"/></a>
+</div>
 <h3><div id="mytitle"></div></h3>
 <div id="mydate"></div>
 <div id="myurl"></div>
