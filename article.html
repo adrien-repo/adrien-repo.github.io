@@ -8,13 +8,7 @@
 <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.js"></script>
 <script type="text/javascript">
-$(window).scroll(function() {
-    if ($(this).scrollTop()) {
-        $('#backtocards').fadeIn();
-    } else {
-        $('#backtocards').fadeOut();
-    }
-});
+$(window).scroll(function() {if ($(this).scrollTop()) {$('#backtocards').fadeIn();} else {$('#backtocards').fadeOut();}});
 </script>
 <script type="text/javascript">
 var yy = localStorage.getItem("articlelink")
@@ -40,9 +34,7 @@ parent.document.getElementById("article").style.visibility = "hidden"
 </script>
 <style>
 .full-width {width: 100%;}
- #backtocards {
-    display: none;
-}
+#backtocards {display: none;}
 </style>
 </head>
 <body  ng-app="BlankApp" ng-cloak>
