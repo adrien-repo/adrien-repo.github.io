@@ -21,7 +21,7 @@ return frag;
 }
 function initialize() 
 {
-var rssadress = window.opener.RSSfeed 
+var rssadress = localStorage.getItem("RSSfeed")
 var feed = new google.feeds.Feed(rssadress);
 feed.setNumEntries(200);
 feed.load(function(result) 
