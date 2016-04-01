@@ -17,32 +17,60 @@
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 
+<script language="javascript" type="text/javascript">
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+  }
+</script>
+
 </head>
 <body ng-app="BlankApp" ng-cloak>
 
-Adrien
-<br>
-
-  <ul class="collapsible" data-collapsible="accordion">
-    <li>
-      <div class="collapsible-header"><i class="material-icons">person_outline</i>About</div>
-      <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">camera_roll</i>Pictures</div>
-      <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">turned_in_not</i>Books</div>
-      <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-    </li>
-	<li>
-      <div class="collapsible-header"><i class="material-icons">web</i>News Reader</div>
-		<div class="collapsible-body">
-		<p>I have build a <a href="newsreader.html">News Reader</a> to enjoy longform articles without surrounding informations and ads.</p>
-		</div>
-    </li>
-  </ul>
+  <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--white">
+      <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--white mdl-color-text--grey-800">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">adrien</span>
+          <div class="mdl-layout-spacer"></div>
+        
+        </div>
+      </header>
+      <div class="demo-ribbon"></div>
+      <main class="demo-main mdl-layout__content">
+        <div class="demo-container mdl-grid">
+          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+          <div class="demo-content mdl-color--white mdl-shadow--0dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+            
+            
+			
+			 <ul class="collapsible" data-collapsible="accordion">
+				<li>
+				  <div class="collapsible-header"><i class="material-icons">person_outline</i>About</div>
+				  <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+				</li>
+				<li>
+				  <div class="collapsible-header"><i class="material-icons">camera_roll</i>Pictures</div>
+				  <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+				</li>
+				<li>
+				  <div class="collapsible-header"><i class="material-icons">turned_in_not</i>Books</div>
+				  <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+				</li>
+				<li>
+				  <div class="collapsible-header"><i class="material-icons">web</i>News Reader</div>
+					<div class="collapsible-body">
+					<p>I have build a <a href="newsreader.html">News Reader</a> to enjoy longform articles without surrounding informations and ads.</p>
+					</div>
+				</li>
+			  </ul>
+			
+          </div>
+        </div>
+       
+      </main>
+    </div>
+    <a href="https://github.com/google/material-design-lite/blob/master/templates/article/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a>
+    <script src="$$hosted_libs_prefix$$/$$version$$/material.min.js"></script>
+  </body>
   
 </body>
 </html>
