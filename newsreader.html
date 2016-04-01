@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#3F51B5">
+<title>Reader</title>
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" sizes="192x192" href="/icons/appicon.png">
+<!-- Angular Material style sheet -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-blue.min.css">
+<script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+var window.RSSfeed = '';
+var window.articleURL = '';
+</script>
+<script>
+function MyFunction(x,y)
+{
+localStorage.setItem("RSSfeed",x);
+document.getElementById("mastertitle").innerHTML = 'Reader / '+y;
+window.open("cards.html", "content");
+var d = document.querySelector('.mdl-layout');
+d.MaterialLayout.toggleDrawer(); 
+}
+function OpenAbout()
+{
+document.getElementById("mastertitle").innerHTML = 'Reader';
+window.open("about.html", "content");
+var d = document.querySelector('.mdl-layout');
+d.MaterialLayout.toggleDrawer(); 
+}
+</script>
+<style>
+a {cursor: pointer;}
+.mdl-collapse.mdl-collapse--opened {border-top: 1px solid #e0e0e0;border-bottom: 1px solid #e0e0e0;margin-top: -1px;}
+.mdl-collapse.mdl-collapse--opened + .mdl-collapse.mdl-collapse--opened {border-top: none;margin-top: 0;}
+.mdl-collapse .mdl-collapse__content-wrapper {overflow: hidden;}
+.mdl-collapse .mdl-collapse__content {transition-property: margin-top;transition-duration: 0.2s;}
+.mdl-collapse .mdl-collapse__icon {transition-property: transform;transition-duration: 0.2s;color: rgba(0,0,0,0.3);position: absolute;right: 6px;margin-top: -3px;}
+.mdl-collapse.mdl-collapse--opened .mdl-collapse__icon {transform: rotate(-180deg);}
+.mdl-collapse.mdl-collapse--opened .mdl-collapse__button {color: teal;}
+.mdl-collapse.mdl-collapse--opened .mdl-collapse__content {margin-top: 0 !important;}
+</style>
+<script>
+$(function(){
+$('.mdl-collapse__content').each(function(){var content = $(this);content.css('margin-top', -content.height());})
+$(document.body).on('click', '.mdl-collapse__button', function(){$(this).parent('.mdl-collapse').toggleClass('mdl-collapse--opened');})
+})
+</script>
+</head>
+<body ng-app="BlankApp" ng-cloak>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <span class="mdl-layout-title"><div id="mastertitle">Reader</div></span>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+  <div class="mdl-navigation">
+      	<div class="mdl-collapse">
+        <a class="mdl-navigation__link mdl-collapse__button">
+          <i class="material-icons mdl-collapse__icon mdl-animation--default">expand_more</i>
+          Newspapers
+        </a>
+        <div class="mdl-collapse__content-wrapper">
+          <div class="mdl-collapse__content mdl-animation--default">
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('https://api.breakingnews.com/api/v1/item/?format=rss','Breaking News');">Breaking News</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml','NY Times');">NY Times</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.wsj.com/xml/rss/3_7085.xml','WSJ');">WSJ</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://rss.lemonde.fr/c/205/f/3050/index.rss','Le Monde');">Le Monde</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.feedburner.com/TheAtlantic','The Atlantic');">The Atlantic</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.latimes.com/rss2.0.xml','LA Times');">LA Times</a>
+             <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.theage.com.au/rssheadlines/top.xml','The Age');">The Age</a>
+          </div>
+        </div>
+      	</div>
+
+	<div class="mdl-collapse">
+        <a class="mdl-navigation__link mdl-collapse__button">
+          <i class="material-icons mdl-collapse__icon mdl-animation--default">expand_more</i>
+          Science
+        </a>
+        <div class="mdl-collapse__content-wrapper">
+          <div class="mdl-collapse__content mdl-animation--default">
+            <a class="mdl-navigation__link" href="#" onclick="MyFunction('https://www.quantamagazine.org/feed/','Quanta Magazine');">Quanta Magazine</a>
+            <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.symmetrymagazine.org/feed','Symmetry Magazine');">Symmetry Magazine</a>
+            <a class="mdl-navigation__link" href="#" onclick="MyFunction('https://www.edge.org/feed','Edge');">Edge</a>
+          </div>
+        </div>
+      	</div>
+
+	<div class="mdl-collapse">
+        <a class="mdl-navigation__link mdl-collapse__button">
+          <i class="material-icons mdl-collapse__icon mdl-animation--default">expand_more</i>
+          Markets
+        </a>
+        <div class="mdl-collapse__content-wrapper">
+          <div class="mdl-collapse__content mdl-animation--default">
+            <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://export.arxiv.org/rss/q-fin','Arxiv Q-fin');">Arxiv Q-Fin</a>
+      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.bloombergview.com/rss/contributors/matt-levine.rss','BBG Matt Levine');">BBG Matt Levine</a>
+      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.bloombergview.com/rss/contributors/the-editors.rss','BBG Editors');">BBG Editors</a>
+      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://www.euromoney.com/RSS.aspx?FeedID=13','EuroMoney');">EuroMoney</a>
+      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.feedburner.com/zerohedge/feed','Zerohedge');">Zerohedge</a>
+      	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.benzinga.com/benzinga/news','Benzinga');">Benzinga</a>
+	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.feedburner.com/Quantocracy','Quantocracy');">Quantocracy</a>
+	    <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.feedburner.com/MisesDailyArticles','Mises Daily');">Mises Daily</a>
+          </div>
+        </div>
+      	</div>
+
+        <div class="mdl-collapse">
+        <a class="mdl-navigation__link mdl-collapse__button">
+          <i class="material-icons mdl-collapse__icon mdl-animation--default">expand_more</i>
+          Jessica
+        </a>
+        <div class="mdl-collapse__content-wrapper">
+          <div class="mdl-collapse__content mdl-animation--default">
+            <a class="mdl-navigation__link" href="#" onclick="MyFunction('https://www.vogue.com/feed/','Vogue US');">Vogue US</a>
+            <a class="mdl-navigation__link" href="#" onclick="MyFunction('http://feeds.feedburner.com/DiamondEngagementRingsWithJewelleryMonthly','Jewellery Monthly');">Jewellery Monthly</a>
+          </div>
+        </div>
+      	</div>
+
+	<a class="mdl-navigation__link" href="#" onclick="OpenAbout()">About</a>
+  </div>
+  </div>
+  <main class="mdl-layout__content">
+      <div class="page-content" id="content"><iframe name="content" style="position: absolute; height: 100%; border: none visibility:visible" src="about.html"></div>
+  </main>
+</div>
+</body>
+</html>
