@@ -1,99 +1,209 @@
-<!doctype html>
-<html lang="en" >
+<!DOCTYPE html>
+<html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#3F51B5">
-<title>Photographies</title>
-<meta name="mobile-web-app-capable" content="yes">
-<!-- <link rel="icon" sizes="192x192" href="/icons/appicon.png"> -->
-<!-- Angular Material style sheet -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<!-- https://design.google.com/icons/ -->
-<link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-blue.min.css">
-<script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-<!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+<style>
+/* The Image Box */
+div.img {
+    border: 1px solid #ccc;
+}
 
-<script language="javascript" type="text/javascript">
- 
-   $(document).ready(function(){
-    $('.materialboxed').materialbox();
-  });
+div.img:hover {
+    border: 1px solid #777;
+}
+
+/* The Image */
+div.img img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+/* Description of Image */
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Add Responsiveness */
+.responsive {
+    padding: 0 6px;
+    float: left;
+    width: 24.99999%;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0.1)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Responsive Columns */
+@media only screen and (max-width: 700px){
+    .responsive {
+        width: 49.99999%;
+        margin: 6px 0;
+    }
+    .modal-content {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 500px){
+    .responsive {
+        width: 100%;
+    }
+}
+
+/* Clear Floats */
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+</style>
+</head>
+<body>
+
+<h2 style="text-align:center">Advanced Image Gallery</h2>
+
+<div class="responsive">
+  <div class="img">
+      <img src="img_fjords.jpg" alt="Trolltunga Norway" width="300" height="200">
+    <div class="desc">Trolltunga Norway</div>
+  </div>
+</div>
+
+
+<div class="responsive">
+  <div class="img">
+    <img src="img_forest.jpg" alt="Forest" width="300" height="200">
+    <div class="desc">Forest Bridge</div>
+  </div>
+</div>
+
+<div class="responsive">
+  <div class="img">
+    <img src="img_lights.jpg" alt="Northern Lights" width="300" height="200">
+    <div class="desc">Northern Lights, Norway</div>
+  </div>
+</div>
+
+<div class="responsive">
+  <div class="img">
+    <img src="img_mountains.jpg" alt="Mountains" width="300" height="200">
+    <div class="desc">Beautiful Mountains</div>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <span class="close">×</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+    modal.style.display = "none";
+}
+
+// Get all images and insert the clicked image inside the modal
+// Get the content of the image description and insert it inside the modal image caption
+var images = document.getElementsByTagName('img');
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+var i;
+for (i = 0; i < images.length; i++) {
+   images[i].onclick = function(){
+       modal.style.display = "block";
+       modalImg.src = this.src;
+       modalImg.alt = this.alt;
+       captionText.innerHTML = this.nextElementSibling.innerHTML;
+   }
+}
 </script>
 
-</head>
-<body ng-app="BlankApp" ng-cloak>
-<div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--white">
-<header class="mdl-layout__header--scroll mdl-color--white mdl-color-text--grey-800">
-<center>
-<br>
-<span class="mdl-layout-title">Photographies</span><div class="mdl-layout-spacer"><br>Some pictures from around the world.</div>
-</center>
-</header>
-
-<div class="demo-ribbon"></div>
-<main class="demo-main mdl-layout__content">
-<div class="demo-container mdl-grid">
-<div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-<div class="demo-content mdl-color--white mdl-shadow--0dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
-
-<ul class="collapsible" data-collapsible="accordion">
-
-<li>
-<div class="collapsible-header"><i class="material-icons">person_outline</i>Hawaii</div>
-<div class="collapsible-body">
-
-<div class="mdl-grid">
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (01).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (02).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (03).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (04).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (05).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (06).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (07).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (08).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (09).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (10).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (11).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (12).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (13).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (14).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (15).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (16).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (17).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (18).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (19).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (20).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (21).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (22).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (23).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (24).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (25).jpg"></div>
-  <div class="mdl-cell"><img class="materialboxed" data-caption="legend" width="100%" src="hawaii (26).jpg"></div>
-</div>
-</li>
-
-<li>
-<div class="collapsible-header"><i class="material-icons">camera_roll</i>Photographies</div>
-<div class="collapsible-body">
-
-
- <p>test</p>
-
-</div>
-</li>
-  </ul>
+<div style="padding:6px;">
+  <p>This example combines CSS3 (animation and media queries) and JavaScript, to create a responsive image gallery that will enlarge an image when it is clicked on.</p>
 </div>
 
-	  
-	  
-	  
-	  
-</div>
-</main>
-</div>
 </body>
 </html>
