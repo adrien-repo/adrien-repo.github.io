@@ -9,15 +9,123 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-blue.min.css">
 
-<link rel="stylesheet" type="text/css" media="all" href="jquery.lightbox-0.5.css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
- <link rel="stylesheet" type="text/css" media="all" href="css/styles.css">
-  <link rel="stylesheet" type="text/css" media="all" href="css/jquery.lightbox-0.5.css">
-  <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
-  <script type="text/javascript" src="js/jquery.lightbox-0.5.min.js"></script>
+
+<!-- Magnific Popup core JS file -->
+<script src="css-js/jquery.magnific-popup.js"></script>
+<!-- Magnific Popup core CSS file -->
+<link rel="stylesheet" href="css-js/magnific-popup.css">
 
 
+  <script type="text/javascript">
+      $(document).ready(function() {
 
+        $('.image-popup-vertical-fit').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          mainClass: 'mfp-img-mobile',
+          image: {
+            verticalFit: true
+          }
+          
+        });
+
+        $('.image-popup-fit-width').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          image: {
+            verticalFit: false
+          }
+        });
+
+        $('.image-popup-no-margins').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          closeBtnInside: false,
+          fixedContentPos: true,
+          mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
+          image: {
+            verticalFit: true
+          },
+          zoom: {
+            enabled: true,
+            duration: 300 // don't foget to change the duration also in CSS
+          }
+        });
+
+      });
+    </script>
+    <style type="text/css">
+    /* padding-bottom and top for image */
+    .mfp-no-margins img.mfp-img {
+      padding: 0;
+    }
+    /* position of shadow behind the image */
+    .mfp-no-margins .mfp-figure:after {
+      top: 0;
+      bottom: 0;
+    }
+    /* padding for main container */
+    .mfp-no-margins .mfp-container {
+      padding: 0;
+    }
+
+
+    /* 
+
+    for zoom animation 
+    uncomment this part if you haven't added this code anywhere else
+
+    */
+    /*
+    
+    .mfp-with-zoom .mfp-container,
+    .mfp-with-zoom.mfp-bg {
+      opacity: 0;
+      -webkit-backface-visibility: hidden;
+      -webkit-transition: all 0.3s ease-out; 
+      -moz-transition: all 0.3s ease-out; 
+      -o-transition: all 0.3s ease-out; 
+      transition: all 0.3s ease-out;
+    }
+    
+    .mfp-with-zoom.mfp-ready .mfp-container {
+        opacity: 1;
+    }
+    .mfp-with-zoom.mfp-ready.mfp-bg {
+        opacity: 0.8;
+    }
+    
+    .mfp-with-zoom.mfp-removing .mfp-container, 
+    .mfp-with-zoom.mfp-removing.mfp-bg {
+      opacity: 0;
+    }
+    */
+    </style>
+
+	 <script type="text/javascript">
+      $(document).ready(function() {
+        $('.popup-gallery').magnificPopup({
+          delegate: 'a',
+          type: 'image',
+          tLoading: 'Loading image #%curr%...',
+          mainClass: 'mfp-img-mobile',
+          gallery: {
+            enabled: true,
+            navigateByImgClick: true,
+            preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+          },
+          image: {
+            tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+            titleSrc: function(item) {
+              return item.el.attr('title');
+            }
+          }
+        });
+      });
+    </script>
+	
 </head>
 <body ng-app="BlankApp" ng-cloak>
 
@@ -27,7 +135,7 @@
 <div class="row">
 <div class="col-sm-12">
 
-<span class="mdl-layout-title">Chad</span><div class="mdl-layout-spacer"><br>Unité, Travail, Progrès (Unity, Work, Progress)<br></div>
+<span class="mdl-layout-title">Hawaii</span><div class="mdl-layout-spacer"><br>The aloha state of mind<br></div>
 <br>
 <br>
 
@@ -36,124 +144,126 @@
 <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
 <div class="demo-content mdl-color--white mdl-shadow--0dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
 
- <div id="thumbnails">
- <ul class="clearfix">
-<li><a href="chad (01).jpg" title="text"><img src="chad (01).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (02).jpg" title="text"><img src="chad (02).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (03).jpg" title="text"><img src="chad (03).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (04).jpg" title="text"><img src="chad (04).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (05).jpg" title="text"><img src="chad (05).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (06).jpg" title="text"><img src="chad (06).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (07).jpg" title="text"><img src="chad (07).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (08).jpg" title="text"><img src="chad (08).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (09).jpg" title="text"><img src="chad (09).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (10).jpg" title="text"><img src="chad (10).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (11).jpg" title="text"><img src="chad (11).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (12).jpg" title="text"><img src="chad (12).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (13).jpg" title="text"><img src="chad (13).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (14).jpg" title="text"><img src="chad (14).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (15).jpg" title="text"><img src="chad (15).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (16).jpg" title="text"><img src="chad (16).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (17).jpg" title="text"><img src="chad (17).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (18).jpg" title="text"><img src="chad (18).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (19).jpg" title="text"><img src="chad (19).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (20).jpg" title="text"><img src="chad (20).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (21).jpg" title="text"><img src="chad (21).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (22).jpg" title="text"><img src="chad (22).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (23).jpg" title="text"><img src="chad (23).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (24).jpg" title="text"><img src="chad (24).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (25).jpg" title="text"><img src="chad (25).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (26).jpg" title="text"><img src="chad (26).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (27).jpg" title="text"><img src="chad (27).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (28).jpg" title="text"><img src="chad (28).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (29).jpg" title="text"><img src="chad (29).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (30).jpg" title="text"><img src="chad (30).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (31).jpg" title="text"><img src="chad (31).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (32).jpg" title="text"><img src="chad (32).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (33).jpg" title="text"><img src="chad (33).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (34).jpg" title="text"><img src="chad (34).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (35).jpg" title="text"><img src="chad (35).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (36).jpg" title="text"><img src="chad (36).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (37).jpg" title="text"><img src="chad (37).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (38).jpg" title="text"><img src="chad (38).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (39).jpg" title="text"><img src="chad (39).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (40).jpg" title="text"><img src="chad (40).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (41).jpg" title="text"><img src="chad (41).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (42).jpg" title="text"><img src="chad (42).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (43).jpg" title="text"><img src="chad (43).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (44).jpg" title="text"><img src="chad (44).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (45).jpg" title="text"><img src="chad (45).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (46).jpg" title="text"><img src="chad (46).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (47).jpg" title="text"><img src="chad (47).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (48).jpg" title="text"><img src="chad (48).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (49).jpg" title="text"><img src="chad (49).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (50).jpg" title="text"><img src="chad (50).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (51).jpg" title="text"><img src="chad (51).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (52).jpg" title="text"><img src="chad (52).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (53).jpg" title="text"><img src="chad (53).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (54).jpg" title="text"><img src="chad (54).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (55).jpg" title="text"><img src="chad (55).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (56).jpg" title="text"><img src="chad (56).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (57).jpg" title="text"><img src="chad (57).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (58).jpg" title="text"><img src="chad (58).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (59).jpg" title="text"><img src="chad (59).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (60).jpg" title="text"><img src="chad (60).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (61).jpg" title="text"><img src="chad (61).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (62).jpg" title="text"><img src="chad (62).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (63).jpg" title="text"><img src="chad (63).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (64).jpg" title="text"><img src="chad (64).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (65).jpg" title="text"><img src="chad (65).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (66).jpg" title="text"><img src="chad (66).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (67).jpg" title="text"><img src="chad (67).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (68).jpg" title="text"><img src="chad (68).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (69).jpg" title="text"><img src="chad (69).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (70).jpg" title="text"><img src="chad (70).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (71).jpg" title="text"><img src="chad (71).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (72).jpg" title="text"><img src="chad (72).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (73).jpg" title="text"><img src="chad (73).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (74).jpg" title="text"><img src="chad (74).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (75).jpg" title="text"><img src="chad (75).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (76).jpg" title="text"><img src="chad (76).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (77).jpg" title="text"><img src="chad (77).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (78).jpg" title="text"><img src="chad (78).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (79).jpg" title="text"><img src="chad (79).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (80).jpg" title="text"><img src="chad (80).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (81).jpg" title="text"><img src="chad (81).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (82).jpg" title="text"><img src="chad (82).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (83).jpg" title="text"><img src="chad (83).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (84).jpg" title="text"><img src="chad (84).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (85).jpg" title="text"><img src="chad (85).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (86).jpg" title="text"><img src="chad (86).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (87).jpg" title="text"><img src="chad (87).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (88).jpg" title="text"><img src="chad (88).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (89).jpg" title="text"><img src="chad (89).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (90).jpg" title="text"><img src="chad (90).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (91).jpg" title="text"><img src="chad (91).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (92).jpg" title="text"><img src="chad (92).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (93).jpg" title="text"><img src="chad (93).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (94).jpg" title="text"><img src="chad (94).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (95).jpg" title="text"><img src="chad (95).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (96).jpg" title="text"><img src="chad (96).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (97).jpg" title="text"><img src="chad (97).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (98).jpg" title="text"><img src="chad (98).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (99).jpg" title="text"><img src="chad (99).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (100).jpg" title="text"><img src="chad (100).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (101).jpg" title="text"><img src="chad (101).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (102).jpg" title="text"><img src="chad (102).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (103).jpg" title="text"><img src="chad (103).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (104).jpg" title="text"><img src="chad (104).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (105).jpg" title="text"><img src="chad (105).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (106).jpg" title="text"><img src="chad (106).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (107).jpg" title="text"><img src="chad (107).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (108).jpg" title="text"><img src="chad (108).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (109).jpg" title="text"><img src="chad (109).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (110).jpg" title="text"><img src="chad (110).jpg" alt="text" height="50"></a></li>
-<li><a href="chad (111).JPG" title="text"><img src="chad (111).JPG" alt="text" height="50"></a></li>
-<li><a href="chad (112).JPG" title="text"><img src="chad (112).JPG" alt="text" height="50"></a></li>
+<div class="popup-gallery">
 
+<a href="chad (01).jpg" title="Title"><img src="chad (01).jpg" width="75" height="75"></a>
+<a href="chad (02).jpg" title="Title"><img src="chad (02).jpg" width="75" height="75"></a>
+<a href="chad (03).jpg" title="Title"><img src="chad (03).jpg" width="75" height="75"></a>
+<a href="chad (04).jpg" title="Title"><img src="chad (04).jpg" width="75" height="75"></a>
+<a href="chad (05).jpg" title="Title"><img src="chad (05).jpg" width="75" height="75"></a>
+<a href="chad (06).jpg" title="Title"><img src="chad (06).jpg" width="75" height="75"></a>
+<a href="chad (07).jpg" title="Title"><img src="chad (07).jpg" width="75" height="75"></a>
+<a href="chad (08).jpg" title="Title"><img src="chad (08).jpg" width="75" height="75"></a>
+<a href="chad (09).jpg" title="Title"><img src="chad (09).jpg" width="75" height="75"></a>
+<a href="chad (10).jpg" title="Title"><img src="chad (10).jpg" width="75" height="75"></a>
+<a href="chad (11).jpg" title="Title"><img src="chad (11).jpg" width="75" height="75"></a>
+<a href="chad (12).jpg" title="Title"><img src="chad (12).jpg" width="75" height="75"></a>
+<a href="chad (13).jpg" title="Title"><img src="chad (13).jpg" width="75" height="75"></a>
+<a href="chad (14).jpg" title="Title"><img src="chad (14).jpg" width="75" height="75"></a>
+<a href="chad (15).jpg" title="Title"><img src="chad (15).jpg" width="75" height="75"></a>
+<a href="chad (16).jpg" title="Title"><img src="chad (16).jpg" width="75" height="75"></a>
+<a href="chad (17).jpg" title="Title"><img src="chad (17).jpg" width="75" height="75"></a>
+<a href="chad (18).jpg" title="Title"><img src="chad (18).jpg" width="75" height="75"></a>
+<a href="chad (19).jpg" title="Title"><img src="chad (19).jpg" width="75" height="75"></a>
+<a href="chad (20).jpg" title="Title"><img src="chad (20).jpg" width="75" height="75"></a>
+<a href="chad (21).jpg" title="Title"><img src="chad (21).jpg" width="75" height="75"></a>
+<a href="chad (22).jpg" title="Title"><img src="chad (22).jpg" width="75" height="75"></a>
+<a href="chad (23).jpg" title="Title"><img src="chad (23).jpg" width="75" height="75"></a>
+<a href="chad (24).jpg" title="Title"><img src="chad (24).jpg" width="75" height="75"></a>
+<a href="chad (25).jpg" title="Title"><img src="chad (25).jpg" width="75" height="75"></a>
+<a href="chad (26).jpg" title="Title"><img src="chad (26).jpg" width="75" height="75"></a>
+<a href="chad (27).jpg" title="Title"><img src="chad (27).jpg" width="75" height="75"></a>
+<a href="chad (28).jpg" title="Title"><img src="chad (28).jpg" width="75" height="75"></a>
+<a href="chad (29).jpg" title="Title"><img src="chad (29).jpg" width="75" height="75"></a>
+<a href="chad (30).jpg" title="Title"><img src="chad (30).jpg" width="75" height="75"></a>
+<a href="chad (31).jpg" title="Title"><img src="chad (31).jpg" width="75" height="75"></a>
+<a href="chad (32).jpg" title="Title"><img src="chad (32).jpg" width="75" height="75"></a>
+<a href="chad (33).jpg" title="Title"><img src="chad (33).jpg" width="75" height="75"></a>
+<a href="chad (34).jpg" title="Title"><img src="chad (34).jpg" width="75" height="75"></a>
+<a href="chad (35).jpg" title="Title"><img src="chad (35).jpg" width="75" height="75"></a>
+<a href="chad (36).jpg" title="Title"><img src="chad (36).jpg" width="75" height="75"></a>
+<a href="chad (37).jpg" title="Title"><img src="chad (37).jpg" width="75" height="75"></a>
+<a href="chad (38).jpg" title="Title"><img src="chad (38).jpg" width="75" height="75"></a>
+<a href="chad (39).jpg" title="Title"><img src="chad (39).jpg" width="75" height="75"></a>
+<a href="chad (40).jpg" title="Title"><img src="chad (40).jpg" width="75" height="75"></a>
+<a href="chad (41).jpg" title="Title"><img src="chad (41).jpg" width="75" height="75"></a>
+<a href="chad (42).jpg" title="Title"><img src="chad (42).jpg" width="75" height="75"></a>
+<a href="chad (43).jpg" title="Title"><img src="chad (43).jpg" width="75" height="75"></a>
+<a href="chad (44).jpg" title="Title"><img src="chad (44).jpg" width="75" height="75"></a>
+<a href="chad (45).jpg" title="Title"><img src="chad (45).jpg" width="75" height="75"></a>
+<a href="chad (46).jpg" title="Title"><img src="chad (46).jpg" width="75" height="75"></a>
+<a href="chad (47).jpg" title="Title"><img src="chad (47).jpg" width="75" height="75"></a>
+<a href="chad (48).jpg" title="Title"><img src="chad (48).jpg" width="75" height="75"></a>
+<a href="chad (49).jpg" title="Title"><img src="chad (49).jpg" width="75" height="75"></a>
+<a href="chad (50).jpg" title="Title"><img src="chad (50).jpg" width="75" height="75"></a>
+<a href="chad (51).jpg" title="Title"><img src="chad (51).jpg" width="75" height="75"></a>
+<a href="chad (52).jpg" title="Title"><img src="chad (52).jpg" width="75" height="75"></a>
+<a href="chad (53).jpg" title="Title"><img src="chad (53).jpg" width="75" height="75"></a>
+<a href="chad (54).jpg" title="Title"><img src="chad (54).jpg" width="75" height="75"></a>
+<a href="chad (55).jpg" title="Title"><img src="chad (55).jpg" width="75" height="75"></a>
+<a href="chad (56).jpg" title="Title"><img src="chad (56).jpg" width="75" height="75"></a>
+<a href="chad (57).jpg" title="Title"><img src="chad (57).jpg" width="75" height="75"></a>
+<a href="chad (58).jpg" title="Title"><img src="chad (58).jpg" width="75" height="75"></a>
+<a href="chad (59).jpg" title="Title"><img src="chad (59).jpg" width="75" height="75"></a>
+<a href="chad (60).jpg" title="Title"><img src="chad (60).jpg" width="75" height="75"></a>
+<a href="chad (61).jpg" title="Title"><img src="chad (61).jpg" width="75" height="75"></a>
+<a href="chad (62).jpg" title="Title"><img src="chad (62).jpg" width="75" height="75"></a>
+<a href="chad (63).jpg" title="Title"><img src="chad (63).jpg" width="75" height="75"></a>
+<a href="chad (64).jpg" title="Title"><img src="chad (64).jpg" width="75" height="75"></a>
+<a href="chad (65).jpg" title="Title"><img src="chad (65).jpg" width="75" height="75"></a>
+<a href="chad (66).jpg" title="Title"><img src="chad (66).jpg" width="75" height="75"></a>
+<a href="chad (67).jpg" title="Title"><img src="chad (67).jpg" width="75" height="75"></a>
+<a href="chad (68).jpg" title="Title"><img src="chad (68).jpg" width="75" height="75"></a>
+<a href="chad (69).jpg" title="Title"><img src="chad (69).jpg" width="75" height="75"></a>
+<a href="chad (70).jpg" title="Title"><img src="chad (70).jpg" width="75" height="75"></a>
+<a href="chad (71).jpg" title="Title"><img src="chad (71).jpg" width="75" height="75"></a>
+<a href="chad (72).jpg" title="Title"><img src="chad (72).jpg" width="75" height="75"></a>
+<a href="chad (73).jpg" title="Title"><img src="chad (73).jpg" width="75" height="75"></a>
+<a href="chad (74).jpg" title="Title"><img src="chad (74).jpg" width="75" height="75"></a>
+<a href="chad (75).jpg" title="Title"><img src="chad (75).jpg" width="75" height="75"></a>
+<a href="chad (76).jpg" title="Title"><img src="chad (76).jpg" width="75" height="75"></a>
+<a href="chad (77).jpg" title="Title"><img src="chad (77).jpg" width="75" height="75"></a>
+<a href="chad (78).jpg" title="Title"><img src="chad (78).jpg" width="75" height="75"></a>
+<a href="chad (79).jpg" title="Title"><img src="chad (79).jpg" width="75" height="75"></a>
+<a href="chad (80).jpg" title="Title"><img src="chad (80).jpg" width="75" height="75"></a>
+<a href="chad (81).jpg" title="Title"><img src="chad (81).jpg" width="75" height="75"></a>
+<a href="chad (82).jpg" title="Title"><img src="chad (82).jpg" width="75" height="75"></a>
+<a href="chad (83).jpg" title="Title"><img src="chad (83).jpg" width="75" height="75"></a>
+<a href="chad (84).jpg" title="Title"><img src="chad (84).jpg" width="75" height="75"></a>
+<a href="chad (85).jpg" title="Title"><img src="chad (85).jpg" width="75" height="75"></a>
+<a href="chad (86).jpg" title="Title"><img src="chad (86).jpg" width="75" height="75"></a>
+<a href="chad (87).jpg" title="Title"><img src="chad (87).jpg" width="75" height="75"></a>
+<a href="chad (88).jpg" title="Title"><img src="chad (88).jpg" width="75" height="75"></a>
+<a href="chad (89).jpg" title="Title"><img src="chad (89).jpg" width="75" height="75"></a>
+<a href="chad (90).jpg" title="Title"><img src="chad (90).jpg" width="75" height="75"></a>
+<a href="chad (91).jpg" title="Title"><img src="chad (91).jpg" width="75" height="75"></a>
+<a href="chad (92).jpg" title="Title"><img src="chad (92).jpg" width="75" height="75"></a>
+<a href="chad (93).jpg" title="Title"><img src="chad (93).jpg" width="75" height="75"></a>
+<a href="chad (94).jpg" title="Title"><img src="chad (94).jpg" width="75" height="75"></a>
+<a href="chad (95).jpg" title="Title"><img src="chad (95).jpg" width="75" height="75"></a>
+<a href="chad (96).jpg" title="Title"><img src="chad (96).jpg" width="75" height="75"></a>
+<a href="chad (97).jpg" title="Title"><img src="chad (97).jpg" width="75" height="75"></a>
+<a href="chad (98).jpg" title="Title"><img src="chad (98).jpg" width="75" height="75"></a>
+<a href="chad (99).jpg" title="Title"><img src="chad (99).jpg" width="75" height="75"></a>
+<a href="chad (100).jpg" title="Title"><img src="chad (100).jpg" width="75" height="75"></a>
+<a href="chad (101).jpg" title="Title"><img src="chad (101).jpg" width="75" height="75"></a>
+<a href="chad (102).jpg" title="Title"><img src="chad (102).jpg" width="75" height="75"></a>
+<a href="chad (103).jpg" title="Title"><img src="chad (103).jpg" width="75" height="75"></a>
+<a href="chad (104).jpg" title="Title"><img src="chad (104).jpg" width="75" height="75"></a>
+<a href="chad (105).jpg" title="Title"><img src="chad (105).jpg" width="75" height="75"></a>
+<a href="chad (106).jpg" title="Title"><img src="chad (106).jpg" width="75" height="75"></a>
+<a href="chad (107).jpg" title="Title"><img src="chad (107).jpg" width="75" height="75"></a>
+<a href="chad (108).jpg" title="Title"><img src="chad (108).jpg" width="75" height="75"></a>
+<a href="chad (109).jpg" title="Title"><img src="chad (109).jpg" width="75" height="75"></a>
+<a href="chad (110).jpg" title="Title"><img src="chad (110).jpg" width="75" height="75"></a>
+<a href="chad (111).JPG" title="Title"><img src="chad (111).JPG" width="75" height="75"></a>
+<a href="chad (112).JPG" title="Title"><img src="chad (112).JPG" width="75" height="75"></a>
 
-</ul>
+	
+
 </div>
+
+
 
 
   
@@ -168,11 +278,7 @@
 
 </center>
 
-<script type="text/javascript">
-$(function() {
-    $('#thumbnails a').lightBox();
-});
-</script>
+
 
 
 </body>
