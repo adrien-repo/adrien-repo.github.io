@@ -9,15 +9,123 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-blue.min.css">
 
-<link rel="stylesheet" type="text/css" media="all" href="jquery.lightbox-0.5.css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
- <link rel="stylesheet" type="text/css" media="all" href="css/styles.css">
-  <link rel="stylesheet" type="text/css" media="all" href="css/jquery.lightbox-0.5.css">
-  <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
-  <script type="text/javascript" src="js/jquery.lightbox-0.5.min.js"></script>
+
+<!-- Magnific Popup core JS file -->
+<script src="css-js/jquery.magnific-popup.js"></script>
+<!-- Magnific Popup core CSS file -->
+<link rel="stylesheet" href="css-js/magnific-popup.css">
 
 
+  <script type="text/javascript">
+      $(document).ready(function() {
 
+        $('.image-popup-vertical-fit').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          mainClass: 'mfp-img-mobile',
+          image: {
+            verticalFit: true
+          }
+          
+        });
+
+        $('.image-popup-fit-width').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          image: {
+            verticalFit: false
+          }
+        });
+
+        $('.image-popup-no-margins').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          closeBtnInside: false,
+          fixedContentPos: true,
+          mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
+          image: {
+            verticalFit: true
+          },
+          zoom: {
+            enabled: true,
+            duration: 300 // don't foget to change the duration also in CSS
+          }
+        });
+
+      });
+    </script>
+    <style type="text/css">
+    /* padding-bottom and top for image */
+    .mfp-no-margins img.mfp-img {
+      padding: 0;
+    }
+    /* position of shadow behind the image */
+    .mfp-no-margins .mfp-figure:after {
+      top: 0;
+      bottom: 0;
+    }
+    /* padding for main container */
+    .mfp-no-margins .mfp-container {
+      padding: 0;
+    }
+
+
+    /* 
+
+    for zoom animation 
+    uncomment this part if you haven't added this code anywhere else
+
+    */
+    /*
+    
+    .mfp-with-zoom .mfp-container,
+    .mfp-with-zoom.mfp-bg {
+      opacity: 0;
+      -webkit-backface-visibility: hidden;
+      -webkit-transition: all 0.3s ease-out; 
+      -moz-transition: all 0.3s ease-out; 
+      -o-transition: all 0.3s ease-out; 
+      transition: all 0.3s ease-out;
+    }
+    
+    .mfp-with-zoom.mfp-ready .mfp-container {
+        opacity: 1;
+    }
+    .mfp-with-zoom.mfp-ready.mfp-bg {
+        opacity: 0.8;
+    }
+    
+    .mfp-with-zoom.mfp-removing .mfp-container, 
+    .mfp-with-zoom.mfp-removing.mfp-bg {
+      opacity: 0;
+    }
+    */
+    </style>
+
+	 <script type="text/javascript">
+      $(document).ready(function() {
+        $('.popup-gallery').magnificPopup({
+          delegate: 'a',
+          type: 'image',
+          tLoading: 'Loading image #%curr%...',
+          mainClass: 'mfp-img-mobile',
+          gallery: {
+            enabled: true,
+            navigateByImgClick: true,
+            preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+          },
+          image: {
+            tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+            titleSrc: function(item) {
+              return item.el.attr('title');
+            }
+          }
+        });
+      });
+    </script>
+	
 </head>
 <body ng-app="BlankApp" ng-cloak>
 
@@ -27,7 +135,7 @@
 <div class="row">
 <div class="col-sm-12">
 
-<span class="mdl-layout-title">Indonesia</span><div class="mdl-layout-spacer"><br>Bhinneka Tunggal Ika (Unity in Diversity)<br></div>
+<span class="mdl-layout-title">Hawaii</span><div class="mdl-layout-spacer"><br>The aloha state of mind<br></div>
 <br>
 <br>
 
@@ -36,30 +144,31 @@
 <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
 <div class="demo-content mdl-color--white mdl-shadow--0dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
 
- <div id="thumbnails">
- <ul class="clearfix">
-<li><a href="indonesia (01).JPG" title="text"><img src="indonesia (01).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (02).JPG" title="text"><img src="indonesia (02).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (03).JPG" title="text"><img src="indonesia (03).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (04).JPG" title="text"><img src="indonesia (04).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (05).JPG" title="text"><img src="indonesia (05).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (06).JPG" title="text"><img src="indonesia (06).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (07).JPG" title="text"><img src="indonesia (07).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (08).JPG" title="text"><img src="indonesia (08).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (09).JPG" title="text"><img src="indonesia (09).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (10).JPG" title="text"><img src="indonesia (10).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (11).JPG" title="text"><img src="indonesia (11).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (12).JPG" title="text"><img src="indonesia (12).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (13).JPG" title="text"><img src="indonesia (13).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (14).JPG" title="text"><img src="indonesia (14).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (15).JPG" title="text"><img src="indonesia (15).JPG" alt="text" height="50"></a></li>
-<li><a href="indonesia (16).JPG" title="text"><img src="indonesia (16).JPG" alt="text" height="50"></a></li>
+<div class="popup-gallery">
+
+<a href="indonesia (01).JPG" title="Title"><img src="indonesia (01).JPG" width="75" height="75"></a>
+<a href="indonesia (02).JPG" title="Title"><img src="indonesia (02).JPG" width="75" height="75"></a>
+<a href="indonesia (03).JPG" title="Title"><img src="indonesia (03).JPG" width="75" height="75"></a>
+<a href="indonesia (04).JPG" title="Title"><img src="indonesia (04).JPG" width="75" height="75"></a>
+<a href="indonesia (05).JPG" title="Title"><img src="indonesia (05).JPG" width="75" height="75"></a>
+<a href="indonesia (06).JPG" title="Title"><img src="indonesia (06).JPG" width="75" height="75"></a>
+<a href="indonesia (07).JPG" title="Title"><img src="indonesia (07).JPG" width="75" height="75"></a>
+<a href="indonesia (08).JPG" title="Title"><img src="indonesia (08).JPG" width="75" height="75"></a>
+<a href="indonesia (09).JPG" title="Title"><img src="indonesia (09).JPG" width="75" height="75"></a>
+<a href="indonesia (10).JPG" title="Title"><img src="indonesia (10).JPG" width="75" height="75"></a>
+<a href="indonesia (11).JPG" title="Title"><img src="indonesia (11).JPG" width="75" height="75"></a>
+<a href="indonesia (12).JPG" title="Title"><img src="indonesia (12).JPG" width="75" height="75"></a>
+<a href="indonesia (13).JPG" title="Title"><img src="indonesia (13).JPG" width="75" height="75"></a>
+<a href="indonesia (14).JPG" title="Title"><img src="indonesia (14).JPG" width="75" height="75"></a>
+<a href="indonesia (15).JPG" title="Title"><img src="indonesia (15).JPG" width="75" height="75"></a>
+<a href="indonesia (16).JPG" title="Title"><img src="indonesia (16).JPG" width="75" height="75"></a>
 
 
+	
 
-
-</ul>
 </div>
+
+
 
 
   
@@ -74,11 +183,7 @@
 
 </center>
 
-<script type="text/javascript">
-$(function() {
-    $('#thumbnails a').lightBox();
-});
-</script>
+
 
 
 </body>
