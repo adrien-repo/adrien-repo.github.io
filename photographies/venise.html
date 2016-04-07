@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#3F51B5">
+<title>Photographies</title>
+<meta name="mobile-web-app-capable" content="yes">
+<!-- <link rel="icon" sizes="192x192" href="/newsreader/icons/appicon.png"> -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-blue.min.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<!-- Magnific Popup core JS file -->
+<script src="css-js/jquery.magnific-popup.js"></script>
+<!-- Magnific Popup core CSS file -->
+<link rel="stylesheet" href="css-js/magnific-popup.css">
+
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+        $('.image-popup-vertical-fit').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          mainClass: 'mfp-img-mobile',
+          image: {
+            verticalFit: true
+          }
+          
+        });
+        $('.image-popup-fit-width').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          image: {
+            verticalFit: false
+          }
+        });
+        $('.image-popup-no-margins').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          closeBtnInside: false,
+          fixedContentPos: true,
+          mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
+          image: {
+            verticalFit: true
+          },
+          zoom: {
+            enabled: true,
+            duration: 300 // don't foget to change the duration also in CSS
+          }
+        });
+      });
+    </script>
+    <style type="text/css">
+    /* padding-bottom and top for image */
+    .mfp-no-margins img.mfp-img {
+      padding: 0;
+    }
+    /* position of shadow behind the image */
+    .mfp-no-margins .mfp-figure:after {
+      top: 0;
+      bottom: 0;
+    }
+    /* padding for main container */
+    .mfp-no-margins .mfp-container {
+      padding: 0;
+    }
+    /* 
+    for zoom animation 
+    uncomment this part if you haven't added this code anywhere else
+    */
+    /*
+    
+    .mfp-with-zoom .mfp-container,
+    .mfp-with-zoom.mfp-bg {
+      opacity: 0;
+      -webkit-backface-visibility: hidden;
+      -webkit-transition: all 0.3s ease-out; 
+      -moz-transition: all 0.3s ease-out; 
+      -o-transition: all 0.3s ease-out; 
+      transition: all 0.3s ease-out;
+    }
+    
+    .mfp-with-zoom.mfp-ready .mfp-container {
+        opacity: 1;
+    }
+    .mfp-with-zoom.mfp-ready.mfp-bg {
+        opacity: 0.8;
+    }
+    
+    .mfp-with-zoom.mfp-removing .mfp-container, 
+    .mfp-with-zoom.mfp-removing.mfp-bg {
+      opacity: 0;
+    }
+    */
+    </style>
+
+	 <script type="text/javascript">
+      $(document).ready(function() {
+        $('.popup-gallery').magnificPopup({
+          delegate: 'a',
+          type: 'image',
+          tLoading: 'Loading image #%curr%...',
+          mainClass: 'mfp-img-mobile',
+          gallery: {
+            enabled: true,
+            navigateByImgClick: true,
+            preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+          },
+          image: {
+            tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+            titleSrc: function(item) {
+              return item.el.attr('title');
+            }
+          }
+        });
+      });
+    </script>
+	
+</head>
+<body ng-app="BlankApp" ng-cloak>
+
+<center>
+<br>
+
+<div class="row">
+<div class="col-sm-12">
+
+<span class="mdl-layout-title">Venice</span><div class="mdl-layout-spacer"><br>2011<br></div>
+<br>
+<br>
+
+
+<div class="demo-container mdl-grid">
+<div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+<div class="demo-content mdl-color--white mdl-shadow--0dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+
+<div class="popup-gallery">
+<a href="venise (01).jpg" title="Title"><img src="venise (01).jpg" width="75" height="75"></a>
+<a href="venise (02).jpg" title="Title"><img src="venise (02).jpg" width="75" height="75"></a>
+<a href="venise (03).jpg" title="Title"><img src="venise (03).jpg" width="75" height="75"></a>
+<a href="venise (04).jpg" title="Title"><img src="venise (04).jpg" width="75" height="75"></a>
+<a href="venise (05).jpg" title="Title"><img src="venise (05).jpg" width="75" height="75"></a>
+<a href="venise (06).jpg" title="Title"><img src="venise (06).jpg" width="75" height="75"></a>
+<a href="venise (07).jpg" title="Title"><img src="venise (07).jpg" width="75" height="75"></a>
+<a href="venise (08).jpg" title="Title"><img src="venise (08).jpg" width="75" height="75"></a>
+<a href="venise (09).jpg" title="Title"><img src="venise (09).jpg" width="75" height="75"></a>
+<a href="venise (10).jpg" title="Title"><img src="venise (10).jpg" width="75" height="75"></a>
+<a href="venise (11).jpg" title="Title"><img src="venise (11).jpg" width="75" height="75"></a>
+<a href="venise (12).jpg" title="Title"><img src="venise (12).jpg" width="75" height="75"></a>
+<a href="venise (13).jpg" title="Title"><img src="venise (13).jpg" width="75" height="75"></a>
+<a href="venise (14).jpg" title="Title"><img src="venise (14).jpg" width="75" height="75"></a>
+<a href="venise (15).jpg" title="Title"><img src="venise (15).jpg" width="75" height="75"></a>
+<a href="venise (16).jpg" title="Title"><img src="venise (16).jpg" width="75" height="75"></a>
+<a href="venise (17).jpg" title="Title"><img src="venise (17).jpg" width="75" height="75"></a>
+<a href="venise (18).jpg" title="Title"><img src="venise (18).jpg" width="75" height="75"></a>
+<a href="venise (19).jpg" title="Title"><img src="venise (19).jpg" width="75" height="75"></a>
+<a href="venise (20).jpg" title="Title"><img src="venise (20).jpg" width="75" height="75"></a>
+<a href="venise (21).jpg" title="Title"><img src="venise (21).jpg" width="75" height="75"></a>
+<a href="venise (22).jpg" title="Title"><img src="venise (22).jpg" width="75" height="75"></a>
+<a href="venise (23).jpg" title="Title"><img src="venise (23).jpg" width="75" height="75"></a>
+<a href="venise (24).jpg" title="Title"><img src="venise (24).jpg" width="75" height="75"></a>
+<a href="venise (25).jpg" title="Title"><img src="venise (25).jpg" width="75" height="75"></a>
+<a href="venise (26).jpg" title="Title"><img src="venise (26).jpg" width="75" height="75"></a>
+<a href="venise (27).jpg" title="Title"><img src="venise (27).jpg" width="75" height="75"></a>
+<a href="venise (28).jpg" title="Title"><img src="venise (28).jpg" width="75" height="75"></a>
+<a href="venise (29).jpg" title="Title"><img src="venise (29).jpg" width="75" height="75"></a>
+<a href="venise (30).jpg" title="Title"><img src="venise (30).jpg" width="75" height="75"></a>
+<a href="venise (31).jpg" title="Title"><img src="venise (31).jpg" width="75" height="75"></a>
+<a href="venise (32).jpg" title="Title"><img src="venise (32).jpg" width="75" height="75"></a>
+<a href="venise (33).jpg" title="Title"><img src="venise (33).jpg" width="75" height="75"></a>
+<a href="venise (34).jpg" title="Title"><img src="venise (34).jpg" width="75" height="75"></a>
+<a href="venise (35).jpg" title="Title"><img src="venise (35).jpg" width="75" height="75"></a>
+<a href="venise (36).jpg" title="Title"><img src="venise (36).jpg" width="75" height="75"></a>
+<a href="venise (37).jpg" title="Title"><img src="venise (37).jpg" width="75" height="75"></a>
+<a href="venise (38).jpg" title="Title"><img src="venise (38).jpg" width="75" height="75"></a>
+<a href="venise (39).jpg" title="Title"><img src="venise (39).jpg" width="75" height="75"></a>
+<a href="venise (40).jpg" title="Title"><img src="venise (40).jpg" width="75" height="75"></a>
+<a href="venise (41).jpg" title="Title"><img src="venise (41).jpg" width="75" height="75"></a>
+<a href="venise (42).jpg" title="Title"><img src="venise (42).jpg" width="75" height="75"></a>
+<a href="venise (43).jpg" title="Title"><img src="venise (43).jpg" width="75" height="75"></a>
+<a href="venise (44).jpg" title="Title"><img src="venise (44).jpg" width="75" height="75"></a>
+<a href="venise (45).jpg" title="Title"><img src="venise (45).jpg" width="75" height="75"></a>
+<a href="venise (46).jpg" title="Title"><img src="venise (46).jpg" width="75" height="75"></a>
+<a href="venise (47).jpg" title="Title"><img src="venise (47).jpg" width="75" height="75"></a>
+<a href="venise (48).jpg" title="Title"><img src="venise (48).jpg" width="75" height="75"></a>
+<a href="venise (49).jpg" title="Title"><img src="venise (49).jpg" width="75" height="75"></a>
+<a href="venise (50).jpg" title="Title"><img src="venise (50).jpg" width="75" height="75"></a>
+<a href="venise (51).jpg" title="Title"><img src="venise (51).jpg" width="75" height="75"></a>
+<a href="venise (52).jpg" title="Title"><img src="venise (52).jpg" width="75" height="75"></a>
+<a href="venise (53).jpg" title="Title"><img src="venise (53).jpg" width="75" height="75"></a>
+<a href="venise (54).jpg" title="Title"><img src="venise (54).jpg" width="75" height="75"></a>
+<a href="venise (55).jpg" title="Title"><img src="venise (55).jpg" width="75" height="75"></a>
+<a href="venise (56).jpg" title="Title"><img src="venise (56).jpg" width="75" height="75"></a>
+<a href="venise (57).jpg" title="Title"><img src="venise (57).jpg" width="75" height="75"></a>
+<a href="venise (58).jpg" title="Title"><img src="venise (58).jpg" width="75" height="75"></a>
+<a href="venise (59).jpg" title="Title"><img src="venise (59).jpg" width="75" height="75"></a>
+<a href="venise (60).jpg" title="Title"><img src="venise (60).jpg" width="75" height="75"></a>
+<a href="venise (61).jpg" title="Title"><img src="venise (61).jpg" width="75" height="75"></a>
+<a href="venise (62).jpg" title="Title"><img src="venise (62).jpg" width="75" height="75"></a>
+<a href="venise (63).jpg" title="Title"><img src="venise (63).jpg" width="75" height="75"></a>
+<a href="venise (64).jpg" title="Title"><img src="venise (64).jpg" width="75" height="75"></a>
+<a href="venise (65).jpg" title="Title"><img src="venise (65).jpg" width="75" height="75"></a>
+<a href="venise (66).jpg" title="Title"><img src="venise (66).jpg" width="75" height="75"></a>
+<a href="venise (67).jpg" title="Title"><img src="venise (67).jpg" width="75" height="75"></a>
+<a href="venise (68).jpg" title="Title"><img src="venise (68).jpg" width="75" height="75"></a>
+<a href="venise (69).jpg" title="Title"><img src="venise (69).jpg" width="75" height="75"></a>
+<a href="venise (70).jpg" title="Title"><img src="venise (70).jpg" width="75" height="75"></a>
+<a href="venise (71).jpg" title="Title"><img src="venise (71).jpg" width="75" height="75"></a>
+<a href="venise (72).jpg" title="Title"><img src="venise (72).jpg" width="75" height="75"></a>
+<a href="venise (73).jpg" title="Title"><img src="venise (73).jpg" width="75" height="75"></a>
+<a href="venise (74).jpg" title="Title"><img src="venise (74).jpg" width="75" height="75"></a>
+<a href="venise (75).jpg" title="Title"><img src="venise (75).jpg" width="75" height="75"></a>
+<a href="venise (76).jpg" title="Title"><img src="venise (76).jpg" width="75" height="75"></a>
+<a href="venise (77).jpg" title="Title"><img src="venise (77).jpg" width="75" height="75"></a>
+<a href="venise (78).jpg" title="Title"><img src="venise (78).jpg" width="75" height="75"></a>
+<a href="venise (79).jpg" title="Title"><img src="venise (79).jpg" width="75" height="75"></a>
+<a href="venise (80).jpg" title="Title"><img src="venise (80).jpg" width="75" height="75"></a>
+<a href="venise (81).jpg" title="Title"><img src="venise (81).jpg" width="75" height="75"></a>
+<a href="venise (82).jpg" title="Title"><img src="venise (82).jpg" width="75" height="75"></a>
+<a href="venise (83).jpg" title="Title"><img src="venise (83).jpg" width="75" height="75"></a>
+<a href="venise (84).jpg" title="Title"><img src="venise (84).jpg" width="75" height="75"></a>
+<a href="venise (85).jpg" title="Title"><img src="venise (85).jpg" width="75" height="75"></a>
+<a href="venise (86).jpg" title="Title"><img src="venise (86).jpg" width="75" height="75"></a>
+<a href="venise (87).jpg" title="Title"><img src="venise (87).jpg" width="75" height="75"></a>
+<a href="venise (88).jpg" title="Title"><img src="venise (88).jpg" width="75" height="75"></a>
+<a href="venise (89).jpg" title="Title"><img src="venise (89).jpg" width="75" height="75"></a>
+
+	
+
+</div>
+
+
+
+
+  
+  
+  </div>
+</div>
+</div>
+
+  
+  
+</div>
+
+</center>
+
+
+
+
+</body>
+</html>
