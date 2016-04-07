@@ -59,41 +59,41 @@ for(var li=0; li<8; li++)
 		if (testvalue == -value_rook)
 		{
 		var imageObj = new Image();
-		imageObj.onload = function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};}
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
                 imageObj.src = Brook;
 		}
 		if (testvalue == -value_knight)
 		{
 		var imageObj = new Image();
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
 imageObj.src = Bknight;
 		}
 		if (testvalue == -value_bishop)
 		{
 		var imageObj = new Image();
 		
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
 imageObj.src = Bbishop;
 		}
 		if (testvalue == -value_queen)
 		{
 		var imageObj = new Image();
 		
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
 imageObj.src = Bqueen;
 		}
 		if (testvalue == -value_king)
 		{
 		var imageObj = new Image();
 		
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
 imageObj.src = Bking;
 		}
 		if (testvalue == -value_pawn)
 		{
 		var imageObj = new Image();
 		
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
 imageObj.src = Bpawn;
 		}
 		
@@ -101,42 +101,42 @@ imageObj.src = Bpawn;
 		{
 		var imageObj = new Image();
 		
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
 imageObj.src = Wrook;
 		}
 		if (testvalue == value_knight)
 		{
 		var imageObj = new Image();
 		
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
 imageObj.src = Wknight;
 		}
 		if (testvalue == value_bishop)
 		{
 		var imageObj = new Image();
 		
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
 imageObj.src = Wbishop;
 		}
 		if (testvalue == value_queen)
 		{
 		var imageObj = new Image();
 		
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
 imageObj.src = Wqueen;
 		}
 		if (testvalue == value_king)
 		{
 		var imageObj = new Image();
 		
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
 imageObj.src = Wking;
 		}
 		if (testvalue == value_pawn)
 		{
 		var imageObj = new Image();
 		
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};})(co+100*li)
 imageObj.src = Wpawn;
 		}
 		
