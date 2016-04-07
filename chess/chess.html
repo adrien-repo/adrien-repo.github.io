@@ -65,35 +65,35 @@ for(var myli=0; myli<8; myli++)
 		if (testvalue == -value_knight)
 		{
 		var imageObj = new Image();
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
 imageObj.src = Bknight;
 		}
 		if (testvalue == -value_bishop)
 		{
 		var imageObj = new Image();
 		
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
 imageObj.src = Bbishop;
 		}
 		if (testvalue == -value_queen)
 		{
 		var imageObj = new Image();
 		
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
 imageObj.src = Bqueen;
 		}
 		if (testvalue == -value_king)
 		{
 		var imageObj = new Image();
 		
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
 imageObj.src = Bking;
 		}
 		if (testvalue == -value_pawn)
 		{
 		var imageObj = new Image();
 		
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
 imageObj.src = Bpawn;
 		}
 		
@@ -101,42 +101,42 @@ imageObj.src = Bpawn;
 		{
 		var imageObj = new Image();
 		
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
 imageObj.src = Wrook;
 		}
 		if (testvalue == value_knight)
 		{
 		var imageObj = new Image();
 		
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
 imageObj.src = Wknight;
 		}
 		if (testvalue == value_bishop)
 		{
 		var imageObj = new Image();
 		
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
 imageObj.src = Wbishop;
 		}
 		if (testvalue == value_queen)
 		{
 		var imageObj = new Image();
 		
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
 imageObj.src = Wqueen;
 		}
 		if (testvalue == value_king)
 		{
 		var imageObj = new Image();
 		
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
 imageObj.src = Wking;
 		}
 		if (testvalue == value_pawn)
 		{
 		var imageObj = new Image();
 		
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
 imageObj.src = Wpawn;
 		}
 		
