@@ -47,8 +47,6 @@ var cellsize = 25
 <script>
 function drawmaterial()
 {
-
-{
 var canvas = document.getElementById('myBoard');
 var context = canvas.getContext('2d');
 
@@ -58,6 +56,7 @@ for(var li=0; li<8; li++)
 	for(var co=0; co<8; co++) 
 	{
 	testvalue = matrix[co][li]
+	alert(co+'-'+li)
 		if (testvalue == -value_rook)
 		{
 		var imageObj = new Image();
@@ -148,7 +147,7 @@ imageObj.src = Wpawn;
 		
 	}		
 
-}
+
 </script>
 	
 <script>
