@@ -59,7 +59,7 @@ for(var myli=0; myli<8; myli++)
 		if (testvalue == -value_rook)
 		{
 		var imageObj = new Image();
-		imageObj.onload = (function() { return function(){context.drawImage(this, xboard+myli*cellsize, yboard+myco*cellsize, cellsize, cellsize);};})(myco+100*myli)
+		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
                 imageObj.src = Brook;
 		}
 		if (testvalue == -value_knight)
