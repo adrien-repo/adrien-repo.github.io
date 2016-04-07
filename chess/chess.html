@@ -168,9 +168,9 @@ for(var li=0; li<8; li++)
 	testvalue = matrix[co][li]
 		if (testvalue == -value_rook)
 		{
-		var imageObj1 = new Image();
-		imageObj1.onload = function(){context.drawImage(imageObj1, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};
-                imageObj1.src = Brook;
+		var imageObj = new Image();
+		imageObj.onload = function(){context.drawImage(this, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};
+                imageObj.src = Brook;
 		}
 		if (testvalue == -value_knight)
 		{
