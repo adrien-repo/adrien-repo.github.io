@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#3F51B5">
+<title>Chess AI</title>
+<meta name="mobile-web-app-capable" content="yes">
+<!-- <link rel="icon" sizes="192x192" href="/icons/appicon.png"> -->
+<!-- Angular Material style sheet -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!-- https://design.google.com/icons/ -->
+<link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-blue.min.css">
+<script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+</head>
+<body ng-app="BlankApp" ng-cloak>
+
+<script>
+var xboard = 20
+var yboard = 20
+var cellsize = 25
+</script>
+
+<!-- board material -->	
+<div  style="display:none;">
+<img id="Bbishop" src="B-bishop.svg">
+<img id="Bking" src="B-king.svg">
+<img id="Bknight" src="B-knight.svg">
+<img id="Bpawn" src="B-pawn.svg">
+<img id="Bqueen" src="B-queen.svg">
+<img id="Brook" src="B-rook.svg">
+<img id="Wbishop" src="W-bishop.svg">
+<img id="Wking" src="W-king.svg">
+<img id="Wknight" src="W-knight.svg">
+<img id="Wpawn" src="W-pawn.svg">
+<img id="Wqueen" src="W-queen.svg">
+<img id="Wrook" src="W-rook.svg">
+</div>
+
+<!-- board -->
+<canvas id="myBoard" width=300 height=300></canvas>
+	
+
+	
+<script>
+
+// Draw board by blocks of 4
+var canvas = document.getElementById('myBoard');
+var context = canvas.getContext('2d');
+var whitecell = '#ffffff'
+var blackcell = '#e6e6e6'
+var blackborder = '#000000'
+var xboard = 20
+var yboard = 20
+var cellsize = 30
+for (li = 0; li < 4; li++) 
+{ 
+for (co = 0; co < 4; co++)
+{
+context.beginPath();
+context.rect(xboard+li*2*cellsize, yboard+co*2*cellsize, cellsize, cellsize);
+context.fillStyle = whitecell;
+context.fill();
+context.lineWidth = 1;
+context.strokeStyle = blackborder;
+context.stroke();
+context.beginPath();
+context.rect(xboard+(li*2+1)*cellsize, yboard+co*2*cellsize, cellsize, cellsize);
+context.fillStyle = blackcell;
+context.fill();
+context.lineWidth = 1;
+context.strokeStyle = blackborder;
+context.stroke();
+context.beginPath();
+context.rect(xboard+li*2*cellsize, yboard+(co*2+1)*cellsize, cellsize, cellsize);
+context.fillStyle = blackcell;
+context.fill();
+context.lineWidth = 1;
+context.strokeStyle = blackborder;
+context.stroke();
+context.beginPath();
+context.rect(xboard+(li*2+1)*cellsize, yboard+(co*2+1)*cellsize, cellsize, cellsize);
+context.fillStyle = whitecell;
+context.fill();
+context.lineWidth = 1;
+context.strokeStyle = blackborder;
+context.stroke();
+}
+}
+// Load material
+var Bbishop = document.getElementById("Bbishop").src;
+var Bking = document.getElementById("Bking").src;
+var Bknight = document.getElementById("Bknight").src;
+var Bpawn = document.getElementById("Bpawn").src;
+var Bqueen = document.getElementById("Bqueen").src;
+var Brook = document.getElementById("Brook").src;
+var Wbishop = document.getElementById("Wbishop").src;
+var Wking = document.getElementById("Wking").src;
+var Wknight = document.getElementById("Wknight").src;
+var Wpawn = document.getElementById("Wpawn").src;
+var Wqueen = document.getElementById("Wqueen").src;
+var Wrook = document.getElementById("Wrook").src;
+
+
+// Init matrix
+var matrix = new Array(8);
+for(var i=0; i<8; i++) 
+	{
+	matrix[i] = new Array(8);
+	}
+
+// init board
+// 9 queen, 5 rook, knight 3.1, bishop 3, pawn 1, king 50
+value_queen = 9
+value_rook = 5
+value_knight = 3.1
+value_bishop = 3
+value_pawn = 1
+value_king = 50
+
+
+// -1 for black, 1 for white
+matrix[0][0] = -value_rook
+matrix[0][1] = -value_knight
+matrix[0][2] = -value_bishop
+matrix[0][3] = -value_queen
+matrix[0][4] = -value_king
+matrix[0][5] = -value_bishop
+matrix[0][6] = -value_knight
+matrix[0][7] = -value_rook
+matrix[1][0] = -value_pawn
+matrix[1][1] = -value_pawn
+matrix[1][2] = -value_pawn
+matrix[1][3] = -value_pawn
+matrix[1][4] = -value_pawn
+matrix[1][5] = -value_pawn
+matrix[1][6] = -value_pawn
+matrix[1][7] = -value_pawn
+
+matrix[7][0] = value_rook
+matrix[7][1] = value_knight
+matrix[7][2] = value_bishop
+matrix[7][3] = value_queen
+matrix[7][4] = value_king
+matrix[7][5] = value_bishop
+matrix[7][6] = value_knight
+matrix[7][7] = value_rook
+matrix[6][0] = value_pawn
+matrix[6][1] = value_pawn
+matrix[6][2] = value_pawn
+matrix[6][3] = value_pawn
+matrix[6][4] = value_pawn
+matrix[6][5] = value_pawn
+matrix[6][6] = value_pawn
+matrix[6][7] = value_pawn
+
+//Render grid
+
+
+for(var li=0; li<8; li++) 
+{
+	for(var co=0; co<8; co++) 
+	{
+	testvalue = matrix[co][li]
+		if (testvalue == -value_rook)
+		{
+		var imageObj = new Image();
+		imageObj.src = Brook;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		if (testvalue == -value_knight)
+		{
+		var imageObj = new Image();
+		imageObj.src = Bknight;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		if (testvalue == -value_bishop)
+		{
+		var imageObj = new Image();
+		imageObj.src = Bbishop;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		if (testvalue == -value_queen)
+		{
+		var imageObj = new Image();
+		imageObj.src = Bqueen;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		if (testvalue == -value_king)
+		{
+		var imageObj = new Image();
+		imageObj.src = Bking;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		if (testvalue == -value_pawn)
+		{
+		var imageObj = new Image();
+		imageObj.src = Bpawn;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		
+		if (testvalue == value_rook)
+		{
+		var imageObj = new Image();
+		imageObj.src = Wrook;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		if (testvalue == value_knight)
+		{
+		var imageObj = new Image();
+		imageObj.src = Wknight;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		if (testvalue == value_bishop)
+		{
+		var imageObj = new Image();
+		imageObj.src = Wbishop;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		if (testvalue == value_queen)
+		{
+		var imageObj = new Image();
+		imageObj.src = Wqueen;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		if (testvalue == value_king)
+		{
+		var imageObj = new Image();
+		imageObj.src = Wking;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		if (testvalue == value_pawn)
+		{
+		var imageObj = new Image();
+		imageObj.src = Wpawn;
+		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		}
+		
+	}
+}
+
+
+
+</script>
+
+
+
+</body>
+</html>
