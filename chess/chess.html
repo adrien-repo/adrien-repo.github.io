@@ -169,7 +169,7 @@ for(var li=0; li<8; li++)
 		if (testvalue == -value_rook)
 		{
 		var imageObj = new Image();
-		context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);
+		imageObj.onload = function(){context.drawImage(imageObj, xboard+li*cellsize, yboard+co*cellsize, cellsize, cellsize);};
                 imageObj.src = Brook;
 		}
 		if (testvalue == -value_knight)
