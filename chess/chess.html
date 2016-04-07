@@ -160,9 +160,21 @@ matrix[6][7] = value_pawn
 
 //Render grid
 
+drawmaterial()
+
+
+
+</script>
+<script>
+	drawmaterial()
+	{
+
+var canvas = document.getElementById('myBoard');
+var context = canvas.getContext('2d');
 
 for(var li=0; li<8; li++) 
 {
+	
 	for(var co=0; co<8; co++) 
 	{
 	testvalue = matrix[co][li]
@@ -252,11 +264,10 @@ imageObj.src = Wpawn;
 		
 	}
 }
-
-
-
+		
+		
+	}
 </script>
-
 
 
 </body>
