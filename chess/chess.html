@@ -49,7 +49,6 @@ function drawmaterial()
 {
 var canvas = document.getElementById('myBoard');
 var context = canvas.getContext('2d');
-
 for(var myli=0; myli<8; myli++) 
 {
 	
@@ -66,91 +65,74 @@ for(var myli=0; myli<8; myli++)
 		{
 		var imageObj = new Image();
 		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
-imageObj.src = Bknight;
+		imageObj.src = Bknight;
 		}
 		if (testvalue == -value_bishop)
 		{
 		var imageObj = new Image();
-		
 		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
-imageObj.src = Bbishop;
+		imageObj.src = Bbishop;
 		}
 		if (testvalue == -value_queen)
 		{
 		var imageObj = new Image();
-		
 		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
-imageObj.src = Bqueen;
+		imageObj.src = Bqueen;
 		}
 		if (testvalue == -value_king)
 		{
 		var imageObj = new Image();
-		
 		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
-imageObj.src = Bking;
+		imageObj.src = Bking;
 		}
 		if (testvalue == -value_pawn)
 		{
 		var imageObj = new Image();
-		
 		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
-imageObj.src = Bpawn;
+		imageObj.src = Bpawn;
 		}
-		
 		if (testvalue == value_rook)
 		{
 		var imageObj = new Image();
-		
 		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
-imageObj.src = Wrook;
+		imageObj.src = Wrook;
 		}
 		if (testvalue == value_knight)
 		{
 		var imageObj = new Image();
-		
 		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
-imageObj.src = Wknight;
+		imageObj.src = Wknight;
 		}
 		if (testvalue == value_bishop)
 		{
 		var imageObj = new Image();
-		
 		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
-imageObj.src = Wbishop;
+		imageObj.src = Wbishop;
 		}
 		if (testvalue == value_queen)
 		{
 		var imageObj = new Image();
-		
 		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
-imageObj.src = Wqueen;
+		imageObj.src = Wqueen;
 		}
 		if (testvalue == value_king)
 		{
 		var imageObj = new Image();
-		
 		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
-imageObj.src = Wking;
+		imageObj.src = Wking;
 		}
 		if (testvalue == value_pawn)
 		{
 		var imageObj = new Image();
-		
 		imageObj.onload = (function() { var xpos = xboard+myli*cellsize; var ypos = yboard+myco*cellsize; return function(){ context.drawImage(this, xpos, ypos, cellsize, cellsize);};})(myco+100*myli)
-imageObj.src = Wpawn;
+		imageObj.src = Wpawn;
 		}
-		
 	}
 }
-		
-		
-	}		
-
-
+}		
 </script>
 	
 <script>
-
 // Draw board by blocks of 4
 var canvas = document.getElementById('myBoard');
 var context = canvas.getContext('2d');
@@ -207,25 +189,19 @@ var Wknight = document.getElementById("Wknight").src;
 var Wpawn = document.getElementById("Wpawn").src;
 var Wqueen = document.getElementById("Wqueen").src;
 var Wrook = document.getElementById("Wrook").src;
-
-
 // Init matrix
 var matrix = new Array(8);
 for(var i=0; i<8; i++) 
 	{
 	matrix[i] = new Array(8);
 	}
-
 // init board
-// 9 queen, 5 rook, knight 3.1, bishop 3, pawn 1, king 50
 value_queen = 9
 value_rook = 5
 value_knight = 3.1
 value_bishop = 3
 value_pawn = 1
 value_king = 50
-
-
 // -1 for black, 1 for white
 matrix[0][0] = -value_rook
 matrix[0][1] = -value_knight
@@ -243,7 +219,6 @@ matrix[1][4] = -value_pawn
 matrix[1][5] = -value_pawn
 matrix[1][6] = -value_pawn
 matrix[1][7] = -value_pawn
-
 matrix[7][0] = value_rook
 matrix[7][1] = value_knight
 matrix[7][2] = value_bishop
@@ -260,12 +235,8 @@ matrix[6][4] = value_pawn
 matrix[6][5] = value_pawn
 matrix[6][6] = value_pawn
 matrix[6][7] = value_pawn
-
 //Render grid
 drawmaterial();
-
-
-
 </script>
 
 </body>
