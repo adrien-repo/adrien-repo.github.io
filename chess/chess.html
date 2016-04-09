@@ -313,16 +313,16 @@ drawmaterial();
 </script>
 
 <script>
-function testfunction()
+function validatemove()
 {
-matrix[1][0] = 0
-matrix[2][0] = -value_pawn
+matrix[stopx][stopy] = matrix[startx][starty]
+matrix[startx][starty] = 0
 drawboard();
 drawmaterial();
 }	
 </script>
-
-<a href="#" onclick=testfunction()>test</a>
+<br>
+<a href="#" onclick=validatemove()>Move</a>
 
 </body>
 </html>
