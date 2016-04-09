@@ -45,6 +45,51 @@ var cellsize = 25
 <canvas id="myBoard" width=300 height=300></canvas>
 	
 <script>
+function drawboard()
+{
+var whitecell = '#ffffff'
+var blackcell = '#e6e6e6'
+var blackborder = '#000000'
+var xboard = 20
+var yboard = 20
+var cellsize = 30
+for (li = 0; li < 4; li++) 
+{ 
+for (co = 0; co < 4; co++)
+{
+context.beginPath();
+context.rect(xboard+li*2*cellsize, yboard+co*2*cellsize, cellsize, cellsize);
+context.fillStyle = whitecell;
+context.fill();
+context.lineWidth = 1;
+context.strokeStyle = blackborder;
+context.stroke();
+context.beginPath();
+context.rect(xboard+(li*2+1)*cellsize, yboard+co*2*cellsize, cellsize, cellsize);
+context.fillStyle = blackcell;
+context.fill();
+context.lineWidth = 1;
+context.strokeStyle = blackborder;
+context.stroke();
+context.beginPath();
+context.rect(xboard+li*2*cellsize, yboard+(co*2+1)*cellsize, cellsize, cellsize);
+context.fillStyle = blackcell;
+context.fill();
+context.lineWidth = 1;
+context.strokeStyle = blackborder;
+context.stroke();
+context.beginPath();
+context.rect(xboard+(li*2+1)*cellsize, yboard+(co*2+1)*cellsize, cellsize, cellsize);
+context.fillStyle = whitecell;
+context.fill();
+context.lineWidth = 1;
+context.strokeStyle = blackborder;
+context.stroke();
+}
+}
+}
+</script>
+<script>
 function drawmaterial()
 {
 var canvas = document.getElementById('myBoard');
@@ -135,46 +180,7 @@ for(var myli=0; myli<8; myli++)
 // Draw board by blocks of 4
 var canvas = document.getElementById('myBoard');
 var context = canvas.getContext('2d');
-var whitecell = '#ffffff'
-var blackcell = '#e6e6e6'
-var blackborder = '#000000'
-var xboard = 20
-var yboard = 20
-var cellsize = 30
-for (li = 0; li < 4; li++) 
-{ 
-for (co = 0; co < 4; co++)
-{
-context.beginPath();
-context.rect(xboard+li*2*cellsize, yboard+co*2*cellsize, cellsize, cellsize);
-context.fillStyle = whitecell;
-context.fill();
-context.lineWidth = 1;
-context.strokeStyle = blackborder;
-context.stroke();
-context.beginPath();
-context.rect(xboard+(li*2+1)*cellsize, yboard+co*2*cellsize, cellsize, cellsize);
-context.fillStyle = blackcell;
-context.fill();
-context.lineWidth = 1;
-context.strokeStyle = blackborder;
-context.stroke();
-context.beginPath();
-context.rect(xboard+li*2*cellsize, yboard+(co*2+1)*cellsize, cellsize, cellsize);
-context.fillStyle = blackcell;
-context.fill();
-context.lineWidth = 1;
-context.strokeStyle = blackborder;
-context.stroke();
-context.beginPath();
-context.rect(xboard+(li*2+1)*cellsize, yboard+(co*2+1)*cellsize, cellsize, cellsize);
-context.fillStyle = whitecell;
-context.fill();
-context.lineWidth = 1;
-context.strokeStyle = blackborder;
-context.stroke();
-}
-}
+
 // Load material
 var Bbishop = document.getElementById("Bbishop").src;
 var Bking = document.getElementById("Bking").src;
@@ -235,6 +241,7 @@ matrix[6][5] = value_pawn
 matrix[6][6] = value_pawn
 matrix[6][7] = value_pawn
 //Render grid
+drawboard();
 drawmaterial();
 </script>
 
@@ -243,6 +250,7 @@ function testfunction()
 {
 matrix[1][0] = 0
 matrix[2][0] = -value_pawn
+drawboard();
 drawmaterial();
 }	
 </script>
