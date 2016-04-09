@@ -89,6 +89,8 @@ var startstop = 1 // 1 for start, -1 for stop
         	stopy = Math.floor((y-yboard)/cellsize)
         	}   
         startstop = startstop * (-1)
+        drawboard();
+	drawmaterial();
       }
 </script>
 
@@ -108,7 +110,7 @@ for (co = 0; co < 4; co++)
 context.beginPath();
 context.rect(xboard+li*2*cellsize, yboard+co*2*cellsize, cellsize, cellsize);
 colorused = whitecell;
-if ((li*2 == xstart) && (co*2 == ystart)) {colorused = selectedcell};
+if ((li*2 == startx) && (co*2 == starty)) {colorused = selectedcell};
 context.fillStyle = colorused;
 context.fill();
 context.lineWidth = 1;
@@ -118,7 +120,7 @@ context.stroke();
 context.beginPath();
 context.rect(xboard+(li*2+1)*cellsize, yboard+co*2*cellsize, cellsize, cellsize);
 colorused = blackcell;
-if ((li*2+1 == xstart) && (co*2 == ystart)) {colorused = selectedcell};
+if ((li*2+1 == startx) && (co*2 == starty)) {colorused = selectedcell};
 context.fillStyle = colorused;
 context.fill();
 context.lineWidth = 1;
@@ -128,7 +130,7 @@ context.stroke();
 context.beginPath();
 context.rect(xboard+li*2*cellsize, yboard+(co*2+1)*cellsize, cellsize, cellsize);
 colorused = blackcell;
-if ((li*2 == xstart) && (co*2+1 == ystart)) {colorused = selectedcell};
+if ((li*2 == startx) && (co*2+1 == starty)) {colorused = selectedcell};
 context.fillStyle = colorused;
 context.fill();
 context.lineWidth = 1;
@@ -138,7 +140,7 @@ context.stroke();
 context.beginPath();
 context.rect(xboard+(li*2+1)*cellsize, yboard+(co*2+1)*cellsize, cellsize, cellsize);
 colorused = whitecell;
-if ((li*2+1 == xstart) && (co*2+1 == ystart)) {colorused = selectedcell};
+if ((li*2+1 == startx) && (co*2+1 == starty)) {colorused = selectedcell};
 context.fillStyle = colorused;
 context.fill();
 context.lineWidth = 1;
