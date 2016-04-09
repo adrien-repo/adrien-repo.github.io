@@ -173,11 +173,10 @@ for(var myli=0; myli<8; myli++)
 </script>
 	
 <script>
-// Draw board by blocks of 4
+// Load canvas
 var canvas = document.getElementById('myBoard');
 var context = canvas.getContext('2d');
-
-// Load material
+// Load material picture sources
 var Bbishop = document.getElementById("Bbishop").src;
 var Bking = document.getElementById("Bking").src;
 var Bknight = document.getElementById("Bknight").src;
@@ -196,7 +195,7 @@ for(var i=0; i<8; i++)
 	{
 	matrix[i] = new Array(8);
 	}
-// init board
+// init board start places
 value_queen = 9
 value_rook = 5
 value_knight = 3.1
@@ -236,7 +235,7 @@ matrix[6][4] = value_pawn
 matrix[6][5] = value_pawn
 matrix[6][6] = value_pawn
 matrix[6][7] = value_pawn
-//Render grid
+//Render start state
 drawboard();
 drawmaterial();
 </script>
