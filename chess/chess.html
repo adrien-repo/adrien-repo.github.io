@@ -77,13 +77,12 @@ var startstop = 1 // 1 for start, -1 for stop
         }
         x -= canvas.offsetLeft;
         y -= canvas.offsetTop;
-        alert("x: " + Math.floor((x-xboard)/cellsize) + "  y: " + Math.floor((y-yboard)/cellsize));
-        if (startstop = 1)
+        if (startstop == 1)
         	{
         	startx = Math.floor((x-xboard)/cellsize)
         	starty = Math.floor((y-yboard)/cellsize)
         	}
-        if (startstop = -1)
+        if (startstop == -1)
         	{
         	stopx = Math.floor((x-xboard)/cellsize)
         	stopy = Math.floor((y-yboard)/cellsize)
