@@ -24,6 +24,14 @@ var xboard = 20
 var yboard = 20
 var cellsize = 30
 </script>
+<script>
+// mouse coordinates for move, between 0 and 7 (init at -1 when not displayed) 
+var startx = -1
+var starty = -1
+var stopx = -1
+var stopy = -1
+var startstop = 1 // 1 for start, -1 for stop
+</script>
 <!-- board material -->	
 <div  style="display:none;">
 <img id="Bbishop" src="B-bishop.svg">
@@ -70,6 +78,17 @@ var cellsize = 30
         x -= canvas.offsetLeft;
         y -= canvas.offsetTop;
         alert("x: " + Math.floor((x-xboard)/cellsize) + "  y: " + Math.floor((y-yboard)/cellsize));
+        if (startstop = 1)
+        	{
+        	startx = Math.floor((x-xboard)/cellsize)
+        	starty = Math.floor((y-yboard)/cellsize)
+        	}
+        if (startstop = -1)
+        	{
+        	stopx = Math.floor((x-xboard)/cellsize)
+        	stopy = Math.floor((y-yboard)/cellsize)
+        	}   
+        startstop = startstop * (-1)
       }
 </script>
 
@@ -79,35 +98,48 @@ function drawboard()
 {
 var whitecell = '#ffffff'
 var blackcell = '#e6e6e6'
+var selectedcell = '#ffffb3'
 var blackborder = '#000000'
+var colorused = ''
 for (li = 0; li < 4; li++) 
 { 
 for (co = 0; co < 4; co++)
 {
 context.beginPath();
 context.rect(xboard+li*2*cellsize, yboard+co*2*cellsize, cellsize, cellsize);
-context.fillStyle = whitecell;
+colorused = whitecell;
+if ((li*2 == xstart) && (co*2 == ystart)) {colorused = selectedcell};
+context.fillStyle = colorused;
 context.fill();
 context.lineWidth = 1;
 context.strokeStyle = blackborder;
 context.stroke();
+
 context.beginPath();
 context.rect(xboard+(li*2+1)*cellsize, yboard+co*2*cellsize, cellsize, cellsize);
-context.fillStyle = blackcell;
+colorused = blackcell;
+if ((li*2+1 == xstart) && (co*2 == ystart)) {colorused = selectedcell};
+context.fillStyle = colorused;
 context.fill();
 context.lineWidth = 1;
 context.strokeStyle = blackborder;
 context.stroke();
+
 context.beginPath();
 context.rect(xboard+li*2*cellsize, yboard+(co*2+1)*cellsize, cellsize, cellsize);
-context.fillStyle = blackcell;
+colorused = blackcell;
+if ((li*2 == xstart) && (co*2+1 == ystart)) {colorused = selectedcell};
+context.fillStyle = colorused;
 context.fill();
 context.lineWidth = 1;
 context.strokeStyle = blackborder;
 context.stroke();
+
 context.beginPath();
 context.rect(xboard+(li*2+1)*cellsize, yboard+(co*2+1)*cellsize, cellsize, cellsize);
-context.fillStyle = whitecell;
+colorused = whitecell;
+if ((li*2+1 == xstart) && (co*2+1 == ystart)) {colorused = selectedcell};
+context.fillStyle = colorused;
 context.fill();
 context.lineWidth = 1;
 context.strokeStyle = blackborder;
