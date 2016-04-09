@@ -19,6 +19,11 @@
 </head>
 <body ng-app="BlankApp" ng-cloak>
 
+<script>
+var xboard = 20
+var yboard = 20
+var cellsize = 30
+</script>
 <!-- board material -->	
 <div  style="display:none;">
 <img id="Bbishop" src="B-bishop.svg">
@@ -44,9 +49,6 @@ function drawboard()
 var whitecell = '#ffffff'
 var blackcell = '#e6e6e6'
 var blackborder = '#000000'
-var xboard = 20
-var yboard = 20
-var cellsize = 30
 for (li = 0; li < 4; li++) 
 { 
 for (co = 0; co < 4; co++)
