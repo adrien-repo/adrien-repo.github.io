@@ -16,13 +16,21 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-<!-- for bottom chart -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<!-- for bottom chart / stats -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <style>
 body {margin: 20px; line-height: 100%;}
 </style>
 <body ng-app="BlankApp" ng-cloak>
+
+<script>
+$( "#showhidestats" ).click(function() {
+$( "#chart_div" ).toggle();
+});
+
+</script>
 
 <script>
 var xboard = 2
@@ -57,9 +65,10 @@ var startstop = 1 // 1 for start, -1 for stop
 <canvas id="myBoard" width=300 height=270></canvas>
 <p>
 <button class="mdl-button mdl-js-button mdl-button--raised" onclick="validatemove()">Move</button>
+<button class="mdl-button mdl-js-button mdl-button--raised" onclick="showhidestats() id="showhidestats">Stats</button>
 </p><!-- chart -->
 <p>
-<div id="chart_div"></div>
+<div id="chart_div" style="display: none;"></div>
 </p>
 
 <script>
@@ -70,7 +79,7 @@ var mydata = [['Turn', 'Rank'],[0, 0],];
 function drawChart() 
 {
 var data = google.visualization.arrayToDataTable(mydata, false); // 'false' means that the first row contains labels, not data.
-var options = {pointSize: 5, colors: ['black'], width: 260, height: 175, legend: 'none', chartArea: {'width': '80%', 'height': '80%'},vAxis: {format:'#'}, hAxis: {format:'#'}};
+var options = {pointSize: 5, colors: ['black'], width: 260, height: 270, legend: 'none', chartArea: {'width': '80%', 'height': '80%'},vAxis: {format:'#'}, hAxis: {format:'#'}};
 var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 chart.draw(data, options);
 };
