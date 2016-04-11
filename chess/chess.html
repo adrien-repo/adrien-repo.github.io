@@ -16,6 +16,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+<!-- for bottom chart -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <style>
 body {margin: 20px}
@@ -53,6 +55,26 @@ var startstop = 1 // 1 for start, -1 for stop
 
 <!-- board -->
 <canvas id="myBoard" width=300 height=300></canvas>
+<br>
+<button class="mdl-button mdl-js-button mdl-button--raised" onclick="validatemove()">Move</button>
+<!-- chart -->
+<br>
+<div id="chart_div"></div>
+
+<script>
+google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawChart);
+var myturn = 1
+var mydata = [['Turn', 'Rank'],[0, 0],];
+function drawChart() 
+{
+var data = google.visualization.arrayToDataTable(mydata, false); // 'false' means that the first row contains labels, not data.
+var options = {pointSize: 5, colors: ['black'], width: 300, height: 175, legend: 'none', chartArea: {'width': '80%', 'height': '80%'},vAxis: {format:'#'}, hAxis: {format:'#'}};
+var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+chart.draw(data, options);
+};
+</script>
+
 
 <script>
       document.addEventListener("DOMContentLoaded", init, false);
@@ -322,9 +344,11 @@ matrix[stopy][stopx] = matrix[starty][startx]
 matrix[starty][startx] = 0
 drawboard();
 drawmaterial();
+mydata.push([myturn,sum(matrix)])
+myturn=myturn+1
+drawChart();
 }	
 </script>
-<br>
-<button class="mdl-button mdl-js-button mdl-button--raised" onclick="validatemove()">Move</button>
+
 </body>
 </html>
