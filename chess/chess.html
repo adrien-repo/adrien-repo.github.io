@@ -57,7 +57,9 @@ var startstop = 1 // 1 for start, -1 for stop
 </div>
 
 <!-- board -->
+<div id="board_div">
 <canvas id="myBoard" width=300 height=270></canvas>
+</div>
 <!-- chart -->
 <div id="chart_div" style="display:none;"></div>
 <p>
@@ -68,7 +70,7 @@ var startstop = 1 // 1 for start, -1 for stop
 <script>
 $( "#showhidestats" ).click(function() {
 $( "#chart_div" ).toggle();
-$( "#myboard" ).toggle();
+$( "#board_div" ).toggle();
 
 });
 </script>
