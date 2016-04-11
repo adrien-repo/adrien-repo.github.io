@@ -25,12 +25,7 @@ body {margin: 20px; line-height: 100%;}
 </style>
 <body ng-app="BlankApp" ng-cloak>
 
-<script>
-$( "#showhidestats" ).click(function() {
-$( "#chart_div" ).toggle();
-});
 
-</script>
 
 <script>
 var xboard = 2
@@ -70,6 +65,12 @@ var startstop = 1 // 1 for start, -1 for stop
 <p>
 <div id="chart_div"></div>
 </p>
+
+<script>
+$( "#showhidestats" ).click(function() {
+$( "#chart_div" ).toggle();
+});
+</script>
 
 <script>
 google.charts.load('current', {packages: ['corechart', 'line']});
