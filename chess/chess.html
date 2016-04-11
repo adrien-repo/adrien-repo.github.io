@@ -58,17 +58,18 @@ var startstop = 1 // 1 for start, -1 for stop
 
 <!-- board -->
 <canvas id="myBoard" width=300 height=270></canvas>
+<!-- chart -->
+<div id="chart_div" style="display:none;"></div>
 <p>
 <button class="mdl-button mdl-js-button mdl-button--raised" onclick="validatemove()">Move</button>
 <button class="mdl-button mdl-js-button mdl-button--raised" id="showhidestats">Stats</button>
-</p><!-- chart -->
-<p>
-<div id="chart_div"></div>
 </p>
 
 <script>
 $( "#showhidestats" ).click(function() {
 $( "#chart_div" ).toggle();
+$( "#myboard" ).toggle();
+
 });
 </script>
 
