@@ -53,17 +53,19 @@ var legalmoveslist = [];
 	<img id="Wrook" src="W-rook.svg">
 </div>
 
+<!-- buttons -->
+	<p>
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="validatemove()">Move</button>
+	<button class="mdl-button mdl-js-button mdl-button--ico" id="showhidestats"><i class="material-icons">timeline</i></button>
+	</p>
+	
 <!-- board -->
 	<div id="board_div">
 	<canvas id="myBoard" width=300 height=268></canvas>
 	</div>
 <!-- chart -->
 	<div id="chart_div" style="display:none;"></div>
-<!-- buttons -->
-	<p>
-	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="validatemove()">Move</button>
-	<button class="mdl-button mdl-js-button mdl-button--ico" id="showhidestats"><i class="material-icons">timeline</i></button>
-	</p>
+
 
 
 <!-- prod scripts from JS fodler -->
