@@ -40,11 +40,16 @@ function listlegalmoves()
 			{
 				//up left (- -)
 				cangoahead = 1
-				for (var mylegbishop=1; mylegbishop<(mylegco+1); mylegbishop++) 
+				for (var mylegbishop=1; mylegbishop<(Math.min(mylegco,mylegli)+1); mylegbishop++) 
 				{
 					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] == 0) && (cangoahead == 1))
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli-mylegbishop]])
+					}
+					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] < 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli-mylegbishop]])
+						cangoahead = 0
 					}
 				}
 
