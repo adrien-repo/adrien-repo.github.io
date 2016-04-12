@@ -213,11 +213,11 @@ function listlegalmoves()
 				{
 				for (var mylegkingy=-1; mylegkingy<=1; mylegkingy++) 
 				{
-					if (((Math.abs(mylegkingx)+Math.abs(mylegkingy))>0) && (((mylegco-mylegkingx)>=0) && ((mylegco+mylegkingx)<=7) && ((mylegli-mylegkingy)>=0) && ((mylegli+mylegkingy)<=7))) 
+					if (((Math.abs(mylegkingx)+Math.abs(mylegkingy))>0) && (((mylegco+mylegkingx)>=0) && ((mylegco+mylegkingx)<=7) && ((mylegli+mylegkingy)>=0) && ((mylegli+mylegkingy)<=7))) 
 					{
-						if (matrix[mylegco-mylegbishop][mylegli-mylegbishop] <= 0)
+						if (matrix[mylegco+mylegkingx][mylegli+mylegkingy] <= 0)
 						{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli-mylegbishop]])
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegkingx,mylegli+mylegkingy]])
 						}
 					}
 				}	
