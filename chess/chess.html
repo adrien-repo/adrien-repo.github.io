@@ -102,7 +102,7 @@ function listlegalmoves()
 		alert(mylegstartcell)
 		//white pawn
 			//can go 1 cell forward if empty
-			if ((mylegstartcell == value_pawn) || (matrix[mylegco-1][mylegli] == 0))
+			if (mylegstartcell == value_pawn)
 			{
 			legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-1,mylegli]])
 			}
