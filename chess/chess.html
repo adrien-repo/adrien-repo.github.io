@@ -72,18 +72,8 @@ var startstop = 1 // 1 for start, -1 for stop
 <!-- dev scripts -->
 
 <script>
-function listlegalmoves()
-{
-	//var legalmoves = [[7,7,7,6]];
-};
-
 function validatemove()
 {
-	alert("here1")
-	listlegalmoves();
-	alert("here2");
-	alert(legalmoves);
-	if (legalmoves.indexOf([starty,startx,stopy,stopx])) >-1 {
 	matrix[stopy][stopx] = matrix[starty][startx]
 	matrix[starty][startx] = 0
 	drawboard();
@@ -92,9 +82,7 @@ function validatemove()
 	mydata.push([myturn,currentrank])
 	myturn=myturn+1;
 	drawChart();
-	} else {
-		alert("not allowed");
-	}
+
 };	
 </script>
 
