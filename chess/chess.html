@@ -58,7 +58,7 @@ var legalmoveslist = [];
 	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="validatemove()">Move</button>
 	<button class="mdl-button mdl-js-button mdl-button--ico" id="showhidestats"><i class="material-icons">timeline</i></button>
 	</p>
-	<div id="infotext"></div>
+	<div id="infotext">:: </div>
 	<br>
 <!-- board -->
 	<div id="board_div">
@@ -148,10 +148,10 @@ function validatemove()
 		mydata.push([myturn,currentrank])
 		myturn=myturn+1;
 		drawChart();
-		document.getElementById('infotext').innerHTML = " ";
+		document.getElementById('infotext').innerHTML = ":: ";
 
 	} else {
-		document.getElementById('infotext').innerHTML = "Move not allowed !";
+		document.getElementById('infotext').innerHTML = ":: Move not allowed !";
 	}
 
 };	
