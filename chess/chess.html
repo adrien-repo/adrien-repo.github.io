@@ -90,7 +90,7 @@ function validatemove()
 	alert(legalmoveslist[0]);
 	alert(legalmoveslist[1]);
 	alert([starty,startx,stopy,stopx])
-	alert(legalmoveslist.indexOf([starty,startx,stopy,stopx]))
+	alert(legalmoveslist.indexOf([[starty,startx,stopy,stopx]]))
 	matrix[stopy][stopx] = matrix[starty][startx]
 	matrix[starty][startx] = 0
 	drawboard();
