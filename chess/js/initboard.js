@@ -20,6 +20,14 @@ for(var i=0; i<8; i++)
 	{
 	matrix[i] = new Array(8);
 	}
+//zero the entire board
+for(var myzeroli=0; myzeroli<8; myzeroli++) 
+	{
+	for(var myzeroco=0; myzeroco<8; myzeroco++) 
+	{
+		matrix[myzeroco][myzeroli] = 0
+	}
+	}
 // init board start places
 value_queen = 9
 value_rook = 5
