@@ -11,6 +11,8 @@ function listlegalmoves()
 	for (var mylegco=0; mylegco<8; mylegco++) 
 	{
 		mylegstartcell = matrix[mylegco][mylegli]
+			
+			
 			//white pawn
 			if (mylegstartcell == value_pawn)
 			{
@@ -35,8 +37,12 @@ function listlegalmoves()
 					legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-1,mylegli+1]])
 				}
 			}
+			
+			
+			
 			//white bishop can move in diagonal as long as cells are free, can eat the next immediate black material
-			if (mylegstartcell == value_bishop)
+			//so does the queen ;)
+			if ((mylegstartcell == value_bishop) || (mylegstartcell == value_queen)) 
 			{	
 				//up left (- -)
 				cangoahead = 1
@@ -115,6 +121,90 @@ function listlegalmoves()
 				}
 
 			}
+
+			//white rook can move in line as long as cells are free, can eat the next immediate black material
+			//so does the queen ;)
+			if ((mylegstartcell == value_rook) || (mylegstartcell == value_queen)) 
+			{	
+				//up left (- -)
+				cangoahead = 1
+
+				for (var mylegrook=1; mylegrook<=(Math.min(mylegco,mylegli)); mylegrook++) 
+				{
+					if ((matrix[mylegco-mylegrook][mylegli-mylegrook] == 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli-mylegrook]])
+					}
+					if ((matrix[mylegco-mylegrook][mylegli-mylegrook] < 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli-mylegrook]])
+						cangoahead = 0
+					}
+					if ((matrix[mylegco-mylegrook][mylegli-mylegrook] > 0) && (cangoahead == 1))
+					{
+						cangoahead = 0
+					}
+				}
+				//up right (- +)
+				cangoahead = 1
+				for (var mylegrook=1; mylegrook<=(Math.min(mylegco,7-mylegli)); mylegrook++) 
+				{
+					if ((matrix[mylegco-mylegrook][mylegli+mylegrook] == 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli+mylegrook]])
+					}
+					if ((matrix[mylegco-mylegrook][mylegli+mylegrook] < 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli+mylegrook]])
+						cangoahead = 0
+					}
+					if ((matrix[mylegco-mylegrook][mylegli+mylegrook] > 0) && (cangoahead == 1))
+					{
+						cangoahead = 0
+					}
+				}
+				
+				//down left (+ -)
+				cangoahead = 1
+
+				for (var mylegrook=1; mylegrook<=(Math.min(7-mylegco,mylegli)); mylegrook++) 
+				{
+					if ((matrix[mylegco+mylegrook][mylegli-mylegrook] == 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli-mylegrook]])
+					}
+					if ((matrix[mylegco+mylegrook][mylegli-mylegrook] < 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli-mylegrook]])
+						cangoahead = 0
+					}
+					if ((matrix[mylegco+mylegrook][mylegli-mylegrook] > 0) && (cangoahead == 1))
+					{
+						cangoahead = 0
+					}
+				}
+				//down right (+ +)
+				cangoahead = 1
+				for (var mylegrook=1; mylegrook<=(Math.min(7-mylegco,7-mylegli)); mylegrook++) 
+				{
+					if ((matrix[mylegco+mylegrook][mylegli+mylegrook] == 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli+mylegrook]])
+					}
+					if ((matrix[mylegco+mylegrook][mylegli+mylegrook] < 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli+mylegrook]])
+						cangoahead = 0
+					}
+					if ((matrix[mylegco+mylegrook][mylegli+mylegrook] > 0) && (cangoahead == 1))
+					{
+						cangoahead = 0
+					}
+				}
+
+			}
+
+
 	
 	}
 	}
