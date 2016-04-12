@@ -126,77 +126,77 @@ function listlegalmoves()
 			//so does the queen ;)
 			if ((mylegstartcell == value_rook) || (mylegstartcell == value_queen)) 
 			{	
-				//up left (- -)
+				//up  (- 0)
 				cangoahead = 1
 
 				for (var mylegrook=1; mylegrook<=(Math.min(mylegco,mylegli)); mylegrook++) 
 				{
-					if ((matrix[mylegco-mylegrook][mylegli-mylegrook] == 0) && (cangoahead == 1))
+					if ((matrix[mylegco-mylegrook][mylegli] == 0) && (cangoahead == 1))
 					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli-mylegrook]])
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli]])
 					}
-					if ((matrix[mylegco-mylegrook][mylegli-mylegrook] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco-mylegrook][mylegli] < 0) && (cangoahead == 1))
 					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli-mylegrook]])
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco-mylegrook][mylegli-mylegrook] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco-mylegrook][mylegli] > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
 				}
-				//up right (- +)
+				//right (0 +)
 				cangoahead = 1
 				for (var mylegrook=1; mylegrook<=(Math.min(mylegco,7-mylegli)); mylegrook++) 
 				{
-					if ((matrix[mylegco-mylegrook][mylegli+mylegrook] == 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli+mylegrook] == 0) && (cangoahead == 1))
 					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli+mylegrook]])
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli+mylegrook]])
 					}
-					if ((matrix[mylegco-mylegrook][mylegli+mylegrook] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli+mylegrook] < 0) && (cangoahead == 1))
 					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli+mylegrook]])
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli+mylegrook]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco-mylegrook][mylegli+mylegrook] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli+mylegrook] > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
 				}
 				
-				//down left (+ -)
+				//down (+ 0)
 				cangoahead = 1
 
 				for (var mylegrook=1; mylegrook<=(Math.min(7-mylegco,mylegli)); mylegrook++) 
 				{
-					if ((matrix[mylegco+mylegrook][mylegli-mylegrook] == 0) && (cangoahead == 1))
+					if ((matrix[mylegco+mylegrook][mylegli] == 0) && (cangoahead == 1))
 					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli-mylegrook]])
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli]])
 					}
-					if ((matrix[mylegco+mylegrook][mylegli-mylegrook] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco+mylegrook][mylegli] < 0) && (cangoahead == 1))
 					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli-mylegrook]])
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco+mylegrook][mylegli-mylegrook] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco+mylegrook][mylegli] > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
 				}
-				//down right (+ +)
+				//right (0 +)
 				cangoahead = 1
 				for (var mylegrook=1; mylegrook<=(Math.min(7-mylegco,7-mylegli)); mylegrook++) 
 				{
-					if ((matrix[mylegco+mylegrook][mylegli+mylegrook] == 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli+mylegrook] == 0) && (cangoahead == 1))
 					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli+mylegrook]])
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli+mylegrook]])
 					}
-					if ((matrix[mylegco+mylegrook][mylegli+mylegrook] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli+mylegrook] < 0) && (cangoahead == 1))
 					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli+mylegrook]])
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli+mylegrook]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco+mylegrook][mylegli+mylegrook] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli+mylegrook] > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
