@@ -1,7 +1,9 @@
 function listlegalmoves()
 {
+
 	//init
 	legalmoveslist = [];
+	var cangoahead = 1;
 	//append all possibilities
 	
 	for(var mylegli=0; mylegli<8; mylegli++) 
@@ -37,7 +39,7 @@ function listlegalmoves()
 			if (mylegstartcell == value_bishop)
 			{
 				//up left (- -)
-				var cangoahead = 1
+				cangoahead = 1
 				for(var mylegbishop=1; mylegbishop<8; mylegbishop++) 
 				{
 					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] == 0) && (cangoahead == 1))
@@ -50,36 +52,9 @@ function listlegalmoves()
 						cangoahead = 0
 					}
 				}
-				//up right (- +)
-				var cangoahead = 1
-				for(var mylegbishop=1; mylegbishop<8; mylegbishop++) 
-				{
-					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop] == 0) && (cangoahead == 1))
-					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli+mylegbishop]])
-					}
-					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop] < 0) && (cangoahead == 1))
-					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli+mylegbishop]])
-						cangoahead = 0
-					}
-				}
-				//down left (+ -)
-				var cangoahead = 1
-				for(var mylegbishop=1; mylegbishop<8; mylegbishop++) 
-				{
-					if ((matrix[mylegco+mylegbishop][mylegli-mylegbishop] == 0) && (cangoahead == 1))
-					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli-mylegbishop]])
-					}
-					if ((matrix[mylegco+mylegbishop][mylegli-mylegbishop] < 0) && (cangoahead == 1))
-					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli-mylegbishop]])
-						cangoahead = 0
-					}
-				}
+
 				//down right (+ +)
-				var cangoahead = 1
+				cangoahead = 1
 				for(var mylegbishop=1; mylegbishop<8; mylegbishop++) 
 				{
 					if ((matrix[mylegco+mylegbishop][mylegli+mylegbishop] == 0) && (cangoahead == 1))
