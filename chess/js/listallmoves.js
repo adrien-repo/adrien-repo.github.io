@@ -224,7 +224,25 @@ function listlegalmoves()
 				}
 			}
 			
+			//white knight do all 3-cells-long moves in a +2/-2 square around it, as long as destination cells are free, can eat the black material
 			
+			if (mylegstartcell == value_knight) 
+			{	
+				//around
+				for (var mylegknightx=-2; mylegknightx<=2; mylegknightx++) 
+				{
+				for (var mylegknighty=-2; mylegknighty<=2; mylegknighty++) 
+				{
+					if (((Math.abs(mylegknightx)+Math.abs(mylegknighty))==3) && (((mylegco+mylegknightx)>=0) && ((mylegco+mylegknightx)<=7) && ((mylegli+mylegknighty)>=0) && ((mylegli+mylegknighty)<=7))) 
+					{
+						if (matrix[mylegco+mylegknightx][mylegli+mylegknighty] <= 0)
+						{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegknightx,mylegli+mylegknighty]])
+						}
+					}
+				}	
+				}
+			}
 
 	
 	}
