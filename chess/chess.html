@@ -148,10 +148,10 @@ function validatemove()
 		mydata.push([myturn,currentrank])
 		myturn=myturn+1;
 		drawChart();
-		$("infotext").update("");
+		document.getElementById('infotext').innerHTML = " ";
 
 	} else {
-		$("infotext").update("Move not allowed !");
+		document.getElementById('infotext').innerHTML = "Move not allowed !";
 	}
 
 };	
