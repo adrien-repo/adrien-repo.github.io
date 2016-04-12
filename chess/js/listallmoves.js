@@ -38,7 +38,7 @@ function listlegalmoves()
 			//white bishop
 			if (mylegstartcell == value_bishop)
 			{	
-				alert(legco+'  -  '+legli)
+				alert(mylegco+'  -  '+mylegli)
 				//up left (- -)
 				cangoahead = 1
 				for (var mylegbishop=1; mylegbishop<(Math.min(mylegco,mylegli)); mylegbishop++) 
