@@ -35,7 +35,7 @@ function listlegalmoves()
 					legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-1,mylegli+1]])
 				}
 			}
-			//white bishop
+			//white bishop can move in diagonal as long as cells are free, can eat the next immediate black material
 			if (mylegstartcell == value_bishop)
 			{	
 				//up left (- -)
@@ -75,7 +75,44 @@ function listlegalmoves()
 						cangoahead = 0
 					}
 				}
+				
+				//down left (+ -)
+				cangoahead = 1
 
+				for (var mylegbishop=1; mylegbishop<=(Math.min(7-mylegco,mylegli)); mylegbishop++) 
+				{
+					if ((matrix[mylegco+mylegbishop][mylegli-mylegbishop] == 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli-mylegbishop]])
+					}
+					if ((matrix[mylegco+mylegbishop][mylegli-mylegbishop] < 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli-mylegbishop]])
+						cangoahead = 0
+					}
+					if ((matrix[mylegco+mylegbishop][mylegli-mylegbishop] > 0) && (cangoahead == 1))
+					{
+						cangoahead = 0
+					}
+				}
+				//down right (+ +)
+				cangoahead = 1
+				for (var mylegbishop=1; mylegbishop<=(Math.min(7-mylegco,7-mylegli)); mylegbishop++) 
+				{
+					if ((matrix[mylegco+mylegbishop][mylegli+mylegbishop] == 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli+mylegbishop]])
+					}
+					if ((matrix[mylegco+mylegbishop][mylegli+mylegbishop] < 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli+mylegbishop]])
+						cangoahead = 0
+					}
+					if ((matrix[mylegco+mylegbishop][mylegli+mylegbishop] > 0) && (cangoahead == 1))
+					{
+						cangoahead = 0
+					}
+				}
 
 			}
 	
