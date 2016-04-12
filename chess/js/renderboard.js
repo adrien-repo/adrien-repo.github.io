@@ -8,11 +8,11 @@ var colorused = ''
 
 //clear board
 context.beginPath();
-context.rect(xboard, yboard, 8*60, 8*60);
+context.rect(xboard-1, yboard-1, 8*60+1, 8*60+1);
 colorused = whitecell;
 context.fillStyle = colorused;
 context.fill();
-context.lineWidth = 1;
+context.lineWidth = 2;
 context.strokeStyle = colorused;
 context.stroke();
 
