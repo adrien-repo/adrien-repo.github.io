@@ -38,35 +38,7 @@ function listlegalmoves()
 			//white bishop
 			if (mylegstartcell == value_bishop)
 			{
-				//up left (- -)
-				cangoahead = 1
-				for(var mylegbishop=1; mylegbishop<8; mylegbishop++) 
-				{
-					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] == 0) && (cangoahead == 1))
-					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli-mylegbishop]])
-					}
-					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] < 0) && (cangoahead == 1))
-					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli-mylegbishop]])
-						cangoahead = 0
-					}
-				}
 
-				//down right (+ +)
-				cangoahead = 1
-				for(var mylegbishop=1; mylegbishop<8; mylegbishop++) 
-				{
-					if ((matrix[mylegco+mylegbishop][mylegli+mylegbishop] == 0) && (cangoahead == 1))
-					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli+mylegbishop]])
-					}
-					if ((matrix[mylegco+mylegbishop][mylegli+mylegbishop] < 0) && (cangoahead == 1))
-					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli+mylegbishop]])
-						cangoahead = 0
-					}
-				}
 
 
 
