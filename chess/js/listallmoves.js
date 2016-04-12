@@ -129,7 +129,7 @@ function listlegalmoves()
 				//up  (- 0)
 				cangoahead = 1
 
-				for (var mylegrook=1; mylegrook<=(Math.min(mylegco,mylegli)); mylegrook++) 
+				for (var mylegrook=1; mylegrook<=mylegco; mylegrook++) 
 				{
 					if ((matrix[mylegco-mylegrook][mylegli] == 0) && (cangoahead == 1))
 					{
@@ -147,7 +147,7 @@ function listlegalmoves()
 				}
 				//right (0 +)
 				cangoahead = 1
-				for (var mylegrook=1; mylegrook<=(Math.min(mylegco,7-mylegli)); mylegrook++) 
+				for (var mylegrook=1; mylegrook<=(7-mylegli); mylegrook++) 
 				{
 					if ((matrix[mylegco][mylegli+mylegrook] == 0) && (cangoahead == 1))
 					{
@@ -167,7 +167,7 @@ function listlegalmoves()
 				//down (+ 0)
 				cangoahead = 1
 
-				for (var mylegrook=1; mylegrook<=(Math.min(7-mylegco,mylegli)); mylegrook++) 
+				for (var mylegrook=1; mylegrook<=(7-mylegco); mylegrook++) 
 				{
 					if ((matrix[mylegco+mylegrook][mylegli] == 0) && (cangoahead == 1))
 					{
@@ -185,7 +185,7 @@ function listlegalmoves()
 				}
 				//right (0 +)
 				cangoahead = 1
-				for (var mylegrook=1; mylegrook<=(Math.min(7-mylegco,7-mylegli)); mylegrook++) 
+				for (var mylegrook=1; mylegrook<=(7-mylegli); mylegrook++) 
 				{
 					if ((matrix[mylegco][mylegli+mylegrook] == 0) && (cangoahead == 1))
 					{
