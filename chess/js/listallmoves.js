@@ -38,10 +38,8 @@ function listlegalmoves()
 			//white bishop
 			if (mylegstartcell == value_bishop)
 			{	
-				alert(mylegco+'  -  '+mylegli)
 				//up left (- -)
 				cangoahead = 1
-				alert('up left:'+Math.min(mylegco,mylegli))
 
 				for (var mylegbishop=1; mylegbishop<=(Math.min(mylegco,mylegli)); mylegbishop++) 
 				{
@@ -61,7 +59,6 @@ function listlegalmoves()
 				}
 				//up right (- +)
 				cangoahead = 1
-				alert('up right:'+Math.max(7-mylegco,7-mylegli))
 				for (var mylegbishop=1; mylegbishop<=(Math.max(7-mylegco,7-mylegli)); mylegbishop++) 
 				{
 					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop] == 0) && (cangoahead == 1))
@@ -73,7 +70,7 @@ function listlegalmoves()
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli+mylegbishop]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop] > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
