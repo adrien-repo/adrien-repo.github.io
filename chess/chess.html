@@ -57,14 +57,14 @@ var legalmoveslist = [];
 	<p>
 	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="validatemove()">Move</button>
 	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="showhidestats"><i class="material-icons">timeline</i></button>
-	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">add circle outline</i></button>
-	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">remove circle outline</i></button>
+	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="zoomin"><i class="material-icons">add circle outline</i></button>
+	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="zoomout"><i class="material-icons">remove circle outline</i></button>
 	</p>
 	<div id="infotext">Your turn !</div>
 	<br>
 <!-- board -->
 	<div id="board_div">
-	<canvas id="myBoard" width=300 height=268></canvas>
+	<canvas id="myBoard" width=500 height=500></canvas>
 	</div>
 <!-- chart -->
 	<div id="chart_div" style="display:none;"></div>
