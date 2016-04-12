@@ -58,7 +58,8 @@ var legalmoveslist = [];
 	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="validatemove()">Move</button>
 	<button class="mdl-button mdl-js-button mdl-button--ico" id="showhidestats"><i class="material-icons">timeline</i></button>
 	</p>
-	
+	<div id="infotext"></div>
+	<br>
 <!-- board -->
 	<div id="board_div">
 	<canvas id="myBoard" width=300 height=268></canvas>
@@ -147,22 +148,14 @@ function validatemove()
 		mydata.push([myturn,currentrank])
 		myturn=myturn+1;
 		drawChart();
+		$("infotext").update("");
+
 	} else {
-		var snackbarContainer = document.querySelector('#demo-toast-example');
-	  	var showToastButton = document.querySelector('#demo-show-toast');
-	  	var data = {message: 'Move not allowed'};
-	    	snackbarContainer.MaterialSnackbar.showSnackbar(data);
+		$("infotext").update("Move not allowed !");
 	}
 
 };	
 </script>
 
 </body>
-<!-- snackbar -->
-	<center>
-	<div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
-	  <div class="mdl-snackbar__text"></div>
-	  <button class="mdl-snackbar__action" type="button"></button>
-	</div>
-	<center>
 </html>
