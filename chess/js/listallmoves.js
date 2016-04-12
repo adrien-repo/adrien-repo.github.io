@@ -203,7 +203,26 @@ function listlegalmoves()
 				}
 
 			}
-
+			
+			//white king can move 1 cell around as long as cells are free, can eat the next immediate black material
+			
+			if (mylegstartcell == value_king) 
+			{	
+				//around
+				for (var mylegkingx=-1; mylegkingx<=1; mylegkingx++) 
+				{
+				for (var mylegkingy=-1; mylegkingy<=1; mylegkingy++) 
+				{
+					if (((Math.abs(mylegkingx)+Math.abs(mylegkingy))>0) && (((mylegco-mylegkingx)>=0) && ((mylegco+mylegkingx)<=7) && ((mylegli-mylegkingy)>=0) && ((mylegli+mylegkingy)<=7))) 
+					{
+						if (matrix[mylegco-mylegbishop][mylegli-mylegbishop] <= 0)
+						{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli-mylegbishop]])
+						}
+					}
+				}	
+				}
+			}
 
 	
 	}
