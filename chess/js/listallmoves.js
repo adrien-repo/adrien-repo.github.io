@@ -59,7 +59,7 @@ function listlegalmoves()
 				}
 				//up right (- +)
 				cangoahead = 1
-				for (var mylegbishop=1; mylegbishop<=(Math.max(7-mylegco,7-mylegli)); mylegbishop++) 
+				for (var mylegbishop=1; mylegbishop<=(Math.max(mylegco,7-mylegli)); mylegbishop++) 
 				{
 					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop] == 0) && (cangoahead == 1))
 					{
