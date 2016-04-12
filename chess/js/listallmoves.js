@@ -6,9 +6,9 @@ function listlegalmoves()
 	var cangoahead = 1;
 	//append all possibilities
 	
-	for(var mylegli=0; mylegli<8; mylegli++) 
+	for (var mylegli=0; mylegli<8; mylegli++) 
 	{
-	for(var mylegco=0; mylegco<8; mylegco++) 
+	for (var mylegco=0; mylegco<8; mylegco++) 
 	{
 		mylegstartcell = matrix[mylegco][mylegli]
 			//white pawn
@@ -38,7 +38,15 @@ function listlegalmoves()
 			//white bishop
 			if (mylegstartcell == value_bishop)
 			{
-
+				//up left (- -)
+				cangoahead = 1
+				for (var mylegbishop=1; mylegbishop<8; mylegbishop++) 
+				{
+					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] == 0) && (cangoahead == 1))
+					{
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli-mylegbishop]])
+					}
+				}
 
 
 
