@@ -61,7 +61,7 @@ function listlegalmoves()
 				}
 				//up right (- +)
 				cangoahead = 1
-				alert('up left:'+Math.min(7-mylegco,7-mylegli))
+				alert('up left:'+Math.max(7-mylegco,7-mylegli))
 				for (var mylegbishop=1; mylegbishop<=(Math.max(7-mylegco,7-mylegli)); mylegbishop++) 
 				{
 					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop] == 0) && (cangoahead == 1))
