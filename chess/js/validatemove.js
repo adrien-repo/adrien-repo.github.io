@@ -25,8 +25,8 @@ function validatemove()
 		mydata.push([myturn,currentrank])
 		myturn=myturn+1;
 		drawChart();
-		document.getElementById('infotext').innerHTML = "< />";
+		document.getElementById('infotext').innerHTML = "Your turn !";
 	} else {
-		document.getElementById('infotext').innerHTML = "< Move not allowed ! />";
+		document.getElementById('infotext').innerHTML = "You can't do that move :)";
 	}
 };	
