@@ -51,6 +51,10 @@ function listlegalmoves()
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli-mylegbishop]])
 						cangoahead = 0
 					}
+					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] > 0) && (cangoahead == 1))
+					{
+						cangoahead = 0
+					}
 				}
 				//up right (- +)
 				cangoahead = 1
@@ -63,6 +67,10 @@ function listlegalmoves()
 					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop] < 0) && (cangoahead == 1))
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli+mylegbishop]])
+						cangoahead = 0
+					}
+					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] > 0) && (cangoahead == 1))
+					{
 						cangoahead = 0
 					}
 				}
