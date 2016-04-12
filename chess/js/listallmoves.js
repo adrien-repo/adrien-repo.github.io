@@ -41,7 +41,9 @@ function listlegalmoves()
 				alert(mylegco+'  -  '+mylegli)
 				//up left (- -)
 				cangoahead = 1
-				for (var mylegbishop=1; mylegbishop<(Math.min(mylegco,mylegli)); mylegbishop++) 
+				alert('up left:'+Math.min(mylegco,mylegli))
+
+				for (var mylegbishop=1; mylegbishop<=(Math.min(mylegco,mylegli)); mylegbishop++) 
 				{
 					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] == 0) && (cangoahead == 1))
 					{
@@ -59,7 +61,7 @@ function listlegalmoves()
 				}
 				//up right (- +)
 				cangoahead = 1
-				for (var mylegbishop=1; mylegbishop<(Math.min(mylegco,mylegli+1)); mylegbishop++) 
+				for (var mylegbishop=1; mylegbishop<=(Math.min(mylegco,mylegli)); mylegbishop++) 
 				{
 					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop] == 0) && (cangoahead == 1))
 					{
