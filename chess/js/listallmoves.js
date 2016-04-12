@@ -40,7 +40,7 @@ function listlegalmoves()
 			{
 				//up left (- -)
 				cangoahead = 1
-				for (var mylegbishop=1; mylegbishop<8; mylegbishop++) 
+				for (var mylegbishop=1; mylegbishop<(mylegco+1); mylegbishop++) 
 				{
 					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] == 0) && (cangoahead == 1))
 					{
