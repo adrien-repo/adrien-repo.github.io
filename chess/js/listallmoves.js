@@ -183,20 +183,20 @@ function listlegalmoves()
 						cangoahead = 0
 					}
 				}
-				//right (0 +)
+				//left (0 -)
 				cangoahead = 1
-				for (var mylegrook=1; mylegrook<=(7-mylegli); mylegrook++) 
+				for (var mylegrook=1; mylegrook<=(mylegli); mylegrook++) 
 				{
-					if ((matrix[mylegco][mylegli+mylegrook] == 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli-mylegrook] == 0) && (cangoahead == 1))
 					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli+mylegrook]])
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli-mylegrook]])
 					}
-					if ((matrix[mylegco][mylegli+mylegrook] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli-mylegrook] < 0) && (cangoahead == 1))
 					{
-						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli+mylegrook]])
+						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli-mylegrook]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco][mylegli+mylegrook] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli-mylegrook] > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
