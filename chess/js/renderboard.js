@@ -5,6 +5,17 @@ var blackcell = '#e6e6e6'
 var selectedcell = '#ffffb3'
 var blackborder = '#000000'
 var colorused = ''
+
+//clear board
+context.beginPath();
+context.rect(xboard, yboard, 8*60, 8*60);
+colorused = whitecell;
+context.fillStyle = colorused;
+context.fill();
+context.lineWidth = 1;
+context.strokeStyle = colorused;
+context.stroke();
+
 for (li = 0; li < 4; li++) 
 { 
 for (co = 0; co < 4; co++)
