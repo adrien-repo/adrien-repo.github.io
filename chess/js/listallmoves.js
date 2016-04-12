@@ -224,7 +224,7 @@ function listlegalmoves()
 				}
 			}
 			
-			//white king can move 1 cell around as long as cells are free, can eat the next immediate black material
+			//white knight do all 3-cell legth moves in q +2/-2 square, as long as destination cells are free, can eat the black material
 			
 			if (mylegstartcell == value_knight) 
 			{	
