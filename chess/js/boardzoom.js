@@ -1,5 +1,5 @@
 $( "#zoomin" ).click(function() {
-cellsize = Math.max(cellsize+2, 60)
+cellsize = Math.min(cellsize+2, 60)
 drawboard();
 drawmaterial();
 });
