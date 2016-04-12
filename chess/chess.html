@@ -107,7 +107,7 @@ function listlegalmoves()
 				{
 				legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-1,mylegli]])
 					//can go 2 cells fwd if both are empty and is first pawn move
-					if ((matrix[mylegco-2][mylegli] == 0) || (mylegco == 6))
+					if ((matrix[mylegco-2][mylegli] == 0) && (mylegco == 6))
 					{
 					legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-2,mylegli]])
 					}
