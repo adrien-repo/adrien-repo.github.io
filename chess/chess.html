@@ -1,38 +1,32 @@
 <!doctype html>
 <html lang="en" >
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#3F51B5">
-<title>Chess AI</title>
-<meta name="mobile-web-app-capable" content="yes">
-<!-- <link rel="icon" sizes="192x192" href="/icons/appicon.png"> -->
-<!-- Angular Material style sheet -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<!-- https://design.google.com/icons/ -->
-<link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-blue.min.css">
-<script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-<!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-<!-- for bottom chart / stats -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#3F51B5">
+	<title>Chess AI</title>
+	<meta name="mobile-web-app-capable" content="yes"><!-- <link rel="icon" sizes="192x192" href="/icons/appicon.png"> -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-blue.min.css">
+	<script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
+
 <style>
-body {margin: 20px; line-height: 100%;}
+	body {margin: 20px; line-height: 100%;}
 </style>
+
 <body ng-app="BlankApp" ng-cloak>
 
-
-
 <script>
+//init board positionning
 var xboard = 2
 var yboard = 2
 var cellsize = 30
-</script>
-<script>
 // mouse coordinates for move, between 0 and 7 (init at -1 when not displayed) 
 var startx = -1
 var starty = -1
@@ -40,121 +34,54 @@ var stopx = -1
 var stopy = -1
 var startstop = 1 // 1 for start, -1 for stop
 </script>
-<!-- board material -->	
+
+<!-- board material hidden preload-->	
 <div  style="display:none;">
-<img id="Bbishop" src="B-bishop.svg">
-<img id="Bking" src="B-king.svg">
-<img id="Bknight" src="B-knight.svg">
-<img id="Bpawn" src="B-pawn.svg">
-<img id="Bqueen" src="B-queen.svg">
-<img id="Brook" src="B-rook.svg">
-<img id="Wbishop" src="W-bishop.svg">
-<img id="Wking" src="W-king.svg">
-<img id="Wknight" src="W-knight.svg">
-<img id="Wpawn" src="W-pawn.svg">
-<img id="Wqueen" src="W-queen.svg">
-<img id="Wrook" src="W-rook.svg">
+	<img id="Bbishop" src="B-bishop.svg">
+	<img id="Bking" src="B-king.svg">
+	<img id="Bknight" src="B-knight.svg">
+	<img id="Bpawn" src="B-pawn.svg">
+	<img id="Bqueen" src="B-queen.svg">
+	<img id="Brook" src="B-rook.svg">
+	<img id="Wbishop" src="W-bishop.svg">
+	<img id="Wking" src="W-king.svg">
+	<img id="Wknight" src="W-knight.svg">
+	<img id="Wpawn" src="W-pawn.svg">
+	<img id="Wqueen" src="W-queen.svg">
+	<img id="Wrook" src="W-rook.svg">
 </div>
 
 <!-- board -->
-<div id="board_div">
-<canvas id="myBoard" width=300 height=268></canvas>
-</div>
+	<div id="board_div">
+	<canvas id="myBoard" width=300 height=268></canvas>
+	</div>
 <!-- chart -->
-<div id="chart_div" style="display:none;"></div>
-<p>
-<button class="mdl-button mdl-js-button" onclick="validatemove()">Move</button>
-<button class="mdl-button mdl-js-button mdl-button--ico" id="showhidestats">timeline</button>
-</p>
+	<div id="chart_div" style="display:none;"></div>
+<!-- buttons -->
+	<p>
+	<button class="mdl-button mdl-js-button" onclick="validatemove()">Move</button>
+	<button class="mdl-button mdl-js-button mdl-button--ico" id="showhidestats">timeline</button>
+	</p>
 
-
+<!-- prod scripts from JS fodler -->
 <script src="/chess/js/statschart.js"></script>
 <script src="/chess/js/mouseclick.js"></script>
 <script src="/chess/js/renderboard.js"></script>
+<script src="/chess/js/initboard.js"></script>
 
-
-
-
-	
-<script>
-// Load canvas
-var canvas = document.getElementById('myBoard');
-var context = canvas.getContext('2d');
-// Load material picture sources
-var Bbishop = document.getElementById("Bbishop").src;
-var Bking = document.getElementById("Bking").src;
-var Bknight = document.getElementById("Bknight").src;
-var Bpawn = document.getElementById("Bpawn").src;
-var Bqueen = document.getElementById("Bqueen").src;
-var Brook = document.getElementById("Brook").src;
-var Wbishop = document.getElementById("Wbishop").src;
-var Wking = document.getElementById("Wking").src;
-var Wknight = document.getElementById("Wknight").src;
-var Wpawn = document.getElementById("Wpawn").src;
-var Wqueen = document.getElementById("Wqueen").src;
-var Wrook = document.getElementById("Wrook").src;
-// Init matrix
-var matrix = new Array(8);
-for(var i=0; i<8; i++) 
-	{
-	matrix[i] = new Array(8);
-	}
-// init board start places
-value_queen = 9
-value_rook = 5
-value_knight = 3.1
-value_bishop = 3
-value_pawn = 1
-value_king = 50
-// -1 for black, 1 for white
-matrix[0][0] = -value_rook
-matrix[0][1] = -value_knight
-matrix[0][2] = -value_bishop
-matrix[0][3] = -value_queen
-matrix[0][4] = -value_king
-matrix[0][5] = -value_bishop
-matrix[0][6] = -value_knight
-matrix[0][7] = -value_rook
-matrix[1][0] = -value_pawn
-matrix[1][1] = -value_pawn
-matrix[1][2] = -value_pawn
-matrix[1][3] = -value_pawn
-matrix[1][4] = -value_pawn
-matrix[1][5] = -value_pawn
-matrix[1][6] = -value_pawn
-matrix[1][7] = -value_pawn
-matrix[7][0] = value_rook
-matrix[7][1] = value_knight
-matrix[7][2] = value_bishop
-matrix[7][3] = value_queen
-matrix[7][4] = value_king
-matrix[7][5] = value_bishop
-matrix[7][6] = value_knight
-matrix[7][7] = value_rook
-matrix[6][0] = value_pawn
-matrix[6][1] = value_pawn
-matrix[6][2] = value_pawn
-matrix[6][3] = value_pawn
-matrix[6][4] = value_pawn
-matrix[6][5] = value_pawn
-matrix[6][6] = value_pawn
-matrix[6][7] = value_pawn
-//Render start state
-drawboard();
-drawmaterial();
-</script>
+<!-- dev scripts -->
 
 <script>
 function validatemove()
 {
-matrix[stopy][stopx] = matrix[starty][startx]
-matrix[starty][startx] = 0
-drawboard();
-drawmaterial();
-var currentrank = (matrix.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
-mydata.push([myturn,currentrank])
-myturn=myturn+1;
-drawChart();
+	matrix[stopy][stopx] = matrix[starty][startx]
+	matrix[starty][startx] = 0
+	drawboard();
+	drawmaterial();
+	var currentrank = (matrix.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
+	mydata.push([myturn,currentrank])
+	myturn=myturn+1;
+	drawChart();
 }	
 </script>
 
