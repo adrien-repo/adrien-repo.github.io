@@ -33,6 +33,8 @@ var starty = -1
 var stopx = -1
 var stopy = -1
 var startstop = 1 // 1 for start, -1 for stop
+//list of legal moves
+var legalmoveslist = [];
 </script>
 
 <!-- board material hidden preload-->	
@@ -72,8 +74,19 @@ var startstop = 1 // 1 for start, -1 for stop
 <!-- dev scripts -->
 
 <script>
+function listlegalmoves()
+{
+	alert("here");
+	//init
+	legalmoveslist = [];
+	//append all possibilities
+	legalmoveslist = legalmoveslist.concat([1,2,3,4])
+	alert("done");
+}
 function validatemove()
 {
+	listlegalmoves();
+	alert(legalmoveslist);
 	matrix[stopy][stopx] = matrix[starty][startx]
 	matrix[starty][startx] = 0
 	drawboard();
