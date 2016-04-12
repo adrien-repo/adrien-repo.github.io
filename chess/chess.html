@@ -79,6 +79,7 @@ function listlegalmoves()
 
 function validatemove()
 {
+	listlegalmoves();
 	if (legalmoves.indexOf([starty,startx,stopy,stopx])) >-1
 	{
 	matrix[stopy][stopx] = matrix[starty][startx]
