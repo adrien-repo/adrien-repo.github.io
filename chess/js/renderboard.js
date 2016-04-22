@@ -67,6 +67,7 @@ context.stroke();
 
 function drawmaterial()
 {
+	
 var canvas = document.getElementById('myBoard');
 var context = canvas.getContext('2d');
 for(var myli=0; myli<8; myli++) 
