@@ -151,7 +151,7 @@ function aiturn()
     for (li_fourth = 0; li_fourth < list_fourth.length; li_fourth++) 
         { 
         nbtests = nbtests+1
-        document.getElementById('infotext').innerHTML = "Thinking..(best: "+utility_treshold+" / "+nbtests+")";
+            document.getElementById('txtbox').value = "Thinking..(best: "+utility_treshold+" / "+nbtests+")";
         
         //get 4 coordinates of move candidate
         starty_fourth = list_fourth[li_fourth][0]
