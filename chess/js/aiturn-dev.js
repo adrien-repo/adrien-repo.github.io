@@ -15,8 +15,9 @@ function aiturn()
     stopychoosen = -9999
     stopxchoosen = -9999
     
-    //init utility_treshold (tb minimized)
+    //init utility_treshold
     utility_treshold = 9999
+    utility_human = -9999
     
     //assess current board 
     evaluate_zero = (matrix.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
@@ -52,9 +53,10 @@ function aiturn()
         //evaluate board after move
         evaluate_first = (matrix_first.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
         
+    //reset treshold for best second move per first move
+    utility_human = -9999
 
-
-    //SECOND HUMAN MOVE
+    //SECOND HUMAN MOVE - we assume it plays the best answer to first move
     //2.0 - for a given player color and matrix
     whoisthinking = 1
     //we use matrix_first as start point
@@ -84,7 +86,10 @@ function aiturn()
         //evaluate board after move
         evaluate_second = (matrix_second.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
 
-
+    //here is the selection of best answer-only from human
+    if (evaluate_second >= utility_human)
+    {
+    utility_human = evaluate_second
 
     //THIRD AI MOVE
     //3.0 - for a given player color and matrix
@@ -130,13 +135,17 @@ function aiturn()
         stopxchoosen = stopx_first
         }
 
-        //end of third loop
+        //end of third loop (for)
         }
  
-        //end of second loop
+ 
+        //end of treshold-beating filter for human  (if)
+        }
+    
+        //end of second loop (for)
         }
 
-        //end of first loop
+        //end of first loop (for)
         }
 
        
