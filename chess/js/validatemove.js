@@ -32,7 +32,7 @@ if (whoisthinking == 1)
 		mydata.push([myturn,currentrank])
 		myturn=myturn+1;
 		drawChart();
-		document.getElementById('infotext').innerHTML = "You have moved ! Now I am thinking..";
+		document.getElementById('infotext').innerHTML = "Thinking..";
 		//AI turn now !
 		whoisthinking = -1;
 
