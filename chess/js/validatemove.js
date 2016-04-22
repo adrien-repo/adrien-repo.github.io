@@ -37,12 +37,12 @@ if (whoisthinking == 1)
 		whoisthinking = -1;
 
 		window.setTimeout(function() {
-		try {
+		//try {
 		aiturn();
-		}
-		catch(err) {alert(err.message)
-			}
-		}, 100);
+		//}
+		//catch(err) {alert(err.message)
+		//	}
+		}, 500);
 			
 		if (list_first.length < 1)
 		{
