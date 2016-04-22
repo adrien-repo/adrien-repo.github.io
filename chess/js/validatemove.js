@@ -41,7 +41,7 @@ if (whoisthinking == 1)
 		}
 		catch(err) {alert(err.message)
 			}
-		if (aifirstlist.length < 1)
+		if (list_first.length < 1)
 		{
 		document.getElementById('infotext').innerHTML = "Wow congrats ! White won ! 1-0";
 		drawboard();
