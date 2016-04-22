@@ -32,7 +32,7 @@ if (whoisthinking == 1)
 		mydata.push([myturn,currentrank])
 		myturn=myturn+1;
 		drawChart();
-		document.getElementById('infotext').innerHTML = "Thinking..";
+		document.getElementById('txtbox').value = "Thinking..";
 		//AI turn now !
 		whoisthinking = -1;
 
@@ -43,7 +43,7 @@ if (whoisthinking == 1)
 			}
 		if (list_first.length < 1)
 		{
-		document.getElementById('infotext').innerHTML = "Wow congrats ! White won ! 1-0";
+		document.getElementById('txtbox').value = "Wow congrats ! White won ! 1-0";
 		drawboard();
 		drawmaterial();
 		return
@@ -62,17 +62,17 @@ if (whoisthinking == 1)
 		mydata.push([myturn,currentrank])
 		myturn=myturn+1;
 		drawChart();
-		document.getElementById('infotext').innerHTML = "Your turn !";
+		document.getElementById('txtbox').value = "Your turn !";
 		
 		//Human turn now !
 		whoisthinking = 1;
 		
 		
 	} else {
-		document.getElementById('infotext').innerHTML = "You can't do that move :)";
+		document.getElementById('txtbox').value = "You can't do that move :)";
 		if (legalmoveslist.length < 1)
 		{
-		document.getElementById('infotext').innerHTML = "Hmm.. no possible move no ? :) Black won ! 0-1";
+		document.getElementById('txtbox').value = "Hmm.. no possible move no ? :) Black won ! 0-1";
 		}
 	}
 }
