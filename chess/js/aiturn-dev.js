@@ -113,7 +113,7 @@ function aiturn()
         //keep the move that minimizes the utility_function
         if (utility_function < utility_treshold)
         {
-        alert(startychoosen+" ** "+startxchoosen++" ** "+stopychoosen+" ** "+stopxchoosen)
+        alert(startychoosen+" ** "+startxchoosen+" ** "+stopychoosen+" ** "+stopxchoosen)
         startychoosen = starty_first
         startxchoosen = startx_first
         stopychoosen = stopy_first
