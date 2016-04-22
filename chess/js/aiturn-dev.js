@@ -106,7 +106,7 @@ function aiturn()
 
     
         utility_first = evaluate_first - evaluate_zero
-        utility_second = evaluate_second - evaluate_zero
+        utility_second = utility_human - evaluate_zero
         
         utility_function = utility_first - utility_second
         //keep the move that minimizes the utility_function
