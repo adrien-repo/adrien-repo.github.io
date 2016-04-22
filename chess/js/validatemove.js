@@ -24,8 +24,8 @@ if (whoisthinking == 1)
 		//make move in matrix and render
 		matrix[stopy][stopx] = matrix[starty][startx]
 		matrix[starty][startx] = 0
-		//drawboard();
-		//drawmaterial();
+		drawboard();
+		drawmaterial();
 		
 		//update chart for stats
 		var currentrank = (matrix.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
