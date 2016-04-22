@@ -21,7 +21,6 @@ function aiturn()
     
     //assess current board 
     evaluate_zero = (matrix.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
-    alert("current board: "+evaluate_zero)
     //FIRST AI MOVE
     //1.0 - for a given player color and matrix
     whoisthinking = -1 
@@ -35,7 +34,6 @@ function aiturn()
     for(var i=0; i<8; i++) {matrix_first[i] = new Array(8);}
     for(var myzeroli=0; myzeroli<8; myzeroli++) {for(var myzeroco=0; myzeroco<8; myzeroco++) {matrix_first[myzeroco][myzeroli] = 0}}
     //loop admitted moves
-    alert("first moves nb: "+list_first.length)
     for (li_first = 0; li_first < list_first.length; li_first++) 
         { 
         //get 4 coordinates of move candidate
@@ -73,7 +71,6 @@ function aiturn()
     for(var i=0; i<8; i++) {matrix_second_best[i] = new Array(8);}
     for(var myzeroli=0; myzeroli<8; myzeroli++) {for(var myzeroco=0; myzeroco<8; myzeroco++) {matrix_second_best[myzeroco][myzeroli] = 0}}
     //loop admitted moves
-    alert("second move nb: "+list_second.length)
     for (li_second = 0; li_second < list_second.length; li_second++) 
         { 
         //get 4 coordinates of move candidate
@@ -95,21 +92,47 @@ function aiturn()
     if (evaluate_second >= utility_human)
     {
     utility_human = evaluate_second
-    //set blank matrix to best answer board state
+    
+    
+    //THIRD AI MOVE
+    //3.0 - for a given player color and matrix
+    whoisthinking = -1
+    //we use matrix_second as start point
+    //3.1 - list all legal moves + clear chess-resulting prohibited moves (external fucntions)
+    list_third = listlegalmoves(matrix_second_best);
+    list_third = removechessfromlist(list_third,matrix_second_best);
+    //3.2 - loop all admitted moves, get board rank <reloop here if needed>
+    //creat blank matrix
+    var matrix_third = new Array(8);
+    for(var i=0; i<8; i++) {matrix_third[i] = new Array(8);}
+    for(var myzeroli=0; myzeroli<8; myzeroli++) {for(var myzeroco=0; myzeroco<8; myzeroco++) {matrix_third[myzeroco][myzeroli] = 0}}
+    //loop admitted moves
+    for (li_third = 0; li_third < list_third.length; li_third++) 
+        { 
+        //get 4 coordinates of move candidate
+        starty_third = list_third[li_third][0]
+        startx_third = list_third[li_third][1]
+        stopy_third = list_third[li_third][2]
+        stopx_third = list_third[li_third][3]
+        //set blank matrix to current board state
             for(var myzeroli=0; myzeroli<8; myzeroli++)
                 {for(var myzeroco=0; myzeroco<8; myzeroco++) 
-                    {matrix_second_best[myzeroco][myzeroli] = matrix_second[myzeroco][myzeroli]}}
-        
-    }
+                    {matrix_third[myzeroco][myzeroli] = matrix_second[myzeroco][myzeroli]}}
+        //simulate admitted move in mirrored matrix
+        matrix_third[stopy_third][stopx_third] = matrix_third[starty_third][startx_third]
+        matrix_third[starty_third][startx_third] = 0
+        //evaluate board after move
+        evaluate_third = (matrix_third.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
     
-        //end of second loop (for)
-        }
-
+    
+    
+    
     
         utility_first = evaluate_first - evaluate_zero
         utility_second = utility_human - evaluate_zero
-        
-        utility_function = utility_first - utility_second
+        utility_third = evaluate_third - evaluate_zero
+
+        utility_function = utility_first - utility_second + utility_third
         //keep the move that minimizes the utility_function
         if (utility_function < utility_treshold)
         {
@@ -122,13 +145,20 @@ function aiturn()
         }
 
         
-
-        //end of first loop (for)
+   //end of third loop (for)
         }
+whoisthinking = 1
 
-       
-       
-       
+    //end of best human (if)
+    
+    }
+            
+        //end of second loop (for)
+        }
+    whoisthinking = -1
+    
+  //end of first loop (for)
+        }
        
        
 //end of function
