@@ -149,7 +149,7 @@ function aiturn()
 													stopxchoosen = stopxai
 												}
 										//3 - a non weakest opponent next move is tolerated if in two moves, you are better off than after the first
-												if ((bestaisecond < bestaifirst) && (bestaisecond < bestboardsecondai))
+												if ((bestaisecond < bestboardfound) && (bestaisecond < bestboardsecondai))
 												{
 													startychoosen = startyai
 													startxchoosen = startxai
