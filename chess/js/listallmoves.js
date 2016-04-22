@@ -14,27 +14,27 @@ function listlegalmoves()
 			
 			
 			//white pawn
-			if (mylegstartcell == value_pawn)
+			if (mylegstartcell == value_pawn*whoisthinking)
 			{
 				//can go 1 cell forward if empty
-				if (matrix[mylegco-1][mylegli] == 0)
+				if (matrix[mylegco-1*whoisthinking][mylegli] == 0)
 				{
-				legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-1,mylegli]])
+				legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-1*whoisthinking,mylegli]])
 					//and can go 2 cells fwd if both are empty and is first pawn move
-					if ((matrix[mylegco-2][mylegli] == 0) && (mylegco == 6))
+					if ((matrix[mylegco-2*whoisthinking][mylegli] == 0) && (mylegco == (2.5+3.5*whoisthinking))) // return row 6 for white, row 1 for black
 					{
-					legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-2,mylegli]])
+					legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-2*whoisthinking,mylegli]])
 					}
 				}
 				//can eat black material (<0) in diagonal 1 cell forward, to the left
-				if (matrix[mylegco-1][mylegli-1] < 0)
+				if (matrix[mylegco-1*whoisthinking][mylegli-1]*whoisthinking < 0)
 				{
-					legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-1,mylegli-1]])
+					legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-1*whoisthinking,mylegli-1]])
 				}
 				//can eat black material (<0) in diagonal 1 cell forward, to the right
-				if (matrix[mylegco-1][mylegli+1] < 0)
+				if (matrix[mylegco-1*whoisthinking][mylegli+1]*whoisthinking < 0)
 				{
-					legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-1,mylegli+1]])
+					legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-1*whoisthinking,mylegli+1]])
 				}
 			}
 			
@@ -42,7 +42,7 @@ function listlegalmoves()
 			
 			//white bishop can move in diagonal as long as cells are free, can eat the next immediate black material
 			//so does the queen ;)
-			if ((mylegstartcell == value_bishop) || (mylegstartcell == value_queen)) 
+			if ((mylegstartcell == value_bishop*whoisthinking) || (mylegstartcell == value_queen*whoisthinking)) 
 			{	
 				//up left (- -)
 				cangoahead = 1
@@ -53,12 +53,12 @@ function listlegalmoves()
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli-mylegbishop]])
 					}
-					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop]*whoisthinking < 0) && (cangoahead == 1))
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli-mylegbishop]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco-mylegbishop][mylegli-mylegbishop]*whoisthinking > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
@@ -71,12 +71,12 @@ function listlegalmoves()
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli+mylegbishop]])
 					}
-					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop]*whoisthinking < 0) && (cangoahead == 1))
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegbishop,mylegli+mylegbishop]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco-mylegbishop][mylegli+mylegbishop]*whoisthinking > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
@@ -91,12 +91,12 @@ function listlegalmoves()
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli-mylegbishop]])
 					}
-					if ((matrix[mylegco+mylegbishop][mylegli-mylegbishop] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco+mylegbishop][mylegli-mylegbishop]*whoisthinking < 0) && (cangoahead == 1))
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli-mylegbishop]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco+mylegbishop][mylegli-mylegbishop] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco+mylegbishop][mylegli-mylegbishop]*whoisthinking > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
@@ -109,12 +109,12 @@ function listlegalmoves()
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli+mylegbishop]])
 					}
-					if ((matrix[mylegco+mylegbishop][mylegli+mylegbishop] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco+mylegbishop][mylegli+mylegbishop]*whoisthinking < 0) && (cangoahead == 1))
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegbishop,mylegli+mylegbishop]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco+mylegbishop][mylegli+mylegbishop] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco+mylegbishop][mylegli+mylegbishop]*whoisthinking > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
@@ -124,7 +124,7 @@ function listlegalmoves()
 
 			//white rook can move in line as long as cells are free, can eat the next immediate black material
 			//so does the queen ;)
-			if ((mylegstartcell == value_rook) || (mylegstartcell == value_queen)) 
+			if ((mylegstartcell == value_rook*whoisthinking) || (mylegstartcell == value_queen*whoisthinking)) 
 			{	
 				//up  (- 0)
 				cangoahead = 1
@@ -135,12 +135,12 @@ function listlegalmoves()
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli]])
 					}
-					if ((matrix[mylegco-mylegrook][mylegli] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco-mylegrook][mylegli]*whoisthinking < 0) && (cangoahead == 1))
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco-mylegrook,mylegli]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco-mylegrook][mylegli] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco-mylegrook][mylegli]*whoisthinking > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
@@ -153,12 +153,12 @@ function listlegalmoves()
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli+mylegrook]])
 					}
-					if ((matrix[mylegco][mylegli+mylegrook] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli+mylegrook]*whoisthinking < 0) && (cangoahead == 1))
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli+mylegrook]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco][mylegli+mylegrook] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli+mylegrook]*whoisthinking > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
@@ -173,12 +173,12 @@ function listlegalmoves()
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli]])
 					}
-					if ((matrix[mylegco+mylegrook][mylegli] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco+mylegrook][mylegli]*whoisthinking < 0) && (cangoahead == 1))
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegrook,mylegli]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco+mylegrook][mylegli] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco+mylegrook][mylegli]*whoisthinking > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
@@ -191,12 +191,12 @@ function listlegalmoves()
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli-mylegrook]])
 					}
-					if ((matrix[mylegco][mylegli-mylegrook] < 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli-mylegrook]*whoisthinking < 0) && (cangoahead == 1))
 					{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco,mylegli-mylegrook]])
 						cangoahead = 0
 					}
-					if ((matrix[mylegco][mylegli-mylegrook] > 0) && (cangoahead == 1))
+					if ((matrix[mylegco][mylegli-mylegrook]*whoisthinking > 0) && (cangoahead == 1))
 					{
 						cangoahead = 0
 					}
@@ -206,7 +206,7 @@ function listlegalmoves()
 			
 			//white king can move 1 cell around as long as cells are free, can eat the next immediate black material
 			
-			if (mylegstartcell == value_king) 
+			if (mylegstartcell == value_king*whoisthinking) 
 			{	
 				//around
 				for (var mylegkingx=-1; mylegkingx<=1; mylegkingx++) 
@@ -215,7 +215,7 @@ function listlegalmoves()
 				{
 					if (((Math.abs(mylegkingx)+Math.abs(mylegkingy))>0) && (((mylegco+mylegkingx)>=0) && ((mylegco+mylegkingx)<=7) && ((mylegli+mylegkingy)>=0) && ((mylegli+mylegkingy)<=7))) 
 					{
-						if (matrix[mylegco+mylegkingx][mylegli+mylegkingy] <= 0)
+						if (matrix[mylegco+mylegkingx][mylegli+mylegkingy]*whoisthinking <= 0)
 						{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegkingx,mylegli+mylegkingy]])
 						}
@@ -226,7 +226,7 @@ function listlegalmoves()
 			
 			//white knight do all 3-cells-long moves in a +2/-2 square around it, as long as destination cells are free, can eat the black material
 			
-			if (mylegstartcell == value_knight) 
+			if (mylegstartcell == value_knight*whoisthinking) 
 			{	
 				//around
 				for (var mylegknightx=-2; mylegknightx<=2; mylegknightx++) 
@@ -235,7 +235,7 @@ function listlegalmoves()
 				{
 					if (((Math.abs(mylegknightx)+Math.abs(mylegknighty))==3) && (((mylegco+mylegknightx)>=0) && ((mylegco+mylegknightx)<=7) && ((mylegli+mylegknighty)>=0) && ((mylegli+mylegknighty)<=7))) 
 					{
-						if (matrix[mylegco+mylegknightx][mylegli+mylegknighty] <= 0)
+						if (matrix[mylegco+mylegknightx][mylegli+mylegknighty]*whoisthinking <= 0)
 						{
 						legalmoveslist = legalmoveslist.concat([[mylegco,mylegli,mylegco+mylegknightx,mylegli+mylegknighty]])
 						}
