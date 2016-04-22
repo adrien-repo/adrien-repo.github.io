@@ -68,6 +68,10 @@ function aiturn()
     var matrix_second = new Array(8);
     for(var i=0; i<8; i++) {matrix_second[i] = new Array(8);}
     for(var myzeroli=0; myzeroli<8; myzeroli++) {for(var myzeroco=0; myzeroco<8; myzeroco++) {matrix_second[myzeroco][myzeroli] = 0}}
+    //create blank matrix for best answer
+    var matrix_second_best = new Array(8);
+    for(var i=0; i<8; i++) {matrix_second_best[i] = new Array(8);}
+    for(var myzeroli=0; myzeroli<8; myzeroli++) {for(var myzeroco=0; myzeroco<8; myzeroco++) {matrix_second_best[myzeroco][myzeroli] = 0}}
     //loop admitted moves
     for (li_second = 0; li_second < list_second.length; li_second++) 
         { 
@@ -90,14 +94,23 @@ function aiturn()
     if (evaluate_second >= utility_human)
     {
     utility_human = evaluate_second
+    //set blank matrix to best answer board state
+            for(var myzeroli=0; myzeroli<8; myzeroli++)
+                {for(var myzeroco=0; myzeroco<8; myzeroco++) 
+                    {matrix_second_best[myzeroco][myzeroli] = matrix_second[myzeroco][myzeroli]}}
+        
+    }
+    
+        //end of second loop (for)
+        }
 
     //THIRD AI MOVE
     //3.0 - for a given player color and matrix
     whoisthinking = -1
     //we use matrix_second as start point
     //3.1 - list all legal moves + clear chess-resulting prohibited moves (external fucntions)
-    list_third = listlegalmoves(matrix_second);
-    list_third = removechessfromlist(list_third,matrix_second);
+    list_third = listlegalmoves(matrix_second_best);
+    list_third = removechessfromlist(list_third,matrix_second_best);
     //2.2 - loop all admitted moves, get board rank <reloop here if needed>
     //creat blank matrix
     var matrix_third = new Array(8);
@@ -139,11 +152,7 @@ function aiturn()
         }
  
  
-        //end of treshold-beating filter for human  (if)
-        }
-    
-        //end of second loop (for)
-        }
+        
 
         //end of first loop (for)
         }
