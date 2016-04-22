@@ -148,6 +148,7 @@ function aiturn()
     //loop admitted moves
     for (li_fourth = 0; li_fourth < list_fourth.length; li_fourth++) 
         { 
+        document.getElementById('infotext').innerHTML = "Thinking..("+utility_function+")";
         //get 4 coordinates of move candidate
         starty_fourth = list_fourth[li_fourth][0]
         startx_fourth = list_fourth[li_fourth][1]
@@ -184,8 +185,6 @@ function aiturn()
         stopychoosen = stopy_first
         stopxchoosen = stopx_first
         utility_treshold = utility_function
-        alert(startychoosen+" ** "+startxchoosen+" ** "+stopychoosen+" ** "+stopxchoosen)
-        alert(utility_function)
 
         }
 
