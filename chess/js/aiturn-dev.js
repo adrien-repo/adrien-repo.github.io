@@ -210,6 +210,31 @@ function aiturn()
     //end of first loop (for)
     }
        
-       
+
+if (list_first.length < 1)
+		{
+		document.getElementById('txtbox').innerHTML = "Wow congrats ! White won ! 1-0";
+		drawboard();
+		drawmaterial();
+		return
+		}
+		//need to store back choosen move in startx, etc values for move tb drawed with highlight
+		starty = startychoosen;
+		startx = startxchoosen;
+		stopy = stopychoosen;
+		stopx = stopxchoosen;
+		matrix[stopy][stopx] = matrix[starty][startx]
+		matrix[starty][startx] = 0
+		drawboard();
+		drawmaterial();
+		//update chart for stats
+		var currentrank = (matrix.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
+		mydata.push([myturn,currentrank])
+		myturn=myturn+1;
+		drawChart();
+		document.getElementById('txtbox').innerHTML = "Your turn !";
+		
+		//Human turn now !
+		whoisthinking = 1;
 //end of function
 }        
