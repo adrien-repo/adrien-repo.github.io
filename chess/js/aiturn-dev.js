@@ -104,7 +104,7 @@ function aiturn()
     for(var i=0; i<8; i++) {matrix_third[i] = new Array(8);}
     for(var myzeroli=0; myzeroli<8; myzeroli++) {for(var myzeroco=0; myzeroco<8; myzeroco++) {matrix_third[myzeroco][myzeroli] = 0}}
     //loop admitted moves
-    for (li_third = 0; li_third < list_third.length; li_second++) 
+    for (li_third = 0; li_third < list_third.length; li_third++) 
         { 
         //get 4 coordinates of move candidate
         starty_third = list_third[li_third][0]
