@@ -33,6 +33,8 @@ if (whoisthinking == 1)
 		myturn=myturn+1;
 		drawChart();
 		document.getElementById('txtbox').innerHTML = "Thinking..";
+		document.getElementById('loadingicon').style.visibility="visible";               
+
 		//AI turn now !
 		whoisthinking = -1;
 
