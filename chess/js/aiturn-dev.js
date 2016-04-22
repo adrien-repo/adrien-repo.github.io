@@ -141,7 +141,7 @@ function aiturn()
 													bestboardfound = bestaifirst
 												}
 										//2 - when two moves are competing, play the one that minimize opponent next move impact
-												if ((bestaifirst == bestboardfound) && (strongesthumananswerever == strongesthumananswer))
+												if ((bestaifirst == bestboardfound) && (strongesthumananswerever == strongesthumananswer) & (strongesthumananswer<bestaifirst))
 												{
 													startychoosen = startyai
 													startxchoosen = startxai
