@@ -35,6 +35,14 @@ var stopy = -1
 var startstop = 1 // 1 for start, -1 for stop
 //list of legal moves
 var legalmoveslist = [];
+var whoisthinking = 1 //1 for white human, -1 for black AI
+
+var startychoosen = -9999
+var startxchoosen = -9999
+var stopychoosen = -9999
+var stopxchoosen = -9999
+var bestboardfound = 9999
+		
 </script>
 
 <!-- board material hidden preload-->	
@@ -59,7 +67,7 @@ var legalmoveslist = [];
 	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="list"><i class="material-icons">assignment</i></button>
 	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="navbefore"><i class="material-icons">chevron_left</i></button>
 	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="navnext"><i class="material-icons">chevron_right</i></button>
-	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="showhidestats"><i class="material-icons">timeline</i></button>
+	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" id="showhidestats"><i class="material-icons">timeline</i></button>
 	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="zoomin"><i class="material-icons">add circle outline</i></button>
 	<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="zoomout"><i class="material-icons">remove circle outline</i></button>
 	</p>
@@ -71,8 +79,6 @@ var legalmoveslist = [];
 	</div>
 <!-- chart -->
 	<div id="chart_div" style="display:none;"></div>
-
-
 
 <!-- prod scripts from JS fodler -->
 <script src="/chess/js/statschart.js"></script>
@@ -86,7 +92,7 @@ var legalmoveslist = [];
 
 <!-- dev scripts -->
 <script src="/chess/js/listallmoves.js"></script>
-
+<script src="/chess/js/aiturn.js"></script>
 
 
 </body>
