@@ -18,6 +18,7 @@ function aiturn()
     //init utility_treshold
     utility_treshold = 9999
     utility_human = -9999
+    utility_human_bis = -9999
     
     //assess current board 
     evaluate_zero = (matrix.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
@@ -124,16 +125,57 @@ function aiturn()
         //evaluate board after move
         evaluate_third = (matrix_third.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
     
+    //reset treshold for best fourth move per third move
+    utility_human_bis = -9999
+
     
-    
+    //FOURTH HUMAN MOVE - we assume it plays the best answer to first move
+    //4.0 - for a given player color and matrix
+    whoisthinking = 1
+    //we use matrix_first as start point
+    //4.1 - list all legal moves + clear chess-resulting prohibited moves (external fucntions)
+    list_fourth = listlegalmoves(matrix_third);
+    list_fourth = removechessfromlist(list_fourth,matrix_third);
+    //4.2 - loop all admitted moves, get board rank <reloop here if needed>
+    //creat blank matrix
+    var matrix_fourth = new Array(8);
+    for(var i=0; i<8; i++) {matrix_fourth[i] = new Array(8);}
+    for(var myzeroli=0; myzeroli<8; myzeroli++) {for(var myzeroco=0; myzeroco<8; myzeroco++) {matrix_fourth[myzeroco][myzeroli] = 0}}
+    //create blank matrix for best answer
+    var matrix_fourth_best = new Array(8);
+    for(var i=0; i<8; i++) {matrix_fourth_best[i] = new Array(8);}
+    for(var myzeroli=0; myzeroli<8; myzeroli++) {for(var myzeroco=0; myzeroco<8; myzeroco++) {matrix_fourth_best[myzeroco][myzeroli] = 0}}
+    //loop admitted moves
+    for (li_fourth = 0; li_fourth < list_fourth.length; li_fourth++) 
+        { 
+        //get 4 coordinates of move candidate
+        starty_fourth = list_fourth[li_fourth][0]
+        startx_fourth = list_fourth[li_fourth][1]
+        stopy_fourth = list_fourth[li_fourth][2]
+        stopx_fourth = list_fourth[li_fourth][3]
+        //set blank matrix to current board state
+            for(var myzeroli=0; myzeroli<8; myzeroli++)
+                {for(var myzeroco=0; myzeroco<8; myzeroco++) 
+                    {matrix_second[myzeroco][myzeroli] = matrix_third[myzeroco][myzeroli]}}
+        //simulate admitted move in mirrored matrix
+        matrix_fourth[stopy_fourth][stopx_fourth] = matrix_fourth[starty_fourth][startx_fourth]
+        matrix_fourth[starty_fourth][startx_fourth] = 0
+        //evaluate board after move
+        evaluate_fourth = (matrix_fourth.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
+
+    //here is the selection of best answer-only from human
+    if (evaluate_fourth >= utility_human_bis)
+    {
+    utility_human_bis = evaluate_fourth
     
     
         utility_first = evaluate_first - evaluate_zero
         utility_second = evaluate_second - evaluate_first
         utility_third = evaluate_third - evaluate_second
+        utility_fourth = evaluate_fourth - evaluate_third
 
     
-        utility_function = utility_first + utility_second + utility_third
+        utility_function = utility_first + utility_second + utility_third + utility_fourth
         //keep the move that minimizes the utility_function
         if (utility_function < utility_treshold)
         {
@@ -146,6 +188,12 @@ function aiturn()
         alert(utility_function)
 
         }
+
+//end of best human bis (if)
+    }
+            
+    //end of fourth loop (for)
+    }
 
     //end of third loop (for)
     }
