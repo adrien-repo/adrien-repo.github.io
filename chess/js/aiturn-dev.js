@@ -73,6 +73,7 @@ function aiturn()
     for(var i=0; i<8; i++) {matrix_second_best[i] = new Array(8);}
     for(var myzeroli=0; myzeroli<8; myzeroli++) {for(var myzeroco=0; myzeroco<8; myzeroco++) {matrix_second_best[myzeroco][myzeroli] = 0}}
     //loop admitted moves
+    alert("second move nb: "+list_second.length)
     for (li_second = 0; li_second < list_second.length; li_second++) 
         { 
         //get 4 coordinates of move candidate
