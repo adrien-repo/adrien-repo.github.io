@@ -35,7 +35,10 @@
         	stopx = Math.floor((x-xboard)/cellsize)
         	stopy = Math.floor((y-yboard)/cellsize)
         	}   
-        startstop = startstop * (-1)
-        drawboard();
-	drawmaterial();
+        if (whoisthinking == 1)
+			{
+			startstop = startstop * (-1)
+			drawboard();
+			drawmaterial();
+			}
       }
