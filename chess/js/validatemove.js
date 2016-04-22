@@ -3,7 +3,10 @@ function validatemove()
 	
 if (whoisthinking == 1)
 {
-	legalmoveslist = listlegalmoves(matrix);
+	legalmoveslistbis = listlegalmoves(matrix);
+	legalmoveslist = removechessfromlist(legalmoveslistbis,matrix);
+	
+	
 	var passedtest = 0;
 	var candidatemove = [];
 	candidatemove = candidatemove.concat([[starty,startx,stopy,stopx]])
@@ -53,12 +56,20 @@ if (whoisthinking == 1)
 		myturn=myturn+1;
 		drawChart();
 		document.getElementById('infotext').innerHTML = "Your turn !";
+		if (aifirstlist.length < 1)
+		{
+		document.getElementById('infotext').innerHTML = "Damn it ! White won ! 1-0";
+		}
 		//Human turn now !
 		whoisthinking = 1;
 		
 		
 	} else {
 		document.getElementById('infotext').innerHTML = "You can't do that move :)";
+		if (legalmoveslist.length < 1)
+		{
+		document.getElementById('infotext').innerHTML = "Hmm.. no possible move no ? :) Black won ! 0-1";
+		}
 	}
 }
 
