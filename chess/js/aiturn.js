@@ -4,7 +4,7 @@ function aiturn()
 	
 	
 	
-	//load current baord in tmp variable for tests
+	//creat blank matrix
 	var matrixai = new Array(8);
 	for(var i=0; i<8; i++) 
 	{
@@ -23,6 +23,9 @@ function aiturn()
 	
 	//get legal moves for AI
 	aifirstlist = listlegalmoves(matrix);
+	
+	aifirstlist = removechessfromlist(aifirstlist,matrix);
+	
 	//loop and assess baord value after moving
 		startychoosen = -9999
 		startxchoosen = -9999
@@ -33,7 +36,7 @@ function aiturn()
 	for (lilegalai = 0; lilegalai < aifirstlist.length; lilegalai++) 
 	{ 
 		//simulate move
-		aifirstlist[lilegalai]
+		//aifirstlist[lilegalai]
 		startyai = aifirstlist[lilegalai][0]
 		startxai = aifirstlist[lilegalai][1]
 		stopyai = aifirstlist[lilegalai][2]
@@ -54,6 +57,7 @@ function aiturn()
 		///////////////////////////////////////////////////////////////////
 		whoisthinking = 1
 		playerreactionlist = listlegalmoves(matrixai);
+		playerreactionlist = removechessfromlist(playerreactionlist,matrixai);
 		startyhumananswer = -9999
 		startxhumananswer = -9999
 		stopyhumananswer = -9999
