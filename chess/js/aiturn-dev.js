@@ -14,6 +14,8 @@ function aiturn()
     startxchoosen = -9999
     stopychoosen = -9999
     stopxchoosen = -9999
+    nbtests = 0
+
     
     //init utility_treshold
     utility_treshold = 9999
@@ -148,7 +150,9 @@ function aiturn()
     //loop admitted moves
     for (li_fourth = 0; li_fourth < list_fourth.length; li_fourth++) 
         { 
-        document.getElementById('infotext').innerHTML = "Thinking..("+utility_function+")";
+        nbtests = nbtests+1
+        document.getElementById('infotext').innerHTML = "Thinking..(best: "+utility_treshold+" / "+nbtests+")";
+        
         //get 4 coordinates of move candidate
         starty_fourth = list_fourth[li_fourth][0]
         startx_fourth = list_fourth[li_fourth][1]
