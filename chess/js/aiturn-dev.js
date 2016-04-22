@@ -232,8 +232,9 @@ if (list_first.length < 1)
 		mydata.push([myturn,currentrank])
 		myturn=myturn+1;
 		drawChart();
-		document.getElementById('txtbox').innerHTML = "Studied "+nbtests+" possibilities, (best: "+utility_treshold.toFixed(2)+") - Now, your turn !";
-		
+		document.getElementById('txtbox').innerHTML = "Studied "+nbtests+" games, (best: "+utility_treshold.toFixed(2)+") - Now, your turn !";
+		document.getElementById('loadingicon').style.visibility="hidden";               
+
 		//Human turn now !
 		whoisthinking = 1;
 //end of function
