@@ -3,7 +3,7 @@ function validatemove()
 	
 if (whoisthinking == 1)
 {
-	listlegalmoves();
+	legalmoveslist = listlegalmoves(matrix);
 	var passedtest = 0;
 	var candidatemove = [];
 	candidatemove = candidatemove.concat([[starty,startx,stopy,stopx]])
