@@ -20,7 +20,7 @@ function aiturn()
     
     //assess current board 
     evaluate_zero = (matrix.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
-    
+    alert("current board: "+evaluate_zero)
     //FIRST AI MOVE
     //1.0 - for a given player color and matrix
     whoisthinking = -1 
@@ -34,6 +34,7 @@ function aiturn()
     for(var i=0; i<8; i++) {matrix_first[i] = new Array(8);}
     for(var myzeroli=0; myzeroli<8; myzeroli++) {for(var myzeroco=0; myzeroco<8; myzeroco++) {matrix_first[myzeroco][myzeroli] = 0}}
     //loop admitted moves
+    alert("first moves nb: "+list_first.length)
     for (li_first = 0; li_first < list_first.length; li_first++) 
         { 
         //get 4 coordinates of move candidate
@@ -131,7 +132,7 @@ function aiturn()
 
         //end of third loop
         }
-
+ 
         //end of second loop
         }
 
