@@ -197,16 +197,18 @@ function aiturn()
             
     //end of fourth loop (for)
     }
+    whoisthinking = -1
 
     //end of third loop (for)
     }
+    whoisthinking = 1
 
     //end of best human (if)
     }
             
     //end of second loop (for)
     }
-    
+    whoisthinking = -1
     //end of first loop (for)
     }
        
