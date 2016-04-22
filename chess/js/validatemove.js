@@ -41,6 +41,13 @@ if (whoisthinking == 1)
 		}
 		catch(err) {alert(err.message)
 			}
+		if (aifirstlist.length < 1)
+		{
+		document.getElementById('infotext').innerHTML = "Wow congrats ! White won ! 1-0";
+		drawboard();
+		drawmaterial();
+		return
+		}
 		//need to store back choosen move in startx, etc values for move tb drawed with highlight
 		starty = startychoosen;
 		startx = startxchoosen;
@@ -56,10 +63,7 @@ if (whoisthinking == 1)
 		myturn=myturn+1;
 		drawChart();
 		document.getElementById('infotext').innerHTML = "Your turn !";
-		if (aifirstlist.length < 1)
-		{
-		document.getElementById('infotext').innerHTML = "Damn it ! White won ! 1-0";
-		}
+		
 		//Human turn now !
 		whoisthinking = 1;
 		
