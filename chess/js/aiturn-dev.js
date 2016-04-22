@@ -103,7 +103,7 @@ function aiturn()
         utility_first = evaluate_first - evaluate_zero
         utility_second = evaluate_second - evaluate_first
     
-        utility_function = utility_first - 0.5*utility_second
+        utility_function = utility_first + utility_second
         //keep the move that minimizes the utility_function
         if (utility_function < utility_treshold)
         {
