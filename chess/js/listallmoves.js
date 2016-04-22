@@ -247,5 +247,82 @@ function listlegalmoves(matrixlegal)
 	
 	}
 	}
+	
 	return legalmoveslisted;
+}
+
+
+function removechessfromlist(mylist,mymatrix)
+{
+	//blank
+	legalmovefiltered = []
+	
+	//creat blank matrix
+	var matrixtest = new Array(8);
+	for(var i=0; i<8; i++) 
+	{
+	matrixtest[i] = new Array(8);
+	}
+	//zero the entire board
+	for(var myzeroli=0; myzeroli<8; myzeroli++) 
+	{
+	for(var myzeroco=0; myzeroco<8; myzeroco++) 
+	{
+		matrixtest[myzeroco][myzeroli] = 0
+	}
+	}
+	
+	
+	//loop into the moves of the pre-filtered list
+	
+	for (litest = 0; litest < mylist.length; litest++) 
+	{ 
+		
+		var rejected = 0
+		
+		startytest = mylist[litest][0]
+		startxtest = mylist[litest][1]
+		stopytest = mylist[litest][2]
+		stopxtest = mylist[litest][3]
+	
+		//copy the existing board for test
+			for(var myzeroli=0; myzeroli<8; myzeroli++) 
+			{
+			for(var myzeroco=0; myzeroco<8; myzeroco++) 
+			{
+				matrixtest[myzeroco][myzeroli] = mymatrix[myzeroco][myzeroli]
+			}
+			}
+		//simulate the move
+		matrixtest[stopytest][stopxtest] = matrixtest[startytest][startxtest]
+		matrixtest[startytest][startxtest] = 0
+		
+		
+		//choose the other player point of view
+		whoisthinking = whoisthinking*-1
+		//list its moves
+		consequencelist = listlegalmoves(matrixtest);
+		
+		//take your seat back
+		whoisthinking = whoisthinking*-1
+		//test if a move implies eating the king
+		
+		for (liconsequence = 0; liconsequence < consequencelist.length; liconsequence++) 
+		{
+			
+			if (matrixtest[consequencelist[liconsequence][2]][consequencelist[liconsequence][3]] == whoisthinking*value_king)
+				{
+				
+				rejected = 1
+				}
+			
+			
+		}
+		
+		if (rejected == 0)
+		{
+			legalmovefiltered = legalmovefiltered.concat([[startytest,startxtest,stopytest,stopxtest]])
+		}
+	}
+	return legalmovefiltered;
 }
