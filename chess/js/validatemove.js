@@ -36,11 +36,14 @@ if (whoisthinking == 1)
 		//AI turn now !
 		whoisthinking = -1;
 
+		setTimeout(function() {
 		try {
 		aiturn();
 		}
 		catch(err) {alert(err.message)
 			}
+		}, 0);	
+			
 		if (list_first.length < 1)
 		{
 		document.getElementById('txtbox').value = "Wow congrats ! White won ! 1-0";
