@@ -27,14 +27,20 @@ function listlegalmoves(matrixlegal)
 					}
 				}
 				//can eat black material (<0) in diagonal 1 cell forward, to the left
-				if (matrixlegal[mylegco-1*whoisthinking][mylegli-1]*whoisthinking < 0)
+				if (mylegli > 0)
 				{
+					if (matrixlegal[mylegco-1*whoisthinking][mylegli-1]*whoisthinking < 0)
+					{
 					legalmoveslisted = legalmoveslisted.concat([[mylegco,mylegli,mylegco-1*whoisthinking,mylegli-1]])
+					}
 				}
 				//can eat black material (<0) in diagonal 1 cell forward, to the right
-				if (matrixlegal[mylegco-1*whoisthinking][mylegli+1]*whoisthinking < 0)
+				if (mylegli<7)
 				{
+					if (matrixlegal[mylegco-1*whoisthinking][mylegli+1]*whoisthinking < 0)
+					{
 					legalmoveslisted = legalmoveslisted.concat([[mylegco,mylegli,mylegco-1*whoisthinking,mylegli+1]])
+					}
 				}
 			}
 			
