@@ -235,7 +235,7 @@ if (list_first.length < 1)
 		mydata.push([myturn,currentrank])
 		myturn=myturn+1;
 		drawChart();
-		document.getElementById('txtbox').innerHTML = "Studied "+nbtests.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",")+" games, ("+evaluate_zero.toFixed(2)+" to "+utility_treshold.toFixed(2)+"). Your turn !";
+		document.getElementById('txtbox').innerHTML = "Studied "+nbtests.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",")+" games, best: "+utility_treshold.toFixed(2)+"). Your turn !";
 		document.getElementById('loadingicon').style.visibility="hidden";               
 
 		//Human turn now !
