@@ -96,6 +96,30 @@ function aiturn()
     {
     utility_human = evaluate_second
     
+    //added here to filter best overall move only	
+    } // end if
+    } // end for
+    for (li_second = 0; li_second < list_second.length; li_second++) 
+        { 
+        //get 4 coordinates of move candidate
+        starty_second = list_second[li_second][0]
+        startx_second = list_second[li_second][1]
+        stopy_second = list_second[li_second][2]
+        stopx_second = list_second[li_second][3]
+        //set blank matrix to current board state
+            for(var myzeroli=0; myzeroli<8; myzeroli++)
+                {for(var myzeroco=0; myzeroco<8; myzeroco++) 
+                    {matrix_second[myzeroco][myzeroli] = matrix_first[myzeroco][myzeroli]}}
+        //simulate admitted move in mirrored matrix
+        matrix_second[stopy_second][stopx_second] = matrix_second[starty_second][startx_second]
+        matrix_second[starty_second][startx_second] = 0
+        //evaluate board after move
+        evaluate_second = (matrix_second.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
+
+    //here is the selection of best answer-only from human
+    if (evaluate_second >= utility_human)
+    
+    // end addition
     
     //THIRD AI MOVE
     //3.0 - for a given player color and matrix
@@ -173,7 +197,31 @@ function aiturn()
     {
     utility_human_bis = evaluate_fourth
     
+    //added here to filter out best move only
+    } //end if
+    } // end for
     
+        for (li_fourth = 0; li_fourth < list_fourth.length; li_fourth++) 
+        { 
+        //get 4 coordinates of move candidate
+        starty_fourth = list_fourth[li_fourth][0]
+        startx_fourth = list_fourth[li_fourth][1]
+        stopy_fourth = list_fourth[li_fourth][2]
+        stopx_fourth = list_fourth[li_fourth][3]
+        //set blank matrix to current board state
+            for(var myzeroli=0; myzeroli<8; myzeroli++)
+                {for(var myzeroco=0; myzeroco<8; myzeroco++) 
+                    {matrix_second[myzeroco][myzeroli] = matrix_third[myzeroco][myzeroli]}}
+        //simulate admitted move in mirrored matrix
+        matrix_fourth[stopy_fourth][stopx_fourth] = matrix_fourth[starty_fourth][startx_fourth]
+        matrix_fourth[starty_fourth][startx_fourth] = 0
+        //evaluate board after move
+        evaluate_fourth = (matrix_fourth.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
+
+    //here is the selection of best answer-only from human
+    if (evaluate_fourth >= utility_human_bis)
+    {
+    	
         utility_first = evaluate_first - evaluate_zero
         utility_second = evaluate_second - evaluate_first
         utility_third = evaluate_third - evaluate_second
