@@ -216,6 +216,7 @@ function aiturn()
 if (list_first.length < 1)
 		{
 		document.getElementById('txtbox').innerHTML = "Wow congrats ! White won ! 1-0";
+		document.getElementById('loadingicon').style.visibility="hidden";               
 		drawboard();
 		drawmaterial();
 		return
