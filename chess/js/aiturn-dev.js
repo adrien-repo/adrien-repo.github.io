@@ -117,7 +117,9 @@ function aiturn()
         evaluate_second = (matrix_second.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
 
     //here is the selection of best answer-only from human
-    if (evaluate_second >= utility_human)
+    if (evaluate_second == utility_human)
+    {
+    	
     
     // end addition
     
@@ -219,7 +221,7 @@ function aiturn()
         evaluate_fourth = (matrix_fourth.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
 
     //here is the selection of best answer-only from human
-    if (evaluate_fourth >= utility_human_bis)
+    if (evaluate_fourth == utility_human_bis)
     {
     	
         utility_first = evaluate_first - evaluate_zero
