@@ -180,7 +180,7 @@ function aiturn()
         utility_fourth = evaluate_fourth - evaluate_third
 
     
-        utility_function = evaluate_fourth //-utility_first + utility_second - utility_third + utility_fourth
+        utility_function = 0.5*evaluate_second + 0.5*evaluate_fourth //-utility_first + utility_second - utility_third + utility_fourth
         //keep the move that minimizes the utility_function
         if (utility_function < utility_treshold)
         {
