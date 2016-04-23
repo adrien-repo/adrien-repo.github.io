@@ -21,7 +21,7 @@ function listlegalmoves(matrixlegal)
 				{
 				legalmoveslisted = legalmoveslisted.concat([[mylegco,mylegli,mylegco-1*whoisthinking,mylegli]])
 					//and can go 2 cells fwd if both are empty and is first pawn move
-					if ((matrixlegal[mylegco-2*whoisthinking][mylegli] == 0) && (mylegco == (2.5+3.5*whoisthinking))) // return row 6 for white, row 1 for black
+					if ((matrixlegal[mylegco-2*whoisthinking][mylegli] == 0) && (mylegco == (2.5*whoisthinking+3.5))) // return row 6 for white, row 1 for black
 					{
 					legalmoveslisted = legalmoveslisted.concat([[mylegco,mylegli,mylegco-2*whoisthinking,mylegli]])
 					}
