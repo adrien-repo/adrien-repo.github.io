@@ -180,7 +180,7 @@ function aiturn()
         utility_fourth = evaluate_fourth - evaluate_third
 
     
-        utility_function = evaluate_second //-utility_first + utility_second - utility_third + utility_fourth
+        utility_function = 0.5*evaluate_first + 0.5*evaluate_fourth //-utility_first + utility_second - utility_third + utility_fourth
         //keep the move that minimizes the utility_function
         if (utility_function < utility_treshold)
         {
@@ -234,7 +234,7 @@ if (list_first.length < 1)
 		mydata.push([myturn,currentrank])
 		myturn=myturn+1;
 		drawChart();
-		//document.getElementById('txtbox').innerHTML = "Studied "+nbtests.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" games, (best: "+utility_treshold.toFixed(2)+"). Your turn !";
+		document.getElementById('txtbox').innerHTML = "Studied "+nbtests.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",")+" games, (best: "+utility_treshold.toFixed(2)+"). Your turn !";
 		document.getElementById('loadingicon').style.visibility="hidden";               
 
 		//Human turn now !
