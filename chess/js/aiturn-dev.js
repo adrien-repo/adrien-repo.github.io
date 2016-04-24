@@ -19,6 +19,7 @@ function aiturn()
     
     //init utility_treshold
     utility_treshold = 9999
+    utility_treshold_move = 9999
     utility_human = -9999
     utility_human_bis = -9999
     
@@ -230,18 +231,22 @@ function aiturn()
         utility_fourth = evaluate_fourth - evaluate_third
 
     
-        utility_function = (0*evaluate_first + 0.6*evaluate_second + 0*evaluate_third + 0.3*evaluate_fourth)/(0.9) //-utility_first + utility_second - utility_third + utility_fourth
+        utility_function = (0.1*evaluate_first + 0.6*evaluate_second + 0.1*evaluate_third + 0.3*evaluate_fourth)/(1.2) //-utility_first + utility_second - utility_third + utility_fourth
+        utility_fuction_move = (0.5*evaluate_first + 0.5*evaluate_third)/(1)
         //keep the move that minimizes the utility_function
-        if (utility_function < utility_treshold)
+        if (utility_function <= utility_treshold)
         {
-        startychoosen = starty_first
-        startxchoosen = startx_first
-        stopychoosen = stopy_first
-        stopxchoosen = stopx_first
-        utility_treshold = utility_function
-
+	        if (utility_function_move < utility_treshold_move)
+	        {
+	        startychoosen = starty_first
+	        startxchoosen = startx_first
+	        stopychoosen = stopy_first
+	        stopxchoosen = stopx_first
+	        utility_treshold = utility_function
+		utility_treshold_move = utility_function_move
+	        }
         }
-
+        
 //end of best human bis (if)
     }
             
