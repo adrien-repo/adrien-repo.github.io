@@ -232,7 +232,7 @@ function aiturn()
 
     
         utility_function = (0.1*evaluate_first + 0.6*evaluate_second + 0.1*evaluate_third + 0.3*evaluate_fourth)/(1.2) //-utility_first + utility_second - utility_third + utility_fourth
-        utility_fuction_move = (0.5*evaluate_first + 0.5*evaluate_third)/(1)
+        utility_function_move = (0.5*evaluate_first + 0.5*evaluate_third)/(1)
         //keep the move that minimizes the utility_function
         if (utility_function <= utility_treshold)
         {
