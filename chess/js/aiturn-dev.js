@@ -230,7 +230,7 @@ function aiturn()
         utility_fourth = evaluate_fourth - evaluate_third
 
     
-        utility_function = (0.2*evaluate_first + 0.6*evaluate_second + 0.2*evaluate_third + 0.6*evaluate_fourth)/(1.6) //-utility_first + utility_second - utility_third + utility_fourth
+        utility_function = (0*evaluate_first + 0.6*evaluate_second + 0*evaluate_third + 0.3*evaluate_fourth)/(0.9) //-utility_first + utility_second - utility_third + utility_fourth
         //keep the move that minimizes the utility_function
         if (utility_function < utility_treshold)
         {
