@@ -14,10 +14,11 @@ function listlegalmoves(matrixlegal)
 			
 			
 			//white pawn
-			if (mylegstartcell == value_pawn*whoisthinking)
+			if ((mylegstartcell == value_pawn*whoisthinking) && ((mylegco-1*whoisthinking)>0) && ((mylegco-1*whoisthinking)<7))
 			{
 				//can go 1 cell forward if empty
-				if (matrixlegal[mylegco-1*whoisthinking][mylegli] == 0)
+				
+				if (matrixlegal[mylegco-1*whoisthinking][mylegli] == 0) 
 				{
 				legalmoveslisted = legalmoveslisted.concat([[mylegco,mylegli,mylegco-1*whoisthinking,mylegli]])
 					//and can go 2 cells fwd if both are empty and is first pawn move
@@ -26,6 +27,7 @@ function listlegalmoves(matrixlegal)
 					legalmoveslisted = legalmoveslisted.concat([[mylegco,mylegli,mylegco-2*whoisthinking,mylegli]])
 					}
 				}
+				
 				//can eat black material (<0) in diagonal 1 cell forward, to the left
 				if (mylegli > 0)
 				{
