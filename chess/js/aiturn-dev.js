@@ -52,6 +52,11 @@ function aiturn()
         //simulate admitted move in mirrored matrix
         matrix_first[stopy_first][stopx_first] = matrix_first[starty_first][startx_first]
         matrix_first[starty_first][startx_first] = 0
+                //pawn promotion for black
+		if ((matrix[stopy_first][stopx_first] == -1*value_pawn) && (stopy == 7))
+		{
+		matrix[stopy_first][stopx_first] = -1*value_queen
+		}
         //evaluate board after move
         evaluate_first = (matrix_first.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
         
@@ -89,6 +94,11 @@ function aiturn()
         //simulate admitted move in mirrored matrix
         matrix_second[stopy_second][stopx_second] = matrix_second[starty_second][startx_second]
         matrix_second[starty_second][startx_second] = 0
+        	//pawn promotion for white
+		if ((matrix[stopy_second][stopx_second] == value_pawn) && (stopy == 0))
+		{
+		matrix[stopy_second][stopx_second] = value_queen
+		}
         //evaluate board after move
         evaluate_second = (matrix_second.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
 
@@ -151,6 +161,11 @@ function aiturn()
         //simulate admitted move in mirrored matrix
         matrix_third[stopy_third][stopx_third] = matrix_third[starty_third][startx_third]
         matrix_third[starty_third][startx_third] = 0
+                //pawn promotion for black
+		if ((matrix[stopy_third][stopx_third] == -1*value_pawn) && (stopy == 7))
+		{
+		matrix[stopy_third][stopx_third] = -1*value_queen
+		}
         //evaluate board after move
         evaluate_third = (matrix_third.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
     
@@ -192,6 +207,11 @@ function aiturn()
         //simulate admitted move in mirrored matrix
         matrix_fourth[stopy_fourth][stopx_fourth] = matrix_fourth[starty_fourth][startx_fourth]
         matrix_fourth[starty_fourth][startx_fourth] = 0
+                //pawn promotion for white
+		if ((matrix[stopy_fourth][stopx_fourth] == value_pawn) && (stopy == 0))
+		{
+		matrix[stopy_fourth][stopx_fourth] = value_queen
+		}
         //evaluate board after move
         evaluate_fourth = (matrix_fourth.reduce(function(a,b) { return a.concat(b) }).reduce(function(a,b) { return a + b })).toFixed(2)
 
