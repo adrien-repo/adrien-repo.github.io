@@ -14,7 +14,7 @@ function listlegalmoves(matrixlegal)
 			
 			
 			//white pawn
-			if ((mylegstartcell == value_pawn*whoisthinking) && ((mylegco)>0) && ((mylegco)<7))
+			if ((mylegstartcell == value_pawn*whoisthinking) && (mylegco>0) && (mylegco<7))
 			{
 				//can go 1 cell forward if empty
 				
