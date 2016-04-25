@@ -53,7 +53,7 @@ function aiturn()
         matrix_first[stopy_first][stopx_first] = matrix_first[starty_first][startx_first]
         matrix_first[starty_first][startx_first] = 0
                 //pawn promotion for black
-		if ((matrix[stopy_first][stopx_first] == -1*value_pawn) && (stopy == 7))
+		if ((matrix[stopy_first][stopx_first] == -1*value_pawn) && (stopy_first == 7))
 		{
 		matrix[stopy_first][stopx_first] = -1*value_queen
 		}
@@ -95,7 +95,7 @@ function aiturn()
         matrix_second[stopy_second][stopx_second] = matrix_second[starty_second][startx_second]
         matrix_second[starty_second][startx_second] = 0
         	//pawn promotion for white
-		if ((matrix[stopy_second][stopx_second] == value_pawn) && (stopy == 0))
+		if ((matrix[stopy_second][stopx_second] == value_pawn) && (stopy_second == 0))
 		{
 		matrix[stopy_second][stopx_second] = value_queen
 		}
@@ -162,7 +162,7 @@ function aiturn()
         matrix_third[stopy_third][stopx_third] = matrix_third[starty_third][startx_third]
         matrix_third[starty_third][startx_third] = 0
                 //pawn promotion for black
-		if ((matrix[stopy_third][stopx_third] == -1*value_pawn) && (stopy == 7))
+		if ((matrix[stopy_third][stopx_third] == -1*value_pawn) && (stopy_third == 7))
 		{
 		matrix[stopy_third][stopx_third] = -1*value_queen
 		}
@@ -208,7 +208,7 @@ function aiturn()
         matrix_fourth[stopy_fourth][stopx_fourth] = matrix_fourth[starty_fourth][startx_fourth]
         matrix_fourth[starty_fourth][startx_fourth] = 0
                 //pawn promotion for white
-		if ((matrix[stopy_fourth][stopx_fourth] == value_pawn) && (stopy == 0))
+		if ((matrix[stopy_fourth][stopx_fourth] == value_pawn) && (stopy_fourth == 0))
 		{
 		matrix[stopy_fourth][stopx_fourth] = value_queen
 		}
