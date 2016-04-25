@@ -24,6 +24,13 @@ if (whoisthinking == 1)
 		//make move in matrix and render
 		matrix[stopy][stopx] = matrix[starty][startx]
 		matrix[starty][startx] = 0
+		
+		//pawn promotion for white
+		if ((matrix[stopy][stopx] == value_pawn) && (stopy == 0))
+			{
+			matrix[stopy][stopx] = value_queen
+			}
+		
 		drawboard();
 		drawmaterial();
 		
