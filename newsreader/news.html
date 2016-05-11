@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News</title>
+<meta name="mobile-web-app-capable" content="yes">
+
+<style>
+a:link {    text-decoration: none; color: blue;}
+a:visited {    text-decoration: none;color: blue;}
+a:hover {    text-decoration: underline;}
+a:active {    text-decoration: underline;}
+</style>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+var a = [
+
+"https://api.breakingnews.com/api/v1/item/?format=rss",
+"http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+"http://www.wsj.com/xml/rss/3_7085.xml",
+"http://rss.lemonde.fr/c/205/f/3050/index.rss",
+"http://www.latimes.com/rss2.0.xml",
+"http://www.theage.com.au/rssheadlines/top.xml",
+"http://feeds.reuters.com/ReutersPictures",
+
+"http://longform.org/feed.rss",
+"http://feeds.feedburner.com/TheAtlantic",
+"http://fusion.net/feed/",
+"http://www.newyorker.com/feed/everything",
+"http://feeds.feedburner.com/nybooks",
+"http://harpers.org/feed/",
+
+"https://www.quantamagazine.org/feed/",
+"http://www.symmetrymagazine.org/feed",
+"https://www.edge.org/feed",
+
+"http://export.arxiv.org/rss/q-fin",
+"http://www.bloombergview.com/rss/contributors/matt-levine.rss",
+"http://www.bloombergview.com/rss/contributors/the-editors.rss",
+"http://www.euromoney.com/RSS.aspx?FeedID=13",
+"http://feeds.feedburner.com/zerohedge/feed",
+"http://feeds.benzinga.com/benzinga/news",
+"http://feeds.feedburner.com/MisesDailyArticles"
+
+
+]
+
+
+google.load("feeds", "1");
+function create(htmlStr)
+{
+var frag = document.createDocumentFragment(),
+temp = document.createElement('div');
+temp.innerHTML = htmlStr;
+while (temp.firstChild) 
+	{
+        frag.appendChild(temp.firstChild);
+    	}
+return frag;
+}
+function initialize() 
+{
+for (var i in a) {
+	var rssadress = a[i]
+	
+	var feed = new google.feeds.Feed(rssadress);
+	feed.setNumEntries(10);
+	feed.load(function(result) 
+	{
+	if (!result.error) 
+        {
+		var container = document.getElementById("feed");
+			document.getElementById("content").innerHTML+= '<b>'+result.feed.title+'</b><br>'
+			
+			
+			for (var i = 0; i < result.feed.entries.length; i++) 
+				{
+				
+				var entry = result.feed.entries[i];
+				if (i == 0)
+				{
+				document.getElementById("headlines").innerHTML+= result.feed.title+' :: <a href="'+entry.link+'">'+entry.title+'</a><br>'
+				}
+				document.getElementById("content").innerHTML+= '<a href="'+entry.link+'">'+entry.title+'</a> '+entry.contentSnippet+'<br>'
+				}
+			document.getElementById("content").innerHTML+= '<br>'
+		}
+	}
+)}
+;
+}
+google.setOnLoadCallback(initialize);
+</script>
+</head>
+<body>
+<b> HEADLINES </b>
+<div id="headlines"></div>
+<br>
+<br>
+
+<div id="content"></div>
+</body>
+</html>
