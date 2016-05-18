@@ -10,7 +10,21 @@ a:visited {    text-decoration: none;color: blue;}
 a:hover {    text-decoration: underline;}
 a:active {    text-decoration: underline;}
 </style>
+
+<script type="text/javascript">
+    function toggle_visibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+    }
+
+</script>  
+
 </head>
+
+
 <body>
 <b>Adrien's Repository</b>
 <br> 
@@ -26,9 +40,9 @@ a:active {    text-decoration: underline;}
 
 <a href="/photographies/photographies.html">Photographies</a>
 <br>
-<a href="">Books</a>
+Books
 <br>
-<a href="">Research</a>
+Research
 <br>
 <a href="/newsreader/news.html">News Reader</a>
 <br>
@@ -37,18 +51,31 @@ a:active {    text-decoration: underline;}
 
 <br>
 
-Hi there ! My name is Adrien, I am a 30 y.o. French engineer and geographer living in Montreux, Switzerland.
-<br><br>
-I work in the hedge fund space, assisting research for a multi-family office to source all liquid strategies and implement equity-focused portfolio management. I have a deep interest in quantitative finance and statistical modeling though I try not to be overly impressed by mathematical elegance - at least, during working hours ! You will find listed the personal pages of some researchers and professors I highly regard. 
-<br><br>
-Prior to that, I have held various roles in agricultural commodities trading, the Ministry of Defense, and a large French NGO I am still a member of. Travel broadens the mind and I have now embarked on another kind of lifelong journey in marrying the amazing Jessica. We are lucky being surrounded by lovely families and friends, and are the proud owners of a small dog. We have shared beautiful moments in places grouped in the Photographies section.
-<br><br>
-I am a heavy reader and appreciate watching documentaries. I also irregularly attend online courses on scientific subjects. I enjoy daily chess playing and occasionally do home-brewing, both with more or less success.
-<br><br>
-I have built this site as a substitute for social platforms I found too time-consuming, and to host some extra-professional coding projects. Have a nice tour !
-<br><br>
 
 
+<a href="#" onclick="toggle_visibility('aboutid');">About</a>
+<div id="aboutid" style="display: none">
+	<br><br>
+	Hi there ! 
+	<br><br>
+	My name is Adrien, I am a 30 y.o. French engineer and geographer living in Montreux, Switzerland.
+	<br><br>
+	I work in the hedge fund space, assisting research for a multi-family office to source all liquid strategies and implement equity-focused portfolio management. I have a deep interest in quantitative finance and statistical modeling though I try not to be overly impressed by mathematical elegance - at least, during working hours ! You will find listed the personal pages of some researchers and professors I highly regard. 
+	<br><br>
+	Prior to that, I have held various roles in agricultural commodities trading, the Ministry of Defense, and a large French NGO I am still a member of. Travel broadens the mind and I have now embarked on another kind of lifelong journey in marrying the amazing Jessica. We are lucky being surrounded by lovely families and friends, and are the proud owners of a small dog. We have shared beautiful moments in places grouped in the Photographies section.
+	<br><br>
+	I am a heavy reader and appreciate watching documentaries. I also irregularly attend online courses on scientific subjects. I enjoy daily chess playing and occasionally do home-brewing, both with more or less success.
+	<br><br>
+	I have built this site as a substitute for social platforms I found too time-consuming, and to host some extra-professional coding projects. 
+	<br><br>
+	Have a nice tour !
+	<br><br>
+</div>
+
+
+
+  
+  
+  
 </body>
-
 </html>
