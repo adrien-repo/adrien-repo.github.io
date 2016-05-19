@@ -17,8 +17,6 @@ header{     font-size: 20px;    text-transform: uppercase;    line-height: 30px;
 .collumn{	width: 340px;    display: inline-block;    vertical-align: top;    margin-bottom: 5px;	margin-right: 5px;    background-color:#F9F9F9}
 </style>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script src="jquery.simpleWeather.js"></script>
 
 <script type="text/javascript">
 var a = [
@@ -130,28 +128,9 @@ for (var i in a) {
 }
 google.setOnLoadCallback(initialize);
 </script>
-<script>
-$(document).ready(function() {
-var wthloc = ['782538','615702','2459115','2423945']
-for (var loopwth in wthloc) 
-	{
-	var mywoeid = wthloc[loopwth]
-	$.simpleWeather({
-	zipcode: '',woeid: mywoeid,location: '',unit: 'c',success: function(weather) 
-		{
-		html = '<b>'+weather.city+'</b>';
-		html += ' '+weather.temp+'&deg;'+weather.units.temp+' ';
-		html += ''+weather.currently+' ';
-		document.getElementById("weather").innerHTML+= html;
-		},
-	});
-	}
-});
-</script>
 </head>
 <body>
 
-<div id="weather"></div>
   <div class="subhead"><div id="breakingnews"></div></div>
   <div class="photosday"><div id="photooftheday"></div></div>
 	<div id="headlines"></div>
