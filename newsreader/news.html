@@ -6,8 +6,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <style>
-a:link {    text-decoration: none; color: blue;}
-a:visited {    text-decoration: none;color: blue;}
+a:link {    text-decoration: none; color: black;}
+a:visited {    text-decoration: none;color: black;}
 a:hover {    text-decoration: underline;}
 a:active {    text-decoration: underline;}
 header{     font-size: 20px;    text-transform: uppercase;    line-height: 30px;    margin-bottom: 5px;}
@@ -93,7 +93,7 @@ for (var i in a) {
 					if (strtxt.indexOf("@") > 50) 
 						{strtxt = strtxt.substring(0,strtxt.indexOf("@"))}; // kick end hashtags
 					
-					document.getElementById("photooftheday").innerHTML+=  '<div class="collumn">'+str+'<br>'+ strtxt + '</div>'
+					document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br>'+ strtxt + '</div>'
 					}
 				}
 			
@@ -101,7 +101,7 @@ for (var i in a) {
 			} else {
 					
 
-				document.getElementById("content").innerHTML+= '<div class="subhead"><b>'+result.feed.title+'</b><div>'
+				document.getElementById("content").innerHTML+= '<div class="subhead" id="' + result.feed.title + '"><b>'+result.feed.title+'</b><div>'
 				for (var i = 0; i < result.feed.entries.length; i++) 
 					{
 					var entry = result.feed.entries[i];
@@ -112,9 +112,9 @@ for (var i in a) {
 					}
 					if (i == 0)
 					{
-					document.getElementById("headlines").innerHTML+= '<div class="collumn"><b>'+result.feed.title+'</b><br><a href="'+entry.link+'">'+entry.title+'</a><br>'+entry.contentSnippet+'</div>'
+					document.getElementById("headlines").innerHTML+= '<div class="collumn"><a href="#' + result.feed.title + '">'+result.feed.title+'</a><br><b><a href="'+entry.link+'">'+entry.title+'</a></b><br>'+entry.contentSnippet+'</div>'
 					}
-					document.getElementById("content").innerHTML+= '<a href="'+entry.link+'">'+entry.title+'</a> '+entry.contentSnippet+'<br>'
+					document.getElementById("content").innerHTML+= '<a href="'+entry.link+'">'+entry.title+'</a><font color="grey"> '+entry.contentSnippet+'</font><br>'
 					}
 				document.getElementById("content").innerHTML+= '<br>'
 			}
