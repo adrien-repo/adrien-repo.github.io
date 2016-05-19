@@ -10,43 +10,15 @@ a:link {    text-decoration: none; color: blue;}
 a:visited {    text-decoration: none;color: blue;}
 a:hover {    text-decoration: underline;}
 a:active {    text-decoration: underline;}
-
-header{
-    font-size: 20px;
-    text-transform: uppercase;
-    line-height: 30px;
-    margin-bottom: 5px;
-
-}
-
-.subhead{
-    text-transform: uppercase;
-    border-bottom: 1px solid;
-    border-top: 1px solid;
-    padding: 5px 0 5px 0;
-	margin-bottom: 5px;
-}
-
-.collumn{
-	width: 340px;
-    display: inline-block;
-    vertical-align: top;
-    margin-bottom: 5px;
-	margin-right: 5px;
-    background-color:#F9F9F9
-}
-
-
-
-
+header{     font-size: 20px;    text-transform: uppercase;    line-height: 30px;    margin-bottom: 5px;}
+.subhead{    text-transform: uppercase;    border-bottom: 1px solid;    border-top: 1px solid;    padding: 5px 0 5px 0;	margin-bottom: 5px;}
+.photosday{  font-size: 12px;  border-bottom: 1px solid;    padding: 5px 0 5px 0;	margin-bottom: 5px;}
+.collumn{	width: 340px;    display: inline-block;    vertical-align: top;    margin-bottom: 5px;	margin-right: 5px;    background-color:#F9F9F9}
 </style>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-
 <script type="text/javascript">
-
 var a = [
-
 "https://api.breakingnews.com/api/v1/item/?format=rss",
 "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
 "http://lens.blogs.nytimes.com/feed/",
@@ -55,7 +27,6 @@ var a = [
 "http://www.latimes.com/rss2.0.xml",
 "http://www.theage.com.au/rssheadlines/top.xml",
 "http://feeds.reuters.com/ReutersPictures",
-
 "http://longform.org/feed.rss",
 "http://feeds.feedburner.com/TheAtlantic",
 "http://fusion.net/feed/",
@@ -63,22 +34,18 @@ var a = [
 "http://feeds.feedburner.com/nybooks",
 "http://harpers.org/feed/",
 "http://feeds.feedburner.com/motherjones/BlogsAndArticles",
-
 "https://www.quantamagazine.org/feed/",
 "http://www.symmetrymagazine.org/feed",
 "https://www.edge.org/feed",
-
 "http://export.arxiv.org/rss/q-fin",
 "http://www.bloombergview.com/rss/contributors/matt-levine.rss",
 "http://www.bloombergview.com/rss/contributors/the-editors.rss",
 "http://www.euromoney.com/RSS.aspx?FeedID=13",
 "http://feeds.benzinga.com/benzinga/news",
-"http://feeds.feedburner.com/MisesDailyArticles"
+"http://feeds.feedburner.com/MisesDailyArticles",
 
-
+"http://widget.websta.me/rss/n/afpphoto"
 ]
-
-
 google.load("feeds", "1");
 function create(htmlStr)
 {
@@ -93,9 +60,7 @@ return frag;
 }
 function initialize() 
 {
-
 var maintitle = 0
-
 for (var i in a) {
 	var rssadress = a[i]
 	
@@ -106,25 +71,54 @@ for (var i in a) {
 	if (!result.error) 
         {
 		var container = document.getElementById("feed");
-			document.getElementById("content").innerHTML+= '<div class="subhead"><b>'+result.feed.title+'</b><div>'
+		if (result.feed.title == '@afpphoto - WEBSTA')
+			{
 			
-			
-			for (var i = 0; i < result.feed.entries.length; i++) 
+			for (var i = 0; i < result.feed.entries.length; i++)
 				{
-				
 				var entry = result.feed.entries[i];
-				if(maintitle == 0)
-				{
-				document.getElementById("breakingnews").innerHTML+= '<b><h1>'+entry.title+'</h1></b>'
-				maintitle = 1
+				if (i < 5)
+					{
+					var str = entry.content 
+					str = str.substring(str.indexOf("<img") + 1); // kick logo
+					str = str.substring(str.indexOf("<img") + 1); //start url
+					str = str.substring(0,str.indexOf(">") + 1); // end url
+					str = '<'+str
+					
+					strtxt = entry.title
+					strtxt = strtxt.substring(strtxt.indexOf(" ") + 1); // kick header
+					strtxt = strtxt.substring(strtxt.indexOf(" ") + 1); // kick header
+					if (strtxt.indexOf("#") > 50) 
+						{strtxt = strtxt.substring(0,strtxt.indexOf("#"))}; // kick end hashtags
+					if (strtxt.indexOf("@") > 50) 
+						{strtxt = strtxt.substring(0,strtxt.indexOf("@"))}; // kick end hashtags
+					
+					document.getElementById("photooftheday").innerHTML+=  '<div class="collumn">'+str+'<br>'+ strtxt + '</div>'
+					}
 				}
-				if (i == 0)
-				{
-				document.getElementById("headlines").innerHTML+= '<div class="collumn"><b>'+result.feed.title+'</b><br><a href="'+entry.link+'">'+entry.title+'</a><br>'+entry.contentSnippet+'</div>'
-				}
-				document.getElementById("content").innerHTML+= '<a href="'+entry.link+'">'+entry.title+'</a> '+entry.contentSnippet+'<br>'
-				}
-			document.getElementById("content").innerHTML+= '<br>'
+			
+			
+			} else {
+					
+
+				document.getElementById("content").innerHTML+= '<div class="subhead"><b>'+result.feed.title+'</b><div>'
+				for (var i = 0; i < result.feed.entries.length; i++) 
+					{
+					var entry = result.feed.entries[i];
+					if(maintitle == 0)
+					{
+					document.getElementById("breakingnews").innerHTML+= '<b><h1>'+entry.title+'</h1></b>'
+					maintitle = 1
+					}
+					if (i == 0)
+					{
+					document.getElementById("headlines").innerHTML+= '<div class="collumn"><b>'+result.feed.title+'</b><br><a href="'+entry.link+'">'+entry.title+'</a><br>'+entry.contentSnippet+'</div>'
+					}
+					document.getElementById("content").innerHTML+= '<a href="'+entry.link+'">'+entry.title+'</a> '+entry.contentSnippet+'<br>'
+					}
+				document.getElementById("content").innerHTML+= '<br>'
+			}
+			
 		}
 	}
 )}
@@ -132,16 +126,14 @@ for (var i in a) {
 }
 google.setOnLoadCallback(initialize);
 </script>
-
 </head>
 <body>
 <header><b>Headlines</b></header>  
   <div class="subhead"><div id="breakingnews"></div></div>
+  <div class="photosday"><div id="photooftheday"></div></div>
 	<div id="headlines"></div>
 <br>
 <br>
-
 <div id="content"></div>
 </body>
-
 </html>
