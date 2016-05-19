@@ -103,7 +103,7 @@ for (var i in a) {
 			} else {
 					
 
-				document.getElementById("content").innerHTML+= '<div class="subhead" id="' + result.feed.title + '"><b>'+result.feed.title+'</b><div>'
+				document.getElementById("content").innerHTML+= '<div class="subhead" id="' + result.feed.title + '"><b><a href="#top">'+result.feed.title+'</a></b><div>'
 				for (var i = 0; i < result.feed.entries.length; i++) 
 					{
 					var entry = result.feed.entries[i];
