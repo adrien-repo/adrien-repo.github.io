@@ -20,9 +20,19 @@ header{     font-size: 20px;    text-transform: uppercase;    line-height: 30px;
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 <script type="text/javascript">
-var a = [
-"http://widget.websta.me/rss/n/afpphoto",
 
+var rdpicsrc = parseInt((Math.random() * (5 - 1 + 1)), 10) + 1
+
+//default
+var aphotos = ["http://widget.websta.me/rss/n/afpphoto"]
+if (rdpicsrc == 1) {var aphotos = ["http://widget.websta.me/rss/n/afpphoto"]}
+if (rdpicsrc == 2) {var aphotos = ["http://widget.websta.me/rss/n/reuters"]}
+if (rdpicsrc == 3) {var aphotos = ["http://widget.websta.me/rss/n/wsj"]}
+if (rdpicsrc == 4) {var aphotos = ["http://widget.websta.me/rss/n/lemondefr"]}
+if (rdpicsrc == 5) {var aphotos = ["http://widget.websta.me/rss/n/nytimes"]}
+
+
+var aarticles = [
 "https://api.breakingnews.com/api/v1/item/?format=rss",
 "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
 "http://lens.blogs.nytimes.com/feed/",
@@ -48,8 +58,10 @@ var a = [
 "http://feeds.benzinga.com/benzinga/news",
 "http://feeds.feedburner.com/MisesDailyArticles",
 "https://googleblog.blogspot.ch/feeds/posts/default?alt=rss"
-
 ]
+
+var a = aphotos.concat(aarticles);
+
 google.load("feeds", "1");
 function create(htmlStr)
 {
@@ -75,7 +87,7 @@ for (var i in a) {
 	if (!result.error) 
         {
 		var container = document.getElementById("feed");
-		if (result.feed.title == '@afpphoto - WEBSTA')
+		if (result.feed.title.substr(result.feed.title.length - 6) == 'WEBSTA')
 			{
 			
 			for (var i = 0; i < result.feed.entries.length; i++)
@@ -89,13 +101,10 @@ for (var i in a) {
 					str = str.substring(0,str.indexOf(">") + 1); // end url
 					str = '<'+str
 					
-					strtxt = entry.title
-					strtxt = strtxt.substring(strtxt.indexOf(" ") + 1); // kick header
-					strtxt = strtxt.substring(strtxt.indexOf(" ") + 1); // kick header
-					if (strtxt.indexOf("#") > 50) 
-						{strtxt = strtxt.substring(0,strtxt.indexOf("#"))}; // kick end hashtags
-					if (strtxt.indexOf("@") > 50) 
-						{strtxt = strtxt.substring(0,strtxt.indexOf("@"))}; // kick end hashtags
+					var strtxt = entry.title
+					
+					strtxt = strtxt.replace(/#(\S*)/g,'');
+					strtxt = strtxt.replace(/@(\S*)/g,'');
 					
 					document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br><font color="grey">'+ strtxt + '</font></div>'
 					}
