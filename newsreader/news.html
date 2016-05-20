@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en" >
 <head>
@@ -96,7 +97,7 @@ for (var i in a) {
 					if (strtxt.indexOf("@") > 50) 
 						{strtxt = strtxt.substring(0,strtxt.indexOf("@"))}; // kick end hashtags
 					
-					document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br>'+ strtxt + '</div>'
+					document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br><font color="grey">'+ strtxt + '</font></div>'
 					}
 				}
 			
@@ -115,7 +116,7 @@ for (var i in a) {
 					}
 					if (i == 0)
 					{
-					document.getElementById("headlines").innerHTML+= '<div class="collumn"><a href="#' + result.feed.title + '">'+result.feed.title+'</a><br><b><a href="'+entry.link+'">'+entry.title+'</a></b><br>'+entry.contentSnippet+'</div>'
+					document.getElementById("headlines").innerHTML+= '<div class="collumn"><a href="#' + result.feed.title + '" style="font-size:12px">'+result.feed.title+'</a><br><b><a href="'+entry.link+'">'+entry.title+'</a></b><br><font color="grey">'+entry.contentSnippet+'</font></div>'
 					}
 					document.getElementById("content").innerHTML+= '<a href="'+entry.link+'">'+entry.title+'</a><font color="grey"> '+entry.contentSnippet+'</font><br>'
 					}
