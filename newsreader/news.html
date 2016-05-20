@@ -21,7 +21,7 @@ header{     font-size: 20px;    text-transform: uppercase;    line-height: 30px;
 
 <script type="text/javascript">
 
-var rdpicsrc = parseInt((Math.random() * (5 - 1 + 1)), 10) + 1
+var rdpicsrc = parseInt((Math.random() * (6 - 1 + 1)), 10) + 1
 
 //default
 var aphotos = ["http://widget.websta.me/rss/n/afpphoto"]
@@ -30,6 +30,7 @@ if (rdpicsrc == 2) {var aphotos = ["http://widget.websta.me/rss/n/reuters"]}
 if (rdpicsrc == 3) {var aphotos = ["http://widget.websta.me/rss/n/wsj"]}
 if (rdpicsrc == 4) {var aphotos = ["http://widget.websta.me/rss/n/lemondefr"]}
 if (rdpicsrc == 5) {var aphotos = ["http://widget.websta.me/rss/n/nytimes"]}
+if (rdpicsrc == 6) {var aphotos = ["http://widget.websta.me/rss/n/nytimes"]}
 
 
 var aarticles = [
@@ -37,6 +38,8 @@ var aarticles = [
 "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
 "http://lens.blogs.nytimes.com/feed/",
 "http://www.wsj.com/xml/rss/3_7085.xml",
+"http://www.ft.com/rss/home/us",
+"http://www.ft.com/rss/lex",
 "http://rss.lemonde.fr/c/205/f/3050/index.rss",
 "http://www.latimes.com/rss2.0.xml",
 "http://www.theage.com.au/rssheadlines/top.xml",
