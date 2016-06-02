@@ -94,7 +94,7 @@ for (var z in a) {
 			maintitle = 0
 			divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
 			document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: none">'
-			document.getElementById(divdest).innerHTML+= '<b><a href="#srch-' + idsection + '" onclick="toggle_visibility(' + idsection + ');">' + '&#9868; ' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b><br></div>'
+			document.getElementById(divdest).innerHTML+= '<b><a href="#srch-' + idsection + '" onclick="toggle_visibility(' + idsection + ');">' + '&#9733; ' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b><br></div>'
 			document.getElementById(divdest).innerHTML+= '<div id="' + idsection + '" style="display: none">'
 			idsection += 1
 			for (var i = 0; i < result.feed.entries.length; i++) 
@@ -119,22 +119,22 @@ google.setOnLoadCallback(initialize);
 <body>
 
   
-  	<div id="subh-news"><b><a href="#subh-news" onclick="toggle_visibility('news');">&#9776; NEWSPAPERS </a></b></div>
+  	<div id="subh-news"><b><a href="#subh-news" onclick="toggle_visibility('news');">&#9733; NEWSPAPERS &#9733; </a></b></div>
 	<div id="news" style="display: none"></div>
 	
-	<div id="subh-markets"><br><b><a href="#subh-markets" onclick="toggle_visibility('markets');">&#9776; MARKETS </a></b></div>
+	<div id="subh-markets"><br><b><a href="#subh-markets" onclick="toggle_visibility('markets');">&#9733; MARKETS &#9733; </a></b></div>
 	<div id="markets" style="display: none"></div>
 	
-	<div id="subh-periodics"><br><b><a href="#subh-periodics" onclick="toggle_visibility('periodics');">&#9776; MAGAZINES </a></b></div>
+	<div id="subh-periodics"><br><b><a href="#subh-periodics" onclick="toggle_visibility('periodics');">&#9733; MAGAZINES &#9733; </a></b></div>
 	<div id="periodics" style="display: none"></div>
 	
-	<div id="subh-bookreviews"><br><b><a href="#subh-bookreviews" onclick="toggle_visibility('bookreviews');">&#9776; BOOKS </a></b></div>
+	<div id="subh-bookreviews"><br><b><a href="#subh-bookreviews" onclick="toggle_visibility('bookreviews');">&#9733; BOOKS &#9733; </a></b></div>
 	<div id="bookreviews" style="display: none"></div>
 	
-	<div id="subh-science"><br><b><a href="#subh-science" onclick="toggle_visibility('science');">&#9776; SCIENCE </a></b></div>
+	<div id="subh-science"><br><b><a href="#subh-science" onclick="toggle_visibility('science');">&#9733; SCIENCE &#9733; </a></b></div>
 	<div id="science" style="display: none"></div>
 	
-	<div id="subh-blogs"><br><b><a href="#subh-blogs" onclick="toggle_visibility('blogs');">&#9776; BLOGS </a></b></div>
+	<div id="subh-blogs"><br><b><a href="#subh-blogs" onclick="toggle_visibility('blogs');">&#9733; BLOGS &#9733; </a></b></div>
 	<div id="blogs" style="display: none"></div>
 
 
