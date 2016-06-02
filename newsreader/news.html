@@ -112,19 +112,7 @@ for (var z in a) {
 					document.getElementById('subh-'+divdest).innerHTML+= ' &#9734; <a href="'+entry.link+'">'+ entry.title+ '</a>'
 					maintitle = 1
 					}
-				var mysnippet = strip(entry.content)
-				alert(mysnippet)
-				if (mysnippet.length < 1000)
-					{
-					document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><font color="grey">'+mysnippet+'</font></i><br>'
-					} else {
-					var mysnippetbegin = mysnippet.substring(0,1000)
-					var mysnippetnext = mysnippet.substring(1001,mysnippet.length-1000+1)
-					var mydivhidden = idsection + '-' i
-					document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><font color="grey">'+mysnippetbegin+'<a href="#" onclick="toggle_visibility(' + mydivhidden + ');">...</a><div id ="'+mydivhidden+'" style="display: none"></div></font></i><br>'
-					document.getElementById(mydivhidden).innerHTML+= mysnippetnext
-						
-					}
+					document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><font color="grey">'+strip(entry.content)+'</font></i><br>'
 					
 				}
 			document.getElementById(idsection-1).innerHTML+= ''
