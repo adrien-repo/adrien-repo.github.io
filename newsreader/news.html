@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en" >
 <head>
@@ -12,64 +11,59 @@ a:link {    text-decoration: none; color: black;}
 a:visited {    text-decoration: none;color: black;}
 a:hover {    text-decoration: underline;}
 a:active {    text-decoration: underline;}
-header{     font-size: 20px;    text-transform: uppercase;    line-height: 30px;    margin-bottom: 5px;}
-.subhead{    text-transform: uppercase;    border-bottom: 1px solid;    border-top: 1px solid;    padding: 5px 0 5px 0;	margin-bottom: 5px;}
-.photosday{  font-size: 12px;  border-bottom: 1px solid;    padding: 5px 0 5px 0;	margin-bottom: 5px;}
-.collumn{	width: 340px;    display: inline-block;    vertical-align: top;    margin-bottom: 5px;	margin-right: 5px;    background-color:#F9F9F9}
 </style>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 <script type="text/javascript">
+    function toggle_visibility(id) {
 
-var rdpicsrc = parseInt((Math.random() * (6 - 1 + 1)), 10) + 1
+	   var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+    }
 
-//default
-var aphotos = ["http://widget.websta.me/rss/n/afpphoto"]
-if (rdpicsrc == 1) {var aphotos = ["http://widget.websta.me/rss/n/afpphoto"]}
-if (rdpicsrc == 2) {var aphotos = ["http://widget.websta.me/rss/n/reuters"]}
-if (rdpicsrc == 3) {var aphotos = ["http://widget.websta.me/rss/n/wsj"]}
-if (rdpicsrc == 4) {var aphotos = ["http://widget.websta.me/rss/n/lemondefr"]}
-if (rdpicsrc == 5) {var aphotos = ["http://widget.websta.me/rss/n/nytimes"]}
-if (rdpicsrc == 6) {var aphotos = ["http://widget.websta.me/rss/n/financialtimes"]}
+</script> 
 
+<script type="text/javascript">
 
 var aarticles = [
-"https://api.breakingnews.com/api/v1/item/?format=rss",
-"http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
-"http://lens.blogs.nytimes.com/feed/",
-"http://www.wsj.com/xml/rss/3_7085.xml",
-"http://www.ft.com/rss/home/us",
-"http://www.ft.com/rss/lex",
-"http://rss.lemonde.fr/c/205/f/3050/index.rss",
-"http://piketty.blog.lemonde.fr/feed/",
-"http://www.laviedesidees.fr/spip.php?page=backend",
-"http://www.latimes.com/rss2.0.xml",
-"http://www.theage.com.au/rssheadlines/top.xml",
-"http://feeds.reuters.com/ReutersPictures",
-"http://longform.org/feed.rss",
-"http://feeds.feedburner.com/TheAtlantic",
-"http://fusion.net/feed/",
-"http://www.newyorker.com/feed/everything",
-"http://feeds.feedburner.com/nybooks",
-"http://cdn.lrb.co.uk/feeds/lrb",
-"http://feeds2.feedburner.com/PhilosophicalReviews/News",
-"http://harpers.org/feed/",
-"http://feeds.feedburner.com/motherjones/BlogsAndArticles",
-"https://www.quantamagazine.org/feed/",
-"http://www.symmetrymagazine.org/feed",
-"https://www.edge.org/feed",
-"http://export.arxiv.org/rss/q-fin",
-"http://www.bloombergview.com/rss/contributors/matt-levine.rss",
-"http://www.bloombergview.com/rss/contributors/the-editors.rss",
-"https://www.project-syndicate.org/rss",
-"http://www.euromoney.com/RSS.aspx?FeedID=13",
-"http://feeds.benzinga.com/benzinga/news",
-"http://feeds.feedburner.com/MisesDailyArticles",
-"https://googleblog.blogspot.ch/feeds/posts/default?alt=rss",
-"http://www.gatesnotes.com/rss"
+["https://api.breakingnews.com/api/v1/item/?format=rss","Breaking News","news"],
+["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml","New York Times","news"],
+["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","news"],
+["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","markets"],
+["http://www.ft.com/rss/home/us","Financial Times","markets"],
+["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
+["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","news"],
+["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","news"],
+["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
+["http://www.latimes.com/rss2.0.xml","Los Angeles Times","news"],
+["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
+["http://feeds.reuters.com/ReutersPictures","Reuters Pictures","news"],
+["http://longform.org/feed.rss","Long Form","periodics"],
+["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
+["http://fusion.net/feed/","Fusion","science"],
+["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
+["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
+["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
+["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
+["http://harpers.org/feed/","Harpers Magazine","periodics"],
+["http://feeds.feedburner.com/motherjones/BlogsAndArticles","Mother Jones","blogs"],
+["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
+["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
+["https://www.edge.org/feed","Edge Magazine","periodics"],
+["http://export.arxiv.org/rss/q-fin","ArXiv","news"],
+["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
+["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","markets"],
+["https://www.project-syndicate.org/rss","Project Syndicate","news"],
+["http://feeds.benzinga.com/benzinga/news","Benziga","markets"],
+["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
+["http://www.gatesnotes.com/rss","Gates notes","blogs"]
 ]
 
-var a = aphotos.concat(aarticles);
+var a = aarticles;
+var alinks = aarticles.map(function(value,index) { return value[0]; });
 
 google.load("feeds", "1");
 function create(htmlStr)
@@ -86,9 +80,10 @@ return frag;
 function initialize() 
 {
 var maintitle = 0
-for (var i in a) {
-	var rssadress = a[i]
+var idsection = 0
+for (var z in a) {
 	
+	var rssadress = a[z][0]
 	var feed = new google.feeds.Feed(rssadress);
 	feed.setNumEntries(15);
 	feed.load(function(result) 
@@ -96,51 +91,22 @@ for (var i in a) {
 	if (!result.error) 
         {
 		var container = document.getElementById("feed");
-		if (result.feed.title.substr(result.feed.title.length - 6) == 'WEBSTA')
-			{
-			
-			for (var i = 0; i < result.feed.entries.length; i++)
+			maintitle = 0
+			divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
+			document.getElementById(divdest).innerHTML+= '<b><a href="#" onclick="toggle_visibility(' + idsection + ');">' + '&#9733;' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b><br>'
+			document.getElementById(divdest).innerHTML+= '<div id="' + idsection + '" style="display: none">'
+			idsection += 1
+			for (var i = 0; i < result.feed.entries.length; i++) 
 				{
 				var entry = result.feed.entries[i];
-				if (i < 5)
+				if(maintitle == 0)
 					{
-					var str = entry.content 
-					str = str.substring(str.indexOf("<img") + 1); // kick logo
-					str = str.substring(str.indexOf("<img") + 1); //start url
-					str = str.substring(0,str.indexOf(">") + 1); // end url
-					str = '<'+str
-					
-					var strtxt = entry.title
-					
-					strtxt = strtxt.replace(/#(\S*)/g,'');
-					strtxt = strtxt.replace(/@(\S*)/g,'');
-					
-					document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br><font color="grey">'+ strtxt + '</font></div>'
-					}
-				}
-			
-			
-			} else {
-					
-
-				document.getElementById("content").innerHTML+= '<div class="subhead" id="' + result.feed.title + '"><b><a href="#top">'+result.feed.title+'</a></b><div>'
-				for (var i = 0; i < result.feed.entries.length; i++) 
-					{
-					var entry = result.feed.entries[i];
-					if(maintitle == 0)
-					{
-					document.getElementById("breakingnews").innerHTML+= '<b><h1>'+entry.title+'</h1></b>'
+					document.getElementById('subh-'+divdest).innerHTML+= '<a href="'+entry.link+'">'+ entry.title+ '</a> &#9734; '
 					maintitle = 1
 					}
-					if (i == 0)
-					{
-					document.getElementById("headlines").innerHTML+= '<div class="collumn"><a href="#' + result.feed.title + '" style="font-size:12px">'+result.feed.title+'</a><br><b><a href="'+entry.link+'">'+entry.title+'</a></b><br><font color="grey">'+entry.contentSnippet+'</font></div>'
-					}
-					document.getElementById("content").innerHTML+= '<a href="'+entry.link+'">'+entry.title+'</a><font color="grey"> '+entry.contentSnippet+'</font><br>'
-					}
-				document.getElementById("content").innerHTML+= '<br>'
-			}
-			
+				document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><font color="grey">'+entry.contentSnippet+'</font></i><br>'
+				}
+			document.getElementById(idsection-1).innerHTML+= ''
 		}
 	}
 )}
@@ -151,11 +117,25 @@ google.setOnLoadCallback(initialize);
 </head>
 <body>
 
-  <div class="subhead"><div id="breakingnews"></div></div>
-  <div class="photosday"><div id="photooftheday"></div></div>
-	<div id="headlines"></div>
-<br>
-<br>
-<div id="content"></div>
+  
+  	<div id="subh-news"><b><a href="#" onclick="toggle_visibility('news');">NEWSPAPERS</a></b> | </div>
+	<div id="news" style="display: none"></div>
+	
+	<div id="subh-markets"><br><b><a href="#" onclick="toggle_visibility('markets');">MARKETS</a></b> | </div>
+	<div id="markets" style="display: none"></div>
+	
+	<div id="subh-periodics"><br><b><a href="#" onclick="toggle_visibility('periodics');">MAGAZINES</a></b> | </div>
+	<div id="periodics" style="display: none"></div>
+	
+	<div id="subh-bookreviews"><br><b><a href="#" onclick="toggle_visibility('bookreviews');">BOOKS</a></b> | </div>
+	<div id="bookreviews" style="display: none"></div>
+	
+	<div id="subh-science"><br><b><a href="#" onclick="toggle_visibility('science');">SCIENCE</a></b> | </div>
+	<div id="science" style="display: none"></div>
+	
+	<div id="subh-blogs"><br><b><a href="#" onclick="toggle_visibility('blogs');">BLOGS</a></b> | </div>
+	<div id="blogs" style="display: none"></div>
+
+
 </body>
 </html>
