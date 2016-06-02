@@ -113,12 +113,12 @@ for (var z in a) {
 					maintitle = 1
 					}
 				var mysnippet = strip(entry.content)
-				if (mysnippet.lenght < 1000)
+				if (mysnippet.length < 1000)
 					{
 					document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><font color="grey">'+mysnippet+'</font></i><br>'
 					} else {
 					var mysnippetbegin = mysnippet.substring(0,1000)
-					var mysnippetnext = mysnippet.substring(1001,length(mysnippet)-1000+1)
+					var mysnippetnext = mysnippet.substring(1001,mysnippet.length-1000+1)
 					var mydivhidden = idsection + '-' i
 					document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><font color="grey">'+mysnippetbegin+'<a href="#" onclick="toggle_visibility(' + mydivhidden + ');">...</a><div id ="'+mydivhidden+'" style="display: none"></div></font></i><br>'
 					document.getElementById(mydivhidden).innerHTML+= mysnippetnext
