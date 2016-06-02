@@ -93,7 +93,8 @@ for (var z in a) {
 		var container = document.getElementById("feed");
 			maintitle = 0
 			divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
-			document.getElementById(divdest).innerHTML+= '<b><a href="#' + idsection + '" onclick="toggle_visibility(' + idsection + ');">' + '&#9868; ' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b><br>'
+			document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: none">'
+			document.getElementById(divdest).innerHTML+= '<b><a href="#srch-' + idsection + '" onclick="toggle_visibility(' + idsection + ');">' + '&#9868; ' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b><br></div>'
 			document.getElementById(divdest).innerHTML+= '<div id="' + idsection + '" style="display: none">'
 			idsection += 1
 			for (var i = 0; i < result.feed.entries.length; i++) 
