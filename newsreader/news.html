@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en" >
 <head>
@@ -11,6 +12,7 @@ a:link {    text-decoration: none; color: blue;}
 a:visited {    text-decoration: none;color: black;}
 a:hover {    text-decoration: underline;}
 a:active {    text-decoration: underline;}
+
 </style>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
@@ -107,8 +109,8 @@ for (var z in a) {
 			maintitle = 0
 			divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
 			document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: none">'
-			document.getElementById(divdest).innerHTML+= '<b><h4><a href="#srch-' + idsection + '" onclick="toggle_visibility(' + idsection + ');">' + '&#9679; ' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></h4></b></div>'
-			document.getElementById(divdest).innerHTML+= '<div id="' + idsection + '" style="display: none">'
+			document.getElementById(divdest).innerHTML+= '<b><a href="#srch-' + idsection + '" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + ' </a></b> | </div>'
+			document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: none"></div>'
 			idsection += 1
 			for (var i = 0; i < result.feed.entries.length; i++) 
 				{
@@ -147,23 +149,29 @@ google.setOnLoadCallback(initialize);
 <body>
 
   
-  	<div id="subh-news"><b><h3><a href="#subh-news" onclick="toggle_visibility('news');">NEWSPAPERS</a></h3></b></div>
-	<div id="news" style="display: none"></div>
+  	<div id="subh-news"><b><a href="#subh-news" onclick="toggle_visibility('news');">NEWSPAPERS</a></b></div>
+	<div id="news">| </div>
+	<div id="news-child"></div>
 	
-	<div id="subh-markets"><br><b><h3><a href="#subh-markets" onclick="toggle_visibility('markets');">MARKETS</a></h3></b></div>
-	<div id="markets" style="display: none"></div>
+	<div id="subh-markets"><br><b><a href="#subh-markets" onclick="toggle_visibility('markets');">MARKETS</a></b></div>
+	<div id="markets">| </div>
+	<div id="markets-child"></div>	
 	
-	<div id="subh-periodics"><br><b><h3><a href="#subh-periodics" onclick="toggle_visibility('periodics');">MAGAZINES</a></h3></b></div>
-	<div id="periodics" style="display: none"></div>
+	<div id="subh-periodics"><br><b><a href="#subh-periodics" onclick="toggle_visibility('periodics');">MAGAZINES</a></b></div>
+	<div id="periodics">| </div>
+	<div id="periodics-child"></div>
 	
-	<div id="subh-bookreviews"><br><b><h3><a href="#subh-bookreviews" onclick="toggle_visibility('bookreviews');">BOOKS</a></h3></b></div>
-	<div id="bookreviews" style="display: none"></div>
+	<div id="subh-bookreviews"><br><b><a href="#subh-bookreviews" onclick="toggle_visibility('bookreviews');">BOOKS</a></b></div>
+	<div id="bookreviews">| </div>
+	<div id="bookreviews-child"></div>
 	
-	<div id="subh-science"><br><b><h3><a href="#subh-science" onclick="toggle_visibility('science');">SCIENCE</a></h3></b></div>
-	<div id="science" style="display: none"></div>
+	<div id="subh-science"><br><b><a href="#subh-science" onclick="toggle_visibility('science');">SCIENCE</a></b></div>
+	<div id="science">| </div>
+	<div id="science-child"></div>
 	
-	<div id="subh-blogs"><br><b><h3><a href="#subh-blogs" onclick="toggle_visibility('blogs');">BLOGS</a></h3></b></div>
-	<div id="blogs" style="display: none"></div>
+	<div id="subh-blogs"><br><b><a href="#subh-blogs" onclick="toggle_visibility('blogs');">BLOGS</a></b></div>
+	<div id="blogs">| </div>
+	<div id="blogs-child"></div>
 
 
 </body>
