@@ -1,5 +1,6 @@
 
 
+
 <!doctype html>
 <html lang="en" >
 <head>
@@ -204,7 +205,8 @@ var aarticles = [
 ["https://sniperinmahwah.wordpress.com/feed/","Sniper in Mahwah","markets"],
 ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
 ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
-["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"]
+["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
+["http://www.reddit.com/r/tldr/.rss","TLDR","news"]
 
 
 
@@ -253,6 +255,10 @@ for (var z in a) {
 					{
 					document.getElementById('subh-'+divdest).innerHTML+= ' &#9900; <a href="'+entry.link+'">'+ entry.title+ '</a>'
 					maintitle = 1
+					if(a[alinks.indexOf(result.feed.feedUrl)][1].includes("TLDR"))
+						{
+						document.getElementById('lasttldr').innerHTML+= '<h3><a href="'+entry.link+'">'+ entry.title+ '</a></h3>'
+						}
 					}
 				if (topnews == 0)
 					{
@@ -387,6 +393,7 @@ for(var b = 0; b < divs.length; b++){
 <div id="indices"><b>QUOTES </b></div><br>
 
 <div id="topnews"></div>
+<div id="lasttldr"></div>
 
 <a href="#showall" onclick="showall();">[Show]</a> <a href="#hideall" onclick="hideall();">[Hide]</a>
 <br>
