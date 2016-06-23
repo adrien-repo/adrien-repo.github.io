@@ -1,25 +1,31 @@
-
-
-
 <!doctype html>
+
 <html lang="en" >
+
 <head>
+
 <link rel='shortcut icon' href='/icon.png' type='image/x-icon'/ >
+  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>News</title>
 <meta name="mobile-web-app-capable" content="yes">
 
-<style>
-a:link {    text-decoration: none; color: blue;}
-a:visited {    text-decoration: none;color: black;}
-a:hover {    text-decoration: underline;}
-a:active {    text-decoration: underline;}
+<title>News</title>
 
+<style>
+	a:link {text-decoration: none; color: black;}
+	a:visited {text-decoration: none;color: black;}
+	a:hover {text-decoration: underline;}
+	a:active {text-decoration: underline;}
+	body {font-family:  'Roboto', sans-serif;}
 </style>
+
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
 <script>
-/*! simpleWeather v3.1.0 - http://simpleweatherjs.com */
+
 (function($) {
   'use strict';
 
@@ -246,7 +252,7 @@ for (var z in a) {
 			divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
 			document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: none">'
 			document.getElementById(divdest).innerHTML+= ' [<b><a href="#srch-' + idsection + '" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
-			document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: none"><br><i>'+ a[alinks.indexOf(result.feed.feedUrl)][1] + '</i><br></div>'
+			document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: none"><br><b>'+ a[alinks.indexOf(result.feed.feedUrl)][1] + '</b><br></div>'
 			idsection += 1
 			for (var i = 0; i < result.feed.entries.length; i++) 
 				{
@@ -269,7 +275,7 @@ for (var z in a) {
 					var mysnippet = strip(entry.content)
 					if (mysnippet.length < 500)
 						{
-						document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><font color="grey">'+mysnippet+'</font></i><br>'
+						document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><br><font color="grey">'+mysnippet+'</font></i><br>'
 						} else {
 						mysnippettrunc = mysnippet.substring(0, 500)
 						mysnippettend = mysnippet.substring(500, (mysnippet.length-500+1))
@@ -399,29 +405,29 @@ for(var b = 0; b < divs.length; b++){
 <br>
 <br>
 
-
-  	<div id="subh-news"><b><a href="#subh-news" onclick="toggle_visibility('news');">NEWSPAPERS</a></b></div>
-	<div id="news"></div>
+	<div></div>
+  	<div id="subh-news" style="border-top:2px solid #AED6F1; background-color:#EBF5FB"><b><a href="#subh-news" onclick="toggle_visibility('news');">NEWSPAPERS</a></b><br></div>
+	<div id="news" style="display:none"></div>
 	<div id="news-child"></div>
-	
-	<div id="subh-markets"><br><b><a href="#subh-markets" onclick="toggle_visibility('markets');">MARKETS</a></b></div>
-	<div id="markets"></div>
+	<br>
+	<div id="subh-markets" style="border-top:2px solid #D7BDE2; background-color:#F4ECF7"><b><a href="#subh-markets" onclick="toggle_visibility('markets');">MARKETS</a></b><br></div>
+	<div id="markets" style="display:none"></div>
 	<div id="markets-child"></div>	
-	
-	<div id="subh-periodics"><br><b><a href="#subh-periodics" onclick="toggle_visibility('periodics');">MAGAZINES</a></b></div>
-	<div id="periodics"></div>
+	<br>
+	<div id="subh-periodics" style="border-top:2px solid #F5B7B1; background-color:#FDEDEC"><b><a href="#subh-periodics" onclick="toggle_visibility('periodics');">MAGAZINES</a></b><br></div>
+	<div id="periodics" style="display:none"></div>
 	<div id="periodics-child"></div>
-	
-	<div id="subh-bookreviews"><br><b><a href="#subh-bookreviews" onclick="toggle_visibility('bookreviews');">BOOKS</a></b></div>
-	<div id="bookreviews"></div>
+	<br>
+	<div id="subh-bookreviews" style="border-top:2px solid #F5CBA7; background-color:#FDF2E9"><b><a href="#subh-bookreviews" onclick="toggle_visibility('bookreviews');">BOOKS</a></b><br></div>
+	<div id="bookreviews" style="display:none"></div>
 	<div id="bookreviews-child"></div>
-	
-	<div id="subh-science"><br><b><a href="#subh-science" onclick="toggle_visibility('science');">SCIENCE</a></b></div>
-	<div id="science"></div>
+	<br>
+	<div id="subh-science" style="border-top:2px solid #F9E79F; background-color:#FEF9E7"><b><a href="#subh-science" onclick="toggle_visibility('science');">SCIENCE</a></b><br></div>
+	<div id="science" style="display:none"></div>
 	<div id="science-child"></div>
-	
-	<div id="subh-blogs"><br><b><a href="#subh-blogs" onclick="toggle_visibility('blogs');">BLOGS</a></b></div>
-	<div id="blogs"></div>
+	<br>
+	<div id="subh-blogs" style="border-top:2px solid #A9DFBF; background-color:#E9F7EF"><b><a href="#subh-blogs" onclick="toggle_visibility('blogs');">BLOGS</a></b><br></div>
+	<div id="blogs" style="display:none"></div>
 	<div id="blogs-child"></div>
 
 
