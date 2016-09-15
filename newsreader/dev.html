@@ -82,7 +82,12 @@
 		if (links[i].text.substring(0, 1) == '#')
 		{
 		} else {
+		
+		if (links[i].text.substring(0, 1) == '@')
+		{
+		} else {
 		links[i].text = '[article]'
+		}
 		}
 		}
   }
@@ -403,6 +408,10 @@ twitterFetcher.fetch(configProfile);
 
   </head>
   <body>
+<img src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m">
+<img src="http://finviz.com/fut_chart.ashx?t=ES&p=h1&s=m">
+<img src="http://finviz.com/fut_chart.ashx?t=ES&p=d1&s=m">
+
 
     <div id="example1"></div>
    
