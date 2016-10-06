@@ -1,3 +1,4 @@
+
 <!doctype html>
 
 <html lang="en" >
@@ -22,6 +23,26 @@
 	a:hover {text-decoration: underline;}
 	a:active {text-decoration: underline;}
 </style>
+
+<style type="text/css">
+		th, td {
+    padding: 5px;
+
+}
+		.GreenText
+		{
+			color: Green;
+		}
+		.RedText
+		{
+			color: Red;
+		}
+
+	</style>
+	
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+
 
 
 <script type="text/javascript">
@@ -411,8 +432,58 @@ twitterFetcher.fetch(configProfile);
 </script>
 
 
+
+	<script type="text/javascript">
+		$(window).load(function () {
+            StockPriceTicker("ES=F,YM=F,NQ=F,^FTSE,^FCHI,^GDAXI,^N225,^HSI", "#dvYQL");
+			
+            setInterval(function() {StockPriceTicker("ES=F,YM=F,NQ=F,^FTSE,^FCHI,^GDAXI,^N225,^HSI", "#dvYQL");} , 1000);
+        });
+        function StockPriceTicker(CNames, dvTarget) {
+            var Symbol = "", CompName = "", Price = "", ChgInPrice = "", PercentChgInPrice = ""; 
+            
+            var flickerAPI = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22" + CNames + "%22)&env=store://datatables.org/alltableswithkeys";
+            var StockTickerHTML = "<table border='0'>";
+            var StockTickerXML = $.get(flickerAPI, function(xml) {
+                $(xml).find("quote").each(function () {
+                    Symbol = $(this).attr("symbol");
+                    $(this).find("Name").each(function () {
+                        CompName = $(this).text();
+                    });
+                    $(this).find("LastTradePriceOnly").each(function () {
+                        Price = $(this).text();
+                    });
+                    $(this).find("Change").each(function () {
+                        ChgInPrice = $(this).text();
+                    });
+                    $(this).find("PercentChange").each(function () {
+                        PercentChgInPrice = $(this).text();
+                    });
+                    
+                    var PriceClass = "GreenText", PriceIcon="up_green";
+                    if(parseFloat(ChgInPrice) < 0) { PriceClass = "RedText"; PriceIcon="down_red"; }
+                    StockTickerHTML = StockTickerHTML + "<tr>";
+					StockTickerHTML = StockTickerHTML + "<span class='" + PriceClass + "'>";
+                    StockTickerHTML = StockTickerHTML + "<td><span class='quote'>" + CompName + "</span></td> ";
+                    StockTickerHTML = StockTickerHTML + "<td>" + "<span class='" + PriceClass + "'>" + parseFloat(Price).toFixed(2) + "</span></td>";
+                    StockTickerHTML = StockTickerHTML + "<td>" + "<span class='" + PriceClass + "'>" + parseFloat(ChgInPrice).toFixed(2) + "</span></td>";
+                    StockTickerHTML = StockTickerHTML + "<td><span class='" + PriceClass + "'>"+parseFloat( PercentChgInPrice.split('%')[0]).toFixed(2) + "%</span></td></tr>";
+                });
+                StockTickerHTML = StockTickerHTML + "</table>"
+				$(dvTarget).html(StockTickerHTML);
+                
+            });
+        }
+    </script>
+	
+	
+
   </head>
   <body>
+  
+  <p><div id="dvYQL"></div></p>
+  
+  
 <img src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m">
 <img src="http://finviz.com/fut_chart.ashx?t=ES&p=h1&s=m">
 <img src="http://finviz.com/fut_chart.ashx?t=ES&p=d1&s=m">
