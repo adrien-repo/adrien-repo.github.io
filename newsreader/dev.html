@@ -737,7 +737,7 @@ for (var z in a) {
 					maintitle = 1
 					if(a[alinks.indexOf(result.feed.feedUrl)][1].includes("TLDR"))
 						{
-						document.getElementById('lasttldr').innerHTML+= '<h3><a href="'+entry.link+'">'+ entry.title+ '</a></h3>'
+						document.getElementById('lasttldr').innerHTML+= '<i><a href="'+entry.link+'">'+ entry.title+ '</a></i>'
 						}
 					}
 				if (topnews == 0)
@@ -922,20 +922,20 @@ for(var b = 0; b < divs.length; b++){
 <div id="indices"><b>QUOTES </b></div><br>
 
 <b>
-<div id="dateoftoday"></div>
+<div id="dateoftoday" style="border-top:1px solid black"></div>
 </b>
-<div id="topnews" style="background-color:#F0F0F0"></div>
+<div id="topnews"></div>
 <br>
 
-<b>Yesterday</b>
-<div id="lasttldr" style="background-color:#F0F0F0"></div>
+<i>Yesterday</i>
+<div id="lasttldr"></div>
 
 <br>
 <br>
 
 		
 
-		<div class="main">
+		<div class="main" style="border-top:1px solid black; border-bottom:1px solid black">
   
 		  <input id="tab1" type="radio" name="tabs" checked>
 		  <label for="tab1">Quotes</label>
@@ -966,7 +966,7 @@ for(var b = 0; b < divs.length; b++){
 		  
 		  
 	
-		  <div class="content">  
+		  <div class="content" style="border-top:1px solid black">  
 			  <div id="content1">
 				<p><div id="dvYQL"></div></p>
 			  </div>
