@@ -1,9 +1,6 @@
-
 <!doctype html>
-
-<html lang="en" >
-
-
+<html lang="en">
+    
 <head>
   
 <link rel='shortcut icon' href='/icon.png' type='image/x-icon'/ >
@@ -11,20 +8,65 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="mobile-web-app-capable" content="yes">
-<meta http-equiv="refresh" content="300" >
+<!--<meta http-equiv="refresh" content="300" > -->
 
-
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>News</title>
+        
 
+		<style>
+		
 
+		*, *:before, *:after {margin: 0; padding: 0; box-sizing: border-box;}
+		body {background: white; color: black; font: 14px;}
+		body {margin: 0 auto; min-width: 320px; max-width: 1000px;}
+		/* You can safely remove the next two lines */
+		/*.top { padding-right: 20px; background: #261F41; text-align: right; }*/
+		
+
+		/*h1 {padding: 100px 0; font-weight: 400; text-align: center;}*/
+		/*p {margin: 0 0 20px; line-height: 1.5;}*/
+
+		.main {margin: 0 auto; min-width: 320px; max-width: 1000px;}
+		.content {background: white; color: black;}
+		.content > div {display: none; padding: 15px 5px 15px;}
+
+		input {display: none;}
+		label {display: inline-block; padding: 15px 25px; font-weight: 600; text-align: center;}
+		label:hover {color: black; cursor: pointer;}
+		input:checked + label {background: black; color: white;}
+
+		#tab1:checked ~ .content #content1,
+		#tab2:checked ~ .content #content2,
+		#tab3:checked ~ .content #content3,
+		#tab4:checked ~ .content #content4,
+#tab5:checked ~ .content #content5,
+#tab6:checked ~ .content #content6,
+#tab7:checked ~ .content #content7,
+#tab8:checked ~ .content #content8,
+#tab9:checked ~ .content #content9
+		{
+		  display: block;
+		}
+
+		@media screen and (max-width: 400px) { label {padding: 15px 10px;} }
+		</style>
+		
+		
+		
+		
 <style>
-	a:link {text-decoration: none; color: grey}
-	a:visited {text-decoration: none;color: grey;}
+	a:link {text-decoration: none; color: black}
+	a:visited {text-decoration: none;color: black;}
 	a:hover {text-decoration: underline;}
 	a:active {text-decoration: underline;}
-</style>
 
-<style type="text/css">
+	
+	
+	
+	
+	
 		th, td {
     padding: 5px;
 
@@ -38,12 +80,31 @@
 			color: Red;
 		}
 
+		
+		
+		
 	</style>
-	
-
+		
+		
+		
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 
 
+
+
+
+  <script>
+  $(document).ready(function() {
+    $(".tabs-menu a").click(function(event) {
+        event.preventDefault();
+        $(this).parent().addClass("current");
+        $(this).parent().siblings().removeClass("current");
+        var tab = $(this).attr("href");
+        $(".tab-content").not(tab).css("display", "none");
+        $(tab).fadeIn();
+    });
+});
+</script>
 
 <script type="text/javascript">
 
@@ -433,11 +494,385 @@ twitterFetcher.fetch(configProfile);
 
 
 
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
+<script>
+
+(function($) {
+  'use strict';
+
+  function getAltTemp(unit, temp) {
+    if(unit === 'f') {
+      return Math.round((5.0/9.0)*(temp-32.0));
+    } else {
+      return Math.round((9.0/5.0)*temp+32.0);
+    }
+  }
+
+  $.extend({
+    simpleWeather: function(options){
+      options = $.extend({
+        location: '',
+        woeid: '',
+        unit: 'f',
+        success: function(weather){},
+        error: function(message){}
+      }, options);
+
+      var now = new Date();
+      var weatherUrl = 'https://query.yahooapis.com/v1/public/yql?format=json&rnd=' + now.getFullYear() + now.getMonth() + now.getDay() + now.getHours() + '&diagnostics=true&callback=?&q=';
+
+      if(options.location !== '') {
+        /* If latitude/longitude coordinates, need to format a little different. */
+        var location = '';
+        if(/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/.test(options.location)) {
+          location = '(' + options.location + ')';
+        } else {
+          location = options.location;
+        }
+
+        weatherUrl += 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="' + location + '") and u="' + options.unit + '"';
+      } else if(options.woeid !== '') {
+        weatherUrl += 'select * from weather.forecast where woeid=' + options.woeid + ' and u="' + options.unit + '"';
+      } else {
+        options.error('Could not retrieve weather due to an invalid location.');
+        return false;
+      }
+
+      $.getJSON(
+        encodeURI(weatherUrl),
+        function(data) {
+          if(data !== null && data.query !== null && data.query.results !== null && data.query.results.channel.description !== 'Yahoo! Weather Error') {
+            var result = data.query.results.channel,
+                weather = {},
+                forecast,
+                compass = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW', 'N'],
+                image404 = 'https://s.yimg.com/os/mit/media/m/weather/images/icons/l/44d-100567.png';
+
+            weather.title = result.item.title;
+            weather.temp = result.item.condition.temp;
+            weather.code = result.item.condition.code;
+            weather.todayCode = result.item.forecast[0].code;
+            weather.currently = result.item.condition.text;
+            weather.high = result.item.forecast[0].high;
+            weather.low = result.item.forecast[0].low;
+            weather.text = result.item.forecast[0].text;
+            weather.humidity = result.atmosphere.humidity;
+            weather.pressure = result.atmosphere.pressure;
+            weather.rising = result.atmosphere.rising;
+            weather.visibility = result.atmosphere.visibility;
+            weather.sunrise = result.astronomy.sunrise;
+            weather.sunset = result.astronomy.sunset;
+            weather.description = result.item.description;
+            weather.city = result.location.city;
+            weather.country = result.location.country;
+            weather.region = result.location.region;
+            weather.updated = result.item.pubDate;
+            weather.link = result.item.link;
+            weather.units = {temp: result.units.temperature, distance: result.units.distance, pressure: result.units.pressure, speed: result.units.speed};
+            weather.wind = {chill: result.wind.chill, direction: compass[Math.round(result.wind.direction / 22.5)], speed: result.wind.speed};
+
+            if(result.item.condition.temp < 80 && result.atmosphere.humidity < 40) {
+              weather.heatindex = -42.379+2.04901523*result.item.condition.temp+10.14333127*result.atmosphere.humidity-0.22475541*result.item.condition.temp*result.atmosphere.humidity-6.83783*(Math.pow(10, -3))*(Math.pow(result.item.condition.temp, 2))-5.481717*(Math.pow(10, -2))*(Math.pow(result.atmosphere.humidity, 2))+1.22874*(Math.pow(10, -3))*(Math.pow(result.item.condition.temp, 2))*result.atmosphere.humidity+8.5282*(Math.pow(10, -4))*result.item.condition.temp*(Math.pow(result.atmosphere.humidity, 2))-1.99*(Math.pow(10, -6))*(Math.pow(result.item.condition.temp, 2))*(Math.pow(result.atmosphere.humidity,2));
+            } else {
+              weather.heatindex = result.item.condition.temp;
+            }
+
+            if(result.item.condition.code == '3200') {
+              weather.thumbnail = image404;
+              weather.image = image404;
+            } else {
+              weather.thumbnail = 'https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/' + result.item.condition.code + 'ds.png';
+              weather.image = 'https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/' + result.item.condition.code + 'd.png';
+            }
+
+            weather.alt = {temp: getAltTemp(options.unit, result.item.condition.temp), high: getAltTemp(options.unit, result.item.forecast[0].high), low: getAltTemp(options.unit, result.item.forecast[0].low)};
+            if(options.unit === 'f') {
+              weather.alt.unit = 'c';
+            } else {
+              weather.alt.unit = 'f';
+            }
+
+            weather.forecast = [];
+            for(var i=0;i<result.item.forecast.length;i++) {
+              forecast = result.item.forecast[i];
+              forecast.alt = {high: getAltTemp(options.unit, result.item.forecast[i].high), low: getAltTemp(options.unit, result.item.forecast[i].low)};
+
+              if(result.item.forecast[i].code == "3200") {
+                forecast.thumbnail = image404;
+                forecast.image = image404;
+              } else {
+                forecast.thumbnail = 'https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/' + result.item.forecast[i].code + 'ds.png';
+                forecast.image = 'https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/' + result.item.forecast[i].code + 'd.png';
+              }
+
+              weather.forecast.push(forecast);
+            }
+
+            options.success(weather);
+          } else {
+            options.error('There was a problem retrieving the latest weather information.');
+          }
+        }
+      );
+      return this;
+    }
+  });
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+    function toggle_visibility(id) {
+
+	   var e = document.getElementById(id);
+       if(e.style.display == 'inline')
+          e.style.display = 'none';
+       else
+          e.style.display = 'inline';
+    }
+
+function strip(html)
+{
+   var tmp = document.createElement("DIV");
+   tmp.innerHTML = html;
+   return tmp.textContent||tmp.innerText;
+}
+
+</script> 
+
+<script type="text/javascript">
+
+var aarticles = [
+["https://api.breakingnews.com/api/v1/item/?format=rss","Breaking News","news"],
+["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml","New York Times","news"],
+["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","news"],
+["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","markets"],
+["http://www.ft.com/rss/home/us","Financial Times","markets"],
+["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
+["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","news"],
+["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","news"],
+["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
+["http://www.latimes.com/rss2.0.xml","Los Angeles Times","news"],
+["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
+["http://feeds.reuters.com/ReutersPictures","Reuters Pictures","news"],
+["http://longform.org/feed.rss","Long Form","periodics"],
+["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
+["http://fusion.net/feed/","Fusion","periodics"],
+["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
+["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
+["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
+["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
+["http://harpers.org/feed/","Harpers Magazine","periodics"],
+["http://feeds.feedburner.com/motherjones/BlogsAndArticles","Mother Jones","blogs"],
+["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
+["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
+["https://www.edge.org/feed","Edge Magazine","periodics"],
+["http://export.arxiv.org/rss/q-fin","ArXiv","markets"],
+["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
+["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","markets"],
+["https://www.project-syndicate.org/rss","Project Syndicate","news"],
+["http://feeds.benzinga.com/benzinga/news","Benziga","markets"],
+["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
+["http://www.gatesnotes.com/rss","Gates notes","blogs"],
+["http://www.salon.com/feed/","Salon","periodics"],
+["https://theintercept.com/feed/?rss","The Intercept","periodics"],
+["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
+["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
+["https://sniperinmahwah.wordpress.com/feed/","Sniper in Mahwah","markets"],
+["http://www.recode.net/rss/index.xml","ReCode","periodics"],
+["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
+["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
+["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
+["http://www.reddit.com/r/tldr/.rss","TLDR","news"]
+
+
+]
+
+var a = aarticles;
+var alinks = aarticles.map(function(value,index) { return value[0]; });
+
+google.load("feeds", "1");
+function create(htmlStr)
+{
+var frag = document.createDocumentFragment(),
+temp = document.createElement('div');
+temp.innerHTML = htmlStr;
+while (temp.firstChild) 
+	{
+        frag.appendChild(temp.firstChild);
+    	}
+return frag;
+}
+function initialize() 
+{
+var topnews = 0
+var maintitle = 0
+var idsection = 0
+for (var z in a) {
+	
+	var rssadress = a[z][0]
+	var feed = new google.feeds.Feed(rssadress);
+	feed.setNumEntries(15);
+	feed.load(function(result) 
+	{
+	if (!result.error) 
+        {
+		var container = document.getElementById("feed");
+			maintitle = 0
+			divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
+			document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: inline">'
+			document.getElementById(divdest).innerHTML+= ' [<b><a href="#srch-' + idsection + '" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
+			document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: inline"><br><b>'+ a[alinks.indexOf(result.feed.feedUrl)][1] + '</b><br></div>'
+			idsection += 1
+			for (var i = 0; i < result.feed.entries.length; i++) 
+				{
+				var entry = result.feed.entries[i];
+				if(maintitle == 0)
+					{
+					document.getElementById('subh-'+divdest).innerHTML+= ' &#9900; <a href="'+entry.link+'">'+ entry.title+ '</a>'
+					maintitle = 1
+					if(a[alinks.indexOf(result.feed.feedUrl)][1].includes("TLDR"))
+						{
+						document.getElementById('lasttldr').innerHTML+= '<h3><a href="'+entry.link+'">'+ entry.title+ '</a></h3>'
+						}
+					}
+				if (topnews == 0)
+					{
+					document.getElementById('topnews').innerHTML+= '<h1><a href="'+entry.link+'">'+ entry.title+ '</a></h1>'
+					topnews = 1
+					}
+
+					var mysnippet = strip(entry.content)
+					if (mysnippet.length < 500)
+						{
+						document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><br><font color="grey">'+mysnippet+'</font></i><br>'
+						} else {
+						mysnippettrunc = mysnippet.substring(0, 500)
+						mysnippettend = mysnippet.substring(500, (mysnippet.length-500+1))
+						var mydivid = idsection*1000+i
+						document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><font color="grey">'+mysnippettrunc+'<a href="#' + mydivid + '" onclick="toggle_visibility('+mydivid+');">[...]</a><div id="' + mydivid + '" style="display: none"></div></font></i><br>'
+						document.getElementById(mydivid).innerHTML+=mysnippettend
+						
+						
+						
+						}
+					
+					
+				}
+		}
+	}
+)}
+;
+}
+google.setOnLoadCallback(initialize);
+</script>
+<script>
+$(document).ready(function() {
+var wthloc = ['782538','615702','2459115','2423945']
+for (var loopwth in wthloc) 
+	{
+	var mywoeid = wthloc[loopwth]
+	$.simpleWeather({
+	zipcode: '',woeid: mywoeid,location: '',unit: 'c',success: function(weather) 
+		{
+		html = '&#9900 <b> '+weather.city+'</b>';
+		html += ' '+weather.temp+'&deg;'+weather.units.temp+' ';
+		html += ''+weather.currently+' ';
+		document.getElementById("weather").innerHTML+= html;
+		},
+	});
+	}
+});
+</script>
+
+<script>
+var symbols = ['SPY', '^FTSE', '^STOXX50E', '^N225'],
+    properties = [{
+        classname: 'name',
+        property: 'Name'
+    }, {
+        classname: 'resultsets',
+        property: 'LastTradePriceOnly'
+    }, {
+        classname: 'changepercent',
+        property: 'PercentChange'
+    }];
+
+function buildElement(quote) {
+    var container = $("<span> &#9900 </span>").addClass("symbol");
+    properties.forEach(function (prop) {
+        var child = $("<span></span>").addClass(prop.classname);
+        child.text(quote[prop.property]+" ");
+        container.append(child);
+    });
+    
+    return container;
+}
+
+$.getJSON("http://query.yahooapis.com/v1/public/yql", {
+    format: "json",
+    diagnostics: "true",
+    env: "http://datatables.org/alltables.env",
+    q: "select * from yahoo.finance.quotes where symbol in ('" + symbols.join("','") + "')"
+}, function (data, xhr, status) {
+    // do some sanity checking of the data here
+    var elements = data.query.results.quote.map(buildElement);
+    $("#indices").append(elements);
+});
+
+
+</script>
+
+<script>
+
+    function showall() {
+
+
+var divs = document.getElementsByTagName("div");
+for(var b = 0; b < divs.length; b++){
+   //do something to each div like
+  
+	if (isNaN(divs[b].id) == false )
+		{
+		if (divs[b].id <= (aarticles.length+1))
+		{
+			divs[b].style.display = 'inline'; 
+		}
+		}
+}
+}
+
+ function hideall() {
+
+
+var divs = document.getElementsByTagName("div");
+for(var b = 0; b < divs.length; b++){
+   //do something to each div like
+  
+	if (isNaN(divs[b].id) == false )
+		{
+		if (divs[b].id <= (aarticles.length+1))
+		{
+			divs[b].style.display = 'none'; 
+		}
+		}
+}
+}
+
+
+</script>
+
+
+
 	<script type="text/javascript">
 		$(window).load(function () {
             StockPriceTicker("ES=F,YM=F,NQ=F,^FTSE,^FCHI,^GDAXI,^N225,^HSI", "#dvYQL");
 			
-            setInterval(function() {StockPriceTicker("ES=F,YM=F,NQ=F,^FTSE,^FCHI,^GDAXI,^N225,^HSI", "#dvYQL");} , 1000);
+            //setInterval(function() {StockPriceTicker("ES=F,YM=F,NQ=F,^FTSE,^FCHI,^GDAXI,^N225,^HSI", "#dvYQL");} , 60000);
         });
         function StockPriceTicker(CNames, dvTarget) {
             var Symbol = "", CompName = "", Price = "", ChgInPrice = "", PercentChgInPrice = ""; 
@@ -476,22 +911,169 @@ twitterFetcher.fetch(configProfile);
         }
     </script>
 	
-	
+		
+		
+	</head>
+	<body>
+<br>
+<br>
 
-  </head>
-  <body>
+		<div id="weather"><b>WEATHER </b></div><br>
+<div id="indices"><b>QUOTES </b></div><br>
+
+<b>
+<div id="dateoftoday"></div>
+</b>
+<div id="topnews" style="background-color:#F0F0F0"></div>
+<br>
+
+<b>Yesterday</b>
+<div id="lasttldr" style="background-color:#F0F0F0"></div>
+
+<br>
+<br>
+
+		
+
+		<div class="main">
   
-  <p><div id="dvYQL"></div></p>
-  
-  
-<img src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m">
+		  <input id="tab1" type="radio" name="tabs" checked>
+		  <label for="tab1">Quotes</label>
+	
+		  <input id="tab2" type="radio" name="tabs">
+		  <label for="tab2">Charts</label>
+	
+		  <input id="tab3" type="radio" name="tabs">
+		  <label for="tab3">Breaking</label>
+	
+		  <input id="tab4" type="radio" name="tabs">
+		  <label for="tab4">Newspapers</label>
+	
+	<input id="tab5" type="radio" name="tabs">
+		  <label for="tab5">Markets</label>
+	
+		<input id="tab6" type="radio" name="tabs">
+		  <label for="tab6">Magazines</label>
+		  
+		  	<input id="tab7" type="radio" name="tabs">
+		  <label for="tab7">Books</label>
+		  
+		  	<input id="tab8" type="radio" name="tabs">
+		  <label for="tab8">Science</label>
+		  
+		  	<input id="tab9" type="radio" name="tabs">
+		  <label for="tab9">Blogs</label>
+		  
+		  
+	
+		  <div class="content">  
+			  <div id="content1">
+				<p><div id="dvYQL"></div></p>
+			  </div>
+	
+			  <div id="content2">
+
+			  
+			  
+				<img src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m">
 <img src="http://finviz.com/fut_chart.ashx?t=ES&p=h1&s=m">
 <img src="http://finviz.com/fut_chart.ashx?t=ES&p=d1&s=m">
 
+<br>
+<br>
 
-    <div id="example1"></div>
-   
-  </body>
+				<img src="http://finviz.com/fut_chart.ashx?t=EX&p=m5&s=m">
+<img src="http://finviz.com/fut_chart.ashx?t=EX&p=h1&s=m">
+<img src="http://finviz.com/fut_chart.ashx?t=EX&p=d1&s=m">
 
-  
+<br>
+<br>
+
+				<img src="http://finviz.com/fut_chart.ashx?t=CL&p=m5&s=m">
+<img src="http://finviz.com/fut_chart.ashx?t=CL&p=h1&s=m">
+<img src="http://finviz.com/fut_chart.ashx?t=CL&p=d1&s=m">
+
+<br>
+<br>
+
+				<img src="http://finviz.com/fut_chart.ashx?t=6E&p=m5&s=m">
+<img src="http://finviz.com/fut_chart.ashx?t=6E&p=h1&s=m">
+<img src="http://finviz.com/fut_chart.ashx?t=6E&p=d1&s=m">
+
+<br>
+<br>
+
+				<img src="http://finviz.com/fut_chart.ashx?t=6B&p=m5&s=m">
+<img src="http://finviz.com/fut_chart.ashx?t=6B&p=h1&s=m">
+<img src="http://finviz.com/fut_chart.ashx?t=6B&p=d1&s=m">
+
+
+			  </div>
+	
+			  <div id="content3">
+				 <div id="example1"></div>
+			  </div>
+	
+			  <div id="content4">
+				<!--<a href="#showall" onclick="showall();">[Show]</a> <a href="#hideall" onclick="hideall();">[Hide]</a> -->
+<!--<br> -->
+
+  	<div id="subh-news" style="background-color:#F0F0F0"></div>
+	<br><br><div id="news" style="display:inline"></div>
+	<br><br><div id="news-child"></div>
+	<br>
+
+
+
+
+
+
+			  </div>
+			  
+			  <div id="content5">
+				 	<div id="subh-markets" style="background-color:#F0F0F0"></div>
+	<br><br><div id="markets" style="display:inline"></div>
+	<br><br><div id="markets-child"></div>	
+	<br>
+			  </div>
+			  
+			  <div id="content6">
+			  	<div id="subh-periodics" style="background-color:#F0F0F0"></div>
+	<br><br><div id="periodics" style="display:inline"></div>
+	<br><br><div id="periodics-child"></div>
+	<br>
+			  </div>
+			  
+			  <div id="content7">
+			  	<div id="subh-bookreviews" style="background-color:#F0F0F0"></div>
+	<br><br><div id="bookreviews" style="display:inline"></div>
+	<br><br><div id="bookreviews-child"></div>
+	<br>
+			  </div>
+			  
+			  <div id="content8">
+			  	<div id="subh-science" style="background-color:#F0F0F0"></div>
+	<br><br><div id="science" style="display:inline"></div>
+	<br><br><div id="science-child"></div>
+	<br>
+			  </div>
+			  
+			  <div id="content9">
+			  	<div id="subh-blogs" style="background-color:#F0F0F0"></div>
+	<br><br><div id="blogs" style="display:inline"></div>
+	<br><br><div id="blogs-child"></div>
+			  </div>
+			  
+			  
+		  </div>
+	
+		</div>
+	</body>
+	
+	<script>
+var d = new Date();
+document.getElementById("dateoftoday").innerHTML = d.toDateString();
+</script>
+
+
 </html>
