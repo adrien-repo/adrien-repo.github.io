@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
     
@@ -51,6 +52,12 @@
 		}
 
 		@media screen and (max-width: 400px) { label {padding: 15px 10px;} }
+		
+		
+		.photosday{  font-size: 12px;  border-bottom: 1px solid;    padding: 5px 0 5px 0;	margin-bottom: 5px;}
+		.collumn{	width: 319px;    display: inline-block;    vertical-align: top;    margin-bottom: 5px;	margin-right: 5px;    background-color:#F9F9F9}
+
+		
 		</style>
 		
 		
@@ -646,7 +653,20 @@ function strip(html)
 
 <script type="text/javascript">
 
+
+var rdpicsrc = parseInt((Math.random() * (6 - 1 + 1)), 10) + 1
+//default
+var aphotos = ["http://widget.websta.me/rss/n/afpphoto","",""]
+if (rdpicsrc == 1) {var aphotos = ["http://widget.websta.me/rss/n/afpphoto","",""]}
+if (rdpicsrc == 2) {var aphotos = ["http://widget.websta.me/rss/n/reuters","",""]}
+if (rdpicsrc == 3) {var aphotos = ["http://widget.websta.me/rss/n/wsj","",""]}
+if (rdpicsrc == 4) {var aphotos = ["http://widget.websta.me/rss/n/lemondefr","",""]}
+if (rdpicsrc == 5) {var aphotos = ["http://widget.websta.me/rss/n/nytimes","",""]}
+if (rdpicsrc == 6) {var aphotos = ["http://widget.websta.me/rss/n/financialtimes","",""]}
+
+
 var aarticles = [
+aphotos,
 ["https://api.breakingnews.com/api/v1/item/?format=rss","Breaking News","news"],
 ["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml","New York Times","news"],
 ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","news"],
@@ -692,7 +712,9 @@ var aarticles = [
 
 ]
 
+
 var a = aarticles;
+
 var alinks = aarticles.map(function(value,index) { return value[0]; });
 
 google.load("feeds", "1");
@@ -715,6 +737,7 @@ var idsection = 0
 for (var z in a) {
 	
 	var rssadress = a[z][0]
+	
 	var feed = new google.feeds.Feed(rssadress);
 	feed.setNumEntries(15);
 	feed.load(function(result) 
@@ -722,18 +745,51 @@ for (var z in a) {
 	if (!result.error) 
         {
 		var container = document.getElementById("feed");
+			
+			if (result.feed.title.substr(result.feed.title.length - 6) == 'WEBSTA')
+			{
+			
+			for (var ji = 0; ji < result.feed.entries.length; ji++)
+				{
+				
+				var entry = result.feed.entries[ji];
+				
+				if (ji < 6)
+					{
+					var str = entry.content 
+					
+					str = str.substring(str.indexOf("<img") + 1); // kick logo
+					str = str.substring(str.indexOf("<img") + 1); //start url
+					str = str.substring(0,str.indexOf(">") + 1); // end url
+					str = '<'+str
+					
+					str = str.replace(">", "width='300'>")
+					
+					var strtxt = entry.content
+					
+					strtxt = strtxt.replace(/#(\S*)/g,'');
+					strtxt = strtxt.replace(/@(\S*)/g,'');
+					strtxt = strtxt.replace(/<\/?[^>]+(>|$)/g, "");
+					document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br><font color="grey">'+ strtxt + '</font></div>'
+					}
+				}
+			
+			
+			} else {
+			
+			
 			maintitle = 0
 			divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
 			document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: inline">'
-			document.getElementById(divdest).innerHTML+= ' [<b><a href="#srch-' + idsection + '" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
-			document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: inline"><br><b>'+ a[alinks.indexOf(result.feed.feedUrl)][1] + '</b><br></div>'
+			document.getElementById(divdest).innerHTML+= ' [<b><a href="#" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
+			document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: none"><br><b>'+ a[alinks.indexOf(result.feed.feedUrl)][1] + '</b><br></div>'
 			idsection += 1
 			for (var i = 0; i < result.feed.entries.length; i++) 
 				{
 				var entry = result.feed.entries[i];
 				if(maintitle == 0)
 					{
-					document.getElementById('subh-'+divdest).innerHTML+= ' &#9900; <a href="'+entry.link+'">'+ entry.title+ '</a>'
+					document.getElementById('subh-'+divdest).innerHTML+= ' &#9900; <a href="'+entry.link+'">'+ entry.title+ '</a><br>'
 					maintitle = 1
 					if(a[alinks.indexOf(result.feed.feedUrl)][1].includes("TLDR"))
 						{
@@ -763,6 +819,9 @@ for (var z in a) {
 					
 					
 				}
+				
+			
+			}
 		}
 	}
 )}
@@ -772,7 +831,7 @@ google.setOnLoadCallback(initialize);
 </script>
 <script>
 $(document).ready(function() {
-var wthloc = ['782538','615702','2459115','2423945']
+var wthloc = ['782538','615702','2459115','2423945','580778']
 for (var loopwth in wthloc) 
 	{
 	var mywoeid = wthloc[loopwth]
@@ -789,43 +848,6 @@ for (var loopwth in wthloc)
 });
 </script>
 
-<script>
-var symbols = ['SPY', '^FTSE', '^STOXX50E', '^N225'],
-    properties = [{
-        classname: 'name',
-        property: 'Name'
-    }, {
-        classname: 'resultsets',
-        property: 'LastTradePriceOnly'
-    }, {
-        classname: 'changepercent',
-        property: 'PercentChange'
-    }];
-
-function buildElement(quote) {
-    var container = $("<span> &#9900 </span>").addClass("symbol");
-    properties.forEach(function (prop) {
-        var child = $("<span></span>").addClass(prop.classname);
-        child.text(quote[prop.property]+" ");
-        container.append(child);
-    });
-    
-    return container;
-}
-
-$.getJSON("http://query.yahooapis.com/v1/public/yql", {
-    format: "json",
-    diagnostics: "true",
-    env: "http://datatables.org/alltables.env",
-    q: "select * from yahoo.finance.quotes where symbol in ('" + symbols.join("','") + "')"
-}, function (data, xhr, status) {
-    // do some sanity checking of the data here
-    var elements = data.query.results.quote.map(buildElement);
-    $("#indices").append(elements);
-});
-
-
-</script>
 
 <script>
 
@@ -868,58 +890,17 @@ for(var b = 0; b < divs.length; b++){
 
 
 
-	<script type="text/javascript">
-		$(window).load(function () {
-            StockPriceTicker("ES=F,YM=F,NQ=F,^FTSE,^FCHI,^GDAXI,^N225,^HSI", "#dvYQL");
-			
-            //setInterval(function() {StockPriceTicker("ES=F,YM=F,NQ=F,^FTSE,^FCHI,^GDAXI,^N225,^HSI", "#dvYQL");} , 60000);
-        });
-        function StockPriceTicker(CNames, dvTarget) {
-            var Symbol = "", CompName = "", Price = "", ChgInPrice = "", PercentChgInPrice = ""; 
-            
-            var flickerAPI = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22" + CNames + "%22)&env=store://datatables.org/alltableswithkeys";
-            var StockTickerHTML = "<table border='0'>";
-            var StockTickerXML = $.get(flickerAPI, function(xml) {
-                $(xml).find("quote").each(function () {
-                    Symbol = $(this).attr("symbol");
-                    $(this).find("Name").each(function () {
-                        CompName = $(this).text();
-                    });
-                    $(this).find("LastTradePriceOnly").each(function () {
-                        Price = $(this).text();
-                    });
-                    $(this).find("Change").each(function () {
-                        ChgInPrice = $(this).text();
-                    });
-                    $(this).find("PercentChange").each(function () {
-                        PercentChgInPrice = $(this).text();
-                    });
-                    
-                    var PriceClass = "GreenText", PriceIcon="up_green";
-                    if(parseFloat(ChgInPrice) < 0) { PriceClass = "RedText"; PriceIcon="down_red"; }
-                    StockTickerHTML = StockTickerHTML + "<tr>";
-					StockTickerHTML = StockTickerHTML + "<span class='" + PriceClass + "'>";
-                    StockTickerHTML = StockTickerHTML + "<td><span class='quote'>" + CompName + "</span></td> ";
-                    StockTickerHTML = StockTickerHTML + "<td>" + "<span class='" + PriceClass + "'>" + parseFloat(Price).toFixed(2) + "</span></td>";
-                    StockTickerHTML = StockTickerHTML + "<td>" + "<span class='" + PriceClass + "'>" + parseFloat(ChgInPrice).toFixed(2) + "</span></td>";
-                    StockTickerHTML = StockTickerHTML + "<td><span class='" + PriceClass + "'>"+parseFloat( PercentChgInPrice.split('%')[0]).toFixed(2) + "%</span></td></tr>";
-                });
-                StockTickerHTML = StockTickerHTML + "</table>"
-				$(dvTarget).html(StockTickerHTML);
-                
-            });
-        }
-    </script>
+
 	
 		
 		
 	</head>
 	<body>
 <br>
-<br>
 
-		<div id="weather"><b>WEATHER </b></div><br>
-<div id="indices"><b>QUOTES </b></div><br>
+<div id="weather"></div><br>
+
+
 
 <b>
 <div id="dateoftoday" style="border-top:1px solid black"></div>
@@ -938,7 +919,7 @@ for(var b = 0; b < divs.length; b++){
 		<div class="main" style="border-top:1px solid black; border-bottom:1px solid black">
   
 		  <input id="tab1" type="radio" name="tabs" checked>
-		  <label for="tab1">Quotes</label>
+		  <label for="tab1">Home</label>
 	
 		  <input id="tab2" type="radio" name="tabs">
 		  <label for="tab2">Charts</label>
@@ -968,7 +949,16 @@ for(var b = 0; b < divs.length; b++){
 	
 		  <div class="content" style="border-top:1px solid black">  
 			  <div id="content1">
-				<p><div id="dvYQL"></div></p>
+				<br>
+
+		
+
+
+<div class="photosday"><div id="photooftheday"></div></div>
+
+<br>
+<br>
+
 			  </div>
 	
 			  <div id="content2">
