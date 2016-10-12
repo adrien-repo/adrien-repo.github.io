@@ -838,7 +838,7 @@ for (var z in a) {
 			maintitle = 0
 			divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
 			document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: inline">'
-			document.getElementById(divdest).innerHTML+= ' [<b><a href="#" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
+			document.getElementById(divdest).innerHTML+= ' [<b><a href="#null" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
 			document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: none"><br><b>'+ a[alinks.indexOf(result.feed.feedUrl)][1] + '</b><br></div>'
 			idsection += 1
 			for (var i = 0; i < result.feed.entries.length; i++) 
