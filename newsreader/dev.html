@@ -707,8 +707,9 @@ aphotos,
 ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
 ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
 ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
-["http://www.reddit.com/r/tldr/.rss","TLDR","news"]
-
+["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
+["http://www.atlasobscura.com/feeds/latest","Atlas Obscura","periodics"],
+["http://www.reddit.com/r/tldr/.rss","Scientific American","news"]
 
 ]
 
@@ -781,7 +782,7 @@ for (var z in a) {
 			maintitle = 0
 			divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
 			document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: inline">'
-			document.getElementById(divdest).innerHTML+= ' [<b><a href="#" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
+			document.getElementById(divdest).innerHTML+= ' [<b><a href="" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
 			document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: none"><br><b>'+ a[alinks.indexOf(result.feed.feedUrl)][1] + '</b><br></div>'
 			idsection += 1
 			for (var i = 0; i < result.feed.entries.length; i++) 
