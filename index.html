@@ -1,3 +1,4 @@
+
 <!doctype html>
 
 <html lang="en">
@@ -641,7 +642,15 @@
 	if (rdpicsrc == 6) {var aphotos = ["http://widget.websta.me/rss/n/financialtimes","",""]}
 
 	var aarticles = [
-	aphotos,
+	["http://widget.websta.me/rss/n/afpphoto","",""],
+	["http://widget.websta.me/rss/n/reuters","",""],
+	["http://widget.websta.me/rss/n/wsj","",""],
+	["http://widget.websta.me/rss/n/lemondefr","",""],
+	["http://widget.websta.me/rss/n/nytimes","",""],
+	["http://widget.websta.me/rss/n/financialtimes","",""],
+	
+	
+	
 	["https://api.breakingnews.com/api/v1/item/?format=rss","Breaking News","news"],
 	["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml","New York Times","news"],
 	["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","news"],
@@ -707,7 +716,11 @@
 	}
 	function initialize() 
 	{
+	var photocount = 0
 	var topnews = 0
+	var topnewsatlaunch = 0
+	var headlineslist = []
+	var photoslist = []
 	var maintitle = 0
 	var idsection = 0
 	for (var z in a) {
@@ -746,7 +759,17 @@
 						strtxt = strtxt.replace(/#(\S*)/g,'');
 						strtxt = strtxt.replace(/@(\S*)/g,'');
 						strtxt = strtxt.replace(/<\/?[^>]+(>|$)/g, "");
+						
+						if (photocount <6)
+						{
 						document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br><font color="grey">'+ strtxt + '</font></div>'
+						photocount = photocount+1
+						}
+						
+						photoslist.push([str,strtxt])
+						localStorage.setItem("photoslistjson", JSON.stringify(photoslist));
+						
+						
 						}
 					}
 				
@@ -774,8 +797,16 @@
 						}
 					if (topnews == 0)
 						{
+						if (topnewsatlaunch == 0)
+						{
 						document.getElementById('topnews').innerHTML+= '<h1><a href="'+entry.link+'">'+ entry.title+ '</a></h1>'
+						topnewsatlaunch = 1
+						}
 						topnews = 1
+						headlineslist.push([entry.title,entry.link])
+						localStorage.setItem("headlineslistjson", JSON.stringify(headlineslist));
+
+						
 						}
 
 						var mysnippet = strip(entry.content)
@@ -790,17 +821,19 @@
 							document.getElementById(mydivid).innerHTML+=mysnippettend
 							
 							}
-						
+					
 					}
 					
-				
+				topnews = 0
 				}
 			}
 		}
 	)}
 	;
+
 	}
 	google.setOnLoadCallback(initialize);
+	
 	</script>
 
 	<script>
@@ -857,6 +890,29 @@
 	}
 	</script>
 
+	<script>
+	function next_headline() {
+	
+	var headlineslist = JSON.parse(localStorage.getItem("headlineslistjson"));
+	myheadlineindex = parseInt((Math.random() * (headlineslist.length - 1 + 1)), 10) 
+	document.getElementById('topnews').innerHTML= '<h1><a href="'+headlineslist[myheadlineindex][1]+'">'+ headlineslist[myheadlineindex][0] + '</a></h1>'
+	}
+	
+	function next_photos() {
+	var photoslist = JSON.parse(localStorage.getItem("photoslistjson"));
+	myphotoindex = parseInt((Math.random() * (6 - 1 + 1)), 10) 
+
+	document.getElementById("photooftheday").innerHTML = ''
+	for (var photoloop = 0; photoloop<6; photoloop++)
+	{
+	document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+photoslist[myphotoindex*6+photoloop][0]+'</center><br><font color="grey">'+ photoslist[myphotoindex*6+photoloop][1] + '</font></div>'
+	}
+	
+	}
+	</script>
+	
+	
+	
 </head>
 
 
@@ -910,7 +966,9 @@
 
 	<div class="content" style="border-top:1px solid black">  
 		<div id="content1">
-			<br>
+			
+			<b>Photos of the day <a href="#null" onclick="next_photos()">&#8634; </a></b>
+			<br><br>
 			<div class="photosday"><div id="photooftheday"></div></div>
 			<br>
 			<br>
@@ -1067,7 +1125,7 @@
 
 <script>
 	var d = new Date();
-	document.getElementById("dateoftoday").innerHTML = d.toDateString();
+	document.getElementById("dateoftoday").innerHTML = d.toDateString() +' <a href="#null" onclick="next_headline()"> &#8634; </a>';
 </script>
 
 </html>
