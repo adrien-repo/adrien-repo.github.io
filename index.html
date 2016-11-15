@@ -16,15 +16,15 @@
         
 	<style>
 	*, *:before, *:after {margin: 0; padding: 0; box-sizing: border-box;}
-	body {background: white; color: black; font: 14px;}
+	body {background: black; color: white; font: 14px;}
 	body {margin: 0 auto; min-width: 320px; max-width: 1000px;}
 	.main {margin: 0 auto; min-width: 320px; max-width: 1000px;}
-	.content {background: white; color: black;}
+	.content {background: black; color: white;}
 	.content > div {display: none; padding: 15px 5px 15px;}
 	input {display: none;}
 	label {display: inline-block; padding: 5px 8px; font-weight: 600; text-align: center;}
-	label:hover {color: black; cursor: pointer;}
-	input:checked + label {background: black; color: white;}
+	label:hover {color: white; cursor: pointer;}
+	input:checked + label {background: white; color: black;}
 	#tab1:checked ~ .content #content1,
 	#tab2:checked ~ .content #content2,
 	#tab3:checked ~ .content #content3,
@@ -41,9 +41,9 @@
 	{display: block;}
 	@media screen and (max-width: 400px) { label {padding: 15px 10px;} }
 	.photosday{  font-size: 12px;  border-bottom: 1px solid;    padding: 5px 0 5px 0;	margin-bottom: 5px;}
-	.collumn{	width: 319px;    display: inline-block;    vertical-align: top;    margin-bottom: 5px;	margin-right: 5px;    background-color:#F9F9F9}
-	a:link {text-decoration: none; color: black}
-	a:visited {text-decoration: none;color: black;}
+	.collumn{	width: 319px;    display: inline-block;    vertical-align: top;    margin-bottom: 5px;	margin-right: 5px;    background-color:#000000}
+	a:link {text-decoration: none; color: white}
+	a:visited {text-decoration: none;color: white;}
 	a:hover {text-decoration: underline;}
 	a:active {text-decoration: underline;}
 	th, td {padding: 5px;}
@@ -475,7 +475,7 @@
           ['Andorra', 1],
           ['UAE', 1]
         ]);
-        var options = { colors: ['#66b3ff'] , legend: 'none',  tooltip: {trigger: 'none'}};
+        var options = { backgroundColor: '#000000', colors: ['#66b3ff'] , legend: 'none',  tooltip: {trigger: 'none'}};
         var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
         chart.draw(data, options);
       }
@@ -840,7 +840,7 @@
 	// Weather query ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	$(document).ready(function() {
-	var wthloc = ['782538','615702','2459115','2423945','580778','783540','608105']
+	//var wthloc = ['782538','615702','2459115','2423945','580778','783540','608105']
 	for (var loopwth in wthloc) 
 		{
 		var mywoeid = wthloc[loopwth]
@@ -927,7 +927,7 @@
 <br>
 <div id="weather"></div><br>
 <b>
-<div id="dateoftoday" style="border-top:1px solid black"></div>
+<div id="dateoftoday" style="border-top:1px solid white"></div>
 </b>
 <div id="topnews"></div>
 <br>
@@ -936,7 +936,7 @@
 <br>
 <br>
 
-<div class="main" style="border-top:1px solid black; border-bottom:1px solid black">
+<div class="main" style="border-top:1px solid white; border-bottom:1px solid white">
 	<input id="tab1" type="radio" name="tabs" checked>
 	<label for="tab1">Home</label>
 	<input id="tab2" type="radio" name="tabs">
@@ -964,7 +964,7 @@
 	<input id="tab13" type="radio" name="tabs">
 	<label for="tab13">About</label>
 
-	<div class="content" style="border-top:1px solid black">  
+	<div class="content" style="border-top:1px solid white">  
 		<div id="content1">
 			
 			<b>Photos of the day <a href="#null" onclick="next_photos()">&#8634; </a></b>
@@ -974,65 +974,65 @@
 			<br>
 		</div>
 		<div id="content2">
-			<img src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m">
-			<img src="http://finviz.com/fut_chart.ashx?t=ES&p=h1&s=m">
-			<img src="http://finviz.com/fut_chart.ashx?t=ES&p=d1&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=ES&p=h1&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=ES&p=d1&s=m">
 			<br>
 			<br>
-			<img src="http://finviz.com/fut_chart.ashx?t=EX&p=m5&s=m">
-			<img src="http://finviz.com/fut_chart.ashx?t=EX&p=h1&s=m">
-			<img src="http://finviz.com/fut_chart.ashx?t=EX&p=d1&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=EX&p=m5&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=EX&p=h1&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=EX&p=d1&s=m">
 			<br>
 			<br>
-			<img src="http://finviz.com/fut_chart.ashx?t=CL&p=m5&s=m">
-			<img src="http://finviz.com/fut_chart.ashx?t=CL&p=h1&s=m">
-			<img src="http://finviz.com/fut_chart.ashx?t=CL&p=d1&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=CL&p=m5&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=CL&p=h1&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=CL&p=d1&s=m">
 			<br>
 			<br>
-			<img src="http://finviz.com/fut_chart.ashx?t=6E&p=m5&s=m">
-			<img src="http://finviz.com/fut_chart.ashx?t=6E&p=h1&s=m">
-			<img src="http://finviz.com/fut_chart.ashx?t=6E&p=d1&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=6E&p=m5&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=6E&p=h1&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=6E&p=d1&s=m">
 			<br>
 			<br>
-			<img src="http://finviz.com/fut_chart.ashx?t=6B&p=m5&s=m">
-			<img src="http://finviz.com/fut_chart.ashx?t=6B&p=h1&s=m">
-			<img src="http://finviz.com/fut_chart.ashx?t=6B&p=d1&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=6B&p=m5&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=6B&p=h1&s=m">
+			<img style="-webkit-filter: invert(1); filter: invert(1);" src="http://finviz.com/fut_chart.ashx?t=6B&p=d1&s=m">
 		</div>
 		<div id="content3">
 			<div id="example1"></div>
 		</div>
 		<div id="content4">
-			<div id="subh-news" style="background-color:#F0F0F0"></div>
+			<div id="subh-news" style="background-color:#000000"></div>
 			<br><br><div id="news" style="display:inline"></div>
 			<br><br><div id="news-child"></div>
 			<br>
 		</div>
 		<div id="content5">
-			<div id="subh-markets" style="background-color:#F0F0F0"></div>
+			<div id="subh-markets" style="background-color:#000000"></div>
 			<br><br><div id="markets" style="display:inline"></div>
 			<br><br><div id="markets-child"></div>	
 			<br>
 		</div>
 		<div id="content6">
-			<div id="subh-periodics" style="background-color:#F0F0F0"></div>
+			<div id="subh-periodics" style="background-color:#000000"></div>
 			<br><br><div id="periodics" style="display:inline"></div>
 			<br><br><div id="periodics-child"></div>
 			<br>
 		</div>
 		<div id="content7">
-			<div id="subh-bookreviews" style="background-color:#F0F0F0"></div>
+			<div id="subh-bookreviews" style="background-color:#000000"></div>
 			<br><br><div id="bookreviews" style="display:inline"></div>
 			<br><br><div id="bookreviews-child"></div>
 			<br>
 		</div>
 		<div id="content8">
-			<div id="subh-science" style="background-color:#F0F0F0"></div>
+			<div id="subh-science" style="background-color:#000000"></div>
 			<br><br><div id="science" style="display:inline"></div>
 			<br><br><div id="science-child"></div>
 			<br>
 		</div>
 		<div id="content9">
-			<div id="subh-blogs" style="background-color:#F0F0F0"></div>
+			<div id="subh-blogs" style="background-color:#000000"></div>
 			<br><br><div id="blogs" style="display:inline"></div>
 			<br><br><div id="blogs-child"></div>
 		</div>
@@ -1084,7 +1084,7 @@
 		<div id="content11">
 			<b>The state of the walk</b>
 			<br> 
-			“Not all those who wander are lost.” – J.R.R. Tolkien<br>
+			'Not all those who wander are lost.' - J.R.R. Tolkien<br>
 			<br>
 			<a href="/photographies/hawaii.html">Hawaii</a><br>
 			<a href="/photographies/indonesia.html">Indonesia</a><br>
