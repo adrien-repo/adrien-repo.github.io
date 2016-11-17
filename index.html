@@ -1,4 +1,5 @@
 
+
 <!doctype html>
 
 <html lang="en">
@@ -17,7 +18,7 @@
         
 	<style>
 	*, *:before, *:after {margin: 0; padding: 0; box-sizing: border-box;}
-	body {background: white; color: black; font: 14px;}
+	body {background: white; color: black; font: 14px; border-left:1px solid white; border-right:1px solid white; outline:1px solid black; outline-offset: 15px;}
 	body {margin: 0 auto; min-width: 320px; max-width: 1000px;}
 	.main {margin: 0 auto; min-width: 320px; max-width: 1000px;}
 	.content {background: white; color: black;}
@@ -626,9 +627,13 @@
 
 		   var e = document.getElementById(id);
 		   if(e.style.display == 'inline')
-			  e.style.display = 'none';
+			  {e.style.display = 'none';}
 		   else
-			  e.style.display = 'inline';
+			  {
+			  
+				if (id == 'weatherforecasts' && document.getElementById("weatherforecaststable").rows.length <3 ) {callweatherdata(1);}
+				e.style.display = 'inline';
+			  }
 		}
 
 	function strip(html)
@@ -706,6 +711,8 @@
 	["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
 	["http://www.atlasobscura.com/feeds/latest","Atlas Obscura","periodics"],
 	["http://rss.liberation.fr/rss/latest/","Liberation","news"],
+	["http://stratechery.com/feed/","Stratechery","periodics"],
+	["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
 	["http://www.reddit.com/r/tldr/.rss","TLDR","news"]
 
 	]
@@ -852,7 +859,18 @@
 	// Weather query ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	$(document).ready(function() {
-	var wthloc = ['615702','2423945','580778','783540','608105']
+	
+	callweatherdata(0);
+	
+	});
+	
+	function callweatherdata(allorone) {
+
+	document.getElementById("weather").innerHTML='<b><a href="#null" onclick="toggle_visibility(\'weatherforecasts\')">[+]</a></b>'
+	document.getElementById("weatherforecaststable").innerHTML=''
+	
+	if (allorone == 0) { var wthloc = ['783540'] }
+	if (allorone == 1) { var wthloc = ['615702','2423945','580778','783540','608105'] }
 	
 		var d = new Date();
 		d.setDate(d.getDate() + 1);
@@ -909,8 +927,8 @@
 			},
 		});
 		}
+	}
 	
-	});
 	</script>
 
 
@@ -970,32 +988,34 @@
 	function refreshcharts() {
 	
 	document.getElementById('finvizcharts').innerHTML= ''
+	var now = new Date();
+	pictimerid = now.getFullYear() +''+ now.getMonth() +''+ now.getDay() +''+ now.getHours()+''+ now.getMinutes()+''+ now.getSeconds()
 	
 	
 	
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=h1&s=m">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=d1&s=m">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=d1&s=m&'+ pictimerid + '">'
 			document.getElementById('finvizcharts').innerHTML+= '<br>'
 			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=m5&s=m">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=h1&s=m">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=d1&s=m">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=d1&s=m&'+ pictimerid + '">'
 			document.getElementById('finvizcharts').innerHTML+= '<br>'
 			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=m5&s=m">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=h1&s=m">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=d1&s=m">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=d1&s=m&'+ pictimerid + '">'
 			document.getElementById('finvizcharts').innerHTML+= '<br>'
 			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=m5&s=m">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=h1&s=m">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=d1&s=m">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=d1&s=m&'+ pictimerid + '">'
 			document.getElementById('finvizcharts').innerHTML+= '<br>'
 			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=m5&s=m">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=h1&s=m">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=d1&s=m">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=d1&s=m&'+ pictimerid + '">'
 	
 	}
 	
@@ -1015,13 +1035,15 @@
 <body>
 <br>
 <center><div style="font-family: UnifrakturMaguntia; font-size: 60px;">Old Planet News</div>
-'A'ohe pau ka 'ike i ka halau ho'okahi - <i>All knowledge is not taught in the same school (One can learn from many sources)</i></center>
-<br>
-<br>
+<div style="border-bottom:1px solid black">'A'ohe pau ka 'ike i ka halau ho'okahi - <i>All knowledge is not taught in the same school (One can learn from many sources)</i></div>
+
+</center>
+
+
 
 <div id="weather"><b><a href="#null" onclick="toggle_visibility('weatherforecasts')">[+]</a></b> </div> 
 
-<div id="weatherforecasts" style="display: none"><br><table id="weatherforecaststable"></table></div><br><br>
+<div id="weatherforecasts" style="display: none"><br><table id="weatherforecaststable"></table></div><br>
 <b>
 <div id="dateoftoday" style="border-top:1px solid black"></div>
 </b>
@@ -1202,6 +1224,9 @@
 		</div>
 	</div>
 </div>
+
+<center><span style="font-family: UnifrakturMaguntia; font-size: 16px;">Old Planet News</span></center>
+<br><br>
 
 </body>
 
