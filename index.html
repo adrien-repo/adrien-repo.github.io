@@ -648,7 +648,7 @@
 	<script type="text/javascript">
 	// RSS feed ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	var rdpicsrc = parseInt((Math.random() * (7 - 1 + 1)), 10) + 1
+	var rdpicsrc = parseInt((Math.random() * (8 - 1 + 1)), 10) + 1
 	//default
 	var aphotos = ["http://widget.websta.me/rss/n/afpphoto","",""]
 	if (rdpicsrc == 1) {var aphotos = ["http://widget.websta.me/rss/n/afpphoto","",""]}
@@ -657,7 +657,8 @@
 	if (rdpicsrc == 4) {var aphotos = ["http://widget.websta.me/rss/n/lemondefr","",""]}
 	if (rdpicsrc == 5) {var aphotos = ["http://widget.websta.me/rss/n/nytimes","",""]}
 	if (rdpicsrc == 6) {var aphotos = ["http://widget.websta.me/rss/n/financialtimes","",""]}
-	if (rdpicsrc == 7) {var aphotos = ["http://widget.websta.me/rss/n/bloombergbusiness","",""]}
+	if (rdpicsrc == 7) {var aphotos = ["http://widget.websta.me/rss/n/liberationfr","",""]}
+	if (rdpicsrc == 8) {var aphotos = ["http://widget.websta.me/rss/n/parismatch_magazine","",""]}
 
 	var aarticles = [
 	["http://widget.websta.me/rss/n/afpphoto","",""],
@@ -666,8 +667,8 @@
 	["http://widget.websta.me/rss/n/lemondefr","",""],
 	["http://widget.websta.me/rss/n/nytimes","",""],
 	["http://widget.websta.me/rss/n/financialtimes","",""],
-	["http://widget.websta.me/rss/n/bloombergbusiness","",""],
-	
+	["http://widget.websta.me/rss/n/liberationfr","",""],
+	["http://widget.websta.me/rss/n/parismatch_magazine","",""],
 	
 	["https://api.breakingnews.com/api/v1/item/?format=rss","Breaking News","news"],
 	["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml","New York Times","news"],
@@ -975,7 +976,7 @@
 	
 	function next_photos() {
 	var photoslist = JSON.parse(localStorage.getItem("photoslistjson"));
-	myphotoindex = parseInt((Math.random() * (7 - 1 + 1)), 10) 
+	myphotoindex = parseInt((Math.random() * (8 - 1 + 1)), 10) 
 
 	document.getElementById("photooftheday").innerHTML = ''
 	for (var photoloop = 0; photoloop<6; photoloop++)
