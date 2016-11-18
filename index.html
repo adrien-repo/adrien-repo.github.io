@@ -648,7 +648,7 @@
 	<script type="text/javascript">
 	// RSS feed ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	var rdpicsrc = parseInt((Math.random() * (6 - 1 + 1)), 10) + 1
+	var rdpicsrc = parseInt((Math.random() * (7 - 1 + 1)), 10) + 1
 	//default
 	var aphotos = ["http://widget.websta.me/rss/n/afpphoto","",""]
 	if (rdpicsrc == 1) {var aphotos = ["http://widget.websta.me/rss/n/afpphoto","",""]}
@@ -657,6 +657,7 @@
 	if (rdpicsrc == 4) {var aphotos = ["http://widget.websta.me/rss/n/lemondefr","",""]}
 	if (rdpicsrc == 5) {var aphotos = ["http://widget.websta.me/rss/n/nytimes","",""]}
 	if (rdpicsrc == 6) {var aphotos = ["http://widget.websta.me/rss/n/financialtimes","",""]}
+	if (rdpicsrc == 7) {var aphotos = ["http://widget.websta.me/rss/n/bloombergbusiness","",""]}
 
 	var aarticles = [
 	["http://widget.websta.me/rss/n/afpphoto","",""],
@@ -665,7 +666,7 @@
 	["http://widget.websta.me/rss/n/lemondefr","",""],
 	["http://widget.websta.me/rss/n/nytimes","",""],
 	["http://widget.websta.me/rss/n/financialtimes","",""],
-	
+	["http://widget.websta.me/rss/n/bloombergbusiness","",""],
 	
 	
 	["https://api.breakingnews.com/api/v1/item/?format=rss","Breaking News","news"],
@@ -713,6 +714,8 @@
 	["http://rss.liberation.fr/rss/latest/","Liberation","news"],
 	["http://stratechery.com/feed/","Stratechery","periodics"],
 	["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
+	["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
+	["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
 	["http://www.reddit.com/r/tldr/.rss","TLDR","news"]
 
 	]
@@ -972,7 +975,7 @@
 	
 	function next_photos() {
 	var photoslist = JSON.parse(localStorage.getItem("photoslistjson"));
-	myphotoindex = parseInt((Math.random() * (6 - 1 + 1)), 10) 
+	myphotoindex = parseInt((Math.random() * (7 - 1 + 1)), 10) 
 
 	document.getElementById("photooftheday").innerHTML = ''
 	for (var photoloop = 0; photoloop<6; photoloop++)
