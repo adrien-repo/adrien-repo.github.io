@@ -31,6 +31,7 @@
 
 <script>
 function body refresh() {
+window.alert(localStorage.getItem("linktoreadLS"))
 myurl = localStorage.getItem("linktoreadLS")
 mykey = "aa5d99a2aaa14d9e837d0edb907b5097"
 
@@ -40,14 +41,14 @@ $.ajax({
         dataType: "json",
         success: displayAll
     });
-}
+
 function displayAll(data){
     document.getElementById('title').innerHTML = '<a href="'+myurl+'">'+data.title+'</a>';
 	document.getElementById('content').innerHTML = data.content;
 	document.getElementById('provider').innerHTML = data.provider_name
 	
 }
-
+}
 
 
 </script>
