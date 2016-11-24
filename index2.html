@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	  	<link rel='icon' href='http://adrien-repo.github.io/icon.png' type='image/x-icon'/ >
+	<link rel='shortcut icon' href='http://adrien-repo.github.io/icon.png' type='image/x-icon'/ >
+	
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=UnifrakturMaguntia" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>Old Planet News</title>
+	
+<script>
+function resizereader() {
+window.alert('here')
+document.getElementById('myframeset').rows = '50%, 50%';
+
+}
+</script>
+<script>
+	function sendtoreader(linktoread) {
+	window.alert(linktoread)
+	resizereader();
+	
+	
+	
+	localStorage.setItem("linktoreadLS",linktoread);
+	
+	}
+	</script>
+
+    </head>
+    
+    <frameset id="myframeset" rows="100%,0%" frameborder="0">
+        <frame name="top" src="master.html" target="top">
+        <frame name="main" src="reading.html" target="main">
+    </frameset>
+</html>
+
+
+</body>

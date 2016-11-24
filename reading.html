@@ -1,0 +1,78 @@
+
+<!doctype html>
+
+<html lang="en">
+    
+<head>
+  	<link rel='icon' href='http://adrien-repo.github.io/icon.png' type='image/x-icon'/ >
+	<link rel='shortcut icon' href='http://adrien-repo.github.io/icon.png' type='image/x-icon'/ >
+	
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=UnifrakturMaguntia" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>Old Planet News</title>
+        
+	<style>
+	*, *:before, *:after {margin: 0; padding: 0; box-sizing: border-box;}
+	body {background: #F1F1F1;}
+	.realbody {background: white; color: black; font: 14px; border-left:14px solid white; border-right:14px solid white; outline:1px solid black; outline-offset: 1px;}
+	.realbody {margin: 0 auto; min-width: 320px; max-width: 1010px;}
+	.main {margin: 0 auto; min-width: 320px; max-width: 1010px;}
+	a:link {text-decoration: none; color: black}
+	a:visited {text-decoration: none;color: black;}
+	a:hover {text-decoration: underline;}
+	a:active {text-decoration: underline;}
+	</style>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+
+<script>
+myurl = localStorage.getItem("linktoreadLS")
+mykey = "aa5d99a2aaa14d9e837d0edb907b5097"
+
+$.ajax({
+        url: 'http://api.embed.ly/1/extract?url='+myurl+'&key='+mykey,
+        type: 'GET',
+        dataType: "json",
+        success: displayAll
+    });
+
+function displayAll(data){
+    document.getElementById('title').innerHTML = '<a href="'+myurl+'">'+data.title+'</a>';
+	document.getElementById('content').innerHTML = data.content;
+	document.getElementById('provider').innerHTML = data.provider_name
+	
+}
+
+
+
+</script>
+
+</head>
+<body>
+<div class="realbody">
+<br>
+<a href="">close</a>
+<br>
+<h1><div id="title"></div></h1>
+<div id="provider"  style="border-bottom:1px solid black"></div>
+
+<br>
+<br>
+
+
+<div id="content"></div>
+<br>
+<br>
+
+<div style="border-bottom:1px solid black"> </div>
+<center><span style="font-family: UnifrakturMaguntia; font-size: 16px;">Old Planet News</span></center>
+<br><br>
+
+
+
+</div>
+</body>
