@@ -813,20 +813,20 @@
 					var entry = result.feed.entries[i];
 					if(maintitle == 0)
 						{
-						document.getElementById('subh-'+divdest).innerHTML+= ' &#9900; <a href="'+entry.link+'">'+ entry.title+ '</a><br>'
+						document.getElementById('subh-'+divdest).innerHTML+= ' &#9900; <a href="window.parent.sendtoreader('+entry.link+')">'+ entry.title+ '</a><br>'
 						maintitle = 1
 						if(a[alinks.indexOf(result.feed.feedUrl)][1].includes("TLDR"))
 							{
 							strtldrtitle = entry.title
 							strtldrtitle = strtldrtitle.substring(strtldrtitle.indexOf("]") + 1)
-							document.getElementById('lasttldr').innerHTML+= '<i><a href="'+entry.link+'">'+ strtldrtitle + '</a></i>'
+							document.getElementById('lasttldr').innerHTML+= '<i><a href="window.parent.sendtoreader('+entry.link+')">'+ strtldrtitle + '</a></i>'
 							}
 						}
 					if (topnews == 0)
 						{
 						if (topnewsatlaunch == 0)
 						{
-						document.getElementById('topnews').innerHTML+= '<h1><a href="'+entry.link+'">'+ entry.title+ '</a></h1>'
+						document.getElementById('topnews').innerHTML+= '<h1><a href="window.parent.sendtoreader('+entry.link+')">'+ entry.title+ '</a></h1>'
 						topnewsatlaunch = 1
 						}
 						topnews = 1
@@ -839,12 +839,12 @@
 						var mysnippet = strip(entry.content)
 						if (mysnippet.length < 500)
 							{
-							document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><br><font color="grey">'+mysnippet+'</font></i><br>'
+							document.getElementById(idsection-1).innerHTML+= '<a href="window.parent.sendtoreader('+entry.link+')"> &#9900; '+entry.title+' </a><i><br><font color="grey">'+mysnippet+'</font></i><br>'
 							} else {
 							mysnippettrunc = mysnippet.substring(0, 500)
 							mysnippettend = mysnippet.substring(500, (mysnippet.length-500+1))
 							var mydivid = idsection*1000+i
-							document.getElementById(idsection-1).innerHTML+= '<a href="'+entry.link+'"> &#9900; '+entry.title+' </a><i><font color="grey">'+mysnippettrunc+'<a href="#' + mydivid + '" onclick="toggle_visibility('+mydivid+');">[...]</a><div id="' + mydivid + '" style="display: none"></div></font></i><br>'
+							document.getElementById(idsection-1).innerHTML+= '<a href="window.parent.sendtoreader('+entry.link+')"> &#9900; '+entry.title+' </a><i><font color="grey">'+mysnippettrunc+'<a href="#' + mydivid + '" onclick="toggle_visibility('+mydivid+');">[...]</a><div id="' + mydivid + '" style="display: none"></div></font></i><br>'
 							document.getElementById(mydivid).innerHTML+=mysnippettend
 							
 							}
