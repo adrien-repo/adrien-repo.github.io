@@ -14,14 +14,21 @@
 	
 <script>
 function resizereader() {
-window.alert('here')
+
 document.getElementById('myframeset').rows = '0%, 100%';
 
 }
+
+function closearticle() {
+
+document.getElementById('myframeset').rows = '100%, 0%';
+
+}
+
 </script>
 <script>
 	function sendtoreader(linktoread) {
-	window.alert(linktoread)
+	
 	resizereader();
 	
 	
@@ -29,6 +36,8 @@ document.getElementById('myframeset').rows = '0%, 100%';
 	localStorage.setItem("linktoreadLS",linktoread);
 	document.getElementById('main').contentWindow.location.reload();
 	}
+	
+	
 	</script>
 
     </head>
