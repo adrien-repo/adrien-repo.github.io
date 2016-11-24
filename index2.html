@@ -31,9 +31,10 @@ document.getElementById('myframeset').rows = '100%, 0%';
 	
 	resizereader();
 	
-	
+	window.alert(linktoread)
 	
 	localStorage.setItem("linktoreadLS",linktoread);
+	window.alert(localStorage.getItem("linktoreadLS"))
 	document.getElementById('main').contentWindow.location.reload();
 	}
 	
