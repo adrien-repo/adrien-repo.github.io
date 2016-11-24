@@ -15,7 +15,7 @@
 <script>
 function resizereader() {
 window.alert('here')
-document.getElementById('myframeset').rows = '50%, 50%';
+document.getElementById('myframeset').rows = '0%, 100%';
 
 }
 </script>
@@ -27,7 +27,7 @@ document.getElementById('myframeset').rows = '50%, 50%';
 	
 	
 	localStorage.setItem("linktoreadLS",linktoread);
-	
+	document.getElementById('main').contentWindow.location.reload();
 	}
 	</script>
 
