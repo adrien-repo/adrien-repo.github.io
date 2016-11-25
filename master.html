@@ -1,6 +1,7 @@
 
 
 
+
 <!doctype html>
 
 <html lang="en">
@@ -644,6 +645,16 @@
 				if (id == 'weatherforecasts' && document.getElementById("weatherforecaststable").rows.length <3 ) {callweatherdata(1);}
 				e.style.display = 'inline';
 			  }
+		var oldid = localStorage.getItem('previousidtoggled')
+		localStorage.setItem('previousidtoggled', id);
+		var eold = document.getElementById(oldid);
+		if(eold.style.display == 'inline')
+			  {eold.style.display = 'none';}
+		   else
+			  {
+				eold.style.display = 'inline';
+			  }
+		
 		}
 
 	function strip(html)
@@ -814,16 +825,16 @@
 				
 				maintitle = 0
 				divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
-				document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: inline">'
-				document.getElementById(divdest).innerHTML+= ' [<b><a href="#null" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
-				document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: none"><br><b><a href="#null" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b><br></div>'
+				//document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: inline">'
+				//document.getElementById(divdest).innerHTML+= ' [<b><a href="#null" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
+				document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: none"><br><h3><span style="border-top:1px solid black; border-bottom:1px solid black"<b><a href="#null" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b></span></h3><br></div>'
 				idsection += 1
 				for (var i = 0; i < result.feed.entries.length; i++) 
 					{
 					var entry = result.feed.entries[i];
 					if(maintitle == 0)
 						{
-						document.getElementById('subh-'+divdest).innerHTML+= ' &#9900; <a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ entry.title+ '</a><br>'
+						document.getElementById('subh-'+divdest).innerHTML+= ' &#9900; [<b><a href="#null" onclick="toggle_visibility(' + (idsection-1) + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] <a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ entry.title+ '</a><br>'
 						maintitle = 1
 						if(a[alinks.indexOf(result.feed.feedUrl)][1].includes("TLDR"))
 							{
@@ -1136,37 +1147,37 @@
 		</div>
 		<div id="content4">
 			<div id="subh-news" style="background-color:#ffffff"></div>
-			<br><br><div id="news" style="display:inline"></div>
+			<!-- <br><br><div id="news" style="display:inline"></div> -->
 			<br><br><div id="news-child"></div>
 			<br>
 		</div>
 		<div id="content5">
 			<div id="subh-markets" style="background-color:#ffffff"></div>
-			<br><br><div id="markets" style="display:inline"></div>
+			<!-- <br><br><div id="markets" style="display:inline"></div> -->
 			<br><br><div id="markets-child"></div>	
 			<br>
 		</div>
 		<div id="content6">
 			<div id="subh-periodics" style="background-color:#ffffff"></div>
-			<br><br><div id="periodics" style="display:inline"></div>
+			<!-- <br><br><div id="periodics" style="display:inline"></div> -->
 			<br><br><div id="periodics-child"></div>
 			<br>
 		</div>
 		<div id="content7">
 			<div id="subh-bookreviews" style="background-color:#ffffff"></div>
-			<br><br><div id="bookreviews" style="display:inline"></div>
+			<!-- <br><br><div id="bookreviews" style="display:inline"></div> -->
 			<br><br><div id="bookreviews-child"></div>
 			<br>
 		</div>
 		<div id="content8">
 			<div id="subh-science" style="background-color:#ffffff"></div>
-			<br><br><div id="science" style="display:inline"></div>
+			<!-- <br><br><div id="science" style="display:inline"></div> -->
 			<br><br><div id="science-child"></div>
 			<br>
 		</div>
 		<div id="content9">
 			<div id="subh-blogs" style="background-color:#ffffff"></div>
-			<br><br><div id="blogs" style="display:inline"></div>
+			<!-- <br><br><div id="blogs" style="display:inline"></div> -->
 			<br><br><div id="blogs-child"></div>
 		</div>
 		<div id="content10">
