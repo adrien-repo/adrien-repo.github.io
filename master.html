@@ -144,7 +144,8 @@
 							links[i].text = '[article]'
 							finaldest = 'www.google.com'
 							links[i].href = '#null'
-							links[i].onclick = new Function("window.parent.sendtoreader('"+finaldest+"')");
+							links[i].setAttribute('onclick',  'alert("hello");');
+							//links[i].onclick = new Function("window.parent.sendtoreader('"+finaldest+"')");
 							}
 						}
 					}
