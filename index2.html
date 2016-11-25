@@ -33,9 +33,27 @@ document.getElementById('myframeset').rows = '100%, 0%';
 	
 	window.alert(linktoread)
 	
-	localStorage.setItem("linktoreadLS",linktoread);
-	window.alert(localStorage.getItem("linktoreadLS"))
-	document.frames.main.location.reload();
+	
+	
+	
+window.alert(localStorage.getItem("linktoreadLS"))
+myurl = linktoread
+mykey = "aa5d99a2aaa14d9e837d0edb907b5097"
+
+$.ajax({
+        url: 'http://api.embed.ly/1/extract?url='+myurl+'&key='+mykey,
+        type: 'GET',
+        dataType: "json",
+        success: displayAll
+    });
+
+function displayAll(data){
+    window.frames["main"].document.getElementById('title').innerHTML = '<a href="'+myurl+'">'+data.title+'</a>';
+	window.frames["main"].document.getElementById('content').innerHTML = data.content;
+	window.frames["main"].document.getElementById('provider').innerHTML = data.provider_name
+	
+}
+
 	}
 	
 	
