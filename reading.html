@@ -19,7 +19,7 @@
 	*, *:before, *:after {margin: 0; padding: 0; box-sizing: border-box;}
 	body {background: #F1F1F1;}
 	.realbody {background: white; color: black; font: 14px; border-left:14px solid white; border-right:14px solid white; outline:1px solid black; outline-offset: 1px;}
-	.realbody {margin: 0 auto; min-width: 320px; max-width: 1010px;}
+	.realbody {position: relative; margin: 0 auto; min-width: 320px; max-width: 1010px;}
 	.main {margin: 0 auto; min-width: 320px; max-width: 1010px;}
 	a:link {text-decoration: none; color: black}
 	a:visited {text-decoration: none;color: black;}
@@ -44,9 +44,12 @@
 <body>
 <div class="realbody">
 <br>
+	
+		
 <div class="floating-bar">
 	<a href="#null" onclick="window.parent.closearticle()">[close]</a>
 </div>
+	
 <br>
 <h1><div id="title"></div></h1>
 <div id="provider"  style="border-bottom:1px solid black"></div>
