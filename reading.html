@@ -29,32 +29,10 @@
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 
-<script>
-function bodyrefresh() {
-window.alert(localStorage.getItem("linktoreadLS"))
-myurl = localStorage.getItem("linktoreadLS")
-mykey = "aa5d99a2aaa14d9e837d0edb907b5097"
 
-$.ajax({
-        url: 'http://api.embed.ly/1/extract?url='+myurl+'&key='+mykey,
-        type: 'GET',
-        dataType: "json",
-        success: displayAll
-    });
-
-function displayAll(data){
-    document.getElementById('title').innerHTML = '<a href="'+myurl+'">'+data.title+'</a>';
-	document.getElementById('content').innerHTML = data.content;
-	document.getElementById('provider').innerHTML = data.provider_name
-	
-}
-}
-
-
-</script>
 
 </head>
-<body onload="bodyrefresh()">
+<body>
 <div class="realbody">
 <br>
 <a href="#null" onclick="window.parent.closearticle()">close</a>
