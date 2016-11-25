@@ -143,8 +143,8 @@
 							} else {
 							links[i].text = '[article]'
 							finaldest = links[i].href
-							links[i].href = '"#null"'
-							links[i].onclick = function() { window.parent.sendtoreader(finaldest); };
+							links[i].href = '#null'
+							links[i].addEventListener("click", window.parent.sendtoreader(finaldest); );
 							}
 						}
 					}
