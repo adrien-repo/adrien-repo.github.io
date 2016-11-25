@@ -60,19 +60,21 @@ document.getElementById('myframeset').rows = '100%, 0%';
 	var pubdate = new Date(data.published + data.offset)
 	var n = pubdate.toString();
 	
-	window.frames["main"].document.getElementById('provider').innerHTML = '<img src="'+data.favicon_url+'" alt="" height="16" width="16"> '+ data.provider_name + ' (' +data.provider_url+ ')<br><br> '+ n + ' <br><br><b>' + data.description +'</b><br><br>'
+	window.frames["main"].document.getElementById('provider').innerHTML = '<img src="'+data.favicon_url+'" alt="" height="16" width="16"> '+ data.provider_name + ' (<a href="'+data.provider_url+'">'+data.provider_url+'</a>')<br><br> '+ n + ' <br><br><b>' + data.description +'</b><br><br>'
 	
 }
 	
 	</script>
 
     </head>
-    
+
+	<body>
     <frameset id="myframeset" rows="100%,0%" frameborder="0">
         <frame name="top" src="master.html" target="top">
         <frame name="main" src="reading.html" target="main">
     </frameset>
-</html>
+
 
 
 </body>
+</html>
