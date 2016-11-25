@@ -142,13 +142,12 @@
 							{
 							} else {
 							links[i].text = '[article]'
-							finaldest = links[i].data-expanded-url
+							finaldest = links[i].title
 							links[i].setAttribute('onclick',  'window.parent.sendtoreader("' + finaldest + '");');
 							links[i].href = '#null'
-							links[i].data-expanded-url = ''
+
 							links[i].target = ''
-							links[i].title = ''
-							links[i].data-scribe = ''
+
 							
 							
 							}
