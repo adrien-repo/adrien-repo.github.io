@@ -647,13 +647,17 @@
 			  }
 		var oldid = localStorage.getItem('previousidtoggled')
 		localStorage.setItem('previousidtoggled', id);
-		var eold = document.getElementById(oldid);
-		if(eold.style.display == 'inline')
-			  {eold.style.display = 'none';}
-		   else
-			  {
-				eold.style.display = 'inline';
-			  }
+		
+		if (id == oldid) { } else {
+		
+			var eold = document.getElementById(oldid);
+			if(eold.style.display == 'inline')
+				  {eold.style.display = 'none';}
+			   else
+				  {
+					eold.style.display = 'inline';
+				  }
+		}
 		
 		}
 
