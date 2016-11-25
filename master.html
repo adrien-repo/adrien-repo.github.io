@@ -827,14 +827,14 @@
 				divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
 				//document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: inline">'
 				//document.getElementById(divdest).innerHTML+= ' [<b><a href="#null" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
-				document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: none"><br><h3><span style="border-top:1px solid black; border-bottom:1px solid black"<b><a href="#null" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b></span></h3><br></div>'
+				document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: none"><br><h3><span style="border-top:1px solid black"><b><a href="#null" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b></span></h3><br></div>'
 				idsection += 1
 				for (var i = 0; i < result.feed.entries.length; i++) 
 					{
 					var entry = result.feed.entries[i];
 					if(maintitle == 0)
 						{
-						document.getElementById('subh-'+divdest).innerHTML+= ' &#9900; [<b><a href="#null" onclick="toggle_visibility(' + (idsection-1) + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] <a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ entry.title+ '</a><br>'
+						document.getElementById('subh-'+divdest).innerHTML+= ' <img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="16" width="16"> [<b><a href="#null" onclick="toggle_visibility(' + (idsection-1) + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] <a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ entry.title+ '</a><br>'
 						maintitle = 1
 						if(a[alinks.indexOf(result.feed.feedUrl)][1].includes("TLDR"))
 							{
@@ -860,12 +860,12 @@
 						var mysnippet = strip(entry.content)
 						if (mysnippet.length < 500)
 							{
-							document.getElementById(idsection-1).innerHTML+= '<a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"> &#9900; '+entry.title+' </a><i><br><font color="grey">'+mysnippet+'</font></i><br>'
+							document.getElementById(idsection-1).innerHTML+= '<a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="16" width="16"> '+entry.title+' </a><i><br><font color="grey">'+mysnippet+'</font></i><br>'
 							} else {
 							mysnippettrunc = mysnippet.substring(0, 500)
 							mysnippettend = mysnippet.substring(500, (mysnippet.length-500+1))
 							var mydivid = idsection*1000+i
-							document.getElementById(idsection-1).innerHTML+= '<a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"> &#9900; '+entry.title+' </a><i><font color="grey">'+mysnippettrunc+'<a href="#' + mydivid + '" onclick="toggle_visibility('+mydivid+');">[...]</a><div id="' + mydivid + '" style="display: none"></div></font></i><br>'
+							document.getElementById(idsection-1).innerHTML+= '<a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="16" width="16"> '+entry.title+' </a><i><font color="grey">'+mysnippettrunc+'<a href="#' + mydivid + '" onclick="toggle_visibility('+mydivid+');">[...]</a><div id="' + mydivid + '" style="display: none"></div></font></i><br>'
 							document.getElementById(mydivid).innerHTML+=mysnippettend
 							
 							}
