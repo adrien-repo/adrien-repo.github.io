@@ -60,7 +60,7 @@ document.getElementById('myframeset').rows = '100%, 0%';
 	var pubdate = new Date(data.published + data.offset)
 	var n = pubdate.toString();
 	
-	window.frames["main"].document.getElementById('provider').innerHTML = '<img src="'+data.favicon_url+'"> '+ data.provider_name + ' ['+ n + ']'
+	window.frames["main"].document.getElementById('provider').innerHTML = '<img src="'+data.favicon_url+'" alt="" height="16" width="16"> '+ data.provider_name + ' ' +data.provider_url+ ' (publication: '+ n + ') <br>' + data.description
 	
 }
 	
