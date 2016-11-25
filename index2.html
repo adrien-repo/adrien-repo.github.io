@@ -31,6 +31,10 @@ document.getElementById('myframeset').rows = '100%, 0%';
 <script>
 	function sendtoreader(linktoread) {
 	
+		
+	window.frames["main"].document.getElementById('title').innerHTML = 'loading title..';
+	window.frames["main"].document.getElementById('content').innerHTML = 'loading content..';
+	window.frames["main"].document.getElementById('provider').innerHTML = 'loading source..';
 	resizereader();
 	
 	
