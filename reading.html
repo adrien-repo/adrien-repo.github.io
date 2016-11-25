@@ -25,6 +25,15 @@
 	a:visited {text-decoration: none;color: black;}
 	a:hover {text-decoration: underline;}
 	a:active {text-decoration: underline;}
+		
+	.floating-bar{
+   	position: fixed;
+   	top: 10px; /* space between top of browser and annoying box */
+   	left: 10px; /* space between top of browser and annoying box */
+   	width: 100px;
+   	height: 100px;
+		}
+		
 	</style>
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
@@ -35,7 +44,9 @@
 <body>
 <div class="realbody">
 <br>
-<a href="#null" onclick="window.parent.closearticle()">close</a>
+<div id="floating-bar">
+	<a href="#null" onclick="window.parent.closearticle()">[close]</a>
+</div>
 <br>
 <h1><div id="title"></div></h1>
 <div id="provider"  style="border-bottom:1px solid black"></div>
