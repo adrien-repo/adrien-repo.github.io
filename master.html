@@ -637,7 +637,20 @@
 		function toggle_visibility(id) {
 
 		   var e = document.getElementById(id);
-		   if(e.style.display == 'inline')
+			
+		
+		var oldid = localStorage.getItem('previousidtoggled')
+		localStorage.setItem('previousidtoggled', id);
+		if (id == oldid) { } else {
+			var eold = document.getElementById(oldid);
+			if(eold.style.display == 'inline')
+				  {eold.style.display = 'none';}
+			   else
+				  {eold.style.display = 'inline';}
+			}
+			
+			
+		  if(e.style.display == 'inline')
 			  {e.style.display = 'none';}
 		   else
 			  {
@@ -645,19 +658,7 @@
 				if (id == 'weatherforecasts' && document.getElementById("weatherforecaststable").rows.length <3 ) {callweatherdata(1);}
 				e.style.display = 'inline';
 			  }
-		var oldid = localStorage.getItem('previousidtoggled')
-		localStorage.setItem('previousidtoggled', id);
-		
-		if (id == oldid) { } else {
-		
-			var eold = document.getElementById(oldid);
-			if(eold.style.display == 'inline')
-				  {eold.style.display = 'none';}
-			   else
-				  {
-					eold.style.display = 'inline';
-				  }
-		}
+
 		
 		}
 
