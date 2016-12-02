@@ -845,7 +845,7 @@
 							{
 							strtldrtitle = entry.title
 							strtldrtitle = strtldrtitle.substring(strtldrtitle.indexOf("]") + 1)
-							document.getElementById('lasttldr').innerHTML+= '<i><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ strtldrtitle.replace(",", ",<br>") + '</a></i>'
+							document.getElementById('lasttldr').innerHTML+= '<i><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ strtldrtitle.replace(/,/g, ",<br>") + '</a></i>'
 							}
 						}
 					if (topnews == 0)
