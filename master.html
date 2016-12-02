@@ -852,7 +852,7 @@
 						{
 						if (topnewsatlaunch == 0)
 						{
-						document.getElementById('topnews').innerHTML+= '<h3><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ entry.title+ '</a></h3>'
+						document.getElementById('topnews').innerHTML+= '<h2><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ entry.title+ '</a></h2>'
 						topnewsatlaunch = 1
 						}
 						topnews = 1
@@ -1001,7 +1001,7 @@
 	
 	var headlineslist = JSON.parse(localStorage.getItem("headlineslistjson"));
 	myheadlineindex = parseInt((Math.random() * (headlineslist.length - 1 + 1)), 10) 
-	document.getElementById('topnews').innerHTML= '<h1><a href="#null" onclick="window.parent.sendtoreader(\''+headlineslist[myheadlineindex][1]+'\');">'+ headlineslist[myheadlineindex][0] + '</a></h1>'
+	document.getElementById('topnews').innerHTML= '<h2><a href="#null" onclick="window.parent.sendtoreader(\''+headlineslist[myheadlineindex][1]+'\');">'+ headlineslist[myheadlineindex][0] + '</a></h2>'
 	}
 	
 	function next_photos() {
