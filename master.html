@@ -650,7 +650,7 @@
 			  {
 			  
 				if (id == 'weatherforecasts' && document.getElementById("weatherforecaststable").rows.length <3 ) {callweatherdata(1);}
-				if (id == oldid) { } else {eold.style.display = 'none';}
+				if (id == oldid) { } else {if (oldid == 'dummy') {} else {eold.style.display = 'none';}}
 				e.style.display = 'inline';
 			  }
 
