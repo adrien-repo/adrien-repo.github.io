@@ -3,6 +3,7 @@
 
 
 
+
 <!doctype html>
 
 <html lang="en">
@@ -692,6 +693,8 @@
 	["http://widget.websta.me/rss/n/liberationfr","",""],
 	["http://widget.websta.me/rss/n/parismatch_magazine","",""],
 	
+	["http://townhall.com/api/openaccess/cartoons","",""],
+	
 	["https://api.breakingnews.com/api/v1/item/?format=rss","Breaking News","news"],
 	["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml","New York Times","news"],
 	["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","news"],
@@ -827,6 +830,9 @@
 				
 				} else {
 				
+				
+				
+				
 				maintitle = 0
 				divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
 				//document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: inline">'
@@ -838,7 +844,7 @@
 					var entry = result.feed.entries[i];
 					if(maintitle == 0)
 						{
-						document.getElementById('subh-'+divdest).innerHTML+= ' <img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="14" width="14"> [<b><a href="#null" onclick="toggle_visibility(' + (idsection-1) + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] <a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ entry.title+ '</a><br>'
+						document.getElementById('subh-'+divdest).innerHTML+= ' <p style="border-bottom:1px solid lightgrey"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="14" width="14"> [<b><a href="#null" onclick="toggle_visibility(' + (idsection-1) + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] <a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ entry.title+ '</a></p>'
 						maintitle = 1
 						if(a[alinks.indexOf(result.feed.feedUrl)][1].includes("TLDR"))
 							{
@@ -864,12 +870,12 @@
 						var mysnippet = strip(entry.content)
 						if (mysnippet.length < 500)
 							{
-							document.getElementById(idsection-1).innerHTML+= '<a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="16" width="16"> '+entry.title+' </a><i><br><font color="grey">'+mysnippet+'</font></i><br>'
+							document.getElementById(idsection-1).innerHTML+= '<p style="border-bottom:1px solid lightgrey"><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="16" width="16"> '+entry.title+' </a><i><br><font color="grey">'+mysnippet+'</font></i></p>'
 							} else {
 							mysnippettrunc = mysnippet.substring(0, 500)
 							mysnippettend = mysnippet.substring(500, (mysnippet.length-500+1))
 							var mydivid = idsection*1000+i
-							document.getElementById(idsection-1).innerHTML+= '<a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="16" width="16"> '+entry.title+' </a><i><font color="grey">'+mysnippettrunc+'<a href="#' + mydivid + '" onclick="toggle_visibility('+mydivid+');">[...]</a><div id="' + mydivid + '" style="display: none"></div></font></i><br>'
+							document.getElementById(idsection-1).innerHTML+= '<p style="border-bottom:1px solid lightgrey"><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="16" width="16"> '+entry.title+' </a><i><font color="grey">'+mysnippettrunc+'<a href="#' + mydivid + '" onclick="toggle_visibility('+mydivid+');">[...]</a><div id="' + mydivid + '" style="display: none"></div></font></i></p>'
 							document.getElementById(mydivid).innerHTML+=mysnippettend
 							
 							}
@@ -878,6 +884,7 @@
 					
 				topnews = 0
 				}
+				
 			}
 		}
 	)}
@@ -1088,10 +1095,12 @@
 <div id="weather"><b><a href="#null" onclick="toggle_visibility('weatherforecasts')">[+]</a></b> </div> 
 
 <div id="weatherforecasts" style="display: none"><br><table id="weatherforecaststable"></table></div>
-<b>
-<div id="dateoftoday" style="border-top:1px solid black"></div>
-</b>
 
+<center>
+<b>
+<div id="dateoftoday" style="border-bottom:1px solid black"></div>
+</b>
+</center>
 <table style="width:100%">
 <col width="50%">
   <col width="50%">
