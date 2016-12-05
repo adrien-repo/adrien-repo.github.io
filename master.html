@@ -641,17 +641,8 @@
 	
 	var oldid = localStorage.getItem('previousidtoggled')
 	localStorage.setItem('previousidtoggled', id);
-			
-		if (id == oldid) { } else {
+	var eold = document.getElementById(oldid);
 		
-		
-			var eold = document.getElementById(oldid);
-			if(eold.style.display == 'inline')
-				  {eold.style.display = 'none';}
-			   else
-				  {eold.style.display = 'inline';}
-			}
-			
 			
 		  if(e.style.display == 'inline')
 			  {e.style.display = 'none';}
@@ -659,6 +650,7 @@
 			  {
 			  
 				if (id == 'weatherforecasts' && document.getElementById("weatherforecaststable").rows.length <3 ) {callweatherdata(1);}
+				if (id == oldid) { } else {eold.style.display = 'none';}
 				e.style.display = 'inline';
 			  }
 
