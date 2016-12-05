@@ -844,14 +844,14 @@
 							{
 							strtldrtitle = entry.title
 							strtldrtitle = strtldrtitle.substring(strtldrtitle.indexOf("]") + 1)
-							document.getElementById('lasttldr').innerHTML+= '<h3>&ldquo;</h3><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ strtldrtitle.replace(/,/g, ",<br>") + '.</a>'
+							document.getElementById('lasttldr').innerHTML+= '<h3>&ldquo;</h3><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ strtldrtitle.replace(/,/g, ",<br>") + '.</a><h3>&rdquo;</h3>'
 							}
 						}
 					if (topnews == 0)
 						{
 						if (topnewsatlaunch == 0)
 						{
-						document.getElementById('topnews').innerHTML+= '<a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="14" width="14"><b> [' + a[alinks.indexOf(result.feed.feedUrl)][1] +']</b><br><h1>'+ entry.title+ '</h1></a><h3>&rdquo;</h3>'
+						document.getElementById('topnews').innerHTML+= '<a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="14" width="14"><b> [' + a[alinks.indexOf(result.feed.feedUrl)][1] +']</b><br><h1>'+ entry.title+ '</h1></a>'
 						topnewsatlaunch = 1
 						}
 						topnews = 1
