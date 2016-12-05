@@ -635,14 +635,16 @@
 	<script type="text/javascript">
 	// Show / Hide function ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		function toggle_visibility(id) {
+	function toggle_visibility(id) {
 
-		   var e = document.getElementById(id);
+	var e = document.getElementById(id);
+	
+	var oldid = localStorage.getItem('previousidtoggled')
+	localStorage.setItem('previousidtoggled', id);
 			
+		if (id <> oldid) { 
 		
-		var oldid = localStorage.getItem('previousidtoggled')
-		localStorage.setItem('previousidtoggled', id);
-		if (id == oldid) { } else {
+		
 			var eold = document.getElementById(oldid);
 			if(eold.style.display == 'inline')
 				  {eold.style.display = 'none';}
@@ -674,7 +676,8 @@
 
 	<script type="text/javascript">
 	// RSS feed ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	localStorage.setItem('previousidtoggled', 'dummy');
+		
 	var rdpicsrc = parseInt((Math.random() * (8 - 1 + 1)), 10) + 1
 	//default
 	var aphotos = ["http://widget.websta.me/rss/n/afpphoto","",""]
