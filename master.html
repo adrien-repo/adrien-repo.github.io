@@ -642,7 +642,7 @@
 	var oldid = localStorage.getItem('previousidtoggled')
 	localStorage.setItem('previousidtoggled', id);
 			
-		if (id <> oldid) { 
+		if (id == oldid) { } else {
 		
 		
 			var eold = document.getElementById(oldid);
