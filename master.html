@@ -652,7 +652,7 @@
 			  {
 			  
 				if (id == 'weatherforecasts' && document.getElementById("weatherforecaststable").rows.length <3 ) {callweatherdata(1);}
-				if (id == oldid) { } else {if (oldid == 'dummy') {} else {eold.style.display = 'none';}}
+				if (id == oldid || id.indexOf('expandable') > 0 ) { } else {if (oldid == 'dummy') {} else {eold.style.display = 'none';}}
 				e.style.display = 'inline';
 			  }
 
@@ -875,7 +875,7 @@
 							} else {
 							mysnippettrunc = mysnippet.substring(0, 500)
 							mysnippettend = mysnippet.substring(500, (mysnippet.length-500+1))
-							var mydivid = idsection*1000+i
+							var mydivid = idsection*1000+i + 'expandable'
 							document.getElementById(idsection-1).innerHTML+= '<p style="border-bottom:1px solid lightgrey"><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="16" width="16"> '+entry.title+' </a><i><font color="grey">'+mysnippettrunc+'<a href="#' + mydivid + '" onclick="toggle_visibility('+mydivid+');">[...]</a><div id="' + mydivid + '" style="display: none"></div></font></i></p>'
 							document.getElementById(mydivid).innerHTML+=mysnippettend
 							
