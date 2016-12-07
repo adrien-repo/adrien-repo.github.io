@@ -868,7 +868,7 @@
 							} else {
 							mysnippettrunc = mysnippet.substring(0, 500)
 							mysnippettend = mysnippet.substring(500, (mysnippet.length-500+1))
-							var mydivid = (idsection*1000+i).toString() + 'expandable'
+							var mydivid = idsection*1000+i
 							document.getElementById(idsection-1).innerHTML+= '<p style="border-bottom:1px solid lightgrey"><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="16" width="16"> '+entry.title+' </a><i><font color="grey">'+mysnippettrunc+'<a href="#' + mydivid + '" onclick="toggle_visibility('+mydivid+');">[...]</a><div id="' + mydivid + '" style="display: none"></div></font></i></p>'
 							document.getElementById(mydivid).innerHTML+=mysnippettend
 							
