@@ -1,71 +1,411 @@
+
 <!doctype html>
 
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
-<head>
-  	<link rel='icon' href='http://www.oldplanetnews.com/icon.png' type='image/x-icon'/ >
-	<link rel='shortcut icon' href='http://www.oldplanetnews.com/icon.png' type='image/x-icon'/ >
-	
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=UnifrakturMaguntia" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+		<meta name="mobile-web-app-capable" content="yes">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-	<title>Old Planet News</title>
-        
-	<style>
-	*, *:before, *:after {margin: 0; padding: 0; box-sizing: border-box;}
-	body {background: #F1F1F1;}
-	.realbody {background: white; color: black; font: 14px; border-left:14px solid white; border-right:14px solid white; outline:1px solid black; outline-offset: 1px;}
-	.realbody {margin: 0 auto; min-width: 320px; max-width: 1010px;}
-	.main {margin: 0 auto; min-width: 320px; max-width: 1010px;}
-	.content {background: white; color: black;}
-	.content > div {display: none; padding: 15px 5px 15px;}
-	input {display: none;}
-	label {display: inline-block; padding: 5px 8px; font-weight: 600; text-align: center;}
-	label:hover {color: black; cursor: pointer;}
-	input:checked + label {background: black; color: white;}
-	#tab1:checked ~ .content #content1,
-	#tab2:checked ~ .content #content2,
-	#tab3:checked ~ .content #content3,
-	#tab4:checked ~ .content #content4,
-	#tab5:checked ~ .content #content5,
-	#tab6:checked ~ .content #content6,
-	#tab7:checked ~ .content #content7,
-	#tab8:checked ~ .content #content8,
-	#tab9:checked ~ .content #content9,
-	#tab10:checked ~ .content #content10,
-	#tab11:checked ~ .content #content11,
-	#tab12:checked ~ .content #content12,
-	#tab13:checked ~ .content #content13
-	{display: block;}
-	@media screen and (max-width: 400px) { label {padding: 15px 10px;} }
-	.photosday{  font-size: 12px;  border-bottom: 1px solid white;    padding: 5px 0 5px 0;	margin-bottom: 5px;}
-	.collumn{	width: 319px;    display: inline-block;    vertical-align: top;    margin-bottom: 5px;	margin-right: 5px;    background-color:#ffffff}
-	a:link {text-decoration: none; color: black}
-	a:visited {text-decoration: none;color: black;}
-	a:hover {text-decoration: underline;}
-	a:active {text-decoration: underline;}
-	th, td {padding: 0px;}
-	</style>
+    <title>Old Planet News</title>
+  	<link rel='icon' href='http://www.oldplanetnews.com/icon.png' type='image/x-icon'/ >
+	<link rel='shortcut icon' href='http://www.oldplanetnews.com/icon.png' type='image/x-icon'/ >
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <!-- Page styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-light_blue.min.css" />
+    
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+	
 
-	<script>
-	// Tab menu ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	$(document).ready(function() {
-		$(".tabs-menu a").click(function(event) {
-			event.preventDefault();
-			$(this).parent().addClass("current");
-			$(this).parent().siblings().removeClass("current");
-			var tab = $(this).attr("href");
-			$(".tab-content").not(tab).css("display", "none");
-			$(tab).fadeIn();
-		});
-	});
+body {
+  margin: 0;
+}
+
+/* Disable ugly boxes around images in IE10 */
+a img{
+  border: 0px;
+}
+
+::-moz-selection {
+  background-color: #DDDDDE;
+  color: #fffff;
+}
+
+::selection {
+  background-color: #DDDDDE;
+  color: #fffff;
+}
+
+
+.android-header .mdl-menu__container {
+  z-index: 50;
+  margin: 0 !important;
+}
+
+
+.mdl-textfield--expandable {
+  width: auto;
+}
+
+.android-fab {
+  position: absolute;
+  right: 20%;
+  bottom: -26px;
+  z-index: 3;
+  background: #DDDDDE !important;
+  color: black !important;
+}
+
+.android-mobile-title {
+  display: none !important;
+}
+
+
+
+.android-header {
+  overflow: visible;
+  background-color: white;
+}
+
+  .android-header .material-icons {
+    color: #000000 !important;
+  }
+
+  .android-header .mdl-layout__drawer-button {
+    background: transparent;
+    color: #000000;
+  }
+
+  .android-header .mdl-navigation__link {
+    color: #000000;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .android-navigation-container {
+    /* Simple hack to make the overflow happen to the left instead... */
+    direction: rtl;
+    -webkit-order: 1;
+        -ms-flex-order: 1;
+            order: 1;
+    width: 500px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .android-navigation {
+    /* ... and now make sure the content is actually LTR */
+    direction: ltr;
+    -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    width: 800px;
+  }
+
+  .android-search-box.is-focused + .android-navigation-container {
+    opacity: 0;
+    width: 100px;
+  }
+
+
+  .android-navigation .mdl-navigation__link {
+    display: inline-block;
+    height: 60px;
+    line-height: 68px;
+    background-color: transparent !important;
+    border-bottom: 4px solid transparent;
+  }
+
+    .android-navigation .mdl-navigation__link:hover {
+      border-bottom: 4px solid #DDDDDD;
+    }
+
+  .android-search-box {
+    -webkit-order: 2;
+        -ms-flex-order: 2;
+            order: 2;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .android-more-button {
+    -webkit-order: 3;
+        -ms-flex-order: 3;
+            order: 3;
+  }
+
+
+.android-drawer {
+  border-right: none;
+}
+
+  .android-drawer-separator {
+    height: 1px;
+    background-color: #dcdcdc;
+    margin: 8px 0;
+  }
+
+  .android-drawer .mdl-navigation__link.mdl-navigation__link {
+    font-size: 14px;
+    color: #000000;
+  }
+
+  .android-drawer span.mdl-navigation__link.mdl-navigation__link {
+    color: #8bc34a;
+  }
+
+  .android-drawer .mdl-layout-title {
+    position: relative;
+    background: #DDDDDE;
+    height: 160px;
+  }
+
+
+/**** Mobile layout ****/
+@media (max-width: 900px) {
+  .android-navigation-container {
+    display: none;
+  }
+
+  .android-title {
+    display: none !important;
+  }
+
+  .android-mobile-title {
+    display: block !important;
+    position: absolute;
+    left: calc(50% - 70px);
+    top: 12px;
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* WebViews in iOS 9 break the "~" operator, and WebViews in OS X 10.10 break
+     consecutive "+" operators in some cases. Therefore, we need to use both
+     here to cover all the bases. */
+  .android.android-search-box.is-focused ~ .android-mobile-title,
+  .android-search-box.is-focused + .android-navigation-container + .android-mobile-title {
+    opacity: 0;
+  }
+
+
+
+  
+}
+    </style>
+	
+
+	
+	
+	<script type="text/javascript">
+	// Show / Hide function ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	localStorage.setItem('previousidtoggled', 'dummy');
+
+	function toggle_visibility(id) {
+
+	var e = document.getElementById(id);
+	
+	var oldid = localStorage.getItem('previousidtoggled')
+	localStorage.setItem('previousidtoggled', id);
+	var eold = document.getElementById(oldid);
+		
+			
+		  if(e.style.display == 'inline')
+			  {e.style.display = 'none';}
+		   else
+			  {
+				if (id == oldid) { } else {if (oldid == 'dummy') {} else {eold.style.display = 'none';}}
+				e.style.display = 'inline';
+			  }
+		
+		
+		$( '.mdl-layout__drawer, .mdl-layout__obfuscator' ).removeClass( 'is-visible' );
+		
+		}
+
+		
+	
+	</script> 
+	
+	
+	 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+   
+   
+	
+	
+	
+	
+
+   <script>
+	
+	var feedsLibrary = {
+feed001: ["https://api.breakingnews.com/api/v1/item/?format=rss","Breaking News","news"],
+feed002: ["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml","New York Times","news"],
+feed003: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","news"],
+feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","markets"],
+feed005: ["http://www.ft.com/rss/home/us","Financial Times","markets"],
+feed006: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
+feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","news"],
+feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","news"],
+feed009: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
+feed010: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","news"],
+feed011: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
+feed012: ["http://feeds.reuters.com/ReutersPictures","Reuters Pictures","news"],
+feed013: ["http://longform.org/feed.rss","Long Form","periodics"],
+feed014: ["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
+feed015: ["http://fusion.net/feed/","Fusion","periodics"],
+feed016: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
+feed017: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
+feed018: ["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
+feed019: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
+feed020: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
+feed021: ["http://feeds.feedburner.com/motherjones/BlogsAndArticles","Mother Jones","blogs"],
+feed022: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
+feed023: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
+feed024: ["https://www.edge.org/feed","Edge Magazine","periodics"],
+feed025: ["http://export.arxiv.org/rss/q-fin","ArXiv","markets"],
+feed026: ["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
+feed027: ["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","markets"],
+feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
+feed029: ["http://feeds.benzinga.com/benzinga/news","Benziga","markets"],
+feed030: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
+feed031: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
+feed032: ["http://www.salon.com/feed/","Salon","periodics"],
+feed033: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
+feed034: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
+feed035: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
+feed036: ["https://sniperinmahwah.wordpress.com/feed/","Sniper in Mahwah","markets"],
+feed037: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
+feed038: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
+feed039: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
+feed040: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
+feed041: ["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
+feed042: ["http://www.atlasobscura.com/feeds/latest","Atlas Obscura","periodics"],
+feed043: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
+feed044: ["http://stratechery.com/feed/","Stratechery","periodics"],
+feed045: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
+feed046: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
+feed047: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
+feed048: ["http://evonomics.com/feed/","Evonomics","markets"],
+feed049: ["https://aeon.co/feed.rss","Aeon","periodics"],
+feed050: ["https://newrepublic.com/rss.xml","NewRepublic","periodics"],
+feed051: ["http://www.reddit.com/r/truereddit/.rss","TrueReddit","periodics"],
+feed052: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
+feed053: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
+feed054: ["http://scitation.aip.org/rss/content/aip/magazine/physicstoday/latestonlinestories;jsessionid=riTi5BaycDFvMSC0goCjE-t1.x-aip-live-02?fmt=rss","Physics Today","science"],
+feed055: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
+feed056: ["https://blog.variantperception.com/feed/","Variant Perception","markets"],
+feed057: ["http://www.reddit.com/r/tldr/.rss","TLDR","news"],
+	};
+
+$.each(feedsLibrary, function(siteId, feedsUrl) {
+  var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
+  var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 5");
+  var format = "&format=json";
+
+  var rssFeedPath = baseUrl.concat(queryString, format);
+
+  $.getJSON(rssFeedPath, function(response) {
+    var feedItems = response.query.results.item;
+	var div = document.createElement("div");
+	div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
+	//div.innerHTML = '<h5>' + feedsUrl[1] + '</h5><br>';
+	firstarticle = 0
+    $.each(feedItems, function( index ) {
+      var item = feedItems[index];
+		
+      //div.innerHTML += '<a target="_blank" href="' + item.link + '">' + item.title +'</a><br>';
+	  if (firstarticle == 0){
+	  var table = document.getElementById(feedsUrl[2]);
+	  var row = table.insertRow(-1);
+	  var cell1 = row.insertCell(0);
+	  var cell2 = row.insertCell(1);
+	  
+	  cell1.innerHTML = '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> ' + feedsUrl[1] ;
+	  cell2.innerHTML = '<a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">'+ item.title+ '</a>';
+	  
+	  
+	  firstarticle =1
+	  }
+	  
+    });
+	document.body.appendChild(div);
+  });
+});
+
+	
 	</script>
+	
+	
+	
+	<script>
+	
+	function refreshcharts() {
+	
+	document.getElementById('finvizcharts').innerHTML= ''
+	var now = new Date();
+	pictimerid = now.getFullYear() +''+ now.getMonth() +''+ now.getDay() +''+ now.getHours()+''+ now.getMinutes()+''+ now.getSeconds()
+	
+	
+	
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=d1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=d1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=VX&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=VX&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=VX&p=d1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=d1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=d1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=d1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<br>'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=m5&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=h1&s=m&'+ pictimerid + '">'
+			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=d1&s=m&'+ pictimerid + '">'
+	
+	}
+	
 
+	
+	
+	</script>
+	
+	
+	
+	
 	<script type="text/javascript">
 	
 	
@@ -451,7 +791,7 @@
 	
 	</script>
 
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
@@ -459,7 +799,7 @@
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-    <script type="text/javascript">
+	 <script type="text/javascript">
 	// Map ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	google.charts.load('current', {'packages':['geochart']});
       google.charts.setOnLoadCallback(drawRegionsMap);
@@ -501,763 +841,338 @@
       }
     </script>
 
-	<script>
-	// Weather ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	(function($) {
-	  'use strict';
-
-	  function getAltTemp(unit, temp) {
-		if(unit === 'f') {
-		  return Math.round((5.0/9.0)*(temp-32.0));
-		} else {
-		  return Math.round((9.0/5.0)*temp+32.0);
-		}
-	  }
-
-	  $.extend({
-		simpleWeather: function(options){
-		  options = $.extend({
-			location: '',
-			woeid: '',
-			unit: 'f',
-			success: function(weather){},
-			error: function(message){}
-		  }, options);
-
-		  var now = new Date();
-		  var weatherUrl = 'https://query.yahooapis.com/v1/public/yql?format=json&rnd=' + now.getFullYear() + now.getMonth() + now.getDay() + now.getHours() + '&diagnostics=true&callback=?&q=';
-
-		  if(options.location !== '') {
-			/* If latitude/longitude coordinates, need to format a little different. */
-			var location = '';
-			if(/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/.test(options.location)) {
-			  location = '(' + options.location + ')';
-			} else {
-			  location = options.location;
-			}
-
-			weatherUrl += 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="' + location + '") and u="' + options.unit + '"';
-		  } else if(options.woeid !== '') {
-			weatherUrl += 'select * from weather.forecast where woeid=' + options.woeid + ' and u="' + options.unit + '"';
-		  } else {
-			options.error('Could not retrieve weather due to an invalid location.');
-			return false;
-		  }
-
-		  $.getJSON(
-			encodeURI(weatherUrl),
-			function(data) {
-			  if(data !== null && data.query !== null && data.query.results !== null && data.query.results.channel.description !== 'Yahoo! Weather Error') {
-				var result = data.query.results.channel,
-					weather = {},
-					forecast,
-					compass = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW', 'N'],
-					image404 = 'https://s.yimg.com/os/mit/media/m/weather/images/icons/l/44d-100567.png';
-
-					weather.title = result.item.title;
-					weather.temp = result.item.condition.temp;
-					weather.code = result.item.condition.code;
-					weather.todayCode = result.item.forecast[0].code;
-					weather.currently = result.item.condition.text;
-					weather.high = result.item.forecast[0].high;
-					weather.low = result.item.forecast[0].low;
-					weather.text = result.item.forecast[0].text;
-					weather.humidity = result.atmosphere.humidity;
-					weather.pressure = result.atmosphere.pressure;
-					weather.rising = result.atmosphere.rising;
-					weather.visibility = result.atmosphere.visibility;
-					weather.sunrise = result.astronomy.sunrise;
-					weather.sunset = result.astronomy.sunset;
-					weather.description = result.item.description;
-					weather.city = result.location.city;
-					weather.country = result.location.country;
-					weather.region = result.location.region;
-					weather.updated = result.item.pubDate;
-					weather.link = result.item.link;
-					weather.units = {temp: result.units.temperature, distance: result.units.distance, pressure: result.units.pressure, speed: result.units.speed};
-					weather.wind = {chill: result.wind.chill, direction: compass[Math.round(result.wind.direction / 22.5)], speed: result.wind.speed};
-
-				if(result.item.condition.temp < 80 && result.atmosphere.humidity < 40) {
-				  weather.heatindex = -42.379+2.04901523*result.item.condition.temp+10.14333127*result.atmosphere.humidity-0.22475541*result.item.condition.temp*result.atmosphere.humidity-6.83783*(Math.pow(10, -3))*(Math.pow(result.item.condition.temp, 2))-5.481717*(Math.pow(10, -2))*(Math.pow(result.atmosphere.humidity, 2))+1.22874*(Math.pow(10, -3))*(Math.pow(result.item.condition.temp, 2))*result.atmosphere.humidity+8.5282*(Math.pow(10, -4))*result.item.condition.temp*(Math.pow(result.atmosphere.humidity, 2))-1.99*(Math.pow(10, -6))*(Math.pow(result.item.condition.temp, 2))*(Math.pow(result.atmosphere.humidity,2));
-				} else {
-				  weather.heatindex = result.item.condition.temp;
-				}
-
-				if(result.item.condition.code == '3200') {
-				  weather.thumbnail = image404;
-				  weather.image = image404;
-				} else {
-				  weather.thumbnail = 'https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/' + result.item.condition.code + 'ds.png';
-				  weather.image = 'https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/' + result.item.condition.code + 'd.png';
-				}
-
-				weather.alt = {temp: getAltTemp(options.unit, result.item.condition.temp), high: getAltTemp(options.unit, result.item.forecast[0].high), low: getAltTemp(options.unit, result.item.forecast[0].low)};
-				if(options.unit === 'f') {
-				  weather.alt.unit = 'c';
-				} else {
-				  weather.alt.unit = 'f';
-				}
-
-				weather.forecast = [];
-				for(var i=0;i<result.item.forecast.length;i++) {
-				  forecast = result.item.forecast[i];
-				  forecast.alt = {high: getAltTemp(options.unit, result.item.forecast[i].high), low: getAltTemp(options.unit, result.item.forecast[i].low)};
-
-				  if(result.item.forecast[i].code == "3200") {
-					forecast.thumbnail = image404;
-					forecast.image = image404;
-				  } else {
-					forecast.thumbnail = 'https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/' + result.item.forecast[i].code + 'ds.png';
-					forecast.image = 'https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/' + result.item.forecast[i].code + 'd.png';
-				  }
-
-				  weather.forecast.push(forecast);
-				}
-
-				options.success(weather);
-			  } else {
-				options.error('There was a problem retrieving the latest weather information.');
-			  }
-			}
-		  );
-		  return this;
-		}
-	  });
-	})(jQuery);
-	</script>
-
-	<script type="text/javascript">
-	// Show / Hide function ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	function toggle_visibility(id) {
-
-	var e = document.getElementById(id);
 	
-	var oldid = localStorage.getItem('previousidtoggled')
-	localStorage.setItem('previousidtoggled', id);
-	var eold = document.getElementById(oldid);
+	
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+      <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
+        <div class="mdl-layout__header-row">
+          <span class="android-title mdl-layout-title">
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="">Old Planet News</a>
+          </span>
+          <!-- Add spacer, to align navigation to the right in desktop -->
+          <div class="android-header-spacer mdl-layout-spacer"></div>
+
+          <!-- Navigation -->
+          <div class="android-navigation-container">
+            <nav class="android-navigation mdl-navigation">
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-home');">Home</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-weather');">Weather</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-charts');">Charts</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-breaking');">Breaking</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-newspapers');">Newspaper</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-markets');">Markets</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-periodics');">Magazines</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-bookreviews');">Books</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-science');">Science</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-blogs');">Blogs</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-bookmarks');">Bookmarks</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-photos');">Photos</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-chess');">Chess</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-about');">About</a>
+            </nav>
+          </div>
+
+          
+          
+        </div>
+      </div>
+
+      <div class="android-drawer mdl-layout__drawer" id ="sidemenu">
+        
+        <nav class="mdl-navigation">
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-home');">Home</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-weather');">Weather</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-charts');">Charts</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-breaking');">Breaking</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-newspapers');">Newspaper</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-markets');">Markets</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-periodics');">Magazines</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-bookreviews');">Books</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-science');">Science</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-blogs');">Blogs</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-bookmarks');">Bookmarks</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-photos');">Photos</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-chess');">Chess</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-about');">About</a>
+        </nav>
+      </div>
+
+      <div class="android-content mdl-layout__content">
+        
+		<div id="id-newspapers" style="display: none">
+		
+		<center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+          
+            
+              
+                     <h4>Newspapers</h4>
+					<table id="news"><col width="250px" /><tbody></tbody></table>
+            
+          
+        </div>
+		</center>
+		
 		
 			
-		  if(e.style.display == 'inline')
-			  {e.style.display = 'none';}
-		   else
-			  {
-			  
-				if (id == 'weatherforecasts' && document.getElementById("weatherforecaststable").rows.length <3 ) {callweatherdata(1);}
-				if (id == oldid) { } else {if (oldid == 'dummy') {} else {eold.style.display = 'none';}}
-				e.style.display = 'inline';
-			  }
-
+   </div>
+   
+   
+   <div id="id-periodics" style="display: none">
+   
+   <center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
 		
-		}
-
-	function strip(html)
-	{
-	   var tmp = document.createElement("DIV");
-	   tmp.innerHTML = html;
-	   return tmp.textContent||tmp.innerText;
-	}
-
-	</script> 
-
-	<script type="text/javascript">
-	// RSS feed ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	localStorage.setItem('previousidtoggled', 'dummy');
+   <h4>Magazines</h4>
+   <table id="periodics"><col width="250px" /><tbody></tbody></table>
+        </div>
+		</center>
 		
-	var rdpicsrc = parseInt((Math.random() * (8 - 1 + 1)), 10) + 1
-	//default
-	var aphotos = ["http://widget.websta.me/rss/n/afpphoto","",""]
-	if (rdpicsrc == 1) {var aphotos = ["http://widget.websta.me/rss/n/afpphoto","",""]}
-	if (rdpicsrc == 2) {var aphotos = ["http://widget.websta.me/rss/n/reuters","",""]}
-	if (rdpicsrc == 3) {var aphotos = ["http://widget.websta.me/rss/n/wsj","",""]}
-	if (rdpicsrc == 4) {var aphotos = ["http://widget.websta.me/rss/n/lemondefr","",""]}
-	if (rdpicsrc == 5) {var aphotos = ["http://widget.websta.me/rss/n/nytimes","",""]}
-	if (rdpicsrc == 6) {var aphotos = ["http://widget.websta.me/rss/n/financialtimes","",""]}
-	if (rdpicsrc == 7) {var aphotos = ["http://widget.websta.me/rss/n/liberationfr","",""]}
-	if (rdpicsrc == 8) {var aphotos = ["http://widget.websta.me/rss/n/parismatch_magazine","",""]}
-
-	var aarticles = [
-	["http://widget.websta.me/rss/n/afpphoto","",""],
-	["http://widget.websta.me/rss/n/reuters","",""],
-	["http://widget.websta.me/rss/n/wsj","",""],
-	["http://widget.websta.me/rss/n/lemondefr","",""],
-	["http://widget.websta.me/rss/n/nytimes","",""],
-	["http://widget.websta.me/rss/n/financialtimes","",""],
-	["http://widget.websta.me/rss/n/liberationfr","",""],
-	["http://widget.websta.me/rss/n/parismatch_magazine","",""],
-	
-	["http://townhall.com/api/openaccess/cartoons","",""],
-	
-	["https://api.breakingnews.com/api/v1/item/?format=rss","Breaking News","news"],
-	["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml","New York Times","news"],
-	["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","news"],
-	["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","markets"],
-	["http://www.ft.com/rss/home/us","Financial Times","markets"],
-	["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
-	["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","news"],
-	["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","news"],
-	["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
-	["http://www.latimes.com/rss2.0.xml","Los Angeles Times","news"],
-	["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
-	["http://feeds.reuters.com/ReutersPictures","Reuters Pictures","news"],
-	["http://longform.org/feed.rss","Long Form","periodics"],
-	["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
-	["http://fusion.net/feed/","Fusion","periodics"],
-	["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
-	["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
-	["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
-	["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
-	["http://harpers.org/feed/","Harpers Magazine","periodics"],
-	["http://feeds.feedburner.com/motherjones/BlogsAndArticles","Mother Jones","blogs"],
-	["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
-	["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
-	["https://www.edge.org/feed","Edge Magazine","periodics"],
-	["http://export.arxiv.org/rss/q-fin","ArXiv","markets"],
-	["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
-	["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","markets"],
-	["https://www.project-syndicate.org/rss","Project Syndicate","news"],
-	["http://feeds.benzinga.com/benzinga/news","Benziga","markets"],
-	["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
-	["http://www.gatesnotes.com/rss","Gates notes","blogs"],
-	["http://www.salon.com/feed/","Salon","periodics"],
-	["https://theintercept.com/feed/?rss","The Intercept","periodics"],
-	["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
-	["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
-	["https://sniperinmahwah.wordpress.com/feed/","Sniper in Mahwah","markets"],
-	["http://www.recode.net/rss/index.xml","ReCode","periodics"],
-	["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
-	["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
-	["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
-	["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
-	["http://www.atlasobscura.com/feeds/latest","Atlas Obscura","periodics"],
-	["http://rss.liberation.fr/rss/latest/","Liberation","news"],
-	["http://stratechery.com/feed/","Stratechery","periodics"],
-	["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
-	["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
-	["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
-	["http://evonomics.com/feed/","Evonomics","markets"],
-	["https://aeon.co/feed.rss","Aeon","periodics"],
-	["https://newrepublic.com/rss.xml","NewRepublic","periodics"],
-	["http://www.reddit.com/r/truereddit/.rss","TrueReddit","periodics"],
-	["http://prospect.org/rss.xml","The American Prospect","periodics"],
-	["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
-	["http://scitation.aip.org/rss/content/aip/magazine/physicstoday/latestonlinestories;jsessionid=riTi5BaycDFvMSC0goCjE-t1.x-aip-live-02?fmt=rss","Physics Today","science"],
-	["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
-	["http://www.reddit.com/r/tldr/.rss","TLDR","news"]
-
-	]
-
-	var a = aarticles;
-
-	var alinks = aarticles.map(function(value,index) { return value[0]; });
-
-	google.load("feeds", "1");
-	function create(htmlStr)
-	{
-	var frag = document.createDocumentFragment(),
-	temp = document.createElement('div');
-	temp.innerHTML = htmlStr;
-	while (temp.firstChild) 
-		{
-			frag.appendChild(temp.firstChild);
-			}
-	return frag;
-	}
-	function initialize() 
-	{
-	var photocount = 0
-	var topnews = 0
-	var topnewsatlaunch = 0
-	var headlineslist = []
-	var photoslist = []
-	var maintitle = 0
-	var idsection = 0
-	for (var z in a) {
 		
-		var rssadress = a[z][0]
+			
+   </div>   
+   <div id="id-science" style="display: none">
+   
+   <center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
 		
-		var feed = new google.feeds.Feed(rssadress);
-		feed.setNumEntries(15);
-		feed.load(function(result) 
-		{
-		if (!result.error) 
-			{
-			var container = document.getElementById("feed");
-				
-				if (result.feed.title.substr(result.feed.title.length - 6) == 'WEBSTA')
-				{
-				
-				for (var ji = 0; ji < result.feed.entries.length; ji++)
-					{
-					
-					var entry = result.feed.entries[ji];
-					
-					if (ji < 6)
-						{
-						var str = entry.content 
-						
-						str = str.substring(str.indexOf("<img") + 1); // kick logo
-						str = str.substring(str.indexOf("<img") + 1); //start url
-						str = str.substring(0,str.indexOf(">") + 1); // end url
-						str = '<'+str
-						
-						str = str.replace(">", "width='300'>")
-						
-						var strtxt = entry.content
-						
-						strtxt = strtxt.replace(/#(\S*)/g,'');
-						strtxt = strtxt.replace(/@(\S*)/g,'');
-						strtxt = strtxt.replace(/<\/?[^>]+(>|$)/g, "");
-						
-						if (photocount <6)
-						{
-						document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br><font color="grey">'+ strtxt + '</font></div>'
-						photocount = photocount+1
-						}
-						
-						photoslist.push([str,strtxt])
-						localStorage.setItem("photoslistjson", JSON.stringify(photoslist));
-						
-						
-						}
-					}
-				
-				} else {
-				
-				
-				
-				
-				maintitle = 0
-				divdest = a[alinks.indexOf(result.feed.feedUrl)][2]
-				//document.getElementById(divdest).innerHTML+= '<div id="srch-' + idsection + '" style="display: inline">'
-				//document.getElementById(divdest).innerHTML+= ' [<b><a href="#null" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] </div>'
-				document.getElementById(divdest+'-child').innerHTML+= '<div id="' + idsection + '" style="display: none"><br><h3><span style="border-top:1px solid black"><b><a href="#null" onclick="toggle_visibility(' + idsection + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b></span></h3><br></div>'
-				idsection += 1
-				for (var i = 0; i < result.feed.entries.length; i++) 
-					{
-					var entry = result.feed.entries[i];
-					if(maintitle == 0)
-						{
-						document.getElementById('subh-'+divdest).innerHTML+= ' <p style="border-bottom:1px solid lightgrey"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="14" width="14"> [<b><a href="#null" onclick="toggle_visibility(' + (idsection-1) + ');">' + a[alinks.indexOf(result.feed.feedUrl)][1] + '</a></b>] <a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ entry.title+ '</a></p>'
-						maintitle = 1
-						if(a[alinks.indexOf(result.feed.feedUrl)][1].includes("TLDR"))
-							{
-							strtldrtitle = entry.title
-							strtldrtitle = strtldrtitle.substring(strtldrtitle.indexOf("]") + 1)
-							document.getElementById('lasttldr').innerHTML+= '<h3>&ldquo;</h3><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');">'+ strtldrtitle.replace(/,/g, ",<br>") + '.</a><h3>&rdquo;</h3>'
-							}
-						}
-					if (topnews == 0)
-						{
-						if (topnewsatlaunch == 0)
-						{
-						document.getElementById('topnews').innerHTML+= '<a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="14" width="14"><b> [' + a[alinks.indexOf(result.feed.feedUrl)][1] +']</b><br><h1>'+ entry.title+ '</h1></a>'
-						topnewsatlaunch = 1
-						}
-						topnews = 1
-						headlineslist.push(['<img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="14" width="14"><b> [' + a[alinks.indexOf(result.feed.feedUrl)][1] +']</b><br><h1>'+ entry.title+ '</h1>', entry.link])
-						localStorage.setItem("headlineslistjson", JSON.stringify(headlineslist));
-
-						
-						}
-
-						var mysnippet = strip(entry.content)
-						if (mysnippet.length < 500)
-							{
-							document.getElementById(idsection-1).innerHTML+= '<p style="border-bottom:1px solid lightgrey"><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="16" width="16"> '+entry.title+' </a><i><br><font color="grey">'+mysnippet+'</font></i></p>'
-							} else {
-							mysnippettrunc = mysnippet.substring(0, 500)
-							mysnippettend = mysnippet.substring(500, (mysnippet.length-500+1))
-							var mydivid = idsection*1000+i
-							document.getElementById(idsection-1).innerHTML+= '<p style="border-bottom:1px solid lightgrey"><a href="#null" onclick="window.parent.sendtoreader(\''+entry.link+'\');"><img src="https://www.google.com/s2/favicons?domain_url=' + entry.link + '" alt="" height="16" width="16"> '+entry.title+' </a><i><font color="grey">'+mysnippettrunc+'<a href="#' + mydivid + '" onclick="toggle_visibility('+mydivid+');">[...]</a><div id="' + mydivid + '" style="display: none"></div></font></i></p>'
-							document.getElementById(mydivid).innerHTML+=mysnippettend
-							
-							}
-					
-					}
-					
-				topnews = 0
-				}
-				
-			}
-		}
-	)}
-	;
-
-	}
-	google.setOnLoadCallback(initialize);
-	
-	</script>
-
-	<script>
-	// Weather query ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	$(document).ready(function() {
-	
-	callweatherdata(0);
-	
-	});
-	
-	function callweatherdata(allorone) {
-
-	document.getElementById("weather").innerHTML='<b><a href="#null" onclick="toggle_visibility(\'weatherforecasts\')">[+]</a></b>'
-	document.getElementById("weatherforecaststable").innerHTML=''
-	
-	if (allorone == 0) { var wthloc = ['783540'] }
-	if (allorone == 1) { var wthloc = ['615702','2423945','580778','783540','608105'] }
-	
-		var d = new Date();
-		d.setDate(d.getDate() + 1);
-		var weekday = new Array(7);
-		weekday[0]=  "Sun";
-		weekday[1] = "Mon";
-		weekday[2] = "Tue";
-		weekday[3] = "Wed";
-		weekday[4] = "Thu";
-		weekday[5] = "Fri";
-		weekday[6] = "Sat";
-
 		
-	
-			var table = document.getElementById("weatherforecaststable")
-			var row = table.insertRow(0)
-			var cell1 = row.insertCell(0)
-			cell1.innerHTML+=''
+   <h4>Science</h4>
+   <table id="science"><col width="250px" /><tbody></tbody></table>
+        </div>
+		</center>
+		
+		
 			
-			for(var tablei=0;tablei<10;tablei++) {
-			var cell2 = row.insertCell(tablei+1)
-			cell2.innerHTML+= weekday[d.getDay()]
-			d.setDate(d.getDate() + 1)
-			}
-			
-	
-	for (var loopwth in wthloc) 
-		{
-		var mywoeid = wthloc[loopwth]
-		$.simpleWeather({
-		zipcode: '',woeid: mywoeid,location: '',unit: 'c',success: function(weather) 
-			{
-			html = '&#9900 <b> '+weather.city+'</b>';
-			html += '<img width="25px" src="'+weather.thumbnail+'">';
-			html += ''+weather.temp+'&deg;'+weather.units.temp+', ';
-			
-			html += ''+weather.currently+' ';
-			document.getElementById("weather").innerHTML+= html;
-			
-			
-			
-			var table = document.getElementById("weatherforecaststable")
-			var row = table.insertRow(-1)
-			
-			var cell1 = row.insertCell(0)
-			cell1.innerHTML+=weather.city
-			
-			for(var tablei=0;tablei<weather.forecast.length;tablei++) {
-			var cell2 = row.insertCell(tablei+1)
-			cell2.innerHTML+= '<img width="25px" src="'+weather.forecast[tablei].thumbnail+'">'
-			cell2.innerHTML+= Math.round((5.0/9.0)*(weather.forecast[tablei].alt.low-32.0)) +'&deg;'+weather.units.temp+'&emsp;'
-			}
-			
-			},
-		});
-		}
-	}
-	
-	</script>
-
-
-	<script>
-
-	function showall() {
-	var divs = document.getElementsByTagName("div");
-	for(var b = 0; b < divs.length; b++){
-	   //do something to each div like  
-		if (isNaN(divs[b].id) == false )
-			{
-			if (divs[b].id <= (aarticles.length+1))
-			{
-				divs[b].style.display = 'inline'; 
-			}
-			}
-	}
-	}
-	 function hideall() {
-	var divs = document.getElementsByTagName("div");
-	for(var b = 0; b < divs.length; b++){
-	   //do something to each div like
-		if (isNaN(divs[b].id) == false )
-			{
-			if (divs[b].id <= (aarticles.length+1))
-			{
-				divs[b].style.display = 'none'; 
-			}
-			}
-	}
-	}
-	</script>
-
-	<script>
-	function next_headline() {
-	
-	var headlineslist = JSON.parse(localStorage.getItem("headlineslistjson"));
-	myheadlineindex = parseInt((Math.random() * (headlineslist.length - 1 + 1)), 10) 
-	document.getElementById('topnews').innerHTML= '<a href="#null" onclick="window.parent.sendtoreader(\''+headlineslist[myheadlineindex][1]+'\');">'+ headlineslist[myheadlineindex][0] + '</a>'
-	}
-	
-	function next_photos() {
-	var photoslist = JSON.parse(localStorage.getItem("photoslistjson"));
-	myphotoindex = parseInt((Math.random() * (8 - 1 + 1)), 10) 
-
-	document.getElementById("photooftheday").innerHTML = ''
-	for (var photoloop = 0; photoloop<6; photoloop++)
-	{
-	document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+photoslist[myphotoindex*6+photoloop][0]+'</center><br><font color="grey">'+ photoslist[myphotoindex*6+photoloop][1] + '</font></div>'
-	}
-	
-	}
-	
-	</script>
-	
-	<script>
-	function refreshcharts() {
-	
-	document.getElementById('finvizcharts').innerHTML= ''
-	var now = new Date();
-	pictimerid = now.getFullYear() +''+ now.getMonth() +''+ now.getDay() +''+ now.getHours()+''+ now.getMinutes()+''+ now.getSeconds()
-	
-	
-	
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=h1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=d1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=m5&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=h1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=d1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=VX&p=m5&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=VX&p=h1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=VX&p=d1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=m5&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=h1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=d1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=m5&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=h1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=d1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=m5&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=h1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=d1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<br>'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=m5&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=h1&s=m&'+ pictimerid + '">'
-			document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=d1&s=m&'+ pictimerid + '">'
-	
-	}
-	
-	
-	
-	</script>
-	
-	
-	
-</head>
-
-
-
-
-
-<body>
-<div class="realbody">
-
-<br>
-<center><div style="font-family: UnifrakturMaguntia; font-size: 30px; text-shadow: -2px -2px lightgrey"><a href="#null" onclick="window.parent.resizereader();">Old Planet News</a></div>
-<div style="border-bottom:1px solid black">'A'ohe pau ka 'ike i ka halau ho'okahi - <i>All knowledge is not taught in the same school (One can learn from many sources)</i></div>
-
-</center>
-
-
-
-<div id="weather"><b><a href="#null" onclick="toggle_visibility('weatherforecasts')">[+]</a></b> </div> 
-
-<div id="weatherforecasts" style="display: none"><br><table id="weatherforecaststable"></table></div>
+   </div>
+<div id="id-bookreviews" style="display: none">
 
 <center>
-<b>
-<div id="dateoftoday" style="border-bottom:1px solid black"></div>
-</b>
-</center>
-<table style="width:100%">
-<col width="50%">
-  <col width="50%">
-<tr>
-<td>
-<div id="topnews"></div>
-</td>
-<td>
-<center><i><div id="lasttldr"></div></i></center>
-</td>
-</table>
-
-<br>
-
-<div class="main" style="border-top:1px solid black; border-bottom:1px solid black">
-	<input id="tab1" type="radio" name="tabs" checked>
-	<label for="tab1">Home</label>
-	<input id="tab2" type="radio" name="tabs">
-	<label for="tab2">Charts</label>
-	<input id="tab3" type="radio" name="tabs">
-	<label for="tab3">Breaking</label>
-	<input id="tab4" type="radio" name="tabs">
-	<label for="tab4">Newspapers</label>
-	<input id="tab5" type="radio" name="tabs">
-	<label for="tab5">Markets</label>
-	<input id="tab6" type="radio" name="tabs">
-	<label for="tab6">Magazines</label>
-	<input id="tab7" type="radio" name="tabs">
-	<label for="tab7">Books</label>
-	<input id="tab8" type="radio" name="tabs">
-	<label for="tab8">Science</label>
-	<input id="tab9" type="radio" name="tabs">
-	<label for="tab9">Blogs</label>
-	<input id="tab10" type="radio" name="tabs">
-	<label for="tab10">Bookmarks</label>
-	<input id="tab11" type="radio" name="tabs">
-	<label for="tab11">Photos</label>
-	<input id="tab12" type="radio" name="tabs">
-	<label for="tab12">Chess</label>
-	<input id="tab13" type="radio" name="tabs">
-	<label for="tab13">About</label>
-
-	<div class="content" style="border-top:1px solid black">  
-		<div id="content1">
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+		
+		
+	<h4>Book Reviews</h4>
+   <table id="bookreviews"><col width="250px" /><tbody></tbody></table>
+        </div>
+		</center>
+		
+		
 			
-			<b>Photos of the day <a href="#null" onclick="next_photos()">&#8634; </a></b>
-			<br><br>
-			<div class="photosday"><div id="photooftheday"></div></div>
-			<br>
-			<br>
-		</div>
-		<div id="content2">
-					<b>Charts <a href="#null" onclick="refreshcharts()">&#8634; </a></b>
-			<br><br>
-			<div id="finvizcharts">
+   </div>   
+   <div id="id-markets" style="display: none">
+   
+   <center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+		
+		
+<h4>Markets</h4>
+   <table id="markets"><col width="250px" /><tbody></tbody></table>
+        </div>
+		</center>
+		
+		
+			
+   </div>   
+   <div id="id-blogs" style="display: none">
+   
+   <center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+		
+		
+<h4>Blogs</h4>
+   <table id="blogs"><col width="250px" /><tbody></tbody></table>
+        </div>
+		</center>
+		
+		
+			
+   </div>
+		   <div id="id-home" style="display: none">
+		   
+		   <center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+		
+		
+			<h4>Home</h4>
+        </div>
+		</center>
+		
+		
+			
+   </div>		
+		<div id="id-weather" style="display: none">
+		
+		<center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+		
+		
+			<h4>Weather</h4>
+        </div>
+		</center>
+		
+		
+			
+   </div>		
+		<div id="id-charts" style="display: none">
+		
+		<center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+		
+		
+			<h4>Charts</h4>
+			<a href="#null" onclick="refreshcharts()">refresh </a>
+			<br><br><br>
+
+			<table>
+			
+			<tr>
+			<td>
+			
+			
+						<div id="finvizcharts">
 			
 			
 			</div>
+</td>
+			</tr>
+			</table>
 			
-		</div>
-		<div id="content3">
-			<b>Breaking <a href="#null" onclick="refreshtwitterfeed()">&#8634; </a></b>
-			<br><br>
-			<div id="example1"></div>
-		</div>
-		<div id="content4">
-			<div id="subh-news" style="background-color:#ffffff"></div>
-			<!-- <br><br><div id="news" style="display:inline"></div> -->
-			<br><br><div id="news-child"></div>
-			<br>
-		</div>
-		<div id="content5">
-			<div id="subh-markets" style="background-color:#ffffff"></div>
-			<!-- <br><br><div id="markets" style="display:inline"></div> -->
-			<br><br><div id="markets-child"></div>	
-			<br>
-		</div>
-		<div id="content6">
-			<div id="subh-periodics" style="background-color:#ffffff"></div>
-			<!-- <br><br><div id="periodics" style="display:inline"></div> -->
-			<br><br><div id="periodics-child"></div>
-			<br>
-		</div>
-		<div id="content7">
-			<div id="subh-bookreviews" style="background-color:#ffffff"></div>
-			<!-- <br><br><div id="bookreviews" style="display:inline"></div> -->
-			<br><br><div id="bookreviews-child"></div>
-			<br>
-		</div>
-		<div id="content8">
-			<div id="subh-science" style="background-color:#ffffff"></div>
-			<!-- <br><br><div id="science" style="display:inline"></div> -->
-			<br><br><div id="science-child"></div>
-			<br>
-		</div>
-		<div id="content9">
-			<div id="subh-blogs" style="background-color:#ffffff"></div>
-			<!-- <br><br><div id="blogs" style="display:inline"></div> -->
-			<br><br><div id="blogs-child"></div>
-		</div>
-		<div id="content10">
-			<b>Academicians's bookmark</b>
-			<br> 
-			<br> 
-			<a href="https://faculty.fuqua.duke.edu/~dah7/">David A. Hsieh</a>
-			<br>
-			<a href="http://www.math.ucla.edu/~tao/">Terence Tao</a>
-			<br>
-			<a href="https://www.dpmms.cam.ac.uk/~wtg10/">Timothy Gowers</a>
-			<br>
-			<a href="http://www.hbs.edu/faculty/Pages/profile.aspx?facId=6625">Erik Stafford</a>
-			<br>
-			<a href="http://statweb.stanford.edu/~ckirby/brad/">Bradley Efron</a>
-			<br>
-			<a href="http://www.edwardothorp.com/">Edward O. Thorp</a>
-			<br>
-			<a href="https://www.math.nyu.edu/faculty/avellane/">Marco Avellaneda</a>
-			<br>
-			<a href="http://www.fooledbyrandomness.com/">Nassim Nicholas Taleb</a>
-			<br>
-			<a href="http://www.experimentalmath.info/">David H. Bailey & Jonathan M. Borwein</a>
-			<br>
-			<a href="http://schwert.ssb.rochester.edu/papers.htm">G. William Schwert</a>
-			<br>
-			<a href="http://people.duke.edu/~charvey/">Campbell R. Harvey</a>
-			<br>
-			<a href="http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=1935527">Wouter J. Keller</a>
-			<br>
-			<a href="http://jasonzweig.com/resources/">Jason Zweig</a>
-			<br>
-			<a href="http://schwert.ssb.rochester.edu/papers.htm/">G. William Schwert</a>
-			<br>
-			<a href="http://www.efalken.com/index.html/">Eric Falkenstein</a>
-			<br>
-			<a href="http://investments.yale.edu/endowment-update/">Yale Endowment Reports</a>
-			<br>
-			<a href="http://eranraviv.com/">Eran Raviv</a>
-			<br>
-			<a href="http://quixoticfinance.com/">Quixotic Finance</a>
-			<br>
-			<a href="http://onlinebooks.library.upenn.edu/">The Online Books Page</a>
-			<br>
-			<a href="https://www.azjones.info/">Andrew Zimmerman Jones</a>
-			<br>
-			<a href="http://www.feynmanlectures.caltech.edu/">Feynman Lectures</a>
-			<br>
-			<a href="https://projecteuler.net/">Project Euler</a>
-			<br>
-			<a href="http://savoir-sans-frontieres.com/JPP/telechargeables/free_downloads_transit.htm">Jean-Pierre Petit</a>
-			<br>
-			<a href="https://sites.google.com/site/ancieslak/">Anna Cieslak</a>
-			<br>
-			<a href="http://www-bcf.usc.edu/~tingkamw/">Leonard Wong</a>
-			<br>
-			<a href="https://www.mat.univie.ac.at/~schachermayer/">Walter Schachermayer</a>
-			<br>
-			<a href="http://people.stern.nyu.edu/adamodar/New_Home_Page/home.htm">Aswath Damodaran</a>
-			<br>
+        </div>
+		</center>
+		
+		
+			
+   </div>		
+				<div id="id-breaking" style="display: none">
+				
+				<center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+		
+		
+			<h4>Breaking</h4>
+			
+			<a href="#null" onclick="refreshtwitterfeed()">refresh </a>
+			<br><br><br>
 
-		</div>
-		<div id="content11">
-			<b>The state of the walk</b>
+			<table>
+			
+			<tr>
+			<td>
+			
+			
+						<div id="example1">
+			
+			
+			</div>
+</td>
+			</tr>
+			</table>
+			
+			
+			
+			
+        </div>
+		</center>
+		
+		
+			
+   </div>		
+		
+			<div id="id-bookmarks" style="display: none">
+			
+			<center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+		
+		
+			<h4>Bookmarks</h4>
+			
+			<table id="markets"><col width="250px" /><tbody>
+			
+			<tr><td><a href="https://faculty.fuqua.duke.edu/~dah7/">David A. Hsieh</a></td><td>des</td></tr>
+			<tr><td><a href="http://www.math.ucla.edu/~tao/">Terence Tao</a></td><td>des</td></tr>
+			<tr><td><a href="https://www.dpmms.cam.ac.uk/~wtg10/">Timothy Gowers</a></td><td>des</td></tr>
+			<tr><td><a href="http://www.hbs.edu/faculty/Pages/profile.aspx?facId=6625">Erik Stafford</a></td><td>des</td></tr>
+			<tr><td><a href="http://statweb.stanford.edu/~ckirby/brad/">Bradley Efron</a></td><td>des</td></tr>
+			<tr><td><a href="http://www.edwardothorp.com/">Edward O. Thorp</a></td><td>des</td></tr>
+			<tr><td><a href="https://www.math.nyu.edu/faculty/avellane/">Marco Avellaneda</a></td><td>des</td></tr>
+			<tr><td><a href="http://www.fooledbyrandomness.com/">Nassim Nicholas Taleb</a></td><td>des</td></tr>
+			<tr><td><a href="http://www.experimentalmath.info/">David H. Bailey & Jonathan M. Borwein</a></td><td>des</td></tr>
+			<tr><td><a href="http://schwert.ssb.rochester.edu/papers.htm">G. William Schwert</a></td><td>des</td></tr>
+			<tr><td><a href="http://people.duke.edu/~charvey/">Campbell R. Harvey</a></td><td>des</td></tr>
+			<tr><td><a href="http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=1935527">Wouter J. Keller</a></td><td>des</td></tr>
+			<tr><td><a href="http://jasonzweig.com/resources/">Jason Zweig</a></td><td>des</td></tr>
+			<tr><td><a href="http://schwert.ssb.rochester.edu/papers.htm/">G. William Schwert</a></td><td>des</td></tr>
+			<tr><td><a href="http://www.efalken.com/index.html/">Eric Falkenstein</a></td><td>des</td></tr>
+			<tr><td><a href="http://investments.yale.edu/endowment-update/">Yale Endowment Reports</a></td><td>des</td></tr>
+			<tr><td><a href="http://eranraviv.com/">Eran Raviv</a></td><td>des</td></tr>
+			<tr><td><a href="http://quixoticfinance.com/">Quixotic Finance</a></td><td>des</td></tr>
+			<tr><td><a href="http://onlinebooks.library.upenn.edu/">The Online Books Page</a></td><td>des</td></tr>
+			<tr><td><a href="https://www.azjones.info/">Andrew Zimmerman Jones</a></td><td>des</td></tr>
+			<tr><td><a href="http://www.feynmanlectures.caltech.edu/">Feynman Lectures</a></td><td>des</td></tr>
+			<tr><td><a href="https://projecteuler.net/">Project Euler</a></td><td>des</td></tr>
+			<tr><td><a href="http://savoir-sans-frontieres.com/JPP/telechargeables/free_downloads_transit.htm">Jean-Pierre Petit</a></td><td>des</td></tr>
+			<tr><td><a href="https://sites.google.com/site/ancieslak/">Anna Cieslak</a></td><td>des</td></tr>
+			<tr><td><a href="http://www-bcf.usc.edu/~tingkamw/">Leonard Wong</a></td><td>des</td></tr>
+			<tr><td><a href="https://www.mat.univie.ac.at/~schachermayer/">Walter Schachermayer</a></td><td>des</td></tr>
+			<tr><td><a href="http://people.stern.nyu.edu/adamodar/New_Home_Page/home.htm">Aswath Damodaran</a></td><td>des</td></tr>
+
+			
+			</tbody></table>
+			
+			
+			
+        </div>
+		</center>
+		
+		
+			
+   </div>		
+		
+			<div id="id-chess" style="display: none">
+			
+			<center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+		
+		
+			<h4>Chess</h4>
+			
+				<table>
+			
+			<tr>
+			<td>
+			<a href="/chess/chess.html">Chess AI</a> is an ongoing development project :)
+
+			</td>
+			</tr>
+			</table>
+        </div>
+		</center>
+		
+		
+			
+   </div>	
+
+<div id="id-photos" style="display: none">
+			
+			<center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+		
+		
+			<h4>Photos</h4>
+			
+			
+			
+			
+			<table>
+			
+			<tr>
+			<td>
+			
+			
+									<b>The state of the walk</b>
 			<br> 
 			<i>'Not all those who wander are lost.' - J.R.R. Tolkien</i><br>
 			<br>
@@ -1276,20 +1191,42 @@
 			<br>
 			<div id="regions_div" style="width: 80%; max-width: 900px;"></div>
 			</center>
+
 			
-		</div>
-		<div id="content12">
-			<a href="/chess/chess.html">Chess AI</a> is an ongoing development project :)
-		</div>
-		<div id="content13">
-				<center><img src="http://www.oldplanetnews.com/mountain.jpg" alt="" height="100" width="100"><img src="http://www.oldplanetnews.com/desert.jpg" alt="" height="100" width="100"></center>
-			<table style="width:100%">
-			<col width="10%">
-			  <col width="80%">
-			  <col width="10%">
+			
+			</div>
+</td>
+			</tr>
+			</table>
+			
+			
+			
+			
+			
+			
+			
+        </div>
+		</center>
+		
+		
+			
+   </div>		
+   
+			
+			<div id="id-about" style="display: none">
+			
+			<center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+			
+			
+			<center><img src="http://www.oldplanetnews.com/mountain.jpg" alt="" height="100" width="100"><img src="http://www.oldplanetnews.com/desert.jpg" alt="" height="100" width="100"></center>
+			<h4>About</h4>
+			<table style="max-width: 800px">
+
 			<tr>
-			<td></td>
+
 			<td>
+			
 			Hi there ! 
 			<br><br>
 			My name is Adrien, I am a 31 y.o. French engineer and geographer, living in Nyon, Switzerland.
@@ -1305,22 +1242,39 @@
 			Have a nice tour !
 			<br><br>
 			</td>
-			<td></td>
+
 			</table>
-		</div>
-	</div>
-</div>
 
-<center><span style="font-family: UnifrakturMaguntia; font-size: 16px;">Old Planet News</span></center>
-<br><br>
-
-</div>
-</body>
-
-<script>
-	var d = new Date();
-	document.getElementById("dateoftoday").innerHTML = '<br>' + d.toDateString() +' <a href="#null" onclick="next_headline()"> &#8634; </a>';
+			
+			
+        </div>
+		</center>
+		
+		
+			
+   </div>		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+      </div>
+    </div>
+    
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<script>
 	refreshcharts()
-</script>
 
+	
+	</script>
+  </body>
 </html>
