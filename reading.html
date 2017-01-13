@@ -2,54 +2,105 @@
 <!doctype html>
 
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
-<head>
-  	<link rel='icon' href='http://www.oldplanetnews.com/icon.png' type='image/x-icon'/ >
-	<link rel='shortcut icon' href='http://www.oldplanetnews.com/icon.png' type='image/x-icon'/ >
-	
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=UnifrakturMaguntia" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+		<meta name="mobile-web-app-capable" content="yes">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <title>Old Planet News</title>
+  	<link rel='icon' href='http://www.oldplanetnews.com/icon.png' type='image/x-icon'/ >
+	<link rel='shortcut icon' href='http://www.oldplanetnews.com/icon.png' type='image/x-icon'/ >
+
+    <!-- Page styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-light_blue.min.css" />
 	<title>Old Planet News</title>
-        
-	<style>
-	*, *:before, *:after {margin: 0; padding: 0; box-sizing: border-box;}
-	body {background: #F1F1F1;}
-	.realbody {background: white; color: black; font: 14px; border-left:14px solid white; border-right:14px solid white; outline:1px solid black; outline-offset: 1px;}
-	.realbody {position: relative; margin: 0 auto; min-width: 320px; max-width: 1010px;}
-	.main {margin: 0 auto; min-width: 320px; max-width: 1010px;}
-	a:link {text-decoration: none; color: black}
-	a:visited {text-decoration: none;color: black;}
-	a:hover {text-decoration: underline;}
-	a:active {text-decoration: underline;}
-	p { margin:10px }	
-	.floating-bar{
-   	position: absolute;
-   	top: 10px; 
-   	right: 10px; 
-   	
-		}
-		
-	</style>
 
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
 
 
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+	.demo-ribbon {
+  width: 100%;
+  height: 40vh;
+  background-color: #DDDDDD;
+  -webkit-flex-shrink: 0;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+}
 
-</head>
-<body>
-<div class="realbody">
-<br>
-	
-		
-<div class="floating-bar">
-	<a href="#null" onclick="window.parent.closearticle()">[close]</a>
-</div>
-	
-<br>
+.demo-main {
+  margin-top: -35vh;
+  -webkit-flex-shrink: 0;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+}
+
+.demo-header .mdl-layout__header-row {
+  padding-left: 40px;
+}
+
+.demo-container {
+  max-width: 1600px;
+  width: calc(100% - 16px);
+  margin: 0 auto;
+}
+
+.demo-content {
+  border-radius: 2px;
+  padding: 80px 56px;
+  margin-bottom: 80px;
+}
+
+.demo-layout.is-small-screen .demo-content {
+  padding: 40px 28px;
+}
+
+.demo-content h3 {
+  margin-top: 48px;
+}
+
+.demo-footer {
+  padding-left: 40px;
+}
+
+.demo-footer .mdl-mini-footer--link-list a {
+  font-size: 13px;
+}
+    </style>
+  </head>
+  <body>
+    <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+      <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title"><a href="#null" onclick="window.parent.closearticle()">[close]</a></span>
+          <div class="mdl-layout-spacer"></div>
+          
+        </div>
+      </header>
+      <div class="demo-ribbon"></div>
+      <main class="demo-main mdl-layout__content">
+        <div class="demo-container mdl-grid">
+          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+          <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+            
 <h1><div id="title"></div></h1>
 <div id="provider"  style="border-bottom:1px solid black"></div>
 
@@ -58,14 +109,13 @@
 
 
 <div id="content"></div>
-<br>
-<br>
-
-<div style="border-bottom:1px solid black"> </div>
-<center><span style="font-family: UnifrakturMaguntia; font-size: 16px;">Old Planet News</span></center>
-<br><br>
-
-
-
-</div>
-</body>
+			
+			
+          </div>
+        </div>
+        
+      </main>
+    </div>
+   
+  </body>
+</html>
