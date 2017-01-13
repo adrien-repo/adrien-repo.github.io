@@ -31,6 +31,9 @@
       z-index: 900;
     }
 	
+	.photosday{  border-bottom: 1px solid white;    padding: 5px 0 5px 0;	margin-bottom: 5px;}
+	.collumn{	width: 319px;    display: inline-block;    vertical-align: top;    margin-bottom: 5px;	margin-right: 5px;    background-color:#ffffff}
+	
 
 body {
   margin: 0;
@@ -213,7 +216,7 @@ a img{
 	
 	<script type="text/javascript">
 	// Show / Hide function ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	localStorage.setItem('previousidtoggled', 'dummy');
+	localStorage.setItem('previousidtoggled', 'id-home');
 
 	function toggle_visibility(id) {
 
@@ -241,6 +244,26 @@ a img{
 	
 	</script> 
 	
+	<script>
+	
+	
+	function next_photos() {
+	var photoslist = JSON.parse(localStorage.getItem("photoslistjson"));
+	myphotoindex = parseInt((Math.random() * (8 - 1 + 1)), 10) 
+
+	document.getElementById("photooftheday").innerHTML = ''
+	
+	for (var photoloop = 0; photoloop<6; photoloop++)
+	{
+	document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+photoslist[myphotoindex*6+photoloop][0]+'</center><br><font color="grey">'+ photoslist[myphotoindex*6+photoloop][1] + '</font></div>'
+	}
+	
+	}
+	
+	
+	
+	</script>
+	
 	
 	 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
    
@@ -252,6 +275,19 @@ a img{
 
    <script>
 	
+	
+		function strip(html)
+	{
+	   var tmp = document.createElement("DIV");
+	   tmp.innerHTML = html;
+	   return tmp.textContent||tmp.innerText;
+	}
+	
+	
+	var photoslist = []
+		photocount = 0
+			firstheadline = 0
+			
 	var feedsLibrary = {
 feed001: ["https://api.breakingnews.com/api/v1/item/?format=rss","Breaking News","news"],
 feed002: ["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml","New York Times","news"],
@@ -260,11 +296,11 @@ feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","markets
 feed005: ["http://www.ft.com/rss/home/us","Financial Times","markets"],
 feed006: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
 feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","news"],
-feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","news"],
+feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","blogs"],
 feed009: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
 feed010: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","news"],
 feed011: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
-feed012: ["http://feeds.reuters.com/ReutersPictures","Reuters Pictures","news"],
+feed012: ["http://feeds.reuters.com/ReutersPictures","Reuters Pictures","blogs"],
 feed013: ["http://longform.org/feed.rss","Long Form","periodics"],
 feed014: ["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
 feed015: ["http://fusion.net/feed/","Fusion","periodics"],
@@ -277,7 +313,7 @@ feed021: ["http://feeds.feedburner.com/motherjones/BlogsAndArticles","Mother Jon
 feed022: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
 feed023: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
 feed024: ["https://www.edge.org/feed","Edge Magazine","periodics"],
-feed025: ["http://export.arxiv.org/rss/q-fin","ArXiv","markets"],
+
 feed026: ["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
 feed027: ["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","markets"],
 feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
@@ -303,15 +339,30 @@ feed047: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
 feed048: ["http://evonomics.com/feed/","Evonomics","markets"],
 feed049: ["https://aeon.co/feed.rss","Aeon","periodics"],
 feed050: ["https://newrepublic.com/rss.xml","NewRepublic","periodics"],
-feed051: ["http://www.reddit.com/r/truereddit/.rss","TrueReddit","periodics"],
+
 feed052: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
 feed053: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
 feed054: ["http://scitation.aip.org/rss/content/aip/magazine/physicstoday/latestonlinestories;jsessionid=riTi5BaycDFvMSC0goCjE-t1.x-aip-live-02?fmt=rss","Physics Today","science"],
 feed055: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
 feed056: ["https://blog.variantperception.com/feed/","Variant Perception","markets"],
-feed057: ["http://www.reddit.com/r/tldr/.rss","TLDR","news"],
+
+
+pod001:  ["http://widget.websta.me/rss/n/reuters","","pod"],
+pod002:  ["http://widget.websta.me/rss/n/afpphoto","","pod"],
+
+pod003:  ["http://widget.websta.me/rss/n/wsj","","pod"],
+pod004:  ["http://widget.websta.me/rss/n/lemondefr","","pod"],
+pod005:  ["http://widget.websta.me/rss/n/nytimes","","pod"],
+pod006:  ["http://widget.websta.me/rss/n/financialtimes","","pod"],
+pod007:  ["http://widget.websta.me/rss/n/liberationfr","","pod"],
+
+
+
 	};
 
+
+
+	
 $.each(feedsLibrary, function(siteId, feedsUrl) {
   var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
   var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 5");
@@ -321,14 +372,79 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 
   $.getJSON(rssFeedPath, function(response) {
     var feedItems = response.query.results.item;
+	
+	if (feedsUrl[2] == 'pod')
+	{
+	
+	
+
+	
+	    $.each(feedItems, function( index ) {
+      var item = feedItems[index];
+		
+      
+
+					
+					
+					
+
+						var str = item.thumbnail.url 
+						
+						str = '<img src="' + str + '" width="300"></img>'
+						
+						
+						var strtxt = item.description
+						
+						strtxt = strtxt.replace(/#(\S*)/g,'');
+						strtxt = strtxt.replace(/@(\S*)/g,'');
+						strtxt = strtxt.replace(/<\/?[^>]+(>|$)/g, "");
+						
+						if (photocount <6)
+						{
+						document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br>'+ strtxt + '</font></div>'
+						photocount = photocount+1
+						}
+						
+						photoslist.push([str,strtxt])
+						localStorage.setItem("photoslistjson", JSON.stringify(photoslist));
+						
+						
+						
+					
+	  
+	  
+		});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	}
+	
+	else
+	
+	{
+	
+	
 	var div = document.createElement("div");
 	div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
-	//div.innerHTML = '<h5>' + feedsUrl[1] + '</h5><br>';
+	div.innerHTML = '<h5>' + feedsUrl[1] + '</h5><br>';
 	firstarticle = 0
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
 		
-      //div.innerHTML += '<a target="_blank" href="' + item.link + '">' + item.title +'</a><br>';
+      div.innerHTML += '<a target="_blank" href="' + item.link + '">' + item.title +'</a><br>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '<br>';
 	  if (firstarticle == 0){
 	  var table = document.getElementById(feedsUrl[2]);
 	  var row = table.insertRow(-1);
@@ -338,12 +454,36 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	  cell1.innerHTML = '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> ' + feedsUrl[1] ;
 	  cell2.innerHTML = '<a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">'+ item.title+ '</a>';
 	  
+	  if (feedsUrl[2] == 'news')
+	  {
+	  var myheadline = document.getElementById("headlinesforhome")
+	  var otherhead = document.getElementById("otherheadlines")
+	  
+	  if (firstheadline == 0)
+	  {
+	  myheadline.innerHTML += '<h4><a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">'+ item.title+ '</a></h4>'
+	  firstheadline = 1
+	  }
+	  else
+	  {
+	  otherhead.innerHTML += '<h6><a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">'+ item.title+ '</a></h6>'
+	  }
+	  
+	  }
+	  
+	  
 	  
 	  firstarticle =1
 	  }
 	  
     });
-	document.body.appendChild(div);
+	var tablechild = document.getElementById(feedsUrl[2] + '-child');
+	tablechild.appendChild(div);
+	
+	
+	}
+	
+	
   });
 });
 
@@ -742,8 +882,8 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 
 					if (printTime) {
 					  
-						op += '&#10160 [' +
-							times[n].textContent.replace(/\s+/g, '') + '] ';
+						op += '<b>[' +
+							times[n].textContent.replace(/\s+/g, '') + ']</b> ';
 					  
 					}
 					reformatlinkstogeneric(tweets[n])
@@ -850,7 +990,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
       <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
         <div class="mdl-layout__header-row">
           <span class="android-title mdl-layout-title">
-            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="">Old Planet News</a>
+            <a class="mdl-navigation__link mdl-typography--text-uppercase"  href="#null" onclick="toggle_visibility('id-home');">Old Planet News</a>
           </span>
           <!-- Add spacer, to align navigation to the right in desktop -->
           <div class="android-header-spacer mdl-layout-spacer"></div>
@@ -910,7 +1050,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
             
               
                      <h4>Newspapers</h4>
-					<table id="news"><col width="250px" /><tbody></tbody></table>
+					<table id="news"><tbody></tbody></table>
+					
+					<table style="max-width: 1500px"><tr><td>
+					<div id="news-child"></div>
+					</tr></td></table>
             
           
         </div>
@@ -927,7 +1071,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
 		
    <h4>Magazines</h4>
-   <table id="periodics"><col width="250px" /><tbody></tbody></table>
+   <table id="periodics"><tbody></tbody></table>
+   
+   <table style="max-width: 1500px"><tr><td>
+   <div id="periodics-child"></div>
+   </tr></td></table>
         </div>
 		</center>
 		
@@ -941,7 +1089,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 		
 		
    <h4>Science</h4>
-   <table id="science"><col width="250px" /><tbody></tbody></table>
+   <table id="science"><tbody></tbody></table>
+   
+   <table style="max-width: 1500px"><tr><td>
+    <div id="science-child"></div>
+	</tr></td></table>
         </div>
 		</center>
 		
@@ -955,7 +1107,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 		
 		
 	<h4>Book Reviews</h4>
-   <table id="bookreviews"><col width="250px" /><tbody></tbody></table>
+   <table id="bookreviews"><tbody></tbody></table>
+   
+   <table style="max-width: 1500px"><tr><td>
+    <div id="bookreviews-child"></div>
+	</tr></td></table>
         </div>
 		</center>
 		
@@ -969,7 +1125,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 		
 		
 <h4>Markets</h4>
-   <table id="markets"><col width="250px" /><tbody></tbody></table>
+   <table id="markets"><tbody></tbody></table>
+   
+   <table style="max-width: 1500px"><tr><td>
+    <div id="markets-child"></div>
+	</tr></td></table>
         </div>
 		</center>
 		
@@ -983,20 +1143,34 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 		
 		
 <h4>Blogs</h4>
-   <table id="blogs"><col width="250px" /><tbody></tbody></table>
+   <table id="blogs"><tbody></tbody></table>
+   
+   <table style="max-width: 1500px"><tr><td>
+    <div id="blogs-child"></div>
+	</tr></td></table>
         </div>
 		</center>
 		
 		
 			
    </div>
-		   <div id="id-home" style="display: none">
+		   <div id="id-home" style="display: in-line">
 		   
 		   <center>
 		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
 		
 		
-			<h4>Home</h4>
+			<div id="headlinesforhome"></div>
+			
+			<div id="otherheadlines"></div>
+			
+			 <a href="#null" onclick="next_photos()">refresh </a>
+			 <br><br><br>
+			<table style="max-width: 1000px"><tr><td>
+    <div class="photosday"><div id="photooftheday"></div></div>
+	</tr></td></table>
+	
+	
         </div>
 		</center>
 		
