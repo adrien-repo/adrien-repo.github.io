@@ -1,5 +1,6 @@
 
 
+
 <!doctype html>
 
 <html lang="en">
@@ -45,6 +46,10 @@
 	.collumnhead{	max-width: 985px;    display: inline-block;    vertical-align: top;    margin-bottom: 5px;	margin-right: 5px;    background-color:#ffffff}
 	
 
+
+	
+	
+	
 body {
   margin: 0;
 }
@@ -186,7 +191,7 @@ a img{
     display: block !important;
     position: absolute;
     left: calc(50% - 70px);
-    top: 12px;
+    top: 2px;
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -248,7 +253,7 @@ a img{
 	
 	for (var photoloop = 0; photoloop<6; photoloop++)
 	{
-	document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+photoslist[myphotoindex*6+photoloop][0]+'</center><br><font color="grey">'+ photoslist[myphotoindex*6+photoloop][1] + '</font></div>'
+	document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+photoslist[myphotoindex*6+photoloop][0]+'</center><br><div style="font-size:small">'+ photoslist[myphotoindex*6+photoloop][1] + '</div></div>'
 	}
 	
 	}
@@ -283,7 +288,7 @@ a img{
 			
 	var feedsLibrary = {
 
-feed002: ["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml","New York Times","news"],
+feed002: ["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","news"],
 feed003: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
 feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
 feed005: ["http://www.ft.com/rss/home/us","Financial Times","news"],
@@ -308,7 +313,7 @@ feed023: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
 feed024: ["https://www.edge.org/feed","Edge Magazine","periodics"],
 
 feed026: ["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
-feed027: ["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","news"],
+feed027: ["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml","New York Times","news"],
 feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
 feed029: ["http://feeds.benzinga.com/benzinga/news","Benziga","markets"],
 feed030: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
@@ -394,7 +399,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 						
 						if (photocount <6)
 						{
-						document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br>'+ strtxt + '<br><br></div>'
+						document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br><div style="font-size:small">'+ strtxt + '<br><br></div></div>'
 						photocount = photocount+1
 						}
 						
@@ -432,7 +437,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	
 	var div = document.createElement("div");
 	div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
-	div.innerHTML = '<h5>' + feedsUrl[1] + '</h5><br>';
+	div.innerHTML = '<h5><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h5><br>';
 	firstarticle = 0
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
@@ -459,7 +464,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	  }
 	  else
 	  {
-	  otherhead.innerHTML += '<div class="collumn" style="border-top:1px solid black"><h6><a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">'+ item.title+ '</a></h6>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"")+ '<br><br></div>'
+	  otherhead.innerHTML += '<div class="collumn" style="border-top:1px solid black"><h6><img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> <a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">'+ item.title+ '</a></h6>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"")+ '<br><br></div>'
 	  }
 	  
 	  }
@@ -1010,7 +1015,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
             </nav>
           </div>
 <span class="android-mobile-title mdl-layout-title">
-             <!--<a class="mdl-navigation__link mdl-typography--text-uppercase"  href="#null" onclick="toggle_visibility('id-home');">Old Planet News</a> /-->
+             <a class="mdl-navigation__link mdl-typography--text-uppercase"  href="#null" onclick="toggle_visibility('id-home');">oldplanetnews.com</a> 
 		</span>
           
           
@@ -1163,23 +1168,54 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 <center><div style="font-family: UnifrakturMaguntia; font-size: 30px; text-shadow: -2px -2px lightgrey">Old Planet News</div>
 
 <div style="border-bottom:1px solid black">'A'ohe pau ka 'ike i ka halau ho'okahi - <i>All knowledge is not taught in the same school (One can learn from many sources)</i></div>
+
 <div id="dateoftoday"></div>
 
-			<div id="headlinesforhome"></div>
-			</tr></td></table>
-			<table style="max-width: 1000px"><tr><td>
+			<div id="headlinesforhome"></div><br>
+			</center>
 			<div id="otherheadlines"></div>
+			<div style="border-bottom:1px solid black">
+			</div>
 			</tr></td></table>
 
 			
-			 <br><br>
+			 
+			 
 			<table style="max-width: 1000px"><tr><td>
+			<div style="border-bottom:1px solid black">
+			<h4>Photos of the day</h4>
+			
     <div class="photosday"><div id="photooftheday"></div></div>
+		<center><a href="#null" onclick="next_photos()">refresh </a></center>
+			 <br>
+	</div>
 	</tr></td></table>
-	<a href="#null" onclick="next_photos()">refresh </a>
-			 <br><br><br>
+			 
 	
         </div>
+		
+					<table style="max-width: 1000px"><tr><td>
+			<br>
+			
+		<div>
+		<h4>Major headlines</h4>
+		
+			<h5>News</h5>
+			<table  border=1 frame=void rules=rows bordercolor="#DDDDDD" id="news"><tbody></tbody></table>
+			<h5>Markets</h5>
+			<table border=1 frame=void rules=rows bordercolor="#DDDDDD" id="markets"><tbody></tbody></table>
+			<h5>Magazines</h5>
+			<table border=1 frame=void rules=rows bordercolor="#DDDDDD" id="periodics"><tbody></tbody></table>
+			<h5>Books</h5>
+			<table border=1 frame=void rules=rows bordercolor="#DDDDDD" id="bookreviews"><tbody></tbody></table>
+			<h5>Science</h5>
+			<table border=1 frame=void rules=rows bordercolor="#DDDDDD" id="science"><tbody></tbody></table>
+			<h5>Blogs</h5>
+			<table border=1 frame=void rules=rows bordercolor="#DDDDDD" id="blogs"><tbody></tbody></table>
+			</div>
+			<br><br><br>
+						</tr></td></table>
+			
 		</center>
 		
 		
@@ -1199,7 +1235,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 			<td>
 			
 			
-			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect"  >
 			  <div class="mdl-tabs__tab-bar">
 				  <a href="#nyon-panel" class="mdl-tabs__tab is-active">Nyon</a>
 				  <a href="#geneve-panel" class="mdl-tabs__tab">Geneve</a>
@@ -1370,20 +1406,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 			</tr>
 			</table>
 			
-			<div style="display: none">
-			<h5>News</h5>
-			<table id="news"><tbody></tbody></table>
-			<h5>Markets</h5>
-			<table id="markets"><tbody></tbody></table>
-			<h5>Magazines</h5>
-			<table id="periodics"><tbody></tbody></table>
-			<h5>Books</h5>
-			<table id="bookreviews"><tbody></tbody></table>
-			<h5>Science</h5>
-			<table id="science"><tbody></tbody></table>
-			<h5>Blogs</h5>
-			<table id="blogs"><tbody></tbody></table>
-			</div>
+			
 						<br><br><br>
 
         </div>
@@ -1587,7 +1610,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 var d = new Date();
 	document.getElementById("dateoftoday").innerHTML = '<br>' + d.toDateString() ;
 	refreshcharts()
-
+	
 	
 	</script>
 	
