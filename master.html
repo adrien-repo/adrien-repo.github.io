@@ -2,6 +2,7 @@
 
 
 
+
 <!doctype html>
 
 <html lang="en">
@@ -210,7 +211,22 @@ a img{
 }
     </style>
 	
-
+<script>
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('changinghour').innerHTML = h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+</script>
 	
 	
 	<script type="text/javascript">
@@ -246,18 +262,18 @@ a img{
 	<script>
 	
 	
-	function next_photos() {
-	var photoslist = JSON.parse(localStorage.getItem("photoslistjson"));
-	myphotoindex = parseInt((Math.random() * (8 - 1 + 1)), 10) 
+	//function next_photos() {
+	//var photoslist = JSON.parse(localStorage.getItem("photoslistjson"));
+	//myphotoindex = parseInt((Math.random() * (8 - 1 + 1)), 10) 
 
-	document.getElementById("photooftheday").innerHTML = ''
+	//document.getElementById("photooftheday").innerHTML = ''
 	
-	for (var photoloop = 0; photoloop<6; photoloop++)
-	{
-	document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+photoslist[myphotoindex*6+photoloop][0]+'</center><br><div style="font-size:small">'+ photoslist[myphotoindex*6+photoloop][1] + '</div></div>'
-	}
+	//for (var photoloop = 0; photoloop<6; photoloop++)
+	//{
+	//document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+photoslist[myphotoindex*6+photoloop][0]+'</center><br><div style="font-size:small">'+ photoslist[myphotoindex*6+photoloop][1] + '</div></div>'
+	//}
 	
-	}
+	//}
 	
 	
 	
@@ -312,10 +328,10 @@ feed021: ["http://feeds.feedburner.com/motherjones/BlogsAndArticles","Mother Jon
 feed022: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
 feed023: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
 feed024: ["https://www.edge.org/feed","Edge Magazine","periodics"],
-
+feed025: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
 feed026: ["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
 feed027: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
-feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
+feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","periodics"],
 feed029: ["http://feeds.benzinga.com/benzinga/news","Benziga","markets"],
 feed030: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
 feed031: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
@@ -398,14 +414,14 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 						strtxt = strtxt.replace(/@(\S*)/g,'');
 						strtxt = strtxt.replace(/<\/?[^>]+(>|$)/g, "");
 						
-						if (photocount <6)
-						{
+						//if (photocount <50)
+						//{
 						document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br><div style="font-size:small">'+ strtxt + '<br><br></div></div>'
 						photocount = photocount+1
-						}
+						//}
 						
-						photoslist.push([str,strtxt])
-						localStorage.setItem("photoslistjson", JSON.stringify(photoslist));
+						//photoslist.push([str,strtxt])
+						//localStorage.setItem("photoslistjson", JSON.stringify(photoslist));
 						
 						
 						
@@ -983,7 +999,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	
 	
   </head>
-  <body>
+  <body  onload="startTime()">
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
       <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
@@ -1003,6 +1019,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-weather');">Weather</a>
 			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-charts');">Charts</a>
               <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-breaking');">Breaking</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-pics');">Pics</a>
               <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-newspapers');">Newspaper</a>
               <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-markets');">Markets</a>
               <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-periodics');">Magazines</a>
@@ -1030,6 +1047,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-weather');">Weather</a>
 			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-charts');">Charts</a>
               <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-breaking');">Breaking</a>
+			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-pics');">Pics</a>
               <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-newspapers');">Newspaper</a>
               <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-markets');">Markets</a>
               <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-periodics');">Magazines</a>
@@ -1170,39 +1188,21 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 
 <div style="border-bottom:1px solid black">'A'ohe pau ka 'ike i ka halau ho'okahi - <i>All knowledge is not taught in the same school (One can learn from many sources)</i></div>
 
-<div id="dateoftoday"></div>
+<span id="dateoftoday"></span><span id="changinghour"></span>
 
 			<div id="headlinesforhome"></div><br>
 			</center>
 			<div id="otherheadlines"></div>
 			<div style="border-bottom:1px solid black">
 			</div>
-			</tr></td></table>
 
-			
-			 
-			 
-			<table style="max-width: 1000px"><tr><td>
-			<div style="border-bottom:1px solid black">
-			<h4>Photos of the day</h4>
-			
-    <div class="photosday"><div id="photooftheday"></div></div>
-		<center><a href="#null" onclick="next_photos()">refresh </a></center>
-			 <br>
-	</div>
-	</tr></td></table>
-			 
-	
-        </div>
-		
-					<table style="max-width: 1000px"><tr><td>
 			<br>
 			
 		<div>
-		<h4>Major headlines</h4>
+		<!--<h4>Major headlines</h4> -->
 		
-			<h5>News</h5>
-			<table  border=1 frame=void rules=rows bordercolor="#DDDDDD" id="news"><tbody></tbody></table>
+			<!--<h5>News</h5>-->
+			<table  border=1 frame=void rules=rows bordercolor="#DDDDDD" id="news" style="display: none"><tbody></tbody></table>
 			<h5>Markets</h5>
 			<table border=1 frame=void rules=rows bordercolor="#DDDDDD" id="markets"><tbody></tbody></table>
 			<h5>Magazines</h5>
@@ -1216,7 +1216,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 			</div>
 			<br><br><br>
 						</tr></td></table>
-			
+			</div>
 		</center>
 		
 		
@@ -1230,113 +1230,34 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 		
 			<h4>Weather</h4>
 			
-			<table>
+<table style="max-width: 1000px"><tr><td>
 			
-			<tr>
-			<td>
-			
-			
-			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect"  >
-			  <div class="mdl-tabs__tab-bar">
-				  <a href="#nyon-panel" class="mdl-tabs__tab is-active">Nyon</a>
-				  <a href="#geneve-panel" class="mdl-tabs__tab">Geneve</a>
-				  <a href="#paris-panel" class="mdl-tabs__tab">Paris</a>
-				  <a href="#bordeaux-panel" class="mdl-tabs__tab">Bordeaux</a>
-				  <a href="#lille-panel" class="mdl-tabs__tab">Lille</a>
-				  <a href="#newyork-panel" class="mdl-tabs__tab">New York</a>
-				  <a href="#honolulu-panel" class="mdl-tabs__tab">Honolulu</a>
-				  
-			  </div>
+			<div class="collumn">
+<iframe src="https://www.meteoblue.com/en/weather/widget/daily/nyon_switzerland_2659422?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 300px;height: 306px"></iframe>
+<br><br><!--<img src="https://www.meteoblue.com/meteogram-web?lon=6.228&lat=46.401&lang=en&look=CELSIUS,KILOMETER_PER_HOUR" style="width: 300px"></img>-->
+</div>
 
-			  <div class="mdl-tabs__panel is-active" id="nyon-panel">
-
-			  
-			  
-			<br>
-			<iframe src="https://www.meteoblue.com/en/weather/widget/daily/nyon_switzerland_2659422?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=monochrome&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 378px;height: 306px"></iframe>
-			<img src="https://www.meteoblue.com/meteogram-web?lon=6.228&lat=46.401&lang=en&look=CELSIUS,KILOMETER_PER_HOUR"></img>
-			<br><br><br>
+<div class="collumn">
+<iframe src="https://www.meteoblue.com/en/weather/widget/daily/paris_france_2988507?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 300px;height: 306px"></iframe>
+	<br><br><!--		<img src="https://www.meteoblue.com/meteogram-web?lon=2.348800&lat=48.853401&lang=en&look=CELSIUS,KILOMETER_PER_HOUR" style="width: 300px"></img>-->
 			</div>
-			  
-			  <div class="mdl-tabs__panel" id="geneve-panel">
+<div class="collumn">
+<iframe src="https://www.meteoblue.com/en/weather/widget/daily/bordeaux_france_3031582?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 300px;height: 306px"></iframe>
+	<br><br>	<!--	<img src="https://www.meteoblue.com/meteogram-web?lon=-0.580500&lat=44.840401&lang=en&look=CELSIUS,KILOMETER_PER_HOUR" style="width: 300px"></img>-->
+			</div>
+<div class="collumn">
+<iframe src="https://www.meteoblue.com/en/weather/widget/daily/lille_france_2998324?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 300px;height: 306px"></iframe>
+	<br><br><!--		<img src="https://www.meteoblue.com/meteogram-web?lon=3.058580&lat=50.632999&lang=en&look=CELSIUS,KILOMETER_PER_HOUR" style="width: 300px"></img>-->
+			</div>
+<div class="collumn">
+<iframe src="https://www.meteoblue.com/en/weather/widget/daily/new-york_united-states-of-america_5128581?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 300px;height: 306px"></iframe>
+	<br><br><!--		<img src="https://www.meteoblue.com/meteogram-web?lon=-74.005997&lat=40.714298&lang=en&look=CELSIUS,KILOMETER_PER_HOUR" style="width: 300px"></img>-->
+			</div>
+<div class="collumn">
+<iframe src="https://www.meteoblue.com/en/weather/widget/daily/honolulu_united-states-of-america_5856195?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 300px;height: 306px"></iframe>
+	<br><br><!--		<img src="https://www.meteoblue.com/meteogram-web?lon=-157.858002&lat=21.306900&lang=en&look=CELSIUS,KILOMETER_PER_HOUR" style="width: 300px"></img>-->
+			</div>
 
-			  			<br>
-			<iframe src="https://www.meteoblue.com/en/weather/widget/daily/geneva_switzerland_2660646?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=monochrome&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 378px;height: 306px"></iframe>
-			<img src="https://www.meteoblue.com/meteogram-web?lon=6.145690&lat=46.202202&lang=en&look=CELSIUS,KILOMETER_PER_HOUR"></img>
-			<br><br><br>
-			
-			  </div>
-
-<div class="mdl-tabs__panel" id="paris-panel">
-
-			  			<br>
-			<iframe src="https://www.meteoblue.com/en/weather/widget/daily/paris_france_2988507?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=monochrome&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 378px;height: 306px"></iframe>
-			<img src="https://www.meteoblue.com/meteogram-web?lon=2.348800&lat=48.853401&lang=en&look=CELSIUS,KILOMETER_PER_HOUR"></img>
-			<br><br><br>
-
-
-
-			  </div>
-
-			  <div class="mdl-tabs__panel" id="bordeaux-panel">
-
-			  
-			  			  			<br>
-			<iframe src="https://www.meteoblue.com/en/weather/widget/daily/bordeaux_france_3031582?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=monochrome&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 378px;height: 306px"></iframe>
-			<img src="https://www.meteoblue.com/meteogram-web?lon=-0.580500&lat=44.840401&lang=en&look=CELSIUS,KILOMETER_PER_HOUR"></img>
-			<br><br><br>
-			
-			
-			  </div>
-
-			  <div class="mdl-tabs__panel" id="lille-panel">
-
-			  
-			  			  			  			<br>
-			<iframe src="https://www.meteoblue.com/en/weather/widget/daily/lille_france_2998324?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=monochrome&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 378px;height: 306px"></iframe>
-			<img src="https://www.meteoblue.com/meteogram-web?lon=3.058580&lat=50.632999&lang=en&look=CELSIUS,KILOMETER_PER_HOUR"></img>
-			<br><br><br>
-			
-			
-			  </div>
-
-			  <div class="mdl-tabs__panel" id="newyork-panel">
-
-			  
-			  			  			  			  			<br>
-			<iframe src="https://www.meteoblue.com/en/weather/widget/daily/new-york_united-states-of-america_5128581?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=monochrome&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 378px;height: 306px"></iframe>
-			<img src="https://www.meteoblue.com/meteogram-web?lon=-74.005997&lat=40.714298&lang=en&look=CELSIUS,KILOMETER_PER_HOUR"></img>
-			<br><br><br>
-			
-			
-			  </div>
-
-			  <div class="mdl-tabs__panel" id="honolulu-panel">
-
-			  			  
-			  			  			  			  			<br>
-			<iframe src="https://www.meteoblue.com/en/weather/widget/daily/honolulu_united-states-of-america_5856195?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=monochrome&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 378px;height: 306px"></iframe>
-			<img src="https://www.meteoblue.com/meteogram-web?lon=-157.858002&lat=21.306900&lang=en&look=CELSIUS,KILOMETER_PER_HOUR"></img>
-			<br><br><br>
-			
-			
-			  </div>
-
-
-
-
-
-
-	  </div>
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 
@@ -1382,6 +1303,48 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 		
 			
    </div>		
+   
+   
+   
+   		<div id="id-pics" style="display: none">
+		
+		<center>
+		<div class="mdl-layout__tab-panel is-active" style ="  padding: 8px;  padding-top: 48px;">
+		
+		
+	<table style="max-width: 1000px"><tr><td>
+
+			<h4>Pics of the day</h4>
+			
+    <div class="photosday"><div id="photooftheday"></div></div>
+		<!-- <center><a href="#null" onclick="next_photos()">refresh </a></center> -->
+			 <br>
+			
+        </div>
+		</center>
+		
+			</td></tr></table>
+			
+   </div>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
 				<div id="id-breaking" style="display: none">
 				
 				<center>
