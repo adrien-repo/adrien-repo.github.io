@@ -275,7 +275,9 @@ function checkTime(i) {
 	
 	//}
 	
-	
+	String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
 	
 	</script>
 	
@@ -410,7 +412,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 		myrosetxt = myrosetxt.substr(0, myrosetxt.indexOf('http'))
 		myrosetxt = myrosetxt.replace(/(\r\n|\n|\r)/gm," ")
 		myrosesplit = myrosetxt.split(" ");
-		myfirststrophe = '"'+ myrosesplit[0] + ' '+ myrosesplit[1] + ' '+ myrosesplit[2] + '<br>, '+ myrosesplit[3] + ' '+ myrosesplit[4] + ',<br>'
+		myfirststrophe = '"'+ myrosesplit[0].capitalize() + ' '+ myrosesplit[1] + ' '+ myrosesplit[2] + ',<br>'+ myrosesplit[3].capitalize() + ' '+ myrosesplit[4] + ',<br>'
 	  	mysecondstrophe = myrosetxt.substr(myrosetxt.indexOf(myrosesplit[4]) + myrosesplit[4].length, myrosetxt.length)
 		  myrose.innerHTML += '<div><i>'+ myfirststrophe +' '+ mysecondstrophe + '"' + '</i></div>'
 	  firstrose = 1
