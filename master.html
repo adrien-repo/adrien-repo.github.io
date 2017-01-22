@@ -410,7 +410,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 		myrosetxt = myrosetxt.substr(0, myrosetxt.indexOf('http'))
 		myrosesplit = myrosetxt.split(" ");
 		myfirststrophe = '"'+ myrosesplit[0] + ' '+ myrosesplit[1] + ' '+ myrosesplit[2] + ', '+ myrosesplit[3] + ' '+ myrosesplit[4] + ', '
-	  	mysecondstrophe = myrosetxt.substr(myrosetxt.indexOf(myrosesplit[4])+len(myrosesplit[4]), len(myrosetxt))
+	  	mysecondstrophe = myrosetxt.substr(myrosetxt.indexOf(myrosesplit[4]) + myrosesplit[4].length, myrosetxt.length)
 		  myrose.innerHTML += '<div><i>'+ myfirststrophe +' '+ mysecondstrophe + '"' + '</i></div>'
 	  firstrose = 1
 	  }
