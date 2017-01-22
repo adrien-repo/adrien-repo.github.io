@@ -1024,7 +1024,19 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
         chart.draw(data, options);
       }
     </script>
+	<script>
+		$(window).scroll(function() {
 
+    if ($(this).scrollTop()>0)
+     {
+        $('.fade').fadeIn();
+     }
+    else
+     {
+      $('.fade').fadeOut();
+     }
+ });
+	  </script>
 	
 	
   </head>
@@ -1061,7 +1073,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 			  <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#null" onclick="toggle_visibility('id-about');">About</a>
             </nav>
           </div>
-<span class="android-mobile-title mdl-layout-title">
+<span class="android-mobile-title mdl-layout-title" id="fade">
              <a class="mdl-navigation__link mdl-typography--text-uppercase"  href="#null" onclick="toggle_visibility('id-home');">oldplanetnews.com</a> 
 		</span>
           
