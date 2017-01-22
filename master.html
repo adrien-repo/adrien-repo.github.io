@@ -302,6 +302,7 @@ function checkTime(i) {
 	var photoslist = []
 		photocount = 0
 			firstheadline = 0
+	   firstrose = 0
 			
 	var feedsLibrary = {
 
@@ -371,6 +372,7 @@ pod005:  ["http://widget.websta.me/rss/n/nytimes","","pod"],
 pod006:  ["http://widget.websta.me/rss/n/financialtimes","","pod"],
 pod007:  ["http://widget.websta.me/rss/n/liberationfr","","pod"],
 
+bot001:  ["https://twitrss.me/twitter_user_to_rss/?user=RosesAreRedBot","","roses"],
 
 
 	};
@@ -485,6 +487,18 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	  }
 	  
 	  }
+	
+	if (feedsUrl[2] == 'roses')
+	  {
+	  var myrose = document.getElementById("homerose")
+	  
+	  if (firstrose == 0)
+	  {
+	  myrose.innerHTML += '<div><h3>'+ item.title+ '</a></h3></div>'
+	  firstrose = 1
+	  }
+	  }	  
+		  
 	  
 	  
 	  
@@ -1188,7 +1202,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 
 <div style="border-bottom:1px solid black">'A'ohe pau ka 'ike i ka halau ho'okahi - <i>All knowledge is not taught in the same school (One can learn from many sources)</i></div>
 
-<span id="dateoftoday"></span><span id="changinghour"></span>
+	<span id="dateoftoday"></span> <span id="changinghour"></span><br><span id="homerose"></span>
 
 			<div id="headlinesforhome"></div><br>
 			</center>
