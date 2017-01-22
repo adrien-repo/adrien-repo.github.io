@@ -406,7 +406,8 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	  
 	  if (firstrose == 0)
 	  {
-	  myrose.innerHTML += '<div>'+ item.title.substr(0, addy.indexOf('http')) + '</a></div>'
+		myrosetxt = item.title
+	  myrose.innerHTML += '<div>'+ myrosetxt.substr(0, myrosetxt.indexOf('http')) + '</a></div>'
 	  firstrose = 1
 	  }
 	  }	  
