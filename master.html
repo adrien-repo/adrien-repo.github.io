@@ -4,6 +4,7 @@
 
 
 
+
 <!doctype html>
 
 <html lang="en">
@@ -213,7 +214,11 @@ a img{
     </style>
 	
 <script>
+
+var titlesaggregated = ""
+
 function startTime() {
+	getkeywords()
     var today = new Date();
     var h = today.getHours();
     var m = today.getMinutes();
@@ -489,7 +494,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	firstarticle = 0
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
-		
+	
+	
+	titlesaggregated = titlesaggregated + " " + item.title + " " + item.description
+	
+	
       div.innerHTML += '<b><a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">' + item.title +'</a></b><br>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '<br>';
 	  if (firstarticle == 0){
 	  var table = document.getElementById(feedsUrl[2]);
@@ -1236,6 +1245,10 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 <div style="border-bottom:1px solid black">'A'ohe pau ka 'ike i ka halau ho'okahi - <i>All knowledge is not taught in the same school (One can learn from many sources)</i></div>
 
 	<span id="dateoftoday"></span> <span id="changinghour"></span><br><div id="homerose"></div>
+	
+	<div id="RobW-sample"></div>
+	
+	
 
 			<div id="headlinesforhome"></div><br>
 			</center>
@@ -1627,6 +1640,135 @@ var d = new Date();
 	
 	</script>
 	
+
+	
+	
+<script type='text/javascript'>
+
+
+
+	
+function getkeywords()
+
+{
+
+ //http://www.bckelk.ukfsn.org/words/uk1000n.html
+var stopwords = [ "the", "and", "to", "of", "a", "I", "in", "was", "he", "that", "it", "his", "her", "you", "as", "had", "with", "for", "she", "not", "at", "but", "be", "my", "on", "have", "him", "is", "said", "me", "which", "by", "so", "this", "all", "from", "they", "no", "were", "if", "would", "or", "when", "what", "there", "been", "one", "could", "very", "an", "who", "them", "Mr", "we", "now", "more", "out", "do", "are", "up", "their", "your", "will", "little", "than", "then", "some", "into", "any", "well", "much", "about", "time", "know", "should", "man", "did", "like", "upon", "such", "never", "only", "good", "how", "before", "other", "see", "must", "am", "own", "come", "down", "say", "after", "think", "made", "might", "being", "Mrs", "again", "great", "two", "can", "go", "over", "too", "here", "came", "old", "thought", "himself", "where", "our", "may", "first", "way", "has", "though", "without", "went", "us", "away", "day", "make", "these", "young", "nothing", "long", "shall", "sir", "back", "don't", "house", "ever", "yet", "take", "every", "hand", "most", "last", "eyes", "its", "miss", "having", "off", "looked", "even", "while", "dear", "look", "many", "life", "still", "mind", "quite", "another", "those", "just", "head", "tell", "better", "always", "saw", "seemed", "put", "face", "let", "took", "poor", "place", "why", "done", "herself", "found", "through", "same", "going", "under", "enough", "soon", "home", "give", "indeed", "left", "get", "once", "mother", "heard", "myself", "rather", "love", "knew", "got", "lady", "room", "something", "yes", "thing", "father", "perhaps", "sure", "heart", "oh", "right", "against", "three", "men", "night", "people", "door", "told", "round", "because", "woman", "till", "felt", "between", "both", "side", "seen", "morning", "began", "whom", "however", "asked", "things", "part", "almost", "moment", "looking", "want", "far", "hands", "gone", "world", "few", "towards", "gave", "friend", "name", "best", "word", "turned", "kind", "cried", "since", "anything", "next", "find", "half", "hope", "called", "nor", "words", "hear", "brought", "set", "each", "replied", "wish", "voice", "whole", "together", "manner", "new", "believe", "course", "least", "years", "answered", "among", "stood", "sat", "speak", "leave", "work", "keep", "taken", "end", "less", "present", "family", "often", "wife", "whether", "master", "coming", "mean", "returned", "evening", "light", "money", "cannot", "whose", "boy", "days", "near", "matter", "suppose", "gentleman", "used", "says", "really", "rest", "business", "full", "help", "child", "sort", "passed", "lay", "small", "behind", "girl", "feel", "fire", "care", "alone", "open", "person", "call", "given", "I'll", "sometimes", "making", "short", "else", "large", "within", "chapter", "TRUE", "country", "times", "ask", "answer", "air", "kept", "hour", "letter", "happy", "reason", "pretty", "husband", "certain", "others", "ought", "does", "known", "it's", "bed", "table", "that's", "ready", "read", "already", "pleasure", "either", "means", "spoke", "taking", "friends", "talk", "hard", "walked", "turn", "strong", "thus", "yourself", "high", "along", "above", "feeling", "glad", "children", "doubt", "nature", "themselves", "black", "hardly", "town", "sense", "saying", "deal", "account", "use", "white", "bad", "everything", "can't", "neither", "wanted", "mine", "close", "return", "dark", "fell", "subject", "bear", "appeared", "fear", "state", "thinking", "also", "point", "therefore", "fine", "case", "doing", "held", "certainly", "walk", "lost", "question", "company", "continued", "fellow", "truth", "water", "possible", "hold", "afraid", "bring", "honour", "low", "ground", "added", "five", "remember", "except", "power", "seeing", "dead", "I'm", "usual", "able", "second", "arms", "late", "opinion", "window", "brother", "live", "four", "none", "death", "arm", "road", "hair", "sister", "entered", "sent", "married", "longer", "immediatel", "god", "women", "hours", "ten", "understand", "son", "horse", "wonder", "cold", "beyond", "please", "fair", "became", "sight", "met", "afterwards", "eye", "year", "show", "general", "itself", "silence", "lord", "wrong", "turning", "daughter", "stay", "forward", "O", "interest", "thoughts", "followed", "won't", "different", "opened", "several", "idea", "received", "change", "laid", "strange", "nobody", "fact", "during", "feet", "tears", "run", "purpose", "character", "body", "ran", "past", "order", "need", "pleased", "trouble", "whatever", "dinner", "happened", "sitting", "getting", "there's", "besides", "soul", "ill", "early", "rose", "aunt", "hundred", "minutes", "across", "carried", "sit", "observed", "suddenly", "creature", "conversati", "worse", "six", "quiet", "chair", "doctor", "tone", "standing", "living", "sorry", "stand", "meet", "instead", "wished", "ah", "lived", "try", "red", "smile", "sound", "expected", "silent", "common", "meant", "tried", "until", "mouth", "distance", "occasion", "cut", "marry", "likely", "length", "story", "visit", "deep", "seems", "street", "remained", "become", "led", "speaking", "natural", "giving", "further", "struck", "week", "loved", "drew", "seem", "church", "knows", "object", "ladies", "marriage", "book", "appearance", "pay", "I've", "obliged", "particular", "pass", "thank", "form", "knowing", "lips", "knowledge", "former", "blood", "sake", "fortune", "necessary", "presence", "feelings", "corner", "beautiful", "talking", "spirit", "ago", "foot", "circumstan", "wind", "presently", "comes", "attention", "wait", "play", "easy", "real", "clear", "worth", "cause", "send", "spirits", "chance", "didn't", "view", "pleasant", "party", "beginning", "horses", "stopped", "notice", "duty", "he's", "age", "figure", "leaving", "sleep", "entirely", "twenty", "fall", "promise", "months", "broken", "heavy", "secret", "thousand", "happiness", "comfort", "minute", "act", "human", "fancy", "strength", "showed", "pounds", "nearly", "probably", "captain", "piece", "school", "write", "laughed", "reached", "repeated", "walking", "father's", "heaven", "beauty", "shook", "sun", "waiting", "moved", "bit", "desire", "news", "front", "effect", "laugh", "uncle", "fit", "miles", "handsome", "caught", "hat", "regard", "gentlemen", "supposed", "easily", "impossible", "glass", "resolved", "grew", "consider", "green", "considered", "unless", "stop", "forth", "expect", "perfectly", "altogether", "surprise", "sudden", "free", "exactly", "grave", "carriage", "believed", "service", "angry", "putting", "carry", "everybody", "mentioned", "looks", "scarcely", "society", "affection", "exclaimed", "dress", "die", "earth", "latter", "garden", "step", "perfect", "countenanc", "liked", "dare", "pain", "companion", "journey", "paper", "opportunit", "makes", "honest", "arrived", "you'll", "bright", "pity", "directly", "cry", "trust", "fast", "ye", "warm", "danger", "trees", "breakfast", "rich", "engaged", "proper", "talked", "respect", "fixed", "hill", "wall", "determined", "wild", "shut", "top", "plain", "scene", "sweet", "especially", "public", "acquaintan", "forget", "history", "pale", "pray", "books", "afternoon", "man's", "otherwise", "mention", "position", "speech", "gate", "'em", "boys", "yours", "drink", "slowly", "broke", "clothes", "fond", "pride", "watch", "sooner", "settled", "paid", "reply", "tea", "lie", "running", "died", "gentle", "particular", "allowed", "outside", "placed", "joy", "hearing", "note", "condition", "follow", "begin", "neck", "serious", "hurt", "kindness", "mere", "farther", "changed", "o'clock", "passing", "girls", "force", "situation", "greater", "expression", "eat", "reading", "spoken", "raised", "anybody", "started", "following", "although", "sea", "proud", "future", "quick", "safe", "temper", "laughing", "ears", "difficulty", "meaning", "servant", "sad", "advantage", "appear", "offer", "breath", "opposite", "number", "miserable", "law", "rising", "favour", "save", "twice", "single", "blue", "noise", "stone", "mistress", "surprised", "allow", "spot", "burst", "keeping", "line", "understood", "court", "finding", "direction", "anxious", "pocket", "around", "conduct", "loss", "fresh", "below", "hall", "satisfacti", "land", "telling", "passion", "floor", "break", "lying", "waited", "closed", "meeting", "trying", "seat", "king", "confidence", "offered", "stranger", "somebody", "matters", "noble", "pardon", "private", "sharp", "evil", "weeks", "justice", "hot", "cast", "letters", "youth", "lives", "health", "finished", "hoped", "holding", "touch", "spite", "delight", "bound", "consequenc", "rain", "wouldn't", "third", "hung", "ways", "weather", "written", "difference", "kitchen", "she's", "mother's", "persons", "quarter", "promised", "hopes", "brown", "nay", "seven", "simple", "wood", "beside", "middle", "ashamed", "lose", "dreadful", "move", "generally", "cousin", "surely", "satisfied", "bent", "shoulder", "art", "field", "quickly", "thrown", "tired", "share", "pair", "to-morrow", "aware", "colour", "writing", "whenever", "quietly", "fool", "forced", "touched", "smiling", "taste", "dog", "spent", "steps", "worst", "legs", "watched", "ay", "thee", "eight", "worthy", "wrote", "manners", "proceeded", "frightened", "somewhat", "born", "greatest", "charge", "degree", "shame", "places", "ma'am", "couldn't", "tongue", "according", "box", "wine", "filled", "servants", "calling", "fallen", "supper","i","s","re","t","ca","d","le",
+"a", "about", "above", "accordingly", "after",
+      "again", "against", "ah", "all", "also", "although", "always", "am", "among", "amongst", "an",
+      "and", "any", "anymore", "anyone", "are", "as", "at", "away", "be", "been",
+      "begin", "beginning", "beginnings", "begins", "begone", "begun", "being",
+      "below", "between", "but", "by", "ca", "can", "cannot", "come", "could",
+      "did", "do", "doing", "during", "each", "either", "else", "end", "et",
+      "etc", "even", "ever", "far", "ff", "following", "for", "from", "further", "furthermore",
+      "get", "go", "goes", "going", "got", "had", "has", "have", "he", "her",
+      "hers", "herself", "him", "himself", "his", "how", "i", "if", "in", "into",
+      "is", "it", "its", "itself", "last", "lastly", "less", "many", "may", "me",
+      "might", "more", "must", "my", "myself", "near", "nearly", "never", "new",
+      "next", "no", "not", "now", "o", "of", "off", "often", "oh", "on", "only",
+      "or", "other", "otherwise", "our", "ourselves", "out", "over", "perhaps",
+      "put", "puts", "quite", "s", "said", "saw", "say", "see", "seen", "shall",
+      "she", "should", "since", "so", "some", "such", "t", "than", "that", "the",
+      "their", "them", "themselves", "then", "there", "therefore", "these", "they",
+      "this", "those", "though", "throughout", "thus", "to", "too",
+      "toward", "unless", "until", "up", "upon", "us", "ve", "very", "was", "we",
+      "were", "what", "whatever", "when", "where", "which", "while", "who",
+      "whom", "whomever", "whose", "why", "with", "within", "without", "would","don",
+      "yes", "your", "yours", "yourself", "yourselves", ",", ";", "?", ".", "$", " ", "example", "using", "de"
+
+
+ ];
+
+
+var text = strip(titlesaggregated);
+
+
+
+
+var atLeast = 4;       // Show results with at least .. occurrences
+var numWords = 1;      // Show statistics for one to .. words
+var ignoreCase = true; // Case-sensitivity
+var REallowedChars = /[^a-zA-Z'\-]+/g;
+ // RE pattern to select valid characters. Invalid characters are replaced with a whitespace
+
+var i, j, k, textlen, len, s;
+// Prepare key hash
+var keys = [null]; //"keys[0] = null", a word boundary with length zero is empty
+var results = [];
+numWords++; //for human logic, we start counting at 1 instead of 0
+for (i=1; i<=numWords; i++) {
+    keys.push({});
+}
+
+// Remove all irrelevant characters
+text = text.replace(REallowedChars, " ").replace(/^\s+/,"").replace(/\s+$/,"");
+
+// Create a hash
+if (ignoreCase) text = text.toLowerCase();
+text = text.split(/\s+/);
+for (i=0, textlen=text.length; i<textlen; i++) {
+    s = text[i];
+    keys[1][s] = (keys[1][s] || 0) + 1;
+    for (j=2; j<=numWords; j++) {
+        if(i+j <= textlen) {
+            s += " " + text[i+j-1];
+            keys[j][s] = (keys[j][s] || 0) + 1;
+        } else break;
+    }
+}
+
+// Prepares results for advanced analysis
+for (var k=1; k<=numWords; k++) {
+    results[k] = [];
+    var key = keys[k];
+    for (var i in key) {
+        if(key[i] >= atLeast) results[k].push({"word":i, "count":key[i]});
+    }
+}
+
+// Result parsing
+//var outputHTML = []; // Buffer data. This data is used to create a table using `.innerHTML`
+var bestkeywords = ""
+
+var f_sortAscending = function(x,y) {return y.count - x.count;};
+for (k=1; k<numWords; k++) {
+    results[k].sort(f_sortAscending);//sorts results
+    
+    // Customize your output. For example:
+    var words = results[k];
+	var topcount = 0
+    //if (words.length) outputHTML.push('<td colSpan="3" class="num-words-header">'+k+' word'+(k==1?"":"s")+'</td>');
+    for (i=0,len=words.length; i<len; i++) {
+        
+		if (topcount<5)
+		{
+        //Characters have been validated. No fear for XSS
+        if (stopwords.indexOf(words[i].word) >= 0) {
+				}
+        else
+        {
+		bestkeywords = bestkeywords + words[i].word.capitalize() // ('+ words[i].count + ') '
+		if (topcount<4) 
+			{ bestkeywords = bestkeywords + ', '} 
+			
+        //outputHTML.push("<td>" + words[i].word + "</td><td>" +
+           //words[i].count + "</td><td>" +
+           //Math.round(words[i].count/textlen*10000)/100 + "%</td>");
+		   topcount = topcount+1
+           // textlen defined at the top
+           // The relative occurence has a precision of 2 digits.
+    }
+	}
+    }
+}
+//outputHTML = '<table id="wordAnalysis"><thead><tr>' +               '<td>Word</td><td>Count</td><td>Relativity</td></tr>' +               '</thead><tbody><tr>' +outputHTML.join("</tr><tr>")+                "</tr></tbody></table>";
+document.getElementById("RobW-sample").innerHTML = "<b>" + bestkeywords + "</b>";
+
+}
+
+
+</script>
+
 
 
 
