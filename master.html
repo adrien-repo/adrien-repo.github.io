@@ -35,6 +35,7 @@
 	a:hover {text-decoration: underline; font-weight: bold}
 	a:active {text-decoration: underline; font-weight: bold}
 	
+	.centered-and-cropped { object-fit: cover }
 	
     #view-source {
       position: fixed;
@@ -440,9 +441,10 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 					
 					
 
-						var str = item.thumbnail.url 
+						var strtmp = item.thumbnail.url 
 						
-						str = '<img src="' + str + '" width="300"></img>'
+						str = '<img src="' + strtmp + '" width="300"></img>'
+						strforhome = '<img  class="centered-and-cropped" width="100" height="100" style="border-radius:5%" src="' + strtmp + '"></img>'
 						
 						
 						var strtxt = item.description
@@ -456,6 +458,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 						document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br><div style="font-size:small">'+ strtxt + '<br><br></div></div>'
 						photocount = photocount+1
 						//}
+						
+						if (photocount <10 )
+						{
+						document.getElementById("pictureforhome").innerHTML+=  '<div class="collumn"><center>'+strforhome+'</center><br></div>'
+						}
 						
 						//photoslist.push([str,strtxt])
 						//localStorage.setItem("photoslistjson", JSON.stringify(photoslist));
@@ -1243,15 +1250,18 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 			<br>
 <center><div style="font-family: UnifrakturMaguntia; font-size: 30px; text-shadow: -2px -2px lightgrey">Old Planet News</div>
 
-<div style="border-bottom:1px solid black">'A'ohe pau ka 'ike i ka halau ho'okahi - <i>All knowledge is not taught in the same school (One can learn from many sources)</i></div>
+<div style="border-bottom:1px solid black">'A'ohe pau ka 'ike i ka halau ho'okahi - <i>All knowledge is not taught in the same school (One can learn from many sources)</i><span id="dateoftoday"></span> <span id="changinghour"></span></div>
 
-	<span id="dateoftoday"></span> <span id="changinghour"></span><br><div id="homerose"></div>
-	
-	<div id="RobW-sample"></div>
+	<br><div id="homerose"></div>
 	
 	
+	
+				
+
 
 			<div id="headlinesforhome"></div><br>
+			<div id="keywordsforhome"   style="border-top:1px solid black"></div><br>
+			<div id="pictureforhome"></div><br>
 			</center>
 			<div id="otherheadlines"></div>
 			<div style="border-bottom:1px solid black">
@@ -1763,7 +1773,7 @@ for (k=1; k<numWords; k++) {
     }
 }
 //outputHTML = '<table id="wordAnalysis"><thead><tr>' +               '<td>Word</td><td>Count</td><td>Relativity</td></tr>' +               '</thead><tbody><tr>' +outputHTML.join("</tr><tr>")+                "</tr></tbody></table>";
-document.getElementById("RobW-sample").innerHTML = "<b>" + bestkeywords + "</b>";
+document.getElementById("keywordsforhome").innerHTML = "Trending: " + bestkeywords + "";
 
 }
 
