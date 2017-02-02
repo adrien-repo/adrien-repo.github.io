@@ -5,6 +5,7 @@
 
 
 
+
 <!doctype html>
 
 <html lang="en">
@@ -516,7 +517,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	  
 	  if (firstheadline == 0)
 	  {
-	  myheadline.innerHTML += '<div class="collumnhead"><h3><a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">'+ item.title+ '</a></h3>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '</div>'
+	  myheadline.innerHTML += '<div class="collumnhead"><h3><a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">'+ item.title+ '</a></h3><b>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '</b></div>'
 	  firstheadline = 1
 	  }
 	  else
@@ -1674,7 +1675,7 @@ var stopwords = [ "the", "and", "to", "of", "a", "I", "in", "was", "he", "that",
       "toward", "unless", "until", "up", "upon", "us", "ve", "very", "was", "we",
       "were", "what", "whatever", "when", "where", "which", "while", "who",
       "whom", "whomever", "whose", "why", "with", "within", "without", "would","don",
-      "yes", "your", "yours", "yourself", "yourselves", ",", ";", "?", ".", "$", " ", "example", "using", "de"
+      "yes", "your", "yours", "yourself", "yourselves", ",", ";", "?", ".", "$", " ", "example", "using", "de", "le", "la"
 
 
  ];
@@ -1729,7 +1730,7 @@ for (var k=1; k<=numWords; k++) {
 // Result parsing
 //var outputHTML = []; // Buffer data. This data is used to create a table using `.innerHTML`
 var bestkeywords = ""
-
+var mymaxdisplay = 10
 var f_sortAscending = function(x,y) {return y.count - x.count;};
 for (k=1; k<numWords; k++) {
     results[k].sort(f_sortAscending);//sorts results
@@ -1740,16 +1741,16 @@ for (k=1; k<numWords; k++) {
     //if (words.length) outputHTML.push('<td colSpan="3" class="num-words-header">'+k+' word'+(k==1?"":"s")+'</td>');
     for (i=0,len=words.length; i<len; i++) {
         
-		if (topcount<5)
+		if (topcount<mymaxdisplay)
 		{
         //Characters have been validated. No fear for XSS
-        if (stopwords.indexOf(words[i].word) >= 0) {
+        if (stopwords.indexOf(words[i].word) >= 0 || words[i].word.length == 1) {
 				}
         else
         {
 		bestkeywords = bestkeywords + words[i].word.capitalize() // ('+ words[i].count + ') '
-		if (topcount<4) 
-			{ bestkeywords = bestkeywords + ', '} 
+		if (topcount<(mymaxdisplay-1)) 
+			{ bestkeywords = bestkeywords + ' - '} 
 			
         //outputHTML.push("<td>" + words[i].word + "</td><td>" +
            //words[i].count + "</td><td>" +
