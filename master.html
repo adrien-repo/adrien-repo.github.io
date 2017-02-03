@@ -6,6 +6,7 @@
 
 
 
+
 <!doctype html>
 
 <html lang="en">
@@ -311,6 +312,7 @@ function checkTime(i) {
 	
 	var photoslist = []
 		photocount = 0
+		photocountall = 0
 			firstheadline = 0
 	   firstrose = 0
 			
@@ -358,7 +360,7 @@ feed038: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
 feed039: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
 feed040: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
 feed041: ["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
-feed042: ["http://www.atlasobscura.com/feeds/latest","Atlas Obscura","periodics"],
+//feed042: ["http://www.atlasobscura.com/feeds/latest","Atlas Obscura","periodics"],
 feed043: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
 feed044: ["http://stratechery.com/feed/","Stratechery","periodics"],
 feed045: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
@@ -366,7 +368,7 @@ feed046: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolu
 feed047: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
 feed048: ["http://evonomics.com/feed/","Evonomics","markets"],
 feed049: ["https://aeon.co/feed.rss","Aeon","periodics"],
-feed050: ["https://newrepublic.com/rss.xml","NewRepublic","periodics"],
+//feed050: ["https://newrepublic.com/rss.xml","NewRepublic","periodics"],
 
 feed052: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
 feed053: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
@@ -383,7 +385,7 @@ pod003:  ["http://widget.websta.me/rss/n/wsj","","pod"],
 pod004:  ["http://widget.websta.me/rss/n/lemondefr","","pod"],
 pod005:  ["http://widget.websta.me/rss/n/nytimes","","pod"],
 pod006:  ["http://widget.websta.me/rss/n/financialtimes","","pod"],
-pod007:  ["http://widget.websta.me/rss/n/liberationfr","","pod"],
+//pod007:  ["http://widget.websta.me/rss/n/liberationfr","","pod"],
 
 
 
@@ -437,10 +439,12 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	  firstrose = 1
 	  }
 	  }	  
+	  
+	  else {
 					
 					
 					
-
+						try {
 						var strtmp = item.thumbnail.url 
 						
 						str = '<img src="' + strtmp + '" width="300"></img>'
@@ -456,21 +460,29 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 						//if (photocount <50)
 						//{
 						document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br><div style="font-size:small">'+ strtxt + '<br><br></div></div>'
-						photocount = photocount+1
+
 						//}
 						
-						if (photocount <10 )
+						if (photocount <4 && photocountall < 19)
 						{
 						document.getElementById("pictureforhome").innerHTML+=  '<div class="collumn"><center>'+strforhome+'</center><br></div>'
 						}
+						else { photocount = 0}
 						
 						//photoslist.push([str,strtxt])
 						//localStorage.setItem("photoslistjson", JSON.stringify(photoslist));
+						photocount = photocount+1
+						photocountall = photocountall+1
 						
+						}
+						catch(err) {
 						
+												photocount = photocount-1
+						photocountall = photocountall-1
+						}
 						
 					
-	  
+	  }
 	  
 		});
 	
