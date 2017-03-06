@@ -70,6 +70,7 @@ table.dataTable{width:100%;margin:0 auto;clear:both;border-collapse:separate;bor
 	
 	var table = $('#mytable').DataTable();
     var firstrose = 0
+    var firstheadline = 0
 	table.clear().draw()
     
 	
@@ -186,7 +187,12 @@ else
 	
 	
 	titlesaggregated = titlesaggregated + " " + item.title + " " + item.description
-	
+	if (firstheadline == 0 && feedsUrl[2] == "news")
+	{
+	var myhl = top.home.document.getElementById('headlineforhome')
+	myhl.innerHTML = '<a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">' + item.title +'</a>';
+	firstheadline = 1
+	}
 	
 	var table = $('#mytable').DataTable();
 
