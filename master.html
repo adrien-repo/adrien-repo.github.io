@@ -123,7 +123,7 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	
 $.each(feedsLibrary, function(siteId, feedsUrl) {
   var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
-  var queryString = encodeURI("SELECT title, link, pubDate FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 5");
+  var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 5");
   var format = "&format=json";
 
   var rssFeedPath = baseUrl.concat(queryString, format);
