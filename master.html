@@ -159,12 +159,12 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 
 		myrosetxt = myrosetxt.substr(0, myrosetxt.indexOf('http'))
 
-		window.alert(myrosetxt)
+		
 		  
 		  myrosetxt = myrosetxt.replace(/(\r\n|\n|\r)/gm,", ")
-		window.alert(myrosetxt)
+		
 		  
-		  myrose.innerHTML += '<div><i><b>'+ '&ldquo; ' + myrosetxt.capitalize()  + '&rdquo;' + '</b></i></div>'
+		  myrose.innerHTML += '<i>'+ '&ldquo; ' + myrosetxt.capitalize()  + '&rdquo;' + '</i>'
 		  
 		  
 		  
