@@ -52,7 +52,7 @@ table.dataTable{width:100%;margin:0 auto;clear:both;border-collapse:separate;bor
 	{
 	
 	var table = $('#mytable').DataTable();
-    firstrose = 0
+    var firstrose = 0
 	table.clear().draw()
     
 	
@@ -140,6 +140,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	
 	if (feedsUrl[1] == 'roses')
 	  {
+		  
 	  var myrose = window.frames["home"].document.getElementById('therose').innerHTML
 	  
 	  if (firstrose == 0)
