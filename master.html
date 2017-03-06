@@ -47,6 +47,13 @@ table.dataTable{width:100%;margin:0 auto;clear:both;border-collapse:separate;bor
 	   return tmp.textContent||tmp.innerText;
 	}
 	
+
+	
+	String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+	
+	</script>
 	
 	function refreshfeed()
 	{
