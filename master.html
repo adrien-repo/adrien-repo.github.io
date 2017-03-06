@@ -52,12 +52,14 @@ table.dataTable{width:100%;margin:0 auto;clear:both;border-collapse:separate;bor
 	{
 	
 	var table = $('#mytable').DataTable();
- 
+    firstrose = 0
 	table.clear().draw()
     
 	
 
 var feedsLibrary = {
+bot001:  ["https://twitrss.me/twitter_user_to_rss/?user=RosesAreRedBot","roses","pod"],
+
 feed002: ["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","news"],
 feed003: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
 feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
@@ -135,6 +137,35 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
 	
+	
+	if (feedsUrl[1] == 'roses')
+	  {
+	  var myrose = window.frames["home"].document.getElementById('therose').innerHTML
+	  
+	  if (firstrose == 0)
+	  {
+		myrosetxt = item.title
+		myroselink = item.link
+
+		myrosetxt = myrosetxt.substr(0, myrosetxt.indexOf('http'))
+
+		myrosetxt = myrosetxt.replace(/(\r\n|\n|\r)/gm,", ")
+
+		  
+		  myrose.innerHTML += '<div><i><b>'+ '&ldquo; ' + myrosetxt.capitalize()  + '&rdquo;' + '</b></i></div>'
+		  
+		  
+		  
+	  firstrose = 1
+	  }
+	  }	
+else
+{	  
+	
+	
+	
+	
+	
 	var table = $('#mytable').DataTable();
 
 	
@@ -173,7 +204,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 
         ] ).draw( false );
 		
-		
+		}
 	  
     });
 	
