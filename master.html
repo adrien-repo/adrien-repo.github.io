@@ -1,3 +1,4 @@
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -19,10 +20,10 @@
 
 	    <style>
 	
-		a:link {text-decoration: none; color: black; font-weight: bold}
-	a:visited {text-decoration: none;color: black; font-weight: bold}
-	a:hover {text-decoration: underline; font-weight: bold}
-	a:active {text-decoration: underline; font-weight: bold}
+		a:link {text-decoration: none; color: black; font-weight: normal}
+	a:visited {text-decoration: none;color: black; font-weight: normal}
+	a:hover {text-decoration: underline; font-weight: normal}
+	a:active {text-decoration: underline; font-weight: normal}
 	
 </style>
 
@@ -45,6 +46,15 @@ table.dataTable{width:100%;margin:0 auto;clear:both;border-collapse:separate;bor
 	   tmp.innerHTML = html;
 	   return tmp.textContent||tmp.innerText;
 	}
+	
+	
+	function refreshfeed()
+	{
+	
+	var table = $('#mytable').DataTable();
+ 
+	table.clear().draw()
+    
 	
 
 var feedsLibrary = {
@@ -174,6 +184,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
   });
 });
 
+	}
+	
+	
+	refreshfeed();
+	
 	
 	</script>
 	
@@ -198,6 +213,7 @@ $(document).ready(function() {
 
 
 
+
 <table  id="mytable" class="display compact" cellspacing="0" width="100%">
   <thead>
     <tr>
@@ -210,5 +226,5 @@ $(document).ready(function() {
   <tbody>
   </tbody>
 </table>
-
+<a href="#null" onclick="refreshfeed();">Refresh</a>
 </body>
