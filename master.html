@@ -55,7 +55,15 @@ table.dataTable{width:100%;margin:0 auto;clear:both;border-collapse:separate;bor
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 	
+		function testfilter(myfiltervalue)
+	{
 	
+	var table = $('#mytable').DataTable();
+	// #myInput is a <input type="text"> element
+
+    table.search(myfiltervalue).draw();
+
+	}
 	
 	function refreshfeed()
 	{
@@ -184,7 +192,7 @@ else
 
 	
 	var cell3 = '<a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">' + item.title +'</a>';
-	var cell2 = '<img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="15" width="15"> ' + feedsUrl[1];
+	var cell2 = '<img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="15" width="15"> ' + '<a href="#null" onclick="testfilter(\''+feedsUrl[1]+'\');">' + feedsUrl[1] +'</a>';
 	var cell4 = feedsUrl[2]
 	cell1 = ''
 	try {
