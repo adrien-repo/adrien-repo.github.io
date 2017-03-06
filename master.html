@@ -144,6 +144,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
   var date = a.getDate();
   if (date<10){date = '0'+date}
   var hour = a.getHours();
+	if (hour<10){hour = '0'+hour}
   var min = a.getMinutes();
   if (min<10){min = '0'+min}
   
