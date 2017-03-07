@@ -114,7 +114,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
     var feedItems = response.query.results.item;
 	
 	
-
+	feedsofar = feedsofar + 1
+	
+	var myloader = top.home.document.getElementById('breaking_preloader')
+	myloader.innerhtml = feedsofar + ' of ' + feedtoload
+	
 	
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
@@ -190,12 +194,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
     });
 	
 	
-		feedsofar = feedsofar + 1
-	if (feedsofar == feedtoload) 
-	{
-	var myloader = top.home.document.getElementById('breaking_preloader')
-	myloader.style.display = "none"
-	}
+	
 	
 	
   });
