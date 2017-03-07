@@ -69,7 +69,7 @@ table.dataTable{width:100%;margin:0 auto;clear:both;border-collapse:separate;bor
 	function refreshfeed()
 	{
 	
-	var mostrecent = 0
+	var mostrecent = new Date('1945/05/09')
 	
 	var table = $('#mytable').DataTable();
     
@@ -149,8 +149,14 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
   
   if (a>mostrecent)
 	{
+	mostrecent = a
+	
 	var mybreak = top.home.document.getElementById('breakingforhome')
-	myhl.innerHTML = mytxt;
+	
+	mybreak.innerHTML = mytxt;
+	
+	
+	
 	}
   
   var year = a.getFullYear();
