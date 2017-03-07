@@ -116,11 +116,10 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	
 	feedsofar = feedsofar + 1
 	
-	var myloader = top.home.document.getElementById('breaking_loaddiv')
-	window.alert(myloader.width)
-	myloader.width =  Math.round(100*feedsofar/feedtoload)
-	  var myloader = top.home.document.getElementById('breaking_loadspan')
-	myloader.text = feedsofar.toString() + ' of ' + feedtoload.toString()
+	var myloader = top.home.document.getElementById('breaking_progress')
+	
+	myloader.value =  feedsofar/feedtoload
+	  
 	
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
