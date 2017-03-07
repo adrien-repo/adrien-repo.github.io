@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,21 +23,28 @@
 <script>
 function resizereader() {
 
-document.getElementById('myframeset').rows = '0%, 100%, 0%';
+document.getElementById('myframeset').rows = '0%, 100%, 0%, 0%';
 
 }
 
 function closearticle() {
 
-document.getElementById('myframeset').rows = '100%, 0%, 0%';
+document.getElementById('myframeset').rows = '100%, 0%, 0%, 0%';
 
 }
 	
 function backtomenu() {
 
-document.getElementById('myframeset').rows = '0%, 0%, 100%';
+document.getElementById('myframeset').rows = '0%, 0%, 100%, 0%';
 
 }
+
+function showbreaking() {
+
+document.getElementById('myframeset').rows = '0%, 0%, 0%, 100%';
+
+}
+
 
 </script>
 <script>
@@ -84,10 +92,11 @@ document.getElementById('myframeset').rows = '0%, 0%, 100%';
     </head>
 
 	
-    <frameset id="myframeset" rows="0%,0%,100%" frameborder="0">
+    <frameset id="myframeset" rows="0%,0%,100%,0%" frameborder="0">
         <frame name="top" src="master.html" target="top">
         <frame name="main" src="reading.html" target="main">
 		<frame name="home" src="home.html" target="home">
+		<frame name="breaking" src="breaking.html" target="breaking">
     </frameset>
 
 
