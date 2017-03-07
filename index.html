@@ -21,15 +21,28 @@
 	    
 	    
 <script>
+
+
+var articleorigin = "home";
+localStorage.setItem("articleorigin", articleorigin);
+
+
 function resizereader() {
 
 document.getElementById('myframeset').rows = '0%, 100%, 0%, 0%';
+
+var articleorigin = "news";
+localStorage.setItem("articleorigin", articleorigin);
 
 }
 
 function closearticle() {
 
-document.getElementById('myframeset').rows = '100%, 0%, 0%, 0%';
+var articleorigin = localStorage.getItem("articleorigin");
+
+if (articleorigin == "news") {document.getElementById('myframeset').rows = '100%, 0%, 0%, 0%';}
+if (articleorigin == "home") {document.getElementById('myframeset').rows = '0%, 0%, 100%, 0%';}
+if (articleorigin == "breaking") {document.getElementById('myframeset').rows = '0%, 0%, 0%, 100%';}
 
 }
 	
@@ -43,6 +56,9 @@ function showbreaking() {
 
 document.getElementById('myframeset').rows = '0%, 0%, 0%, 100%';
 
+var articleorigin = "breaking";
+localStorage.setItem("articleorigin", articleorigin);
+
 }
 
 
@@ -50,9 +66,8 @@ document.getElementById('myframeset').rows = '0%, 0%, 0%, 100%';
 <script>
 	function sendtoreader(linktoread) {
 	
-	if (window.frames["breaking"].height == 0) {window.alert('from news')}
-	if (window.frames["main"].height == 0) {window.alert('from breaking')}
-		
+
+	
 	window.frames["main"].document.getElementById('title').innerHTML = 'loading article..';
 	window.frames["main"].document.getElementById('content').innerHTML = '..';
 	window.frames["main"].document.getElementById('provider').innerHTML = 'Alternativelly, you may use the below link: <br><br>' + '<a href="'+linktoread+'">'+linktoread+'</a>';
