@@ -98,6 +98,8 @@ break016:  ["https://twitrss.me/twitter_user_to_rss/?user=washingtonpost","Washi
 
 	};
 
+var feedtoload = Object.keys(feedsLibrary).length
+var feedsofar = 0
 
 
 	
@@ -112,7 +114,12 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
     var feedItems = response.query.results.item;
 	
 	
-	
+	feedsofar = feedsofar + 1
+	if (feedsofar == feedtoload) 
+	{
+	var myloader = top.home.document.getElementById('breaking_preloader')
+	myloader.style.display = "none"
+	}
 	
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
