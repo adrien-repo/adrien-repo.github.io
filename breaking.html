@@ -119,7 +119,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	var myloader = top.home.document.getElementById('breaking_progress')
 	
 	myloader.value =  feedsofar/feedtoload
-	  
+	
+	if (feedsofar>=feedtoload)
+	{
+	myloader.style.style.display = "none";
+	}
 	
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
