@@ -39,7 +39,8 @@ localStorage.setItem("articleorigin", articleorigin);
 function closearticle() {
 
 var articleorigin = localStorage.getItem("articleorigin");
-
+window.alert(articleorigin)
+	
 if (articleorigin == "news") {document.getElementById('myframeset').rows = '100%, 0%, 0%, 0%';}
 if (articleorigin == "home") {document.getElementById('myframeset').rows = '0%, 0%, 100%, 0%';}
 if (articleorigin == "breaking") {document.getElementById('myframeset').rows = '0%, 0%, 0%, 100%';}
