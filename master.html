@@ -158,7 +158,10 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	
 	myloader.value =  feedsofar/feedtoload
 
-	
+		if (feedsofar>=feedtoload)
+	{
+	myloader.style.display = "none";
+	}
 	
 
 	
