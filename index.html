@@ -39,8 +39,7 @@ localStorage.setItem("articleorigin", articleorigin);
 function closearticle() {
 
 var articleorigin = localStorage.getItem("articleorigin");
-window.alert(articleorigin)
-	
+
 if (articleorigin == "news") {document.getElementById('myframeset').rows = '100%, 0%, 0%, 0%';}
 if (articleorigin == "home") {document.getElementById('myframeset').rows = '0%, 0%, 100%, 0%';}
 if (articleorigin == "breaking") {document.getElementById('myframeset').rows = '0%, 0%, 0%, 100%';}
@@ -48,6 +47,8 @@ if (articleorigin == "breaking") {document.getElementById('myframeset').rows = '
 }
 	
 function backtomenu() {
+var articleorigin = "home";
+localStorage.setItem("articleorigin", articleorigin);
 
 document.getElementById('myframeset').rows = '0%, 0%, 100%, 0%';
 
@@ -58,6 +59,15 @@ function showbreaking() {
 document.getElementById('myframeset').rows = '0%, 0%, 0%, 100%';
 
 var articleorigin = "breaking";
+localStorage.setItem("articleorigin", articleorigin);
+
+}
+
+function shownews() {
+
+document.getElementById('myframeset').rows = '100%, 0%, 0%, 0%';
+
+var articleorigin = "news";
 localStorage.setItem("articleorigin", articleorigin);
 
 }
