@@ -138,6 +138,8 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	};
 
 
+var feedtoload = Object.keys(feedsLibrary).length
+var feedsofar = 0
 
 	
 $.each(feedsLibrary, function(siteId, feedsUrl) {
@@ -150,7 +152,12 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
   $.getJSON(rssFeedPath, function(response) {
     var feedItems = response.query.results.item;
 	
+	feedsofar = feedsofar + 1
 	
+	var myloader = top.home.document.getElementById('news_preloader')
+	myloader.innerHTML = feedsofar.toString() + ' of ' + feedtoload.toString()
+	
+
 	
 	
     $.each(feedItems, function( index ) {
