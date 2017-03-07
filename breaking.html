@@ -117,7 +117,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	feedsofar = feedsofar + 1
 	
 	var myloader = top.home.document.getElementById('breaking_loaddiv')
-	myloader.width =  (Math.round(100*feedsofar/feedtoload)).toString() + '%'
+	myloader.width =  Math.round(100*feedsofar/feedtoload)
 	  var myloader = top.home.document.getElementById('breaking_loadspan')
 	myloader.text = feedsofar.toString() + ' of ' + feedtoload.toString()
 	
