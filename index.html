@@ -50,6 +50,8 @@ document.getElementById('myframeset').rows = '0%, 0%, 0%, 100%';
 <script>
 	function sendtoreader(linktoread) {
 	
+	if (window.frames["breaking"].height == 0) {window.alert('from news')}
+	if (window.frames["main"].height == 0) {window.alert('from breaking')}
 		
 	window.frames["main"].document.getElementById('title').innerHTML = 'loading article..';
 	window.frames["main"].document.getElementById('content').innerHTML = '..';
