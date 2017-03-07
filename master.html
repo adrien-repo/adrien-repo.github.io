@@ -139,7 +139,7 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 
 
 var feedtoload = Object.keys(feedsLibrary).length
-var feedsofar = 0
+var feedsofar = 1
 
 	
 $.each(feedsLibrary, function(siteId, feedsUrl) {
@@ -154,7 +154,10 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	
 	feedsofar = feedsofar + 1
 	
+		var myloader = top.home.document.getElementById('news_progress')
 	
+	myloader.value =  feedsofar/feedtoload
+
 	
 	
 
