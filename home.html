@@ -1,6 +1,7 @@
 
 
 
+
 <!doctype html>
 
 <html lang="en">
@@ -49,6 +50,39 @@
 }
 </style>
 
+<style>
+
+.load{    
+width: 50%;
+height: 12px;
+background: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAALCAYAAAC+jufvAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwAAADsABataJCQAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAPklEQVQYV2M48Gvvf4ZDv/b9Z9j7Fcha827Df4alr1b9Z1j4YsV/BuML3v8ZTC/7/GcwuwokrG4DCceH/v8Bs2Ef1StO/o0AAAAASUVORK5CYII=);  
+-moz-border-radius: 4px;
+border-radius: 4px;
+}
+
+.noload{
+width: 500px;    
+max-width: 100%;    
+ background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAALCAYAAAC+jufvAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwAAADsABataJCQAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAANUlEQVQYVy3EIQ4AQQgEwfn/zwghCMwGh8Tj+8yVKN0d2l00M6i70XsPmdmfu6OIQJmJqooPOu8mqi//WKcAAAAASUVORK5CYII=); 
+
+-moz-border-radius: 4px;
+border-radius: 4px;
+    border: 1px solid #999999;    
+    position: relative;
+}
+
+.loadtext {
+    font-family: Consolas;    
+font-size: 11px;
+    color: #000000;
+     position: absolute;
+    bottom: -1px;
+  
+ left: 45%;       
+}
+
+</style>
+
 
   </head>
   <body>
@@ -59,7 +93,7 @@
 	
 	<div class="card">
     <div class="container">
-		<h2><img src="bot07.png" style="height: 25px"></img> <a href="#null" onclick="window.parent.shownews()">Long Reads</a> <div id="news_preloader" ></div> </h2>
+		<h2><img src="bot07.png" style="height: 25px"></img> <a href="#null" onclick="window.parent.shownews()">Long Reads</a> <div class="noload"><span class="loadtext" id="news_loadspan">20%</span><div class="load" id="news_loaddiv"></div></div> </h2>
 		<div id="therose"></div>
 		<div id="headlineforhome"></div>
 		<br>
@@ -69,7 +103,7 @@
 	
 	<div class="card">
     <div class="container">
-		<h2><img src="bot15.png" style="height: 25px"></img> <a href="#null" onclick="window.parent.showbreaking()">Breaking News</a> <div id="breaking_preloader"></div></h2>
+		<h2><img src="bot15.png" style="height: 25px"></img> <a href="#null" onclick="window.parent.showbreaking()">Breaking News</a> <div class="noload"><span class="loadtext" id="breaking_loadspan">20%</span><div class="load" id="breaking_loaddiv"></div></div></h2>
 		<div id="breakingforhome"></div>
 		<br>
 	</div>
@@ -78,7 +112,7 @@
 	
 
 	
-   
+       
 
 
    
