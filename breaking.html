@@ -116,9 +116,10 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	
 	feedsofar = feedsofar + 1
 	
-	var myloader = top.home.document.getElementById('breaking_preloader')
-	myloader.innerHTML = feedsofar.toString() + ' of ' + feedtoload.toString()
-	
+	var myloader = top.home.document.getElementById('breaking_loaddiv')
+	myloader.css('width',  feedsofar/feedtoload + '%')
+	  var myloader = top.home.document.getElementById('breaking_loadspan')
+	myloader.text(feedsofar.toString() + ' of ' + feedtoload.toString())
 	
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
