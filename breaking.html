@@ -70,6 +70,11 @@ table.dataTable{width:100%;margin:0 auto;clear:both;border-collapse:separate;bor
 	{
 	
 	var mostrecent = new Date('1945/05/09')
+	var mybreak = top.home.document.getElementById('breakingforhome')
+	mybreak.innerHtML = ""
+	var break1 = ""
+	var break2 = ""
+	var break3 = ""
 	
 	var table = $('#mytable').DataTable();
     
@@ -163,11 +168,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	mostrecent = a
 	
 	var mybreak = top.home.document.getElementById('breakingforhome')
-	
-	mybreak.innerHTML = mytxt;
-	
-	
-	
+	break3 = break2
+	break2 = break1
+	break1 = '<img src="https://www.google.com/s2/favicons?domain_url=' + feedsUrl[2] + '" alt="" height="15" width="15"> ' + mytxt
+	mybreak.innerHTML = break1 + '<br>' + break2 + '<br>' + break3 + '<br>';
+		
 	}
   
   var year = a.getFullYear();
