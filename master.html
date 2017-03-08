@@ -86,7 +86,7 @@ feed003: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"]
 feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
 feed005: ["http://www.ft.com/rss/home/us","Financial Times","news"],
 feed006: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
-feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","news"],
+feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","magazines"],
 feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","blogs"],
 feed009: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","magazines"],
 feed010: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","magazines"],
@@ -101,13 +101,13 @@ feed017: ["http://feeds.feedburner.com/nybooks","The New York review of Books","
 //feed019: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
 feed020: ["http://harpers.org/feed/","Harpers Magazine","magazines"],
 feed021: ["http://feeds.feedburner.com/motherjones/BlogsAndArticles","Mother Jones","blogs"],
-feed022: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
+feed022: ["https://www.quantamagazine.org/feed/","Quanta Magazine","news"],
 feed023: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
 feed024: ["https://www.edge.org/feed","Edge Magazine","magazines"],
 feed025: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
 feed026: ["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
 feed027: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
-feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","magazines"],
+feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
 
 feed030: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
 feed031: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
@@ -219,7 +219,7 @@ else
 	if (firstheadline == 0 && feedsUrl[2] == "news")
 	{
 	var myhl = top.home.document.getElementById('headlineforhome')
-	myhl.innerHTML += '<a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">' + item.title +'</a><br>'+item.description+'<br>';
+	myhl.innerHTML += '<img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="15" width="15"> <a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">' + item.title +'</a><br>'+item.description+'<br>';
 	firstheadline = 1
 	}
 	
