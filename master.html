@@ -189,7 +189,20 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 		  myrosetxt = myrosetxt.replace(/(\r\n|\n|\r)/gm,", ")
 		
 		 
-		 myrose.innerHTML = '<i>'+ '&ldquo; ' + myrosetxt.capitalize()  + '&rdquo;' + '</i>'
+		mylink = item.title
+		  if ((mylink.match(/http/g) || []).length == 0)
+		  {
+		  myrose.innerHTML = '<i>'+ '&ldquo; ' + myrosetxt.capitalize()  + '&rdquo;' + '</i>'
+		  }
+		  else
+		  {
+		  mylink = mylink.substr(mylink.indexOf('http'), mylink.length)
+		  mylink =  ' <a href="#null" onclick="window.parent.sendtoreader(\''+mylink+'\');"><i>'+ '&ldquo; ' + myrosetxt.capitalize()  + '&rdquo;' + '</i></a>'
+		  myrose.innerHTML = mylink
+		  }
+		  	
+		
+		  //myrose.innerHTML = '<i>'+ '&ldquo; ' + myrosetxt.capitalize()  + '&rdquo;' + '</i>'
 		  
 		  
 		  
