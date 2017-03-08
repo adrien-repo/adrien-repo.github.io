@@ -74,6 +74,8 @@ table.dataTable{width:100%;margin:0 auto;clear:both;border-collapse:separate;bor
     var firstheadline = 0
 	table.clear().draw()
     
+	var myhl = top.home.document.getElementById('headlineforhome')
+	myhl.innerHTML = ""
 	
 
 var feedsLibrary = {
@@ -217,7 +219,7 @@ else
 	if (firstheadline == 0 && feedsUrl[2] == "news")
 	{
 	var myhl = top.home.document.getElementById('headlineforhome')
-	myhl.innerHTML = '<a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">' + item.title +'</a><br>'+item.description;
+	myhl.innerHTML += '<a href="#null" onclick="window.parent.sendtoreader(\''+item.link+'\');">' + item.title +'</a><br>'+item.description+'<br>';
 	firstheadline = 1
 	}
 	
@@ -262,7 +264,7 @@ else
     });
 	
 	
-	
+	firstheadline = 0
 	
 	
   });
