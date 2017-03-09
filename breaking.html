@@ -110,7 +110,7 @@ var feedsofar = 1
 	
 $.each(feedsLibrary, function(siteId, feedsUrl) {
   var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
-  var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 7");
+  var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 3");
   var format = "&format=json";
 
   var rssFeedPath = baseUrl.concat(queryString, format);
