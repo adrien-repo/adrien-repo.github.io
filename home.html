@@ -2,6 +2,7 @@
 
 
 
+
 <!doctype html>
 
 <html lang="en">
@@ -13,6 +14,11 @@
 		<meta name="mobile-web-app-capable" content="yes">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js'></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <title>The Happy Bots</title>
   	
@@ -77,6 +83,16 @@
 	</div>
 	</div>
 	</center>
+		<br>
+		
+		<div class="card">
+    <div class="container">
+		<div id="weather"></div>
+		<div id="curve_chart" style="width: 100%; height: 200px"></div>
+	</div>
+	</div>
+	</center>
+		<br>
 	
 
 	
@@ -87,5 +103,79 @@
   
  </div>
    
+<script>
+
+$(document).ready(function() {
+  $.simpleWeather({
+    location: 'Nyon, CH',
+    woeid: '',
+    unit: 'c',
+    success: function(weather) {
+      html = '<h2><img src="bot09.png" style="height: 25px"></img> Weather</h2><table style="width:100%"><tr><td><img src="'+weather.image+'" style="height: 50px"></td><td>It\'s <b>'+ weather.currently + '</b> in ' + weather.city + ' and temperature is <b>' + weather.temp+'&deg;'+weather.units.temp + '</b>.</td></tr></table>';
+	  
+      
+  
+      $("#weather").html(html);
+	  
+	  
+	  
+	  google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+	  var d = new Date();
+		var weekday = new Array(7);
+		weekday[0] =  "Sun";
+		weekday[1] = "Mon";
+		weekday[2] = "Tue";
+		weekday[3] = "Wed";
+		weekday[4] = "Thu";
+		weekday[5] = "Fri";
+		weekday[6] = "Sat";
+		weekday[7] =  "Sun";
+		weekday[8] = "Mon";
+		weekday[9] = "Tue";
+		weekday[10] = "Wed";
+		weekday[11] = "Thu";
+		weekday[12] = "Fri";
+		weekday[13] = "Sat";
+
+		var n = weekday[d.getDay()];
+	  
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Day', 'Min', 'Max'],
+          [weekday[d.getDay()],  parseFloat(weather.forecast[0].low),      parseFloat(weather.forecast[0].high)],
+          [weekday[d.getDay()+1],  parseFloat(weather.forecast[1].low),      parseFloat(weather.forecast[1].high)],
+          [weekday[d.getDay()+2],  parseFloat(weather.forecast[2].low),       parseFloat(weather.forecast[2].high)],
+          [weekday[d.getDay()+3],  parseFloat(weather.forecast[3].low),      parseFloat(weather.forecast[3].high)],
+		  [weekday[d.getDay()+4],  parseFloat(weather.forecast[4].low),      parseFloat(weather.forecast[4].high)]
+        ]);
+
+        var options = {
+          
+          curveType: 'function',
+          legend: { position: 'top' },
+		            series: {
+            0: { color: '#abc3ea' },
+            1: { color: '#eaabb0' },
+      
+          }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+	  
+	  
+	  
+	  
+    },
+    error: function(error) {
+      $("#weather").html('<p>'+error+'</p>');
+    }
+  });
+});
+</script>
   </body>
 </html>
