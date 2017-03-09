@@ -194,7 +194,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 			var nth = 0;
 			myrosetxt = myrosetxt.replace(/,/g, function (match, i, original) {
    			 nth++;
-    			return (nth === 2) ? "<br>" : match;
+    			return (nth === 2) ? ",<br>" : match;
 			});
 		 
 		mylink = item.title
