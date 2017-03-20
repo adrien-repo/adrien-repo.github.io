@@ -99,7 +99,7 @@
 	
 	<div class="card">
     <div class="container">
-		<h2><img src="bot07.png" style="height: 25px"></img> <a href="#null" onclick="window.parent.shownews()">Long Reads</a> <br><progress id="news_progress" value="0"  style="height:4px; width:100%"></progress> </h2>
+		<h2><img src="bot07.png" style="height: 25px"></img> <a href="#null" onclick="window.parent.shownews()">Long Reads</a><a href="#null" onclick="parent.frames[0].refreshfeed();">&#x21BB;</a> <br><progress id="news_progress" value="0"  style="height:4px; width:100%"></progress> </h2>
 		<div id="therose"></div><br>
 		<div id="headlineforhome"></div>
 		<br>
@@ -109,7 +109,7 @@
 	
 	<div class="card">
     <div class="container">
-		<h2><img src="bot15.png" style="height: 25px"></img> <a href="#null" onclick="window.parent.showbreaking()">Breaking News</a><a href="#null" onclick="parent.frames[0].refreshfeed();">&#x21BB;</a> <br><progress id="breaking_progress" value="0" style="height:4px; width:100%"></progress></h2>
+		<h2><img src="bot15.png" style="height: 25px"></img> <a href="#null" onclick="window.parent.showbreaking()">Breaking News</a><a href="#null" onclick="parent.frames[3].refreshfeed();">&#x21BB;</a> <br><progress id="breaking_progress" value="0" style="height:4px; width:100%"></progress></h2>
 		<div id="breakingforhome"></div>
 		<br>
 	</div>
@@ -262,8 +262,8 @@ var myurl = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yah
 	  
     });
 
-	window.parent.parent.frames["main"].refreshfeed();
-	window.parent.parent.frames["breaking"].refreshfeed();
+	window.parent.frames[0].refreshfeed();
+	window.parent.frames[3].refreshfeed();
 	
 
 </script>
