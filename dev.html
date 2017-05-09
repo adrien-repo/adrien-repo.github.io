@@ -136,10 +136,12 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	  var table = document.getElementById(feedsUrl[2]);
 	  var row = table.insertRow(-1);
 	  var cell1 = row.insertCell(0);
-	  var cell2 = row.insertCell(1);
+	  //var cell2 = row.insertCell(1);
 	  
-	  cell1.innerHTML = '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> ' + feedsUrl[1] ;
-	  cell2.innerHTML = '<a href="'+item.link+'">'+ item.title+ '</a>';
+	  //cell1.innerHTML = '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> ' + feedsUrl[1] ;
+	  //cell2.innerHTML = '<a href="'+item.link+'">'+ item.title+ '</a>';
+	  
+	  cell1.innerHTML = '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> ' + feedsUrl[1] + ': <a href="'+item.link+'">'+ item.title+ '</a>';
 	  
 	  if (feedsUrl[2] == 'news')
 	  {
@@ -181,11 +183,21 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	</script>
 	
 	</head>
-	<body>
+	<body bgcolor="#f2f2f2">
+				<center>
+				<table bgcolor="white"  style="max-width: 1000px; border:1px solid black"><tr><td>
+			<br>
+			
+	<center>
 	<div id="headlinesforhome"></div><br>
+	
 	<div id="otherheadlines"></div>
-			<div style="border-bottom:1px solid black">
-			</div>
+	</center>
+	</tr></td></table>
+		<br>
+		<table bgcolor="white"  style="max-width: 1000px; border:1px solid black"><tr><td>
+			<br>
+			
 	
 	<!--<h5>News</h5>-->
 			<table  border=1 frame=void rules=rows bordercolor="#DDDDDD" id="news" style="display: none"><tbody></tbody></table>
@@ -202,8 +214,12 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 			</div>
 			<br><br><br>
 						
+		</tr></td></table>
+		<br>
 		
-		
+				<br>
+		<table bgcolor="white"  style="max-width: 1000px; border:1px solid black"><tr><td>
+			<br>
 		<div id="id-newspapers" >
 		
 		<div  style ="  padding: 8px;  padding-top: 48px;">
@@ -220,12 +236,15 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
           
         </div>
 		
-		
+				</tr></td></table>
+		<br>
 		
 			
    </div>
    
-   
+   <br>
+		<table bgcolor="white"  style="max-width: 1000px; border:1px solid black"><tr><td>
+			<br>
    <div id="id-periodics" >
    
    
@@ -239,7 +258,15 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
    </tr></td></table>
         </div>
 		
+		</tr></td></table>
+		<br>
 		
+			
+   </div>
+   
+   <br>
+		<table bgcolor="white"  style="max-width: 1000px; border:1px solid black"><tr><td>
+			<br>
 		
 			
    </div>   
@@ -257,7 +284,15 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	</tr></td></table>
         </div>
 		
+		</tr></td></table>
+		<br>
 		
+			
+   </div>
+   
+   <br>
+		<table bgcolor="white"  style="max-width: 1000px; border:1px solid black"><tr><td>
+			<br>
 		
 			
    </div>
@@ -275,7 +310,15 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	</tr></td></table>
         </div>
 
+		</tr></td></table>
+		<br>
 		
+			
+   </div>
+   
+   <br>
+		<table bgcolor="white"  style="max-width: 1000px; border:1px solid black"><tr><td>
+			<br>
 		
 			
    </div>   
@@ -293,7 +336,15 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	</tr></td></table>
         </div>
 	
+		</tr></td></table>
+		<br>
 		
+			
+   </div>
+   
+   <br>
+		<table bgcolor="white"  style="max-width: 1000px; border:1px solid black"><tr><td>
+			<br>
 		
 			
    </div>   
@@ -311,6 +362,13 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	</tr></td></table>
         </div>
 		
+		</tr></td></table>
+		<br>
+		
+			
+   </div>
+   
+   <br>
 		
 		
 			
