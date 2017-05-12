@@ -5,11 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-html, body {
+html {
+  padding: 10px;
+  max-width: 1000px;
+  	margin-left:auto;
+        margin-right:auto;
+}
+
+body {
     width:100%;
 	max-width: 1000px;
 	margin-left:auto;
         margin-right:auto;
+		
 }
 div {
     -webkit-column-width: 20em;
@@ -83,7 +91,7 @@ feed032: ["http://www.salon.com/feed/","Salon","periodics"],
 feed033: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
 feed034: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
 feed035: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
-feed036: ["https://sniperinmahwah.wordpress.com/feed/","Sniper in Mahwah","markets"],
+
 feed037: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
 feed038: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
 feed039: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
@@ -127,7 +135,7 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	
 	var div = document.createElement("div");
 	div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
-	div.innerHTML = '<h3><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><br><img src="http://loremflickr.com/1000/300/' + feedItems[0].title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="width: 100%; max-width: 1000px"><br>';
+	div.innerHTML = '<h3><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><img src="http://loremflickr.com/1000/300/' + feedItems[0].title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="width: 100%; max-width: 1000px"><br><br>';
 	firstarticle = 0
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
@@ -148,7 +156,7 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	  
 	      
 	  
-	  table.innerHTML += '<b><img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14">' + feedsUrl[1] + ' <a href="'+item.link+'\">'+ item.title+ '</a></b><br>';
+	  table.innerHTML += '<b><img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> ' + feedsUrl[1] + ' <a href="'+item.link+'\">'+ item.title+ '</a></b><br>';
 	  
 	  if (feedsUrl[2] == 'news')
 	  {
@@ -237,20 +245,20 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 			<br>
 			<br>
 			
-			<h2>News</h2>
+			<hr><h2>News</h2>
 			<div  id="id-newspapers" ><span id="news-child"></span></div>
 			<br><br><br><br>
-			<h2>Markets</h2>
+			<hr><h2>Markets</h2>
 			<div id="id-markets" ><span id="markets-child"></span></div>
 			<br><br><br><br>
-			<h2>Magazines</h2>
+			<hr><h2>Magazines</h2>
 	<div id="id-periodics" ><span id="periodics-child"></span></div>
-		<h2>Science</h2>
+		<hr><h2>Books</h2>
 	<div id="id-bookreviews" ><span id="bookreviews-child"></span></div>
-	<h2>Science</h2>
+	<hr><h2>Science</h2>
 	<div id="id-science" ><span id="science-child"></span></div>
 
-	<h2>Blogs</h2>
+	<hr><h2>Blogs</h2>
 	<div id="id-blogs" ><span id="blogs-child"></span></div>
 	
 		
