@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <title>The Happy bots</title>
@@ -19,7 +20,7 @@ body {
         margin-right:auto;
 		
 }
-div {
+.twocols {
     -webkit-column-width: 20em;
     -webkit-column-gap: 2em;
     -webkit-column-rule: 1px solid #eee;
@@ -42,7 +43,22 @@ div {
 </style>
    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
    
+<script type="text/javascript">
+	var oldid = 'id-headlines'
+	
+    function toggle_visibility(id) {
+       
+	   var olde = document.getElementById(oldid)
+	   olde.style.display = 'none'
+	   oldid = id
+	   var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+    }
 
+</script>
    
    <script>
    
@@ -212,18 +228,28 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 
 
 
+			<h2><a href="#" onclick="toggle_visibility('id-headlines');">Headlines</a>
+			<a href="#" onclick="toggle_visibility('id-newspapers');">News</a>
+			<a href="#" onclick="toggle_visibility('id-markets');">Markets</a>
+			<a href="#" onclick="toggle_visibility('id-periodics');">Magazines</a>
+			<a href="#" onclick="toggle_visibility('id-bookreviews');">Books</a>
+			<a href="#" onclick="toggle_visibility('id-science');">Science</a>
+			<a href="#" onclick="toggle_visibility('id-blogs');">Blogs</a></h2>
+			
 
 
-    <h1><b><span id="headlinesforhome" style="max-width: 500px"></span></b></h1>
+
+
+			<div id="id-headlines" style="display: block">
+			    <h1><b><span id="headlinesforhome" style="max-width: 500px"></span></b></h1>
 	
 <span id="headlinepic"></span>
    
  			<br>
 			<br>
 			<br>
-
-      
-			<div>
+			<div  class="twocols">
+			
 			<h2>News</h2>
 			<span id="news"></span>
 			
@@ -241,25 +267,29 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 			<h2>Blogs</h2>
 			<span id="blogs"></span>
 			</div>
-			<br>
-			<br>
-			<br>
+	</div>
 			
-			<hr><h2>News</h2>
-			<div  id="id-newspapers" ><span id="news-child"></span></div>
-			<br><br><br><br>
-			<hr><h2>Markets</h2>
-			<div id="id-markets" ><span id="markets-child"></span></div>
-			<br><br><br><br>
-			<hr><h2>Magazines</h2>
-	<div id="id-periodics" ><span id="periodics-child"></span></div>
-		<hr><h2>Books</h2>
-	<div id="id-bookreviews" ><span id="bookreviews-child"></span></div>
-	<hr><h2>Science</h2>
-	<div id="id-science" ><span id="science-child"></span></div>
+			
+			
+			
+			<div  id="id-newspapers" style="display: none"><span id="news-child"></span></div>
+			
+			
+			
+			<div id="id-markets"  style="display: none"><span id="markets-child"></span></div>
+			
+			
+			
+	<div id="id-periodics"  style="display: none"><span id="periodics-child"></span></div>
+		
+		
+	<div id="id-bookreviews"  style="display: none"><span id="bookreviews-child"></span></div>
+	
+	
+	<div id="id-science"  style="display: none"><span id="science-child"></span></div>
 
-	<hr><h2>Blogs</h2>
-	<div id="id-blogs" ><span id="blogs-child"></span></div>
+	
+	<div id="id-blogs"  style="display: none"><span id="blogs-child"></span></div>
 	
 		
  
