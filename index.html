@@ -14,7 +14,15 @@ html {
   max-width: 1000px;
   	margin-left:auto;
         margin-right:auto;
-		
+		    border-left: 1.5px solid grey;
+	border-right: 1.5px solid grey;
+	
+	  background: url("http://loremflickr.com/1920/1200/happy") no-repeat center center fixed opacity:0.5; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  
 }
 
 body {
@@ -22,26 +30,44 @@ body {
 	max-width: 1000px;
 	margin-left:auto;
         margin-right:auto;
+      background-color: #ffffff;
+
+	
 
 		
 }
+
+.bg {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+}
+
 .twocols {
+
+
+
     -webkit-column-width: 20em;
     -webkit-column-gap: 2em;
-    -webkit-column-rule: 1px solid #4d4d4d;
+    -webkit-column-rule: 1px solid white;
     -webkit-column-count: 2;
     -moz-column-width: 20em;
     -moz-column-gap: 2em;
-    -moz-column-rule: 1px solid #4d4d4d;
+    -moz-column-rule: 1px solid white;
     -moz-column-count: 2;
     -ms-column-width: 20em;
     -ms-column-gap: 2em;
-    -ms-column-rule: 1px solid #4d4d4d;
+    -ms-column-rule: 1px solid white;
     -ms-column-count: 2;
     column-width: 20em;
     column-gap: 2em;
-    column-rule: 1px solid #4d4d4d;
+    column-rule: 1px solid white;
     column-count: 2;
+   
 }
 
 .navbar {
@@ -50,7 +76,10 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  
+	max-width: 1000px;
+	margin-left:auto;
+        margin-right:auto;
+		  
 }
 
 a {
@@ -179,7 +208,12 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	
 	var div = document.createElement("div");
 	div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
-	div.innerHTML = '<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><img src="http://loremflickr.com/1000/300/' + feedItems[0].title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="width: 100%; max-width: 1000px"><br><br>';
+	div.setAttribute("class","twocols")
+	div.setAttribute("style","margin-bottom: 20px")
+	
+	//div.innerHTML = '<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3>';
+	div.innerHTML = ''
+	
 	firstarticle = 0
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
@@ -188,19 +222,23 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	
 	
 	
-      div.innerHTML += '<b><a href="'+item.link+'">'+item.title+'</a></b><br>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '<br>';
+      //div.innerHTML += '<b><a href="'+item.link+'">'+item.title+'</a></b><br>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '<br>';
+	  
 	  if (firstarticle == 0){
 	  var table = document.getElementById(feedsUrl[2]);
-	  //var row = table.insertRow(-1);
-	  //var cell1 = row.insertCell(0);
-	  //var cell2 = row.insertCell(1);
-	  
-	  //cell1.innerHTML = '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> ' + feedsUrl[1] ;
-	  //cell2.innerHTML = '<a href="'+item.link+'">'+ item.title+ '</a>';
+
 	  
 	      
 	  
-	  table.innerHTML += '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> <b>' + feedsUrl[1] + ':</b> <a href="'+item.link+'\">'+ item.title+ '</a><br>';
+	  table.innerHTML += '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> <b><a href="'+item.link+'\">'+ item.title+ '</a></b><font size="-1" color="#4d4d4d"> by ' + feedsUrl[1] + '</font><br>';
+	  
+	   myfirstarticle = '<div style="position: relative; width:100% max-width:500px; min-height: 500px;">'
+	   myfirstarticle += '<img src="http://loremflickr.com/500/500/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="opacity:0.5;width: 100%; max-width: 500px; min-height: 500px;" >'
+	  myfirstarticle += '<span style="color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 500px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><h3 style="color: white; padding:5px; "><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><h1><a style="color: white;padding: 5px;" href="'+item.link+'">'+ item.title+ '</a></h1><br><h3 style="padding: 5px;">'+strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"")+'</h3></span>'
+	  myfirstarticle += '</div>'
+	  
+	  div.innerHTML += myfirstarticle
+	  
 	  
 	  if (feedsUrl[2] == 'news')
 	  {
@@ -210,7 +248,7 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	  if (firstheadline == 0)
 	  {
 	  myheadline.innerHTML += '<img src="http://loremflickr.com/500/500/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="opacity:0.5;width: 100%; max-width: 500px; min-height: 500px;" >'
-	  myheadline.innerHTML += '<span style="padding: 5px;color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 470px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><h1><a style="color: white;" href="'+item.link+'">'+ item.title+ '</a></h1><br><h3>'+strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"")+'</h3></span>'
+	  myheadline.innerHTML += '<span style="color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 500px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><h1><a style="color: white;padding: 5px;" href="'+item.link+'">'+ item.title+ '</a></h1><br><h3 style="padding: 5px;">'+strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"")+'</h3></span>'
 	  
 	  
 	  
@@ -230,9 +268,14 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	  
 	  firstarticle =1
 	  }
+	  else
+	  {
+	  div.innerHTML += '<b><font size="+1"><a href="'+item.link+'">'+item.title+'</a></font></b><br>' + strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"") + '<br>';
+	  }
 	  
     });
 	var tablechild = document.getElementById(feedsUrl[2] + '-child');
+	
 	tablechild.appendChild(div);
 	
 	
@@ -247,16 +290,17 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
    
    
 
+
+  
    
-   
-   
+ 
 
  <body >
 
 
   
-   <div class="navbar" style="color: white;max-width: 1000px; z-index: 2 ">
-			<h4 style="padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">
+   <div class="navbar" style="color: white; z-index: 2 ">
+			<h4 style="padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.35);">
 			<a style="color: white; " href="#" onclick="toggle_visibility('id-headlines');">Headlines</a> |
 			<a style="color: white; " href="#" onclick="toggle_visibility('id-newspapers');">News</a> |
 			<a style="color: white; " href="#" onclick="toggle_visibility('id-markets');">Markets</a> |
@@ -268,7 +312,7 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 </div>
 
 
-<div class="mymain" style="z-index: 1">
+<div class="mymain" style="z-index: 1;">
 
 
 			<div id="id-headlines" style="display: block">
@@ -281,21 +325,21 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 			
 			<div  class="twocols">
 			<div id="headlinesforhome" style="position: relative; width:100% max-width:500px; min-height: 500px;"></div>
-			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">News</h2>
+			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">News</h3>
 			<span id="news"></span>
 			
 			
-			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">Markets</h2>
+			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">Markets</h3>
 			<span id="markets"></span>
 			
 			
-			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">Magazines</h2>
+			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">Magazines</h3>
 			<span id="periodics"></span>
-			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">Books</h2>
+			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">Books</h3>
 			<span id="bookreviews"></span>
-			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">Science</h2>
+			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">Science</h3>
 			<span id="science"></span>
-			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">Blogs</h2>
+			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">Blogs</h3>
 			<span id="blogs"></span>
 			</div>
 			
@@ -324,7 +368,7 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	<div id="id-blogs"  style="display: none"><span id="blogs-child"></span></div>
 	
 	<br><br><br><br><br>
- <div>
+ </div>
 
 </body>
 </html>
