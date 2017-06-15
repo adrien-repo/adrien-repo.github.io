@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <title>The Happy bots</title>
@@ -27,19 +28,19 @@ body {
 .twocols {
     -webkit-column-width: 20em;
     -webkit-column-gap: 2em;
-    -webkit-column-rule: 1px solid #eee;
+    -webkit-column-rule: 1px solid #4d4d4d;
     -webkit-column-count: 2;
     -moz-column-width: 20em;
     -moz-column-gap: 2em;
-    -moz-column-rule: 1px solid #eee;
+    -moz-column-rule: 1px solid #4d4d4d;
     -moz-column-count: 2;
     -ms-column-width: 20em;
     -ms-column-gap: 2em;
-    -ms-column-rule: 1px solid #eee;
+    -ms-column-rule: 1px solid #4d4d4d;
     -ms-column-count: 2;
     column-width: 20em;
     column-gap: 2em;
-    column-rule: 1px solid #eee;
+    column-rule: 1px solid #4d4d4d;
     column-count: 2;
 }
 
@@ -51,6 +52,13 @@ body {
   width: 100%;
   
 }
+
+a {
+    color: black;
+	text-decoration: none;
+}
+
+
 
 .mymain {
 overflow: hidden;
@@ -171,7 +179,7 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	
 	var div = document.createElement("div");
 	div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
-	div.innerHTML = '<h3><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><img src="http://loremflickr.com/1000/300/' + feedItems[0].title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="width: 100%; max-width: 1000px"><br><br>';
+	div.innerHTML = '<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><img src="http://loremflickr.com/1000/300/' + feedItems[0].title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="width: 100%; max-width: 1000px"><br><br>';
 	firstarticle = 0
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
@@ -180,7 +188,7 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	
 	
 	
-      div.innerHTML += '<a href="'+item.link+'">'+item.title+'</a><br>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '<br>';
+      div.innerHTML += '<b><a href="'+item.link+'">'+item.title+'</a></b><br>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '<br>';
 	  if (firstarticle == 0){
 	  var table = document.getElementById(feedsUrl[2]);
 	  //var row = table.insertRow(-1);
@@ -192,7 +200,7 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	  
 	      
 	  
-	  table.innerHTML += '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> ' + feedsUrl[1] + ' <a href="'+item.link+'\">'+ item.title+ '</a><br>';
+	  table.innerHTML += '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> <b>' + feedsUrl[1] + ':</b> <a href="'+item.link+'\">'+ item.title+ '</a><br>';
 	  
 	  if (feedsUrl[2] == 'news')
 	  {
@@ -201,9 +209,10 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	  
 	  if (firstheadline == 0)
 	  {
-	  myheadline.innerHTML += '<span><a href="'+item.link+'">'+ item.title+ '</a><br>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '</span>'
+	  myheadline.innerHTML += '<img src="http://loremflickr.com/1000/300/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="opacity:0.5;width: 100%; max-width: 1000px; min-height: 300px;" >'
+	  myheadline.innerHTML += '<h1 style="padding: 5px;color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 980px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><a style="color: white;" href="'+item.link+'">'+ item.title+ '</a><br></h1>'
 	  var myheadlinepic = document.getElementById("headlinepic")
-	  myheadlinepic.innerHTML = '<img src="http://loremflickr.com/1000/300/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="width: 100%; max-width: 1000px">'
+	  myheadlinepic.innerHTML = '<h3>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '</h3>'
 	  
 	  }
 	  else
@@ -246,47 +255,50 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 
 
   
-   <div class="navbar">
-			<h4>    <a href="#" onclick="toggle_visibility('id-headlines');">Headlines</a>
-			<a href="#" onclick="toggle_visibility('id-newspapers');">News</a>
-			<a href="#" onclick="toggle_visibility('id-markets');">Markets</a>
-			<a href="#" onclick="toggle_visibility('id-periodics');">Magazines</a>
-			<a href="#" onclick="toggle_visibility('id-bookreviews');">Books</a>
-			<a href="#" onclick="toggle_visibility('id-science');">Science</a>
-			<a href="#" onclick="toggle_visibility('id-blogs');">Blogs</a></h4>
+   <div class="navbar" style="color: white;max-width: 1000px; z-index: 2 ">
+			<h4 style="padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">
+			<a style="color: white; " href="#" onclick="toggle_visibility('id-headlines');">Headlines</a> |
+			<a style="color: white; " href="#" onclick="toggle_visibility('id-newspapers');">News</a> |
+			<a style="color: white; " href="#" onclick="toggle_visibility('id-markets');">Markets</a> |
+			<a style="color: white; " href="#" onclick="toggle_visibility('id-periodics');">Magazines</a> |
+			<a style="color: white; " href="#" onclick="toggle_visibility('id-bookreviews');">Books</a> |
+			<a style="color: white; " href="#" onclick="toggle_visibility('id-science');">Science</a> |
+			<a style="color: white; " href="#" onclick="toggle_visibility('id-blogs');">Blogs</a>
+			</h4>
 </div>
 
 
-<div class="mymain">
+<div class="mymain" style="z-index: 1">
 
 
 			<div id="id-headlines" style="display: block">
-			    <h1><span id="headlinesforhome" style="max-width: 500px"></span></h1>
-	
-<span id="headlinepic"></span>
+			    <center><div id="headlinepic" style="width: 100%; max-width:800px"></div></center>
+				<div id="headlinesforhome" style="position: relative; width:100% max-width:1000px; min-height: 300px;"></div>
+				
+				
    
- 			<br>
-			<br>
-			<br>
+
+			<p style="clear:both;">
 			<div  class="twocols">
 			
-			<h2>News</h2>
+			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">News</h2>
 			<span id="news"></span>
 			
 			
-			<h2>Markets</h2>
+			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">Markets</h2>
 			<span id="markets"></span>
 			
 			
-			<h2>Magazines</h2>
+			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">Magazines</h2>
 			<span id="periodics"></span>
-			<h2>Books</h2>
+			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">Books</h2>
 			<span id="bookreviews"></span>
-			<h2>Science</h2>
+			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">Science</h2>
 			<span id="science"></span>
-			<h2>Blogs</h2>
+			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">Blogs</h2>
 			<span id="blogs"></span>
 			</div>
+			</p>
 	</div>
 			
 			
