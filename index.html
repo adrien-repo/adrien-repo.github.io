@@ -209,10 +209,10 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 	  
 	  if (firstheadline == 0)
 	  {
-	  myheadline.innerHTML += '<img src="http://loremflickr.com/1000/300/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="opacity:0.5;width: 100%; max-width: 1000px; min-height: 300px;" >'
-	  myheadline.innerHTML += '<h1 style="padding: 5px;color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 980px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><a style="color: white;" href="'+item.link+'">'+ item.title+ '</a><br></h1>'
-	  var myheadlinepic = document.getElementById("headlinepic")
-	  myheadlinepic.innerHTML = '<h3>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '</h3>'
+	  myheadline.innerHTML += '<img src="http://loremflickr.com/500/500/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="opacity:0.5;width: 100%; max-width: 500px; min-height: 500px;" >'
+	  myheadline.innerHTML += '<span style="padding: 5px;color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 470px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><h1><a style="color: white;" href="'+item.link+'">'+ item.title+ '</a></h1><br><h3>'+strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"")+'</h3></span>'
+	  
+	  
 	  
 	  }
 	  else
@@ -272,15 +272,15 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 
 
 			<div id="id-headlines" style="display: block">
-			    <center><div id="headlinepic" style="width: 100%; max-width:800px"></div></center>
-				<div id="headlinesforhome" style="position: relative; width:100% max-width:1000px; min-height: 300px;"></div>
+			    
+				
 				
 				
    
 
-			<p style="clear:both;">
-			<div  class="twocols">
 			
+			<div  class="twocols">
+			<div id="headlinesforhome" style="position: relative; width:100% max-width:500px; min-height: 500px;"></div>
 			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">News</h2>
 			<span id="news"></span>
 			
@@ -298,7 +298,7 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 			<h2 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);">Blogs</h2>
 			<span id="blogs"></span>
 			</div>
-			</p>
+			
 	</div>
 			
 			
