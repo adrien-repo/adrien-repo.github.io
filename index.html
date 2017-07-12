@@ -1,370 +1,247 @@
-
-
-
 <!DOCTYPE html>
+
 <html>
 <title>The Happy bots</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
 <style>
 html {
-  padding: 10px;
-  max-width: 1000px;
-  	margin-left:auto;
-        margin-right:auto;
-		    border-left: 1.5px solid grey;
-	border-right: 1.5px solid grey;
-	
-	
-  
+	padding: 10px;
+	max-width: 1000px;
+	margin-left:auto;
+	margin-right:auto;
+	border-left: 1.5px solid black;
+	border-right: 1.5px solid black;
 }
-
 body {
-    width:100%;
+	width:100%;
 	max-width: 1000px;
 	margin-left:auto;
-        margin-right:auto;
-      background-color: #ffffff;
-
-	
-
-		
+	margin-right:auto;
+	background-color: #ffffff;
 }
-
 .bg {
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-
-  /* Preserve aspet ratio */
-  min-width: 100%;
-  min-height: 100%;
+	position: fixed; 
+	top: 0; 
+	left: 0; 
+	min-width: 100%;
+	min-height: 100%;
 }
-
 .twocols {
-
-
-
-    -webkit-column-width: 20em;
-    -webkit-column-gap: 2em;
-    -webkit-column-rule: 1px solid white;
-    -webkit-column-count: 2;
-    -moz-column-width: 20em;
-    -moz-column-gap: 2em;
-    -moz-column-rule: 1px solid white;
-    -moz-column-count: 2;
-    -ms-column-width: 20em;
-    -ms-column-gap: 2em;
-    -ms-column-rule: 1px solid white;
-    -ms-column-count: 2;
-    column-width: 20em;
-    column-gap: 2em;
-    column-rule: 1px solid white;
-    column-count: 2;
-   
+	-webkit-column-width: 20em;
+	-webkit-column-gap: 2em;
+	-webkit-column-rule: 1px solid white;
+	-webkit-column-count: 2;
+	-moz-column-width: 20em;
+	-moz-column-gap: 2em;
+	-moz-column-rule: 1px solid white;
+	-moz-column-count: 2;
+	-ms-column-width: 20em;
+	-ms-column-gap: 2em;
+	-ms-column-rule: 1px solid white;
+	-ms-column-count: 2;
+	column-width: 20em;
+	column-gap: 2em;
+	column-rule: 1px solid white;
+	column-count: 2;
 }
-
 .navbar {
-  overflow: hidden;
-   background-color: #ffffff;
-  position: fixed;
-  top: 0;
-  width: 100%;
+	overflow: hidden;
+	background-color: #ffffff;
+	position: fixed;
+	top: 0;
+	width: 100%;
 	max-width: 1000px;
 	margin-left:auto;
-        margin-right:auto;
-		  
+	margin-right:auto;
 }
-
 a {
-    color: black;
+	color: black;
 	text-decoration: none;
 }
-
-
-
 .mymain {
-overflow: hidden;
-  padding: 5px;
-  margin-top: 60px;
- 
+	overflow: hidden;
+	padding: 5px;
+	margin-top: 60px;
 }
-
-
 </style>
-   <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
    
 <script type="text/javascript">
-	var oldid = 'id-headlines'
-	
-    function toggle_visibility(id) {
-       
-	   var olde = document.getElementById(oldid)
-	   olde.style.display = 'none'
-	   oldid = id
-	   var e = document.getElementById(id);
-       if(e.style.display == 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block';
-    }
+
+var oldid = 'id-headlines'
+
+function toggle_visibility(id) 
+	{
+	var olde = document.getElementById(oldid)
+	olde.style.display = 'none'
+	oldid = id
+	var e = document.getElementById(id);
+	if(e.style.display == 'block')
+		e.style.display = 'none';
+	else
+		e.style.display = 'block';
+	}
 
 </script>
    
-   <script>
-   
-   function strip(html)
+<script>
+
+function strip(html)
 	{
-	   var tmp = document.createElement("DIV");
-	   tmp.innerHTML = html;
-	   return tmp.textContent||tmp.innerText;
+	var tmp = document.createElement("DIV");
+	tmp.innerHTML = html;
+	return tmp.textContent||tmp.innerText;
 	}
-	firstheadline = 0
-   var feedsLibrary = {
+	
 
-
-feed001: ["http://bnonews.com/news/index.php/news/rss","BNO","news"],		
-feed002: ["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","news"],
-feed003: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
-feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
-feed005: ["http://www.ft.com/rss/home/us","Financial Times","news"],
-feed006: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
-feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","news"],
-feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","blogs"],
-feed009: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
-feed010: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","periodics"],
-feed011: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
-feed012: ["http://feeds.reuters.com/ReutersPictures","Reuters Pictures","blogs"],
-feed013: ["http://longform.org/feed.rss","Long Form","periodics"],
-feed014: ["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
-feed015: ["http://fusion.net/feed/","Fusion","periodics"],
-feed016: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
-feed017: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
-feed018: ["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
-feed019: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
-feed020: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
-feed021: ["http://feeds.feedburner.com/motherjones/BlogsAndArticles","Mother Jones","blogs"],
-feed022: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
-feed023: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
-feed024: ["https://www.edge.org/feed","Edge Magazine","periodics"],
-feed025: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
-feed026: ["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
-feed027: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
-feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","periodics"],
-
-feed030: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
-feed031: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
-feed032: ["http://www.salon.com/feed/","Salon","periodics"],
-feed033: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
-feed034: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
-feed035: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
-
-feed037: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
-feed038: ["http://www.cbsnews.com/latest/rss/main","CBS News","periodics"],
-feed039: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
-feed040: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
-feed041: ["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
-//feed042: ["http://www.atlasobscura.com/feeds/latest","Atlas Obscura","periodics"],
-feed043: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
-feed044: ["http://stratechery.com/feed/","Stratechery","periodics"],
-feed045: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
-feed046: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
-feed047: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
-feed048: ["http://evonomics.com/feed/","Evonomics","markets"],
-feed049: ["https://aeon.co/feed.rss","Aeon","periodics"],
-//feed050: ["https://newrepublic.com/rss.xml","NewRepublic","periodics"],
-
-feed052: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
-feed053: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
-feed054: ["http://scitation.aip.org/rss/content/aip/magazine/physicstoday/latestonlinestories;jsessionid=riTi5BaycDFvMSC0goCjE-t1.x-aip-live-02?fmt=rss","Physics Today","science"],
-feed055: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
-feed056: ["https://blog.variantperception.com/feed/","Variant Perception","markets"],
-
-
-
-
+firstheadline = 0
+var feedsLibrary = {
+	feed001: ["http://bnonews.com/news/index.php/news/rss","BNO","news"],
+	feed002: ["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","news"],
+	feed003: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
+	feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
+	feed005: ["http://www.ft.com/rss/home/us","Financial Times","news"],
+	feed006: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
+	feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","news"],
+	feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","blogs"],
+	feed009: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
+	feed010: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","periodics"],
+	feed011: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
+	feed012: ["http://feeds.reuters.com/ReutersPictures","Reuters Pictures","blogs"],
+	feed013: ["http://longform.org/feed.rss","Long Form","periodics"],
+	feed014: ["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
+	feed015: ["http://fusion.net/feed/","Fusion","periodics"],
+	feed016: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
+	feed017: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
+	feed018: ["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
+	feed019: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
+	feed020: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
+	feed021: ["http://feeds.feedburner.com/motherjones/BlogsAndArticles","Mother Jones","blogs"],
+	feed022: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
+	feed023: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
+	feed024: ["https://www.edge.org/feed","Edge Magazine","periodics"],
+	feed025: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
+	feed026: ["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
+	feed027: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
+	feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","periodics"],
+	feed030: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
+	feed031: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
+	feed032: ["http://www.salon.com/feed/","Salon","periodics"],
+	feed033: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
+	feed034: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
+	feed035: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
+	feed037: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
+	feed038: ["http://www.cbsnews.com/latest/rss/main","CBS News","periodics"],
+	feed039: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
+	feed040: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
+	feed041: ["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
+	//feed042: ["http://www.atlasobscura.com/feeds/latest","Atlas Obscura","periodics"],
+	feed043: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
+	feed044: ["http://stratechery.com/feed/","Stratechery","periodics"],
+	feed045: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
+	feed046: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
+	feed047: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
+	feed048: ["http://evonomics.com/feed/","Evonomics","markets"],
+	feed049: ["https://aeon.co/feed.rss","Aeon","periodics"],
+	//feed050: ["https://newrepublic.com/rss.xml","NewRepublic","periodics"],
+	feed052: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
+	feed053: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
+	feed054: ["http://scitation.aip.org/rss/content/aip/magazine/physicstoday/latestonlinestories;jsessionid=riTi5BaycDFvMSC0goCjE-t1.x-aip-live-02?fmt=rss","Physics Today","science"],
+	feed055: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
+	feed056: ["https://blog.variantperception.com/feed/","Variant Perception","markets"],
 	};
 
-	$.each(feedsLibrary, function(siteId, feedsUrl) {
-  var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
-  var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 5");
-  var format = "&format=json";
+$.each(feedsLibrary, function(siteId, feedsUrl) 
+	{
+	var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
+	var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 5");
+	var format = "&format=json";
+	var rssFeedPath = baseUrl.concat(queryString, format);
+	$.getJSON(rssFeedPath, function(response) 
+		{
+		var feedItems = response.query.results.item;
+		var div = document.createElement("div");
+		div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
+		div.setAttribute("class","twocols")
+		div.setAttribute("style","margin-bottom: 20px")
+		div.innerHTML = ''
+		firstarticle = 0
+		$.each(feedItems, function( index ) 
+			{
+			var item = feedItems[index];
+			if (firstarticle == 0)
+				{
+				var table = document.getElementById(feedsUrl[2]);
+				table.innerHTML += '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> <b><a href="'+item.link+'\">'+ item.title+ '</a></b><font size="-1" color="#4d4d4d"> by ' + feedsUrl[1] + '</font><br>';
+				myfirstarticle = '<div style="position: relative; width:100% max-width:500px; min-height: 500px;">'
+				myfirstarticle += '<img src="http://loremflickr.com/500/500/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="opacity:0.5;width: 100%; max-width: 500px; min-height: 500px;" >'
+				myfirstarticle += '<span style="color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 500px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><h3 style="color: white; padding:5px; "><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><h1><a style="color: white;padding: 5px;" href="'+item.link+'">'+ item.title+ '</a></h1><br><h3 style="padding: 5px;">'+strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"")+'</h3></span>'
+				myfirstarticle += '</div>'
+				div.innerHTML += myfirstarticle
+				if (feedsUrl[2] == 'news')
+					{
+					var myheadline = document.getElementById("headlinesforhome")
+					if (firstheadline == 0)
+						{
+						myheadline.innerHTML += '<img src="http://loremflickr.com/500/500/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="opacity:0.5;width: 100%; max-width: 500px; min-height: 500px;" >'
+						myheadline.innerHTML += '<span style="color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 500px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><h1><a style="color: white;padding: 5px;" href="'+item.link+'">'+ item.title+ '</a></h1><br><h3 style="padding: 5px;">'+strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"")+'</h3></span>'
+						}
+					firstheadline = firstheadline + 1
+					}
+				firstarticle =1
+				}
+				else
+				{
+				div.innerHTML += '<b><font size="+1"><a href="'+item.link+'">'+item.title+'</a></font></b><br>' + strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"") + '<br>';
+				}
+			});
+		var tablechild = document.getElementById(feedsUrl[2] + '-child');
+		tablechild.appendChild(div);
+		});
+	});
+</script>
 
-  var rssFeedPath = baseUrl.concat(queryString, format);
-
-  $.getJSON(rssFeedPath, function(response) {
-    var feedItems = response.query.results.item;
-	
-
-	
-	
-	
-	
-	var div = document.createElement("div");
-	div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
-	div.setAttribute("class","twocols")
-	div.setAttribute("style","margin-bottom: 20px")
-	
-	//div.innerHTML = '<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3>';
-	div.innerHTML = ''
-	
-	firstarticle = 0
-    $.each(feedItems, function( index ) {
-      var item = feedItems[index];
-	
-	
-	
-	
-	
-      //div.innerHTML += '<b><a href="'+item.link+'">'+item.title+'</a></b><br>' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"") + '<br>';
-	  
-	  if (firstarticle == 0){
-	  var table = document.getElementById(feedsUrl[2]);
-
-	  
-	      
-	  
-	  table.innerHTML += '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> <b><a href="'+item.link+'\">'+ item.title+ '</a></b><font size="-1" color="#4d4d4d"> by ' + feedsUrl[1] + '</font><br>';
-	  
-	   myfirstarticle = '<div style="position: relative; width:100% max-width:500px; min-height: 500px;">'
-	   myfirstarticle += '<img src="http://loremflickr.com/500/500/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="opacity:0.5;width: 100%; max-width: 500px; min-height: 500px;" >'
-	  myfirstarticle += '<span style="color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 500px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><h3 style="color: white; padding:5px; "><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><h1><a style="color: white;padding: 5px;" href="'+item.link+'">'+ item.title+ '</a></h1><br><h3 style="padding: 5px;">'+strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"")+'</h3></span>'
-	  myfirstarticle += '</div>'
-	  
-	  div.innerHTML += myfirstarticle
-	  
-	  
-	  if (feedsUrl[2] == 'news')
-	  {
-	  var myheadline = document.getElementById("headlinesforhome")
-	  //var otherhead = document.getElementById("otherheadlines")
-	  
-	  if (firstheadline == 0)
-	  {
-	  myheadline.innerHTML += '<img src="http://loremflickr.com/500/500/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="opacity:0.5;width: 100%; max-width: 500px; min-height: 500px;" >'
-	  myheadline.innerHTML += '<span style="color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 500px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><h1><a style="color: white;padding: 5px;" href="'+item.link+'">'+ item.title+ '</a></h1><br><h3 style="padding: 5px;">'+strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"")+'</h3></span>'
-	  
-	  
-	  
-	  }
-	  else
-	  {
-	  
-	  
-	  }
-	  firstheadline = firstheadline + 1
-	  }
-	
-	
-		  
-	  
-	  
-	  
-	  firstarticle =1
-	  }
-	  else
-	  {
-	  div.innerHTML += '<b><font size="+1"><a href="'+item.link+'">'+item.title+'</a></font></b><br>' + strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"") + '<br>';
-	  }
-	  
-    });
-	var tablechild = document.getElementById(feedsUrl[2] + '-child');
-	
-	tablechild.appendChild(div);
-	
-	
-	
-	
-	
-  });
-});
-
-	
-	</script>
-   
-   
-
-
-  
-   
- 
-
- <body >
-
-
-  
-   <div class="navbar" style="color: white; z-index: 2 ">
-			<h4 style="padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.35);">
-			<a style="color: white; " href="#" onclick="toggle_visibility('id-headlines');">Headlines</a> |
-			<a style="color: white; " href="#" onclick="toggle_visibility('id-newspapers');">News</a> |
-			<a style="color: white; " href="#" onclick="toggle_visibility('id-markets');">Markets</a> |
-			<a style="color: white; " href="#" onclick="toggle_visibility('id-periodics');">Magazines</a> |
-			<a style="color: white; " href="#" onclick="toggle_visibility('id-bookreviews');">Books</a> |
-			<a style="color: white; " href="#" onclick="toggle_visibility('id-science');">Science</a> |
-			<a style="color: white; " href="#" onclick="toggle_visibility('id-blogs');">Blogs</a>
-			</h4>
-</div>
-
-
-<div class="mymain" style="z-index: 1;">
-
-
-			<div id="id-headlines" style="display: block">
-			    
-				
-				
-				
-   
-
-			
-			<div  class="twocols">
-			<div id="headlinesforhome" style="position: relative; width:100% max-width:500px; min-height: 500px;"></div>
-			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">News</h3>
-			<span id="news"></span>
-			
-			
-			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">Markets</h3>
-			<span id="markets"></span>
-			
-			
-			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">Magazines</h3>
-			<span id="periodics"></span>
-			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">Books</h3>
-			<span id="bookreviews"></span>
-			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">Science</h3>
-			<span id="science"></span>
-			<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.25);">Blogs</h3>
-			<span id="blogs"></span>
-			</div>
-			
+<body >
+	<div class="navbar" style="color: white; z-index: 2 ">
+		<h4 style="padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">
+		<a style="color: white; " href="#" onclick="toggle_visibility('id-headlines');">Headlines</a> |
+		<a style="color: white; " href="#" onclick="toggle_visibility('id-newspapers');">News</a> |
+		<a style="color: white; " href="#" onclick="toggle_visibility('id-markets');">Markets</a> |
+		<a style="color: white; " href="#" onclick="toggle_visibility('id-periodics');">Magazines</a> |
+		<a style="color: white; " href="#" onclick="toggle_visibility('id-bookreviews');">Books</a> |
+		<a style="color: white; " href="#" onclick="toggle_visibility('id-science');">Science</a> |
+		<a style="color: white; " href="#" onclick="toggle_visibility('id-blogs');">Blogs</a>
+		</h4>
 	</div>
-			
-			
-			
-			
-			<div  id="id-newspapers" style="display: none"><span id="news-child"></span></div>
-			
-			
-			
-			<div id="id-markets"  style="display: none"><span id="markets-child"></span></div>
-			
-			
-			
-	<div id="id-periodics"  style="display: none"><span id="periodics-child"></span></div>
-		
-		
-	<div id="id-bookreviews"  style="display: none"><span id="bookreviews-child"></span></div>
-	
-	
-	<div id="id-science"  style="display: none"><span id="science-child"></span></div>
 
-	
-	<div id="id-blogs"  style="display: none"><span id="blogs-child"></span></div>
-	
-	<br><br><br><br><br>
- </div>
-
-</body>
+	<div class="mymain" style="z-index: 1;">
+		<div id="id-headlines" style="display: block">
+			<div class="twocols">
+				<div id="headlinesforhome" style="position: relative; width:100% max-width:500px; min-height: 500px;"></div>
+				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">News</h3>
+				<span id="news"></span>
+				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">Markets</h3>
+				<span id="markets"></span>
+				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">Magazines</h3>
+				<span id="periodics"></span>
+				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">Books</h3>
+				<span id="bookreviews"></span>
+				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">Science</h3>
+				<span id="science"></span>
+				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">Blogs</h3>
+				<span id="blogs"></span>
+			</div>
+		</div>
+		<div  id="id-newspapers" style="display: none"><span id="news-child"></span></div>
+		<div id="id-markets"  style="display: none"><span id="markets-child"></span></div>
+		<div id="id-periodics"  style="display: none"><span id="periodics-child"></span></div>
+		<div id="id-bookreviews"  style="display: none"><span id="bookreviews-child"></span></div>
+		<div id="id-science"  style="display: none"><span id="science-child"></span></div>
+		<div id="id-blogs"  style="display: none"><span id="blogs-child"></span></div>
+		<br><br><br><br><br>
+	</div>
+	</body>
 </html>
