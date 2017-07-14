@@ -4,15 +4,16 @@
 <title>The Happy bots</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
 <style>
 html {
 	padding: 10px;
 	max-width: 1000px;
 	margin-left:auto;
 	margin-right:auto;
-	border-left: 1.5px solid black;
-	border-right: 1.5px solid black;
+	border-left: 0.5px solid black;
+	border-right: 0.5px solid black;
+	font-family: 'Crimson Text', serif;
 }
 body {
 	width:100%;
@@ -28,27 +29,11 @@ body {
 	min-width: 100%;
 	min-height: 100%;
 }
-.twocols {
-	-webkit-column-width: 20em;
-	-webkit-column-gap: 2em;
-	-webkit-column-rule: 1px solid white;
-	-webkit-column-count: 2;
-	-moz-column-width: 20em;
-	-moz-column-gap: 2em;
-	-moz-column-rule: 1px solid white;
-	-moz-column-count: 2;
-	-ms-column-width: 20em;
-	-ms-column-gap: 2em;
-	-ms-column-rule: 1px solid white;
-	-ms-column-count: 2;
-	column-width: 20em;
-	column-gap: 2em;
-	column-rule: 1px solid white;
-	column-count: 2;
-}
+
 .navbar {
 	overflow: hidden;
 	background-color: #ffffff;
+	border-bottom: 0.5px solid black;
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -64,6 +49,7 @@ a {
 	overflow: hidden;
 	padding: 5px;
 	margin-top: 60px;
+	border-bottom: 0.5px solid black;
 }
 </style>
 
@@ -175,10 +161,9 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 			if (firstarticle == 0)
 				{
 				var table = document.getElementById(feedsUrl[2]);
-				table.innerHTML += '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> <b><a href="'+item.link+'\">'+ item.title+ '</a></b><font size="-1" color="#4d4d4d"> by ' + feedsUrl[1] + '</font><br>';
-				myfirstarticle = '<div style="position: relative; width:100% max-width:500px; min-height: 500px;">'
-				myfirstarticle += '<img src="http://loremflickr.com/500/500/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="opacity:0.5;width: 100%; max-width: 500px; min-height: 500px;" >'
-				myfirstarticle += '<span style="color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 500px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><h3 style="color: white; padding:5px; "><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><h1><a style="color: white;padding: 5px;" href="'+item.link+'">'+ item.title+ '</a></h1><br><h3 style="padding: 5px;">'+strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"")+'</h3></span>'
+				table.innerHTML += '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> <a href="'+item.link+'\">'+ item.title+ '</a><font size="-1" color="#4d4d4d"> by ' + feedsUrl[1] + '</font><br>';
+				myfirstarticle = '<div>'
+				myfirstarticle += '<div style="font-size: 100%;"><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="14" width="14"> ' + feedsUrl[1] + '</div><div style="font-size: 120%;"><a href="'+item.link+'">'+ item.title+ '</a></div><div style="font-size: 100%; color: grey">'+strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"")+'</div>'
 				myfirstarticle += '</div>'
 				div.innerHTML += myfirstarticle
 				if (feedsUrl[2] == 'news')
@@ -186,8 +171,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 					var myheadline = document.getElementById("headlinesforhome")
 					if (firstheadline == 0)
 						{
-						myheadline.innerHTML += '<img src="http://loremflickr.com/500/500/' + item.title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, ",") +'" style="opacity:0.5;width: 100%; max-width: 500px; min-height: 500px;" >'
-						myheadline.innerHTML += '<span style="color: white;position: absolute;top:0px;left:0px;width:100%;max-width: 500px;background: rgb(0, 0, 0);background: rgba(0, 0, 0, 0.5);"><h1><a style="color: white;padding: 5px;" href="'+item.link+'">'+ item.title+ '</a></h1><br><h3 style="padding: 5px;">'+strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"")+'</h3></span>'
+						myheadline.innerHTML += '<div style="font-size: 140%;"><a href="'+item.link+'">'+ item.title+ '</a></div><div style="font-size: 100%; color: grey">'+strip(item.description).substring(0,2000).replace(/(\r\n|\n|\r)/gm,"")+'</div>'
 						}
 					firstheadline = firstheadline + 1
 					}
@@ -195,7 +179,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 				}
 				else
 				{
-				div.innerHTML += '<b><font size="+1"><a href="'+item.link+'">'+item.title+'</a></font></b><br>' + strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"") + '<br>';
+				div.innerHTML += '<font size="+1"><a href="'+item.link+'">'+item.title+'</a></font><br><div style="color: grey">' + strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"") + '</div>';
 				}
 			});
 		var tablechild = document.getElementById(feedsUrl[2] + '-child');
@@ -203,35 +187,75 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 		});
 	});
 </script>
-
+<script>
+	function refreshcharts() {
+	document.getElementById('finvizcharts').innerHTML= ''
+	var now = new Date();
+	pictimerid = now.getFullYear() +''+ now.getMonth() +''+ now.getDay() +''+ now.getHours()+''+ now.getMinutes()+''+ now.getSeconds()
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=h1&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=d1&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<br>'
+	document.getElementById('finvizcharts').innerHTML+= '<br>'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=m5&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=h1&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=d1&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<br>'
+	document.getElementById('finvizcharts').innerHTML+= '<br>'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=m5&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=h1&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=d1&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<br>'
+	document.getElementById('finvizcharts').innerHTML+= '<br>'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=m5&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=h1&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=d1&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<br>'
+	document.getElementById('finvizcharts').innerHTML+= '<br>'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=m5&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=h1&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=d1&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<br>'
+	document.getElementById('finvizcharts').innerHTML+= '<br>'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=m5&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=h1&s=m&'+ pictimerid + '">'
+	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=d1&s=m&'+ pictimerid + '">'
+	}
+</script>
 <body >
 	<div class="navbar" style="color: white; z-index: 2 ">
-		<h4 style="padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">
-		<a style="color: white; " href="#" onclick="toggle_visibility('id-headlines');">Headlines</a> |
-		<a style="color: white; " href="#" onclick="toggle_visibility('id-newspapers');">News</a> |
-		<a style="color: white; " href="#" onclick="toggle_visibility('id-markets');">Markets</a> |
-		<a style="color: white; " href="#" onclick="toggle_visibility('id-periodics');">Magazines</a> |
-		<a style="color: white; " href="#" onclick="toggle_visibility('id-bookreviews');">Books</a> |
-		<a style="color: white; " href="#" onclick="toggle_visibility('id-science');">Science</a> |
-		<a style="color: white; " href="#" onclick="toggle_visibility('id-blogs');">Blogs</a>
-		</h4>
+		<div>
+		<a href="#" onclick="toggle_visibility('id-headlines');">Headlines</a> |
+		<a href="#" onclick="toggle_visibility('id-newspapers');">News</a> |
+		<a href="#" onclick="toggle_visibility('id-markets');">Markets</a> |
+		<a href="#" onclick="toggle_visibility('id-periodics');">Magazines</a> |
+		<a href="#" onclick="toggle_visibility('id-bookreviews');">Books</a> |
+		<a href="#" onclick="toggle_visibility('id-science');">Science</a> |
+		<a href="#" onclick="toggle_visibility('id-blogs');">Blogs</a> |
+		<a href="#" onclick="toggle_visibility('id-weather');">Weather</a> |
+		<a href="#" onclick="toggle_visibility('id-charts');">Charts</a> |
+		<a href="#" onclick="toggle_visibility('id-pics');">Pics</a> |
+		<a href="#" onclick="toggle_visibility('id-chess');">Chess</a> |
+		<a href="#" onclick="toggle_visibility('id-bookmarks');">Bookmarks</a> |
+		<a href="#" onclick="toggle_visibility('id-about');">About</a>
+		</div>
 	</div>
 
 	<div class="mymain" style="z-index: 1;">
 		<div id="id-headlines" style="display: block">
-			<div class="twocols">
-				<div id="headlinesforhome" style="position: relative; width:100% max-width:500px; min-height: 500px;"></div>
-				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">News</h3>
+			<div >
+				<div id="headlinesforhome" ></div>
+				<br><div style="font-size: 120%;">News</div>
 				<span id="news"></span>
-				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">Markets</h3>
+				<br><div style="font-size: 120%;">Markets</div>
 				<span id="markets"></span>
-				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">Magazines</h3>
+				<br><div style="font-size: 120%;">Magazines</div>
 				<span id="periodics"></span>
-				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">Books</h3>
+				<br><div style="font-size: 120%;">Books</div>
 				<span id="bookreviews"></span>
-				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">Science</h3>
+				<br><div style="font-size: 120%;">Science</div>
 				<span id="science"></span>
-				<h3 style="color: white; padding:5px; background: rgb(0, 0, 0);background: rgba(0, 0, 0);">Blogs</h3>
+				<br><div style="font-size: 120%;">Blogs</div>
 				<span id="blogs"></span>
 			</div>
 		</div>
@@ -241,7 +265,61 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 		<div id="id-bookreviews"  style="display: none"><span id="bookreviews-child"></span></div>
 		<div id="id-science"  style="display: none"><span id="science-child"></span></div>
 		<div id="id-blogs"  style="display: none"><span id="blogs-child"></span></div>
-		<br><br><br><br><br>
+		<div id="id-bookmarks"  style="display: none">
+			<a href="https://faculty.fuqua.duke.edu/~dah7/">David A. Hsieh</a><br>
+			<a href="http://www.math.ucla.edu/~tao/">Terence Tao</a><br>
+			<a href="https://www.dpmms.cam.ac.uk/~wtg10/">Timothy Gowers</a><br>
+			<a href="http://www.hbs.edu/faculty/Pages/profile.aspx?facId=6625">Erik Stafford</a><br>
+			<a href="http://statweb.stanford.edu/~ckirby/brad/">Bradley Efron</a><br>
+			<a href="http://www.edwardothorp.com/">Edward O. Thorp</a><br>
+			<a href="https://www.math.nyu.edu/faculty/avellane/">Marco Avellaneda</a><br>
+			<a href="http://www.fooledbyrandomness.com/">Nassim Nicholas Taleb</a><br>
+			<a href="http://www.experimentalmath.info/">David H. Bailey & Jonathan M. Borwein</a><br>
+			<a href="http://schwert.ssb.rochester.edu/papers.htm">G. William Schwert</a><br>
+			<a href="http://people.duke.edu/~charvey/">Campbell R. Harvey</a><br>
+			<a href="http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=1935527">Wouter J. Keller</a><br>
+			<a href="http://jasonzweig.com/resources/">Jason Zweig</a><br>
+			<a href="http://schwert.ssb.rochester.edu/papers.htm/">G. William Schwert</a><br>
+			<a href="http://www.efalken.com/index.html/">Eric Falkenstein</a><br>
+			<a href="http://investments.yale.edu/endowment-update/">Yale Endowment Reports</a><br>
+			<a href="http://eranraviv.com/">Eran Raviv</a><br>
+			<a href="http://quixoticfinance.com/">Quixotic Finance</a><br>
+			<a href="http://onlinebooks.library.upenn.edu/">The Online Books Page</a><br>
+			<a href="https://www.azjones.info/">Andrew Zimmerman Jones</a><br>
+			<a href="http://www.feynmanlectures.caltech.edu/">Feynman Lectures</a><br>
+			<a href="https://projecteuler.net/">Project Euler</a><br>
+			<a href="http://savoir-sans-frontieres.com/JPP/telechargeables/free_downloads_transit.htm">Jean-Pierre Petit</a><br>
+			<a href="https://sites.google.com/site/ancieslak/">Anna Cieslak</a><br>
+		</div>
+		<div id="id-about"  style="display: none">
+			Hi there !
+			<br><br>
+			My name is Adrien, I am a 31 y.o. French engineer and geographer living in Nyon, Switzerland.
+			<br><br>
+			I work in the hedge fund space, assisting research for a multi-family office to source all liquid strategies and implement equity-focused portfolio management. I have a deep interest in quantitative finance and statistical modeling though I try not to be overly impressed by mathematical elegance - at least, during working hours ! You will find listed the personal pages of some researchers and professors I highly regard. 
+			<br><br>
+			Prior to that, I have held various roles in agricultural commodities trading, the Ministry of Defense, and a large French NGO I am still a member of. Travel broadens the mind and I have now embarked on another kind of lifelong journey in marrying the amazing Jessica. We are lucky being surrounded by lovely families and friends, and are the proud owners of a small dog. We have shared beautiful moments in places grouped in the Photographies section.
+			<br><br>
+			I am a heavy reader and appreciate watching documentaries. I also irregularly attend online courses on scientific subjects. I enjoy daily chess playing and occasionally do home-brewing, both with more or less success.
+			<br><br>
+			I have built this site as a substitute for social platforms I found too time-consuming, and to host some extra-professional coding projects. 
+			<br><br>
+			Have a nice tour !
+			<br><br>
+		</div>
+		<div id="id-weather"  style="display: none">
+		</div>
+		<div id="id-charts"  style="display: none">
+			<a href="#null" onclick="refreshcharts()">refresh </a>
+			<br><br><div id="finvizcharts"></div>
+		</div>
+		<div id="id-pics"  style="display: none">
+		</div>
+		<div id="id-chess"  style="display: none">
+		</div>
 	</div>
 	</body>
+	<script>
+	refreshcharts()
+	</script>
 </html>
