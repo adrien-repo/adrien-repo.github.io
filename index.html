@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 
 <html>
@@ -15,6 +16,7 @@ html {
 	border-left: 0.5px solid black;
 	border-right: 0.5px solid black;
 	font-family: 'Crimson Text', serif;
+
 }
 body {
 	width:100%;
@@ -22,6 +24,8 @@ body {
 	margin-left:auto;
 	margin-right:auto;
 	background-color: #ffffff;
+	
+
 }
 .bg {
 	position: fixed; 
@@ -29,6 +33,7 @@ body {
 	left: 0; 
 	min-width: 100%;
 	min-height: 100%;
+	background-color: #ffffff;
 }
 
 .navbar {
@@ -51,11 +56,28 @@ a {
 	padding: 5px;
 	margin-top: 60px;
 	border-bottom: 0.5px solid black;
+	background-color: #ffffff;
 }
 </style>
 
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-   
+
+<script>
+$('document').ready(function() {
+	var data;
+	var url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
+	$.get(url, function(data) {
+		console.log(data);
+		$("#apod_title")
+		.append(data.title);
+		$("#apod_explanation")
+		.append( data.explanation);
+		$("#apod_img_id").attr("src", data.url);
+		
+	});
+	});
+</script>
+
 <script type="text/javascript">
 
 var oldid = 'id-headlines'
@@ -257,7 +279,12 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 				<br><div style="font-size: 120%;">Science</div>
 				<span id="science"></span>
 				<br><div style="font-size: 120%;">Blogs</div>
-				<span id="blogs"></span>
+				<span id="blogs"></span><br><br>
+				<div id="dataobject">
+					<b><span id="apod_title"></span></b>
+					<br><span id="apod_explanation" style="font-size: 90%; color: grey"></span><br>
+					<img id="apod_img_id" style="width:100%;max-width:1000px" />
+				</div><br>
 			</div>
 		</div>
 		<div  id="id-newspapers" style="display: none"><span id="news-child"></span></div>
