@@ -1,0 +1,38 @@
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script>
+var url = 'http://unsplash.com/rss';
+
+  $.ajax({
+    url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(url),
+    async: false,
+    jsonpCallback: 'jsonCallback',
+    contentType: "application/json",
+    dataType: 'jsonp',
+    success: function(json) {
+      
+      var min = 0;
+      var max = json.responseData.feed.entries.length;
+      // and the formula is:
+      var random = Math.floor(Math.random() * (max - min + 1)) + min;
+
+      var str = json.responseData.feed.entries[random].content;
+
+      var regex = /<img.*?src="(.*?)"/;
+      var src = regex.exec(str)[1];
+      					var myheadline = document.getElementById("headlinesforhome")
+
+			myheadline.innerHTML = src
+      $('#apod_img_id').attr('src',src);
+      
+    }
+  });  
+  </script>
+<body>
+<div id="headlinesforhome">
+
+</div>
+aaa
+<img id="apod_img_id" style="width:100%" />
+
+</body>
