@@ -1,102 +1,136 @@
-
-
-<!DOCTYPE html>
-
 <html>
 <title>The Happy bots</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet">
+
+
 <style>
-html {
-	padding: 10px;
-	max-width: 1000px;
-	margin-left:auto;
-	margin-right:auto;
-	border-left: 0.5px solid black;
-	border-right: 0.5px solid black;
-	font-family: 'EB Garamond', serif;
 
+ 
+.css-treeview ul,
+.css-treeview li
+{
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
-body {
-	width:100%;
-	max-width: 1000px;
-	margin-left:auto;
-	margin-right:auto;
-	background-color: #ffffff;
-	
+ 
+.css-treeview input
+{
+    position: absolute;
+    opacity: 0;
+}
+ 
+.css-treeview
+{
+    font: normal 11px "Segoe UI", Arial, Sans-serif;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+ 
+.css-treeview a
+{
+    color: #00f;
+    text-decoration: none;
+}
+ 
+.css-treeview a:hover
+{
+    text-decoration: underline;
+}
+ 
+.css-treeview input + label + ul
+{
+    margin: 0 0 0 22px;
+}
+ 
+.css-treeview input ~ ul
+{
+    display: none;
+}
+ 
+.css-treeview label,
+.css-treeview label::before
+{
+    cursor: pointer;
+}
+ 
+.css-treeview input:disabled + label
+{
+    cursor: default;
+    opacity: .6;
+}
+ 
+.css-treeview input:checked:not(:disabled) ~ ul
+{
+    display: block;
+}
+ 
+.css-treeview label,
+.css-treeview label::before
+{
+    background: url("http://www.thehappybots.com/icons.png") no-repeat;
+}
+ 
+.css-treeview label,
+.css-treeview a,
+.css-treeview label::before
+{
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
+    vertical-align: middle;
+}
+ 
+.css-treeview label
+{
+    background-position: 18px 0;
+}
+ 
+.css-treeview label::before
+{
+    content: "";
+    width: 16px;
+    margin: 0 22px 0 0;
+    vertical-align: middle;
+    background-position: 0 -32px;
+}
+ 
+.css-treeview input:checked + label::before
+{
+    background-position: 0 -16px;
+}
+ 
+/* webkit adjacent element selector bugfix */
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{
+    .css-treeview 
+    {
+        -webkit-animation: webkit-adjacent-element-selector-bugfix infinite 1s;
+    }
+ 
+    @-webkit-keyframes webkit-adjacent-element-selector-bugfix 
+    {
+        from 
+        { 
+            padding: 0;
+        } 
+        to 
+        { 
+            padding: 0;
+        }
+    }
+}
 
-}
-.bg {
-	position: fixed; 
-	top: 0; 
-	left: 0; 
-	min-width: 100%;
-	min-height: 100%;
-	background-color: #ffffff;
-}
-
-.navbar {
-	overflow: hidden;
-	background-color: #ffffff;
-	border-bottom: 0.5px solid black;
-	position: fixed;
-	top: 0;
-	width: 100%;
-	max-width: 1000px;
-	margin-left:auto;
-	margin-right:auto;
-}
-a {
-	color: black;
-	text-decoration: none;
-}
-.mymain {
-	overflow: hidden;
-	padding: 5px;
-	margin-top: 60px;
-	border-bottom: 0.5px solid black;
-	background-color: #ffffff;
-}
 </style>
 
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 
+
 <script>
-$('document').ready(function() {
-	var data;
-	var url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
-	$.get(url, function(data) {
-		console.log(data);
-		$("#apod_title")
-		.append(data.title);
-		$("#apod_explanation")
-		.append( data.explanation);
-		$("#apod_img_id").attr("src", data.url);
-		
-	});
-	});
-</script>
+//http://experiments.wemakesites.net/css3-treeview.html
 
-<script type="text/javascript">
-
-var oldid = 'id-headlines'
-
-function toggle_visibility(id) 
-	{
-	var olde = document.getElementById(oldid)
-	olde.style.display = 'none'
-	oldid = id
-	var e = document.getElementById(id);
-	if(e.style.display == 'block')
-		e.style.display = 'none';
-	else
-		e.style.display = 'block';
-	}
-
-</script>
-   
-<script>
 
 function strip(html)
 	{
@@ -174,8 +208,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 		var feedItems = response.query.results.item;
 		var div = document.createElement("div");
 		div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
-		div.setAttribute("class","twocols")
-		div.setAttribute("style","margin-bottom: 20px")
+
 		div.innerHTML = ''
 		firstarticle = 0
 		$.each(feedItems, function( index ) 
@@ -183,180 +216,41 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 			var item = feedItems[index];
 			if (firstarticle == 0)
 				{
-				var table = document.getElementById(feedsUrl[2]);
-				table.innerHTML += '<img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> <a href="'+item.link+'\">'+ item.title+ '</a><font size="-1" color="#4d4d4d"> by ' + feedsUrl[1] + '</font><br>';
-				myfirstarticle = '<div>'
-				myfirstarticle += '<div style="font-size: 100%;"><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="14" width="14"><b> ' + feedsUrl[1] + '</b></div><div style="font-size: 120%;"><a href="'+item.link+'">'+ item.title+ '</a></div><div style="font-size: 100%; color: grey">'+strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"")+'</div>'
-				myfirstarticle += '</div>'
-				div.innerHTML += myfirstarticle
-				if (feedsUrl[2] == 'news')
-					{
-					var myheadline = document.getElementById("headlinesforhome")
-					if (firstheadline == 0)
-						{
-						myheadline.innerHTML += '<div style="font-size: 140%;"><b><a href="'+item.link+'">'+ item.title+ '</a></b></div><div style="font-size: 100%; color: grey">'+strip(item.description).substring(0,2000).replace(/(\r\n|\n|\r)/gm,"")+'</div>'
-						}
-					firstheadline = firstheadline + 1
-					}
+				myfirstarticle = '<li><input type="checkbox" id="item-0-0" /><label ><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="12" width="12"> ' + feedsUrl[1] + '</label><ul>'
+				myfirstarticle += '<li><span style="font-size: 100%;"><a href="'+item.link+'">'+ item.title+ '</a></span></li>'
+				
+				
+
 				firstarticle =1
 				}
 				else
 				{
-				div.innerHTML += '<font size="+1"><a href="'+item.link+'">'+item.title+'</a></font><br><div style="color: grey">' + strip(item.description).substring(0,300).replace(/(\r\n|\n|\r)/gm,"") + '</div>';
+				myfirstarticle += '<li><span style="font-size: 100%;"><a href="'+item.link+'">'+ item.title+ '</a></span></li>';
 				}
 			});
-		var tablechild = document.getElementById(feedsUrl[2] + '-child');
+		div.innerHTML += myfirstarticle
+		div.innerHTML += '</ul></li>'
+		var tablechild = document.getElementById(feedsUrl[2]);
 		tablechild.appendChild(div);
 		});
 	});
 </script>
-<script>
-	function refreshcharts() {
-	document.getElementById('finvizcharts').innerHTML= ''
-	var now = new Date();
-	pictimerid = now.getFullYear() +''+ now.getMonth() +''+ now.getDay() +''+ now.getHours()+''+ now.getMinutes()+''+ now.getSeconds()
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=m5&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=h1&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=ES&p=d1&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<br>'
-	document.getElementById('finvizcharts').innerHTML+= '<br>'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=m5&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=h1&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=EX&p=d1&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<br>'
-	document.getElementById('finvizcharts').innerHTML+= '<br>'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=m5&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=h1&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=CL&p=d1&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<br>'
-	document.getElementById('finvizcharts').innerHTML+= '<br>'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=m5&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=h1&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=NG&p=d1&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<br>'
-	document.getElementById('finvizcharts').innerHTML+= '<br>'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=m5&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=h1&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6E&p=d1&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<br>'
-	document.getElementById('finvizcharts').innerHTML+= '<br>'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=m5&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=h1&s=m&'+ pictimerid + '">'
-	document.getElementById('finvizcharts').innerHTML+= '<img style="-webkit-filter: grayscale(0); filter: grayscale(0);" src="http://finviz.com/fut_chart.ashx?t=6B&p=d1&s=m&'+ pictimerid + '">'
-	}
-</script>
-<body >
-	<div class="navbar" style="color: white; z-index: 2 ">
-		<div>
-		<a href="#" onclick="toggle_visibility('id-headlines');">Headlines</a> |
-		<a href="#" onclick="toggle_visibility('id-newspapers');">News</a> |
-		<a href="#" onclick="toggle_visibility('id-markets');">Markets</a> |
-		<a href="#" onclick="toggle_visibility('id-periodics');">Magazines</a> |
-		<a href="#" onclick="toggle_visibility('id-bookreviews');">Books</a> |
-		<a href="#" onclick="toggle_visibility('id-science');">Science</a> |
-		<a href="#" onclick="toggle_visibility('id-blogs');">Blogs</a> |
-		<a href="#" onclick="toggle_visibility('id-weather');">Weather</a> |
-		<a href="#" onclick="toggle_visibility('id-charts');">Charts</a> |
-		<a href="#" onclick="toggle_visibility('id-pics');">Pics</a> |
-		<a href="#" onclick="toggle_visibility('id-chess');">Chess</a> |
-		<a href="#" onclick="toggle_visibility('id-bookmarks');">Bookmarks</a> |
-		<a href="#" onclick="toggle_visibility('id-about');">About</a>
-		</div>
-	</div>
 
-	<div class="mymain" style="z-index: 1;">
-		<div id="id-headlines" style="display: block">
-			<div >
-				<div id="headlinesforhome" ></div>
-				<br><div style="font-size: 120%;">News</div>
-				<span id="news"></span>
-				<br><div style="font-size: 120%;">Markets</div>
-				<span id="markets"></span>
-				<br><div style="font-size: 120%;">Magazines</div>
-				<span id="periodics"></span>
-				<br><div style="font-size: 120%;">Books</div>
-				<span id="bookreviews"></span>
-				<br><div style="font-size: 120%;">Science</div>
-				<span id="science"></span>
-				<br><div style="font-size: 120%;">Blogs</div>
-				<span id="blogs"></span><br><br>
-				<div id="dataobject">
-					<b><span id="apod_title"></span></b>
-					<br><span id="apod_explanation" style="font-size: 90%; color: grey"></span><br>
-					<img id="apod_img_id" style="width:100%;max-width:1000px" />
-				</div><br>
-			</div>
-		</div>
-		<div  id="id-newspapers" style="display: none"><span id="news-child"></span></div>
-		<div id="id-markets"  style="display: none"><span id="markets-child"></span></div>
-		<div id="id-periodics"  style="display: none"><span id="periodics-child"></span></div>
-		<div id="id-bookreviews"  style="display: none"><span id="bookreviews-child"></span></div>
-		<div id="id-science"  style="display: none"><span id="science-child"></span></div>
-		<div id="id-blogs"  style="display: none"><span id="blogs-child"></span></div>
-		<div id="id-bookmarks"  style="display: none">
-			<a href="https://faculty.fuqua.duke.edu/~dah7/">David A. Hsieh</a><br>
-			<a href="http://www.math.ucla.edu/~tao/">Terence Tao</a><br>
-			<a href="https://www.dpmms.cam.ac.uk/~wtg10/">Timothy Gowers</a><br>
-			<a href="http://www.hbs.edu/faculty/Pages/profile.aspx?facId=6625">Erik Stafford</a><br>
-			<a href="http://statweb.stanford.edu/~ckirby/brad/">Bradley Efron</a><br>
-			<a href="http://www.edwardothorp.com/">Edward O. Thorp</a><br>
-			<a href="https://www.math.nyu.edu/faculty/avellane/">Marco Avellaneda</a><br>
-			<a href="http://www.fooledbyrandomness.com/">Nassim Nicholas Taleb</a><br>
-			<a href="http://www.experimentalmath.info/">David H. Bailey & Jonathan M. Borwein</a><br>
-			<a href="http://schwert.ssb.rochester.edu/papers.htm">G. William Schwert</a><br>
-			<a href="http://people.duke.edu/~charvey/">Campbell R. Harvey</a><br>
-			<a href="http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=1935527">Wouter J. Keller</a><br>
-			<a href="http://jasonzweig.com/resources/">Jason Zweig</a><br>
-			<a href="http://schwert.ssb.rochester.edu/papers.htm/">G. William Schwert</a><br>
-			<a href="http://www.efalken.com/index.html/">Eric Falkenstein</a><br>
-			<a href="http://investments.yale.edu/endowment-update/">Yale Endowment Reports</a><br>
-			<a href="http://eranraviv.com/">Eran Raviv</a><br>
-			<a href="http://quixoticfinance.com/">Quixotic Finance</a><br>
-			<a href="http://onlinebooks.library.upenn.edu/">The Online Books Page</a><br>
-			<a href="https://www.azjones.info/">Andrew Zimmerman Jones</a><br>
-			<a href="http://www.feynmanlectures.caltech.edu/">Feynman Lectures</a><br>
-			<a href="https://projecteuler.net/">Project Euler</a><br>
-			<a href="http://savoir-sans-frontieres.com/JPP/telechargeables/free_downloads_transit.htm">Jean-Pierre Petit</a><br>
-			<a href="https://sites.google.com/site/ancieslak/">Anna Cieslak</a><br>
-		</div>
-		<div id="id-about"  style="display: none">
-			Hi there !
-			<br><br>
-			My name is Adrien, I am a 31 y.o. French engineer and geographer living in Nyon, Switzerland.
-			<br><br>
-			I work in the hedge fund space, assisting research for a multi-family office to source all liquid strategies and implement equity-focused portfolio management. I have a deep interest in quantitative finance and statistical modeling though I try not to be overly impressed by mathematical elegance - at least, during working hours ! You will find listed the personal pages of some researchers and professors I highly regard. 
-			<br><br>
-			Prior to that, I have held various roles in agricultural commodities trading, the Ministry of Defense, and a large French NGO I am still a member of. Travel broadens the mind and I have now embarked on another kind of lifelong journey in marrying the amazing Jessica. We are lucky being surrounded by lovely families and friends, and are the proud owners of a small dog. We have shared beautiful moments in places grouped in the Photographies section.
-			<br><br>
-			I am a heavy reader and appreciate watching documentaries. I also irregularly attend online courses on scientific subjects. I enjoy daily chess playing and occasionally do home-brewing, both with more or less success.
-			<br><br>
-			I have built this site as a substitute for social platforms I found too time-consuming, and to host some extra-professional coding projects. 
-			<br><br>
-			Have a nice tour !
-			<br><br>
-		</div>
-		<div id="id-weather"  style="display: none">
-			<center>
-			<div>
-			<iframe src="https://www.meteoblue.com/en/weather/widget/daily/nyon_switzerland_2659422?geoloc=fixed&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&precipitation=1&precipitationprobability=1&layout=light"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 300px;height: 306px"></iframe>
-			<br><br><img src="https://www.meteoblue.com/meteogram-web?lon=6.228&lat=46.401&lang=en&look=CELSIUS,KILOMETER_PER_HOUR"></img>
-			<br><br><img src="https://my.meteoblue.com/visimage/meteogram_multiSimple?look=KILOMETER_PER_HOUR%2CCELSIUS%2CMILLIMETER&apikey=5838a18e295d&cache=no&city=Nyon&iso2=ch&lat=46.383202&lon=6.239550&asl=401&tz=Europe%2FZurich&dt=1&fcstlength=168&lang=en&ts=1502432535&sig=6c4ad306a323491f765cc228b609579a"></img>
-			<br><br><a href="https://www.meteoblue.com/en/weather-maps/nyon_switzerland_2659422?variable=precipitation3h_cloudcover_pressure&level=surface&lines=none&mapcenter=46.3832N6.2396&zoom=6">full map</a>
-			</div>
-			</center>
-		</div>
-		<div id="id-charts"  style="display: none">
-			<a href="#null" onclick="refreshcharts()">refresh </a>
-			<br><br><div id="finvizcharts"></div>
-		</div>
-		<div id="id-pics"  style="display: none">
-		</div>
-		<div id="id-chess"  style="display: none">
-			<a href="/chess/chess.html">Chess AI</a> is an ongoing development project :)
-		</div>
-	</div>
-	</body>
-	<script>
-	refreshcharts()
-	</script>
-</html>
+
+
+
+
+<p></p>
+             
+<div class="css-treeview">
+    <ul>
+    <li><input type="checkbox" checked="checked"/><label for="item-0">News</label><ul><div id="news"></div></ul></li>
+	<li><input type="checkbox" checked="checked"/><label for="item-0">Markets</label><ul><div id="markets"></div></ul></li>
+	<li><input type="checkbox" checked="checked"/><label for="item-0">Magazines</label><ul><div id="periodics"></div></ul></li>
+	<li><input type="checkbox" checked="checked"/><label for="item-0">Books</label><ul><div id="bookreviews"></div></ul></li>
+	<li><input type="checkbox" checked="checked"/><label for="item-0">Science</label><ul><div id="science"></div></ul></li>
+	<li><input type="checkbox" checked="checked"/><label for="item-0">Blogs</label><ul><div id="blogs"></div></ul></li>
+    </ul>
+</div>
+             
+            <p> </p>
