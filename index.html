@@ -1,10 +1,20 @@
+
 <html>
 <title>The Happy bots</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
 
 <style>
+
+body
+{
+background-image: url("http://www.thehappybots.com/back.png")
+
+}
+
+
 
  
 .css-treeview ul,
@@ -23,10 +33,9 @@
  
 .css-treeview
 {
-    font: normal 11px "Segoe UI", Arial, Sans-serif;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
+font-family: 'Roboto Mono', monospace; 
+font-size: 13px
+
 }
  
 .css-treeview a
@@ -126,6 +135,9 @@
 </style>
 
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+
+
 
 
 <script>
@@ -237,20 +249,58 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 </script>
 
 
+<body style="font-family: 'Roboto Mono', monospace; ">
 
 
 
-<p></p>
+<p><b>The Happy Bots</b></p>
              
 <div class="css-treeview">
-    <ul>
-    <li><input type="checkbox" checked="checked"/><label for="item-0">News</label><ul><div id="news"></div></ul></li>
-	<li><input type="checkbox" checked="checked"/><label for="item-0">Markets</label><ul><div id="markets"></div></ul></li>
-	<li><input type="checkbox" checked="checked"/><label for="item-0">Magazines</label><ul><div id="periodics"></div></ul></li>
-	<li><input type="checkbox" checked="checked"/><label for="item-0">Books</label><ul><div id="bookreviews"></div></ul></li>
-	<li><input type="checkbox" checked="checked"/><label for="item-0">Science</label><ul><div id="science"></div></ul></li>
-	<li><input type="checkbox" checked="checked"/><label for="item-0">Blogs</label><ul><div id="blogs"></div></ul></li>
-    </ul>
+	<ul>
+	<li><input type="checkbox" checked="checked"/><label for="item-0"><b>RSS feeds</b></label>
+		<ul>
+		<!--     checked="checked"  -->
+		<li><input type="checkbox" /><label for="item-0">News</label><ul><div id="news"></div></ul></li>
+		<li><input type="checkbox" /><label for="item-0">Markets</label><ul><div id="markets"></div></ul></li>
+		<li><input type="checkbox" /><label for="item-0">Magazines</label><ul><div id="periodics"></div></ul></li>
+		<li><input type="checkbox" /><label for="item-0">Books</label><ul><div id="bookreviews"></div></ul></li>
+		<li><input type="checkbox" /><label for="item-0">Science</label><ul><div id="science"></div></ul></li>
+		<li><input type="checkbox" /><label for="item-0">Blogs</label><ul><div id="blogs"></div></ul></li>
+		</ul>
+	</li>
+	<li><input type="checkbox" /><label for="item-0"><b>Bookmarks</b></label>
+		<ul>
+		<li><a href="https://faculty.fuqua.duke.edu/~dah7/">David A. Hsieh</a></li>
+		<li><a href="http://www.math.ucla.edu/~tao/">Terence Tao</a></li>
+		<li><a href="https://www.dpmms.cam.ac.uk/~wtg10/">Timothy Gowers</a></li>
+		<li><a href="http://www.hbs.edu/faculty/Pages/profile.aspx?facId=6625">Erik Stafford</a></li>
+		<li><a href="http://statweb.stanford.edu/~ckirby/brad/">Bradley Efron</a></li>
+		<li><a href="http://www.edwardothorp.com/">Edward O. Thorp</a></li>
+		<li><a href="https://www.math.nyu.edu/faculty/avellane/">Marco Avellaneda</a></li>
+		<li><a href="http://www.fooledbyrandomness.com/">Nassim Nicholas Taleb</a></li>
+		<li><a href="http://www.experimentalmath.info/">David H. Bailey & Jonathan M. Borwein</a></li>
+		<li><a href="http://schwert.ssb.rochester.edu/papers.htm">G. William Schwert</a></li>
+		<li><a href="http://people.duke.edu/~charvey/">Campbell R. Harvey</a></li>
+		<li><a href="http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=1935527">Wouter J. Keller</a></li>
+		<li><a href="http://jasonzweig.com/resources/">Jason Zweig</a></li>
+		<li><a href="http://schwert.ssb.rochester.edu/papers.htm/">G. William Schwert</a></li>
+		<li><a href="http://www.efalken.com/index.html/">Eric Falkenstein</a></li>
+		<li><a href="http://investments.yale.edu/endowment-update/">Yale Endowment Reports</a></li>
+		<li><a href="http://eranraviv.com/">Eran Raviv</a></li>
+		<li><a href="http://quixoticfinance.com/">Quixotic Finance</a></li>
+		<li><a href="http://onlinebooks.library.upenn.edu/">The Online Books Page</a></li>
+		<li><a href="https://www.azjones.info/">Andrew Zimmerman Jones</a></li>
+		<li><a href="http://www.feynmanlectures.caltech.edu/">Feynman Lectures</a></li>
+		<li><a href="https://projecteuler.net/">Project Euler</a></li>
+		<li><a href="http://savoir-sans-frontieres.com/JPP/telechargeables/free_downloads_transit.htm">Jean-Pierre Petit</a></li>
+		<li><a href="https://sites.google.com/site/ancieslak/">Anna Cieslak</a></li>
+		</ul>
+	</li>
+	</ul>
 </div>
+<p> </p>
+
+
              
-            <p> </p>
+            
+</body>
