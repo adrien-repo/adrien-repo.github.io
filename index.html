@@ -1,136 +1,28 @@
 
+
 <html>
 <title>The Happy bots</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 <style>
 
-body
-{
-background-image: url("http://www.thehappybots.com/back.png")
-
-}
 
 
 
- 
-.css-treeview ul,
-.css-treeview li
-{
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
- 
-.css-treeview input
-{
-    position: absolute;
-    opacity: 0;
-}
- 
-.css-treeview
-{
-font-family: 'Roboto Mono', monospace; 
-font-size: 13px
-
-}
- 
-.css-treeview a
-{
-    color: #00f;
-    text-decoration: none;
-}
- 
-.css-treeview a:hover
-{
-    text-decoration: underline;
-}
- 
-.css-treeview input + label + ul
-{
-    margin: 0 0 0 22px;
-}
- 
-.css-treeview input ~ ul
-{
-    display: none;
-}
- 
-.css-treeview label,
-.css-treeview label::before
-{
-    cursor: pointer;
-}
- 
-.css-treeview input:disabled + label
-{
-    cursor: default;
-    opacity: .6;
-}
- 
-.css-treeview input:checked:not(:disabled) ~ ul
-{
-    display: block;
-}
- 
-.css-treeview label,
-.css-treeview label::before
-{
-    background: url("http://www.thehappybots.com/icons.png") no-repeat;
-}
- 
-.css-treeview label,
-.css-treeview a,
-.css-treeview label::before
-{
-    display: inline-block;
-    height: 16px;
-    line-height: 16px;
-    vertical-align: middle;
-}
- 
-.css-treeview label
-{
-    background-position: 18px 0;
-}
- 
-.css-treeview label::before
-{
-    content: "";
-    width: 16px;
-    margin: 0 22px 0 0;
-    vertical-align: middle;
-    background-position: 0 -32px;
-}
- 
-.css-treeview input:checked + label::before
-{
-    background-position: 0 -16px;
-}
- 
-/* webkit adjacent element selector bugfix */
-@media screen and (-webkit-min-device-pixel-ratio:0)
-{
-    .css-treeview 
-    {
-        -webkit-animation: webkit-adjacent-element-selector-bugfix infinite 1s;
-    }
- 
-    @-webkit-keyframes webkit-adjacent-element-selector-bugfix 
-    {
-        from 
-        { 
-            padding: 0;
-        } 
-        to 
-        { 
-            padding: 0;
-        }
-    }
-}
+ol.tree{padding-left:30px;}
+li{list-style-type:none;position:relative;margin-left:-15px;}
+li label{padding-left:37px;cursor:pointer;background:url("https://www.thecssninja.com/demo/css_tree/folder-horizontal.png") no-repeat 15px 2px;display:block;}
+li input{width:1em;height:1em;position:absolute;left:-0.5em;top:0;opacity:0;cursor:pointer;}
+li input + ol{height:1em;margin:-16px 0 0 -44px;background:url("https://www.thecssninja.com/demo/css_tree/toggle-small-expand.png") no-repeat 40px 0;}
+li input + ol > li{display:none;margin-left:-14px !important;padding-left:1px}
+li.file{margin-left:-1px !important;}
+li.file a{display:inline-block;padding-left:21px;color;text-decoration:none;background:url("https://www.thecssninja.com/demo/css_tree/document.png") no-repeat 0 0;}
+li input:checked + ol{height:auto;margin:-21px 0 0 -44px;padding:25px 0 0 80px;background:url("https://www.thecssninja.com/demo/css_tree/toggle-small.png") no-repeat 40px 5px;}
+li input:checked + ol > li{display:block;margin:0 0 0.063em;}
+li input:checked + ol > li:first-child{margin:0 0 0.125em;}
 
 </style>
 
@@ -141,7 +33,7 @@ font-size: 13px
 
 
 <script>
-//http://experiments.wemakesites.net/css3-treeview.html
+
 
 
 function strip(html)
@@ -193,7 +85,7 @@ var feedsLibrary = {
 	feed039: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
 	feed040: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
 	feed041: ["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
-	//feed042: ["http://www.atlasobscura.com/feeds/latest","Atlas Obscura","periodics"],
+	feed042: ["https://cosmosmagazine.com/feed.rss","Cosmos Magazine","science"],
 	feed043: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
 	feed044: ["http://stratechery.com/feed/","Stratechery","periodics"],
 	feed045: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
@@ -218,8 +110,8 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 	$.getJSON(rssFeedPath, function(response) 
 		{
 		var feedItems = response.query.results.item;
-		var div = document.createElement("div");
-		div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
+		var div = document.createElement("li");
+		//div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
 
 		div.innerHTML = ''
 		firstarticle = 0
@@ -228,8 +120,8 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 			var item = feedItems[index];
 			if (firstarticle == 0)
 				{
-				myfirstarticle = '<li><input type="checkbox" id="item-0-0" /><label ><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="12" width="12"> ' + feedsUrl[1] + '</label><ul>'
-				myfirstarticle += '<li><span style="font-size: 100%;"><a href="'+item.link+'">'+ item.title+ '</a></span></li>'
+				myfirstarticle = '<label ><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="12" width="12"> ' + feedsUrl[1] + '</label><input type="checkbox"  /><ol>'
+				myfirstarticle += '<li class="file"><a href="'+item.link+'">'+ item.title+ '</a></li>'
 				
 				
 
@@ -237,11 +129,11 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 				}
 				else
 				{
-				myfirstarticle += '<li><span style="font-size: 100%;"><a href="'+item.link+'">'+ item.title+ '</a></span></li>';
+				myfirstarticle += '<li class="file"><a href="'+item.link+'">'+ item.title+ '</a></li>';
 				}
 			});
 		div.innerHTML += myfirstarticle
-		div.innerHTML += '</ul></li>'
+		div.innerHTML += '</ol>'
 		var tablechild = document.getElementById(feedsUrl[2]);
 		tablechild.appendChild(div);
 		});
@@ -249,56 +141,56 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 </script>
 
 
-<body style="font-family: 'Roboto Mono', monospace; ">
+<body style="font-family: 'Roboto', sans-serif; font-size:15px">
 
 
 
 <p><b>The Happy Bots</b></p>
-             
-<div class="css-treeview">
-	<ul>
-	<li><input type="checkbox" checked="checked"/><label for="item-0"><b>RSS feeds</b></label>
-		<ul>
+
+		
+		
+		
+	<ol  class="tree">
+	<li><label><b>RSS feeds</b></label><input type="checkbox" checked="checked"/>
+		<ol>
 		<!--     checked="checked"  -->
-		<li><input type="checkbox" /><label for="item-0">News</label><ul><div id="news"></div></ul></li>
-		<li><input type="checkbox" /><label for="item-0">Markets</label><ul><div id="markets"></div></ul></li>
-		<li><input type="checkbox" /><label for="item-0">Magazines</label><ul><div id="periodics"></div></ul></li>
-		<li><input type="checkbox" /><label for="item-0">Books</label><ul><div id="bookreviews"></div></ul></li>
-		<li><input type="checkbox" /><label for="item-0">Science</label><ul><div id="science"></div></ul></li>
-		<li><input type="checkbox" /><label for="item-0">Blogs</label><ul><div id="blogs"></div></ul></li>
-		</ul>
+		<li><label>News</label><input type="checkbox" /><ol id="news"></ol></li>
+		<li><label>Markets</label><input type="checkbox" /><ol id="markets"></ol></li>
+		<li><label>Magazines</label><input type="checkbox" /><ol id="periodics"></ol></li>
+		<li><label>Books</label><input type="checkbox" /><ol id="bookreviews"></ol></li>
+		<li><label>Science</label><input type="checkbox" /><ol id="science"></ol></li>
+		<li><label>Blogs</label><input type="checkbox" /><ol id="blogs"></ol></li>
+		</ol>
 	</li>
-	<li><input type="checkbox" /><label for="item-0"><b>Bookmarks</b></label>
-		<ul>
-		<li><a href="https://faculty.fuqua.duke.edu/~dah7/">David A. Hsieh</a></li>
-		<li><a href="http://www.math.ucla.edu/~tao/">Terence Tao</a></li>
-		<li><a href="https://www.dpmms.cam.ac.uk/~wtg10/">Timothy Gowers</a></li>
-		<li><a href="http://www.hbs.edu/faculty/Pages/profile.aspx?facId=6625">Erik Stafford</a></li>
-		<li><a href="http://statweb.stanford.edu/~ckirby/brad/">Bradley Efron</a></li>
-		<li><a href="http://www.edwardothorp.com/">Edward O. Thorp</a></li>
-		<li><a href="https://www.math.nyu.edu/faculty/avellane/">Marco Avellaneda</a></li>
-		<li><a href="http://www.fooledbyrandomness.com/">Nassim Nicholas Taleb</a></li>
-		<li><a href="http://www.experimentalmath.info/">David H. Bailey & Jonathan M. Borwein</a></li>
-		<li><a href="http://schwert.ssb.rochester.edu/papers.htm">G. William Schwert</a></li>
-		<li><a href="http://people.duke.edu/~charvey/">Campbell R. Harvey</a></li>
-		<li><a href="http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=1935527">Wouter J. Keller</a></li>
-		<li><a href="http://jasonzweig.com/resources/">Jason Zweig</a></li>
-		<li><a href="http://schwert.ssb.rochester.edu/papers.htm/">G. William Schwert</a></li>
-		<li><a href="http://www.efalken.com/index.html/">Eric Falkenstein</a></li>
-		<li><a href="http://investments.yale.edu/endowment-update/">Yale Endowment Reports</a></li>
-		<li><a href="http://eranraviv.com/">Eran Raviv</a></li>
-		<li><a href="http://quixoticfinance.com/">Quixotic Finance</a></li>
-		<li><a href="http://onlinebooks.library.upenn.edu/">The Online Books Page</a></li>
-		<li><a href="https://www.azjones.info/">Andrew Zimmerman Jones</a></li>
-		<li><a href="http://www.feynmanlectures.caltech.edu/">Feynman Lectures</a></li>
-		<li><a href="https://projecteuler.net/">Project Euler</a></li>
-		<li><a href="http://savoir-sans-frontieres.com/JPP/telechargeables/free_downloads_transit.htm">Jean-Pierre Petit</a></li>
-		<li><a href="https://sites.google.com/site/ancieslak/">Anna Cieslak</a></li>
-		</ul>
+	<li><label><b>Bookmarks</b></label><input type="checkbox" />
+		<ol>
+		<li class="file"><a href="https://faculty.fuqua.duke.edu/~dah7/">David A. Hsieh</a></li>
+		<li class="file"><a href="http://www.math.ucla.edu/~tao/">Terence Tao</a></li>
+		<li class="file"><a href="https://www.dpmms.cam.ac.uk/~wtg10/">Timothy Gowers</a></li>
+		<li class="file"><a href="http://www.hbs.edu/faculty/Pages/profile.aspx?facId=6625">Erik Stafford</a></li>
+		<li class="file"><a href="http://statweb.stanford.edu/~ckirby/brad/">Bradley Efron</a></li>
+		<li class="file"><a href="http://www.edwardothorp.com/">Edward O. Thorp</a></li>
+		<li class="file"><a href="https://www.math.nyu.edu/faculty/avellane/">Marco Avellaneda</a></li>
+		<li class="file"><a href="http://www.fooledbyrandomness.com/">Nassim Nicholas Taleb</a></li>
+		<li class="file"><a href="http://www.experimentalmath.info/">David H. Bailey & Jonathan M. Borwein</a></li>
+		<li class="file"><a href="http://schwert.ssb.rochester.edu/papers.htm">G. William Schwert</a></li>
+		<li class="file"><a href="http://people.duke.edu/~charvey/">Campbell R. Harvey</a></li>
+		<li class="file"><a href="http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=1935527">Wouter J. Keller</a></li>
+		<li class="file"><a href="http://jasonzweig.com/resources/">Jason Zweig</a></li>
+		<li class="file"><a href="http://schwert.ssb.rochester.edu/papers.htm/">G. William Schwert</a></li>
+		<li class="file"><a href="http://www.efalken.com/index.html/">Eric Falkenstein</a></li>
+		<li class="file"><a href="http://investments.yale.edu/endowment-update/">Yale Endowment Reports</a></li>
+		<li class="file"><a href="http://eranraviv.com/">Eran Raviv</a></li>
+		<li class="file"><a href="http://quixoticfinance.com/">Quixotic Finance</a></li>
+		<li class="file"><a href="http://onlinebooks.library.upenn.edu/">The Online Books Page</a></li>
+		<li class="file"><a href="https://www.azjones.info/">Andrew Zimmerman Jones</a></li>
+		<li class="file"><a href="http://www.feynmanlectures.caltech.edu/">Feynman Lectures</a></li>
+		<li class="file"><a href="https://projecteuler.net/">Project Euler</a></li>
+		<li class="file"><a href="http://savoir-sans-frontieres.com/JPP/telechargeables/free_downloads_transit.htm">Jean-Pierre Petit</a></li>
+		<li class="file"><a href="https://sites.google.com/site/ancieslak/">Anna Cieslak</a></li>
+		</ol>
 	</li>
-	</ul>
-</div>
-<p> </p>
+	</ol>
 
 
              
