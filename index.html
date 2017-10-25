@@ -1,5 +1,6 @@
 
 
+
 <html>
 <title>The Happy bots</title>
 <meta charset="UTF-8">
@@ -27,9 +28,9 @@
     text-align: left;
 }
 
-header {background: #376E95;color:white; height:5vh}
-footer {background: #97ADBB;color:white; height:1.5vh}
-.nav {background:#eee; height:83vh;}
+header {background: #376E95;color:white}
+footer {background: #97ADBB;color:white}
+.nav {background:#eee}
 
 .nav ul {
     list-style-type: none;
@@ -184,11 +185,12 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 </header>
 		
 <nav class="nav">	
+<!--     type="checkbox" checked="checked"  -->
 	<strong>/Self.Root</strong>
 	<ol  class="tree">
-	<li><label><strong>RSS feeds</strong></label><input type="checkbox" checked="checked"/>
+	<li><label><strong>RSS feeds</strong></label><input type="checkbox" />
 		<ol>
-		<!--     checked="checked"  -->
+		
 		<li><label>News</label><input type="checkbox" /><ol id="news"></ol></li>
 		<li><label>Markets</label><input type="checkbox" /><ol id="markets"></ol></li>
 		<li><label>Magazines</label><input type="checkbox" /><ol id="periodics"></ol></li>
