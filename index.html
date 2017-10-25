@@ -6,26 +6,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
+<head>
 <style>
 
+.flex-container {
+    display: -webkit-flex;
+    display: flex;  
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    
+}
 
+.flex-container > * {
+    padding: 15px;
+    -webkit-flex: 1 100%;
+    flex: 1 100%;
+}
+
+.article {
+    text-align: left;
+}
+
+header {background: black;color:white;}
+footer {background: #aaa;color:white;}
+.nav {background:#eee;}
+
+.nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+.nav ul a {
+    text-decoration: none;
+}
+
+@media all and (min-width: 768px) {
+    .nav {-webkit-flex: 1 auto;flex:1 auto;-webkit-order:1;order:1;}
+    .article {-webkit-flex:5 0px;flex:5 0px;-webkit-order:2;order:2;}
+    footer {-webkit-order:3;order:3;}
+}
 
 
 ol.tree{padding-left:30px;}
 li{list-style-type:none;position:relative;margin-left:-15px;}
-li label{padding-left:37px;cursor:pointer;background:url("https://www.thecssninja.com/demo/css_tree/folder-horizontal.png") no-repeat 15px 2px;display:block;}
+li label{padding-left:37px;cursor:pointer;background:url("http://www.thehappybots.com/folder-horizontal.png") no-repeat 15px 2px;display:block;}
 li input{width:1em;height:1em;position:absolute;left:-0.5em;top:0;opacity:0;cursor:pointer;}
-li input + ol{height:1em;margin:-16px 0 0 -44px;background:url("https://www.thecssninja.com/demo/css_tree/toggle-small-expand.png") no-repeat 40px 0;}
+li input + ol{height:1em;margin:-16px 0 0 -44px;background:url("http://www.thehappybots.com/toggle-small-expand.png") no-repeat 40px 0;}
 li input + ol > li{display:none;margin-left:-14px !important;padding-left:1px}
 li.file{margin-left:-1px !important;}
-li.file a{display:inline-block;padding-left:21px;color;text-decoration:none;background:url("https://www.thecssninja.com/demo/css_tree/document.png") no-repeat 0 0;}
-li input:checked + ol{height:auto;margin:-21px 0 0 -44px;padding:25px 0 0 80px;background:url("https://www.thecssninja.com/demo/css_tree/toggle-small.png") no-repeat 40px 5px;}
+li.file a{display:inline-block;padding-left:21px;color;text-decoration:none;background:url("http://www.thehappybots.com/document.png") no-repeat 0 0;}
+li input:checked + ol{height:auto;margin:-21px 0 0 -44px;padding:25px 0 0 80px;background:url("http://www.thehappybots.com/toggle-small.png") no-repeat 40px 5px;}
 li input:checked + ol > li{display:block;margin:0 0 0.063em;}
 li input:checked + ol > li:first-child{margin:0 0 0.125em;}
 
 </style>
-
+</head>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 
@@ -144,14 +178,15 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 <body style="font-family: 'Roboto', sans-serif; font-size:15px">
 
 
-
-<p><b>The Happy Bots</b></p>
-
+<div class="flex-container">
+<header>
+<p><strong>The Happy Bots</strong></p>
+</header>
 		
-		
+<nav class="nav">	
 		
 	<ol  class="tree">
-	<li><label><b>RSS feeds</b></label><input type="checkbox" checked="checked"/>
+	<li><label><strong>RSS feeds</strong></label><input type="checkbox" checked="checked"/>
 		<ol>
 		<!--     checked="checked"  -->
 		<li><label>News</label><input type="checkbox" /><ol id="news"></ol></li>
@@ -162,7 +197,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 		<li><label>Blogs</label><input type="checkbox" /><ol id="blogs"></ol></li>
 		</ol>
 	</li>
-	<li><label><b>Bookmarks</b></label><input type="checkbox" />
+	<li><label><strong>Bookmarks</strong></label><input type="checkbox" />
 		<ol>
 		<li class="file"><a href="https://faculty.fuqua.duke.edu/~dah7/">David A. Hsieh</a></li>
 		<li class="file"><a href="http://www.math.ucla.edu/~tao/">Terence Tao</a></li>
@@ -192,6 +227,14 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 	</li>
 	</ol>
 
+</nav>
+
+<article class="article">
+
+</article>
+
+<footer>www.thehappybots.com</footer>
+</div>
 
              
             
