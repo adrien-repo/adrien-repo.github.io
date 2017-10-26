@@ -1,6 +1,7 @@
 
 
 
+
 <html>
 <title>The Happy bots</title>
 <meta charset="UTF-8">
@@ -26,11 +27,13 @@
 
 .article {
     text-align: left;
+	overflow:scroll;
+	height:87vh
 }
 
-header {background: #376E95;color:white}
-footer {background: #97ADBB;color:white}
-.nav {background:#eee}
+header {background: #376E95;color:white; height:5vh}
+
+.nav {background:#eee; width: 500px; overflow:scroll ; height:87vh}
 
 .nav ul {
     list-style-type: none;
@@ -43,7 +46,7 @@ footer {background: #97ADBB;color:white}
 @media all and (min-width: 768px) {
     .nav {-webkit-flex: 1 auto;flex:1 auto;-webkit-order:1;order:1;}
     .article {-webkit-flex:5 0px;flex:5 0px;-webkit-order:2;order:2;}
-    footer {-webkit-order:3;order:3;}
+    
 }
 
 
@@ -117,7 +120,7 @@ var feedsLibrary = {
 	feed035: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
 	feed037: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
 	feed038: ["http://www.cbsnews.com/latest/rss/main","CBS News","periodics"],
-	feed039: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
+	//feed039: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
 	feed040: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
 	feed041: ["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
 	feed042: ["https://cosmosmagazine.com/feed.rss","Cosmos Magazine","science"],
@@ -150,21 +153,35 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 
 		div.innerHTML = ''
 		firstarticle = 0
+		mysource = ''
+		myicon = ''
 		$.each(feedItems, function( index ) 
 			{
 			var item = feedItems[index];
 			if (firstarticle == 0)
 				{
 				myfirstarticle = '<label ><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="12" width="12"> ' + feedsUrl[1] + '</label><input type="checkbox"  /><ol>'
-				myfirstarticle += '<li class="file"><a href="'+item.link+'">'+ item.title+ '</a></li>'
+				myicon = 'https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link
+				mysource = feedsUrl[1]
+				mytitle = item.title.replace(/['"]+/g, ' ');
+				mylink = item.link.replace(/['"]+/g, ' ');
+				mycontent = strip(item.description).replace(/(\r\n|\n|\r)/gm,"")
+				mycontent = mycontent.replace(/['"]+/g, ' ');
 				
+				myfirstarticle += '<li class="file"><a href="#" onclick="showarticle(\''+mytitle+'\',\''+mylink+'\',\''+mycontent+'\',\''+mysource+'\',\''+myicon+'\')">'+ item.title+ '</a></li>'
 				
 
 				firstarticle =1
 				}
 				else
 				{
-				myfirstarticle += '<li class="file"><a href="'+item.link+'">'+ item.title+ '</a></li>';
+				mytitle = item.title.replace(/['"]+/g, ' ');
+				mylink = item.link.replace(/['"]+/g, ' ');
+				mycontent = strip(item.description).replace(/(\r\n|\n|\r)/gm,"")
+				mycontent = mycontent.replace(/['"]+/g, ' ');
+				
+				myfirstarticle += '<li class="file"><a href="#" onclick="showarticle(\''+mytitle+'\',\''+mylink+'\',\''+mycontent+'\',\''+mysource+'\',\''+myicon+'\')">'+ item.title+ '</a></li>'
+				
 				}
 			});
 		div.innerHTML += myfirstarticle
@@ -173,6 +190,23 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 		tablechild.appendChild(div);
 		});
 	});
+	
+	
+	
+function showarticle(vartitle, varlink, varcontent, varsource, varicon)
+{
+var divtitle = document.getElementById("divtitle");
+divtitle.innerHTML = '<img src="' + varicon + '" alt="" height="12" width="12"> ' + varsource + '<h2>' + vartitle + '</h2>'
+
+var divlink = document.getElementById("divlink");
+divlink.innerHTML = '<a href=' + varlink + ' target="_blank">' + varlink +'</a><br><br>'
+
+var divbody = document.getElementById("divbody");
+divbody.innerHTML = varcontent
+
+}
+
+
 </script>
 
 
@@ -232,10 +266,12 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 </nav>
 
 <article class="article">
-
+<div id="divtitle"></div>
+<div id="divlink"></div>
+<div id="divbody"></div>
 </article>
 
-<footer>www.thehappybots.com</footer>
+
 </div>
 
              
