@@ -2,6 +2,7 @@
 
 
 
+
 <html>
 <title>The Happy bots</title>
 <meta charset="UTF-8">
@@ -173,7 +174,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 				mycontent = strip(item.description).replace(/(\r\n|\n|\r)/gm,"")
 				mycontent = mycontent.replace(/['"]+/g, ' ');
 				
-				myfirstarticle += '<li class="file"><a href="#" onclick="showarticle(\''+mytitle+'\',\''+mylink+'\',\''+mycontent+'\',\''+mysource+'\',\''+myicon+'\')">'+ item.title+ '</a></li>'
+				myfirstarticle += '<li class="file"><a href="#" onmouseover="showarticle(\''+mytitle+'\',\''+mylink+'\',\''+mycontent+'\',\''+mysource+'\',\''+myicon+'\')">'+ item.title+ '</a></li>'
 				
 
 				firstarticle =1
@@ -185,7 +186,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl)
 				mycontent = strip(item.description).replace(/(\r\n|\n|\r)/gm,"")
 				mycontent = mycontent.replace(/['"]+/g, ' ');
 				
-				myfirstarticle += '<li class="file"><a href="#" onclick="showarticle(\''+mytitle+'\',\''+mylink+'\',\''+mycontent+'\',\''+mysource+'\',\''+myicon+'\')">'+ item.title+ '</a></li>'
+				myfirstarticle += '<li class="file"><a href="#" onmouseover="showarticle(\''+mytitle+'\',\''+mylink+'\',\''+mycontent+'\',\''+mysource+'\',\''+myicon+'\')">'+ item.title+ '</a></li>'
 				
 				}
 			});
