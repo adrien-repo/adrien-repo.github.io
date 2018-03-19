@@ -1,304 +1,588 @@
-
-
-
-
-
-
-<html>
-<title>The Happy bots</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-<head>
-<style>
-
-A:link { COLOR: black; TEXT-DECORATION: none; font-weight: normal }
-A:visited { COLOR: black; TEXT-DECORATION: none; font-weight: normal }
-A:active { COLOR: black; TEXT-DECORATION: none }
-A:hover { COLOR: blue; TEXT-DECORATION: none; font-weight: none }
-
-.outer-div
-{
-     padding: 5px;
-	 height: calc(100vh - 30px);
-	 
-	 background-color:lightgrey;
-}
-.inner-div
-{
-     margin: 0 auto;
-     width: 100%; 
-	 background-color:white;
-}
-
-
-.flex-container {
-
-    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-  display: -webkit-flex;     /* NEW - Chrome */
-  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
-  -webkit-box-flex-direction: row;
-  -moz-box-flex-direction: row;
-  -webkit-flex-direction: row;
-  flex-direction: row;
-  height:calc(100vh - 30px);
-  
-}
-
-.flex-container > * {
-    padding: 15px;
-    -webkit-flex: 1 100%;
-    flex: 1 100%;
-}
-
-.article {
-border: 10px solid white;
-    background-color: #F7F7F7;
-    text-align: left;
-	overflow:scroll;
-	
-}
-
-
-
-.nav {  overflow:scroll ; border: 10px solid white; background-color: #F7F7F7;}
-
-.nav ul {
-    list-style-type: none;
-    padding: 0;
-}
-.nav ul a {
-    text-decoration: none;
-}
-
-
-
-ol.tree{padding-left:30px;}
-li{list-style-type:none;position:relative;margin-left:-15px;}
-li label{padding-left:37px;cursor:pointer;background:url("http://www.thehappybots.com/folder-horizontal.png") no-repeat 15px 2px;display:block;}
-li input{width:1em;height:1em;position:absolute;left:-0.5em;top:0;opacity:0;cursor:pointer;}
-li input + ol{height:1em;margin:-16px 0 0 -44px;background:url("http://www.thehappybots.com/toggle-small-expand.png") no-repeat 40px 0;}
-li input + ol > li{display:none;margin-left:-14px !important;padding-left:1px}
-li.file{margin-left:-1px !important;}
-li.file a{display:inline-block;padding-left:21px;color;text-decoration:none;background:url("http://www.thehappybots.com/document.png") no-repeat 0 0;}
-li input:checked + ol{height:auto;margin:-21px 0 0 -44px;padding:25px 0 0 80px;background:url("http://www.thehappybots.com/toggle-small.png") no-repeat 40px 5px;}
-li input:checked + ol > li{display:block;margin:0 0 0.063em;}
-li input:checked + ol > li:first-child{margin:0 0 0.125em;}
-
-</style>
-</head>
-<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-
-
-
-
-
-<script>
-
-
-
-function strip(html)
-	{
-	var tmp = document.createElement("DIV");
-	tmp.innerHTML = html;
-	return tmp.textContent||tmp.innerText;
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>The Happy Bots</title>
+  	<link rel='icon' href='http://www.thehappybots.com/icon.png' type='image/x-icon'/ >
+	<link rel='shortcut icon' href='http://www.thehappybots.com/icon.png' type='image/x-icon'/ >
+	<link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+		a:link {text-decoration: none; color: black; font-weight: bold}
+		a:visited {text-decoration: none;color: black; font-weight: bold}
+		a:hover {text-decoration: underline; font-weight: bold}
+		a:active {text-decoration: underline; font-weight: bold}
+		.centered-and-cropped { object-fit: cover }
+		#view-source {
+		  position: fixed;
+		  display: block;
+		  right: 0;
+		  bottom: 0;
+		  margin-right: 40px;
+		  margin-bottom: 40px;
+		  z-index: 900;
+		}
+		
+	body {
+		margin: 0;
+		font-family: 'Roboto', sans-serif;
+		
+		
 	}
 	
 
-firstheadline = 0
-var feedsLibrary = {
-	feed001: ["http://bnonews.com/news/index.php/news/rss","BNO","news"],
-	feed002: ["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","news"],
-	feed003: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
-	feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
-	feed005: ["http://www.ft.com/rss/home/us","Financial Times","news"],
-	feed006: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
-	feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","news"],
-	feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","blogs"],
-	feed009: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
-	feed010: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","periodics"],
-	feed011: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
-	feed012: ["http://feeds.reuters.com/ReutersPictures","Reuters Pictures","blogs"],
-	feed013: ["http://longform.org/feed.rss","Long Form","periodics"],
-	feed014: ["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
-	feed015: ["http://fusion.net/feed/","Fusion","periodics"],
-	feed016: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
-	feed017: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
-	feed018: ["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
-	feed019: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
-	feed020: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
-	feed021: ["http://feeds.feedburner.com/motherjones/BlogsAndArticles","Mother Jones","blogs"],
-	feed022: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
-	feed023: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
-	feed024: ["https://www.edge.org/feed","Edge Magazine","periodics"],
-	feed025: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
-	feed026: ["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
-	feed027: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
-	feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","periodics"],
-	feed030: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
-	feed031: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
-	feed032: ["http://www.salon.com/feed/","Salon","periodics"],
-	feed033: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
-	feed034: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
-	feed035: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
-	feed037: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
-	feed038: ["http://www.cbsnews.com/latest/rss/main","CBS News","periodics"],
-	//feed039: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
-	feed040: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
-	feed041: ["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
-	feed042: ["https://cosmosmagazine.com/feed.rss","Cosmos Magazine","science"],
-	feed043: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
-	feed044: ["http://stratechery.com/feed/","Stratechery","periodics"],
-	feed045: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
-	feed046: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
-	feed047: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
-	feed048: ["http://evonomics.com/feed/","Evonomics","markets"],
-	feed049: ["https://aeon.co/feed.rss","Aeon","periodics"],
-	//feed050: ["https://newrepublic.com/rss.xml","NewRepublic","periodics"],
-	feed052: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
-	feed053: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
-	feed054: ["http://scitation.aip.org/rss/content/aip/magazine/physicstoday/latestonlinestories;jsessionid=riTi5BaycDFvMSC0goCjE-t1.x-aip-live-02?fmt=rss","Physics Today","science"],
-	feed055: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
-	feed056: ["https://blog.variantperception.com/feed/","Variant Perception","markets"],
-	};
-
-$.each(feedsLibrary, function(siteId, feedsUrl) 
-	{
-	var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
-	var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 20");
-	var format = "&format=json";
-	var rssFeedPath = baseUrl.concat(queryString, format);
-	$.getJSON(rssFeedPath, function(response) 
-		{
-		var feedItems = response.query.results.item;
-		var div = document.createElement("li");
-		//div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
-
-		div.innerHTML = ''
-		firstarticle = 0
-		mysource = ''
-		myicon = ''
-		$.each(feedItems, function( index ) 
-			{
-			var item = feedItems[index];
-			if (firstarticle == 0)
-				{
-				myfirstarticle = '<label ><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="12" width="12"> ' + feedsUrl[1] + '</label><input type="checkbox"  /><ol>'
-				myicon = 'https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link
-				mysource = feedsUrl[1]
-				mytitle = item.title.replace(/['"]+/g, ' ');
-				mylink = item.link.replace(/['"]+/g, ' ');
-				mycontent = strip(item.description).replace(/(\r\n|\n|\r)/gm,"")
-				mycontent = mycontent.replace(/['"]+/g, ' ');
-				
-				myfirstarticle += '<li class="file"><a href="#" onmouseover="showarticle(\''+mytitle+'\',\''+mylink+'\',\''+mycontent+'\',\''+mysource+'\',\''+myicon+'\')">'+ item.title+ '</a></li>'
-				
-
-				firstarticle =1
-				}
-				else
-				{
-				mytitle = item.title.replace(/['"]+/g, ' ');
-				mylink = item.link.replace(/['"]+/g, ' ');
-				mycontent = strip(item.description).replace(/(\r\n|\n|\r)/gm,"")
-				mycontent = mycontent.replace(/['"]+/g, ' ');
-				
-				myfirstarticle += '<li class="file"><a href="#" onmouseover="showarticle(\''+mytitle+'\',\''+mylink+'\',\''+mycontent+'\',\''+mysource+'\',\''+myicon+'\')">'+ item.title+ '</a></li>'
-				
-				}
-			});
-		div.innerHTML += myfirstarticle
-		div.innerHTML += '</ol>'
-		var tablechild = document.getElementById(feedsUrl[2]);
-		tablechild.appendChild(div);
-		});
-	});
 	
 	
-	
-function showarticle(vartitle, varlink, varcontent, varsource, varicon)
-{
-var divtitle = document.getElementById("divtitle");
-divtitle.innerHTML = '<img src="' + varicon + '" alt="" height="12" width="12"> ' + varsource + '<h2>' + vartitle + '</h2>'
-
-var divlink = document.getElementById("divlink");
-divlink.innerHTML = '<a href=' + varlink + ' target="_blank">' + varlink +'</a><br><br>'
-
-var divbody = document.getElementById("divbody");
-divbody.innerHTML = varcontent
-
+	* {
+  box-sizing: border-box;
 }
+
+img {
+  vertical-align: middle;
+}
+
+/* Position the image container (needed to position the left and right arrows) */
+.container {
+  position: relative;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 150px;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: gray;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "prev button" to the left */
+.prev {
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Container for image text */
+.caption-container {
+  text-align: center;
+  background-color: #222;
+  padding: 2px 16px;
+  color: white;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Six columns side by side */
+.column {
+  float: left;
+  width: 16.66%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+	</style>
+	
+	<script>
+		String.prototype.capitalize = function() {
+		return this.charAt(0).toUpperCase() + this.slice(1);
+		}	
+	</script>
+	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+   
+   
+	<script>
+var paused = 0;
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+paused = 1
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+paused = 1
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  var captionText = document.getElementById("caption");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
+}
+
+
 
 
 </script>
 
+   <script>
+	
+	
+	
+		function strip(html)
+	{
+	   var tmp = document.createElement("DIV");
+	   tmp.innerHTML = html;
+	   return tmp.textContent||tmp.innerText;
+	}
+	
+	
+	var photoslist = []
+		photocount = 0
+		photocountall = 0
+			firstheadline = 0
+	   firstrose = 0
+			
+	var feedsLibrary = {
 
-<body style="font-family: 'Roboto', sans-serif; font-size:15px">
-
-
-<div class="outer-div"><div class="inner-div">
-
-<div class="flex-container">
-
+bot001:  ["https://twitrss.me/twitter_user_to_rss/?user=RosesAreRedBot","roses","pod"],
 		
-<nav class="nav">	
-<!--     type="checkbox" checked="checked"  -->
-	<strong>/Self.Root</strong>
-	<ol  class="tree">
-	<li><label><strong>RSS feeds</strong></label><input type="checkbox" />
-		<ol>
+feed002: ["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","news"],
+feed003: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
+feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
+feed005: ["http://www.ft.com/rss/home/us","Financial Times","news"],
+feed006: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
+feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","periodics"],
+feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","blogs"],
+feed009: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
+feed010: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","periodics"],
+feed011: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
+feed012: ["http://feeds.reuters.com/ReutersPictures","Reuters Pictures","blogs"],
+feed013: ["http://longform.org/feed.rss","Long Form","periodics"],
+feed014: ["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
+feed015: ["http://fusion.net/feed/","Fusion","periodics"],
+feed016: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
+feed017: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
+feed018: ["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
+feed019: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
+feed020: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
+feed021: ["http://feeds.feedburner.com/motherjones/BlogsAndArticles","Mother Jones","blogs"],
+feed022: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
+feed023: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
+feed024: ["https://www.edge.org/feed","Edge Magazine","periodics"],
+feed025: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
+feed026: ["http://www.bloombergview.com/rss/contributors/matt-levine.rss","Bloomberg - Matt Levine","markets"],
+feed027: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
+feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
+
+feed030: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
+feed031: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
+feed032: ["http://www.salon.com/feed/","Salon","periodics"],
+feed033: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
+feed034: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
+feed035: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
+feed036: ["https://sniperinmahwah.wordpress.com/feed/","Sniper in Mahwah","markets"],
+feed037: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
+feed038: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
+feed039: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
+feed040: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
+feed041: ["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
+//feed042: ["http://www.atlasobscura.com/feeds/latest","Atlas Obscura","periodics"],
+feed043: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
+feed044: ["http://stratechery.com/feed/","Stratechery","periodics"],
+feed045: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
+feed046: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
+feed047: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
+feed048: ["http://evonomics.com/feed/","Evonomics","markets"],
+feed049: ["https://aeon.co/feed.rss","Aeon","periodics"],
+//feed050: ["https://newrepublic.com/rss.xml","NewRepublic","periodics"],
+
+feed052: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
+feed053: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
+feed054: ["http://scitation.aip.org/rss/content/aip/magazine/physicstoday/latestonlinestories;jsessionid=riTi5BaycDFvMSC0goCjE-t1.x-aip-live-02?fmt=rss","Physics Today","science"],
+feed055: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
+feed056: ["https://blog.variantperception.com/feed/","Variant Perception","markets"],
+
+
+
+pod001:  ["http://widget.websta.me/rss/n/reuters","","pod"],
+pod002:  ["http://widget.websta.me/rss/n/afpphoto","","pod"],
+
+pod003:  ["http://widget.websta.me/rss/n/wsj","","pod"],
+pod004:  ["http://widget.websta.me/rss/n/lemondefr","","pod"],
+pod005:  ["http://widget.websta.me/rss/n/nytimes","","pod"],
+pod006:  ["http://widget.websta.me/rss/n/financialtimes","","pod"],
+
+
+
+
+
+	};
+
+
+
+	
+$.each(feedsLibrary, function(siteId, feedsUrl) {
+  var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
+  var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 5");
+  var format = "&format=json";
+
+  var rssFeedPath = baseUrl.concat(queryString, format);
+
+  $.getJSON(rssFeedPath, function(response) {
+    var feedItems = response.query.results.item;
+	
+	if (feedsUrl[2] == 'pod')
+	{
+	
+	
+
+	
+	    $.each(feedItems, function( index ) {
+      var item = feedItems[index];
 		
-		<li><label>News</label><input type="checkbox" /><ol id="news"></ol></li>
-		<li><label>Markets</label><input type="checkbox" /><ol id="markets"></ol></li>
-		<li><label>Magazines</label><input type="checkbox" /><ol id="periodics"></ol></li>
-		<li><label>Books</label><input type="checkbox" /><ol id="bookreviews"></ol></li>
-		<li><label>Science</label><input type="checkbox" /><ol id="science"></ol></li>
-		<li><label>Blogs</label><input type="checkbox" /><ol id="blogs"></ol></li>
-		</ol>
-	</li>
-	<li><label><strong>Bookmarks</strong></label><input type="checkbox" />
-		<ol>
-		<li class="file"><a href="https://faculty.fuqua.duke.edu/~dah7/">David A. Hsieh</a></li>
-		<li class="file"><a href="http://www.math.ucla.edu/~tao/">Terence Tao</a></li>
-		<li class="file"><a href="https://www.dpmms.cam.ac.uk/~wtg10/">Timothy Gowers</a></li>
-		<li class="file"><a href="http://www.hbs.edu/faculty/Pages/profile.aspx?facId=6625">Erik Stafford</a></li>
-		<li class="file"><a href="http://statweb.stanford.edu/~ckirby/brad/">Bradley Efron</a></li>
-		<li class="file"><a href="http://www.edwardothorp.com/">Edward O. Thorp</a></li>
-		<li class="file"><a href="https://www.math.nyu.edu/faculty/avellane/">Marco Avellaneda</a></li>
-		<li class="file"><a href="http://www.fooledbyrandomness.com/">Nassim Nicholas Taleb</a></li>
-		<li class="file"><a href="http://www.experimentalmath.info/">David H. Bailey & Jonathan M. Borwein</a></li>
-		<li class="file"><a href="http://schwert.ssb.rochester.edu/papers.htm">G. William Schwert</a></li>
-		<li class="file"><a href="http://people.duke.edu/~charvey/">Campbell R. Harvey</a></li>
-		<li class="file"><a href="http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=1935527">Wouter J. Keller</a></li>
-		<li class="file"><a href="http://jasonzweig.com/resources/">Jason Zweig</a></li>
-		<li class="file"><a href="http://schwert.ssb.rochester.edu/papers.htm/">G. William Schwert</a></li>
-		<li class="file"><a href="http://www.efalken.com/index.html/">Eric Falkenstein</a></li>
-		<li class="file"><a href="http://investments.yale.edu/endowment-update/">Yale Endowment Reports</a></li>
-		<li class="file"><a href="http://eranraviv.com/">Eran Raviv</a></li>
-		<li class="file"><a href="http://quixoticfinance.com/">Quixotic Finance</a></li>
-		<li class="file"><a href="http://onlinebooks.library.upenn.edu/">The Online Books Page</a></li>
-		<li class="file"><a href="https://www.azjones.info/">Andrew Zimmerman Jones</a></li>
-		<li class="file"><a href="http://www.feynmanlectures.caltech.edu/">Feynman Lectures</a></li>
-		<li class="file"><a href="https://projecteuler.net/">Project Euler</a></li>
-		<li class="file"><a href="http://savoir-sans-frontieres.com/JPP/telechargeables/free_downloads_transit.htm">Jean-Pierre Petit</a></li>
-		<li class="file"><a href="https://sites.google.com/site/ancieslak/">Anna Cieslak</a></li>
-		</ol>
-	</li>
-	</ol>
+      
+			if (feedsUrl[1] == 'roses')
+	  {
+	  var myrose = document.getElementById("homerose")
+	  
+	  if (firstrose == 0)
+	  {
+		myrosetxt = item.title
+		myroselink = item.link
 
-</nav>
+		myrosetxt = myrosetxt.substr(0, myrosetxt.indexOf('http'))
 
-<article class="article">
-<div id="divtitle"></div>
-<div id="divlink"></div>
-<div id="divbody"></div>
-</article>
+		myrosetxt = myrosetxt.replace(/(\r\n|\n|\r)/gm,",<br> ")
+		
+		myrosetxt = myrosetxt.replace('violets', 'the world')
+		myrosetxt = myrosetxt.replace('roses are red,<br>', 'bots are happy,')
+		  
+		  myrose.innerHTML += '<div><b>'+ '&ldquo; ' + myrosetxt.capitalize()  + '&rdquo;' + '</b></div>'
+		  
+		  
+		  
+	  firstrose = 1
+	  }
+	  }	  
+	  
+	  else {
+					
+					
+					
+						try {
+						var strtmp = item.thumbnail.url 
+						
+						str = '<img src="' + strtmp + '" width="300"></img>'
+						
+						
+						
+						var strtxt = item.description
+						
+						strtxt = strtxt.replace(/#(\S*)/g,'');
+						strtxt = strtxt.replace(/@(\S*)/g,'');
+						strtxt = strtxt.replace(/<\/?[^>]+(>|$)/g, "");
+						strtxt = strtxt.replace(">","")
+						strtxt = strtxt.split("href")[0]
+						strtxt = strtxt.split("http")[0]
+						
+						
+					
+						//document.getElementById("photooftheday").innerHTML+=  '<div class="collumn"><center>'+str+'</center><br><div style="font-size:small">'+ strtxt + '<br><br></div></div>'
 
+				
+						//strforhome = '<img  class="centered-and-cropped" width="100" height="100" style="border-radius:5%" src="' + strtmp + '" title="' + strtxt.replace(">","") + '"></img>'
+						strforhome = '<img  class="centered-and-cropped" height="350px"  src="' + strtmp + '" title="' + strtxt + '"></img>'
+						
+						if ( photocountall < 200)
+						{
+						//document.getElementById("pictureforhome").innerHTML+=  '<div class="collumn"><center>'+strforhome+'</center><br></div>'
+						document.getElementById("pictureforhome").innerHTML+= '<div class="mySlides"><div style = "font-family:  \'IBM Plex Mono\', monospace; font-size: 0.75em; max-width: 600px; text-align: justify; text-justify: inter-word;">' + strtxt + '</div><br><br>' + strforhome + '</div>'
+						showSlides(2);
+						}
+						else { photocount = 0}
+						
+					
+						photocount = photocount+1
+						photocountall = photocountall+1
+						
+						}
+						catch(err) {
+						
+						
+						}
+						
+					
+	  }
+	  
+		});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	}
+	
+	else
+	
+	{
+	
+	
+	var div = document.createElement("div");
+	div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
+	div.innerHTML = '<h3><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><br>';
+	firstarticle = 0
+    $.each(feedItems, function( index ) {
+      var item = feedItems[index];
+	
+	
+	
+	
+	
+      div.innerHTML += '<div style = "text-align: justify; text-justify: inter-word;"><b><a href="'+item.link+'" target="_blank">' + item.title +'</a></b><br>' + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + '<br></div>';
+	  if (firstarticle == 0){
+
+	  
+	  if (feedsUrl[2] == 'news')
+	  {
+	  var myheadline = document.getElementById("headlinesforhome")
+	  var otherhead = document.getElementById("otherheadlines")
+	  
+	  if (firstheadline == 0)
+	  {
+	  myheadline.innerHTML += '<div ><h1><a href="'+item.link+'" target="_blank">'+ item.title.replace(", ",",<br>").replace(":",":<br>").toUpperCase() + '</a></h1><h2><div style = "font-family: \'roboto\'">' + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + '</div></h2></div>'
+	  firstheadline = 1
+	  }
+	  else
+	  {
+	  otherhead.innerHTML += '<div><img src="https://www.google.com/s2/favicons?domain_url=' + item.link + '" alt="" height="14" width="14"> <b><a href="'+item.link+'" target="_blank">'+ item.title + '</a></b> ' + strip(item.description).substring(0,1000).replace(/(\r\n|\n|\r)/gm,"")+ '<br><br></div>'
+	  }
+	  
+	  }
+	
+	
+		  
+	  
+	  
+	  
+	  firstarticle =1
+	  }
+	  
+    });
+	var tablechild = document.getElementById(feedsUrl[2] + '-child');
+	tablechild.appendChild(div);
+	
+	
+	}
+	
+	
+  });
+});
+
+	
+	</script>
+	
+	
+	
+	
+	
+	
+
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
+	
+
+    
+<script>
+var paused = 0
+window.setInterval(function(){
+  /// call your function here
+  if (paused == 0) {showSlides(slideIndex += 1);}
+}, 5000);
+</script>
+	 
+	
+	
+	
+  </head>
+  
+<body onload="showSlides(0)">
+
+<div id="id-home" style="display: in-line; background-color: #f2f2f2">
+<center>
+<table style="max-width: 1000px;  background-color: white; border-left:1px solid black; border-right:1px solid black;  "><tr><td>
+	<br>
+
+	<center>
+
+	<div id="mymenu"><a href="#id-newspapers">Newspapers</a> | <a href="#id-periodics">Magazines</a> | <a href="#id-science">Science</a> | <a href="#id-markets">Markets</a> | <a href="#id-bloks">Blogs</a> | <a href="#id-bookreviews">Books</a></div>
+	<br>
+	<div id="homerose" style="font-family: 'Gloria Hallelujah', cursive;"></div>
+
+	<table ><tr><td>
+	<center>
+	<div id="headlinesforhome" style = "font-family: 'Bowlby One SC', cursive; max-width: 800px; border-bottom:1px solid black"></div><br>
+	
+	<br>
+	<table style = "max-width: 800px"><tr><td>
+	<center>
+		
+	<div  class="container"><a class="prev" onclick="plusSlides(-1)"><</a><a class="next" onclick="plusSlides(1)">></a><div id="pictureforhome"></div></div><br>
+	
+	</center>
+		<div style="border-bottom:1px solid black">
+	</div><br><br>
+	<div id="otherheadlines" style = "max-width: 800px; text-align: justify; text-justify: inter-word;"></div>
+	</tr></td></table>
+	
+	<table><tr><td>
+	
+	<center>
+
+	
+	
+	<div style="border-bottom:1px solid black">
+	</div>
+
+	<br>
+	<br><br><br>
+	
+	<div id="id-newspapers" style = "column-width: 319px; border-bottom:1px solid black">
+		<center>
+		<h1><a href="#mymenu">Newspapers</a></h1>
+		<table><tr><td>
+			<div id="news-child"></div>
+		</tr></td></table>
+        </center>
+	</div>
+	<br><br><br>
+   
+	<div id="id-periodics" style = "column-width: 319px; border-bottom:1px solid black">
+		<center>
+		<h1><a href="#mymenu">Magazines</a></h1>
+		<table><tr><td>
+			<div id="periodics-child"></div>
+		</tr></td></table>
+        </center>
+	</div>   
+	<br><br><br>
+   
+	<div id="id-science" style = "column-width: 319px; border-bottom:1px solid black">
+		<center>
+		<h1><a href="#mymenu">Science</a></h1>
+		<table><tr><td>
+			<div id="science-child"></div>
+		</tr></td></table>
+        </center>
+	</div>
+	<br><br><br>
+
+
+   
+	<div id="id-markets" style = "column-width: 319px; border-bottom:1px solid black">
+		<center>
+		<h1><a href="#mymenu">Markets</a></h1>
+		<table><tr><td>
+			<div id="markets-child"></div>
+		</tr></td></table>
+		</center>
+   </div>   
+   <br><br><br>
+   
+	<div id="id-blogs" style = "column-width: 319px; border-bottom:1px solid black">
+		<center>
+		<h1><a href="#mymenu">Blogs</a></h1>
+		<table><tr><td>
+			<div id="blogs-child"></div>
+		</tr></td></table>
+		</center>
+	</div>
+	<br><br><br>
+		
+	<div id="id-bookreviews" style = "column-width: 319px; border-bottom:1px solid black">
+		<center>
+		<h1><a href="#mymenu">Books</a></h1>
+		<table ><tr><td>
+			<div id="bookreviews-child"></div>
+		</tr></td></table>
+        </center>
+	</div>   
+	<br><br><br>
+	
+</center>
 
 </div>
-
-      </div></div>       
-            
+</tr></td></table>
+</tr></td></table>
+</center>
 </body>
+
+</html>
