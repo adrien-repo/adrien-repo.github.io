@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,6 +11,11 @@
 	<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <style>
+	
+
+	
+	
+	
 		a:link {text-decoration: none; color: black; font-weight: bold}
 		a:visited {text-decoration: none;color: black; font-weight: bold}
 		a:hover {text-decoration: underline; font-weight: bold}
@@ -180,6 +186,47 @@ function showSlides(n) {
 
 </script>
 
+
+
+  <script type="text/javascript">
+  $.getJSON('http://api.wunderground.com/api/c6dc8e785d943109/conditions/q/ch/geneva.json', function(json) {
+     
+          $('div#city1 strong').text(json.current_observation.display_location.full)
+          $('div#icon1').html('<img src=' + json.current_observation.icon_url + '>')
+          $('div#weather1').text(json.current_observation.temp_c + "°C " + json.current_observation.weather);
+          
+        }
+      );
+  $.getJSON('http://api.wunderground.com/api/c6dc8e785d943109/conditions/q/fr/paris.json', function(json) {
+     
+          $('div#city2 strong').text(json.current_observation.display_location.full)
+          $('div#icon2').html('<img src=' + json.current_observation.icon_url + '>')
+          $('div#weather2').text(json.current_observation.temp_c + "°C " + json.current_observation.weather);
+          
+        }
+      );
+
+	    $.getJSON('http://api.wunderground.com/api/c6dc8e785d943109/conditions/q/ny/newyork.json', function(json) {
+     
+          $('div#city3 strong').text(json.current_observation.display_location.full)
+          $('div#icon3').html('<img src=' + json.current_observation.icon_url + '>')
+          $('div#weather3').text(json.current_observation.temp_c + "°C " + json.current_observation.weather);
+          
+        }
+      );
+	  
+	  	    $.getJSON('http://api.wunderground.com/api/c6dc8e785d943109/conditions/q/hi/honolulu.json', function(json) {
+     
+          $('div#city4 strong').text(json.current_observation.display_location.full)
+          $('div#icon4').html('<img src=' + json.current_observation.icon_url + '>')
+          $('div#weather4').text(json.current_observation.temp_c + "°C " + json.current_observation.weather);
+          
+        }
+      );
+    
+  </script>
+
+  
    <script>
 	
 	
@@ -487,8 +534,27 @@ window.setInterval(function(){
 	<br>
 	<div id="homerose" style="font-family: 'Gloria Hallelujah', cursive;"></div>
 
-	<table ><tr><td>
-	<center>
+	<div id="weather" >
+	<table style = "max-width: 950px"><tr><td style="width:25%;">
+    <div id="icon1"></div>
+    <div id="city1"><strong></strong></div>
+    <div id="weather1"></div>
+    </td><td style="width:25%;">
+	    <div id="icon2"></div>
+    <div id="city2"><strong></strong></div>
+    <div id="weather2"></div>
+	</td><td style="width:25%;">
+	    <div id="icon3"></div>
+    <div id="city3"><strong></strong></div>
+    <div id="weather3"></div>
+    </td><td style="width:25%;">
+		    <div id="icon4"></div>
+    <div id="city4"><strong></strong></div>
+    <div id="weather4"></div>
+	</td></tr></table>
+  </div>
+  
+	
 	<div id="headlinesforhome" style = "font-family: 'Bowlby One SC', cursive; max-width: 800px; border-bottom:1px solid black"></div><br>
 	
 	<br>
@@ -503,7 +569,7 @@ window.setInterval(function(){
 	<div id="otherheadlines" style = "max-width: 800px; text-align: justify; text-justify: inter-word;"></div>
 	</tr></td></table>
 	
-	<table><tr><td>
+	
 	
 	<center>
 
@@ -515,7 +581,10 @@ window.setInterval(function(){
 	<br>
 	<br><br><br>
 	
-	<div id="id-newspapers" style = "column-width: 319px; border-bottom:1px solid black">
+	
+	
+	
+	<div id="id-newspapers" style = " -webkit-columns: 2 400px; -moz-columns: 2 400px; columns: 2 400px; border-bottom:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Newspapers</a></h1>
 		<table><tr><td>
@@ -525,7 +594,7 @@ window.setInterval(function(){
 	</div>
 	<br><br><br>
    
-	<div id="id-periodics" style = "column-width: 319px; border-bottom:1px solid black">
+	<div id="id-periodics" style = "column-width: 400px; border-bottom:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Magazines</a></h1>
 		<table><tr><td>
@@ -535,7 +604,7 @@ window.setInterval(function(){
 	</div>   
 	<br><br><br>
    
-	<div id="id-science" style = "column-width: 319px; border-bottom:1px solid black">
+	<div id="id-science" style = "column-width: 400px; border-bottom:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Science</a></h1>
 		<table><tr><td>
@@ -547,7 +616,7 @@ window.setInterval(function(){
 
 
    
-	<div id="id-markets" style = "column-width: 319px; border-bottom:1px solid black">
+	<div id="id-markets" style = "column-width: 400px; border-bottom:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Markets</a></h1>
 		<table><tr><td>
@@ -557,7 +626,7 @@ window.setInterval(function(){
    </div>   
    <br><br><br>
    
-	<div id="id-blogs" style = "column-width: 319px; border-bottom:1px solid black">
+	<div id="id-blogs" style = "column-width: 400px; border-bottom:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Blogs</a></h1>
 		<table><tr><td>
@@ -567,7 +636,7 @@ window.setInterval(function(){
 	</div>
 	<br><br><br>
 		
-	<div id="id-bookreviews" style = "column-width: 319px; border-bottom:1px solid black">
+	<div id="id-bookreviews" style = "column-width: 400px; border-bottom:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Books</a></h1>
 		<table ><tr><td>
@@ -579,10 +648,12 @@ window.setInterval(function(){
 	
 </center>
 
-</div>
 </tr></td></table>
-</tr></td></table>
+
+
+
 </center>
+</div>
 </body>
 
 </html>
