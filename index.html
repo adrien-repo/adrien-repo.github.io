@@ -1,4 +1,5 @@
 
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -443,6 +444,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	
 	var div = document.createElement("div");
 	div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
+	
 	div.innerHTML = '<h3><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><br>';
 	firstarticle = 0
     $.each(feedItems, function( index ) {
@@ -522,10 +524,10 @@ window.setInterval(function(){
   </head>
   
 <body onload="showSlides(0)">
-
-<div id="id-home" style="display: in-line; background-color: #f2f2f2">
 <center>
-<table style="max-width: 1000px;  background-color: white; border-left:1px solid black; border-right:1px solid black;  "><tr><td>
+<div id="id-home" style=" max-width: 850px; margin-left: 40px; margin-right: 40px">
+
+
 	<br>
 
 	<center>
@@ -535,7 +537,7 @@ window.setInterval(function(){
 	<div id="homerose" style="font-family: 'Gloria Hallelujah', cursive;"></div>
 
 	<div id="weather" >
-	<table style = "max-width: 950px"><tr><td style="width:25%;">
+	<table style = ""><tr><td style="width:25%;">
     <div id="icon1"></div>
     <div id="city1"><strong></strong></div>
     <div id="weather1"></div>
@@ -555,10 +557,10 @@ window.setInterval(function(){
   </div>
   
 	
-	<div id="headlinesforhome" style = "font-family: 'Bowlby One SC', cursive; max-width: 800px; border-bottom:1px solid black"></div><br>
+	<div id="headlinesforhome" style = "font-family: 'Bowlby One SC', cursive;  border-bottom:1px solid black"></div><br>
 	
 	<br>
-	<table style = "max-width: 800px"><tr><td>
+	<table ><tr><td>
 	<center>
 		
 	<div  class="container"><a class="prev" onclick="plusSlides(-1)"><</a><a class="next" onclick="plusSlides(1)">></a><div id="pictureforhome"></div></div><br>
@@ -566,7 +568,7 @@ window.setInterval(function(){
 	</center>
 		<div style="border-bottom:1px solid black">
 	</div><br><br>
-	<div id="otherheadlines" style = "max-width: 800px; text-align: justify; text-justify: inter-word;"></div>
+	<div id="otherheadlines" style = " text-align: justify; text-justify: inter-word;"></div>
 	</tr></td></table>
 	
 	
@@ -584,7 +586,7 @@ window.setInterval(function(){
 	
 	
 	
-	<div id="id-newspapers" style = " -webkit-columns: 2 400px; -moz-columns: 2 400px; columns: 2 400px; border-bottom:1px solid black">
+	<div id="id-newspapers" style = "column-width: 400px; column-gap: 40px; border-bottom:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Newspapers</a></h1>
 		<table><tr><td>
@@ -594,7 +596,7 @@ window.setInterval(function(){
 	</div>
 	<br><br><br>
    
-	<div id="id-periodics" style = "column-width: 400px; border-bottom:1px solid black">
+	<div id="id-periodics" style = "column-width: 400px; column-gap: 40px;border-bottom:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Magazines</a></h1>
 		<table><tr><td>
@@ -604,7 +606,7 @@ window.setInterval(function(){
 	</div>   
 	<br><br><br>
    
-	<div id="id-science" style = "column-width: 400px; border-bottom:1px solid black">
+	<div id="id-science" style = "column-width: 400px; column-gap: 40px;border-bottom:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Science</a></h1>
 		<table><tr><td>
@@ -616,7 +618,7 @@ window.setInterval(function(){
 
 
    
-	<div id="id-markets" style = "column-width: 400px; border-bottom:1px solid black">
+	<div id="id-markets" style = "column-width: 400px; column-gap: 40px;border-bottom:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Markets</a></h1>
 		<table><tr><td>
@@ -626,7 +628,7 @@ window.setInterval(function(){
    </div>   
    <br><br><br>
    
-	<div id="id-blogs" style = "column-width: 400px; border-bottom:1px solid black">
+	<div id="id-blogs" style = "column-width: 400px; column-gap: 40px;border-bottom:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Blogs</a></h1>
 		<table><tr><td>
@@ -648,12 +650,13 @@ window.setInterval(function(){
 	
 </center>
 
-</tr></td></table>
+
 
 
 
 </center>
 </div>
+</center>
 </body>
 
 </html>
