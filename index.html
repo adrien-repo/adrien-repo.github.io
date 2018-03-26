@@ -1,5 +1,6 @@
 
 
+
 <!doctype html>
 <html lang="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,84 +62,10 @@ img {
   display: none;
 }
 
-/* Add a pointer when hovering over the thumbnail images */
-.cursor {
-  cursor: pointer;
-}
 
-/* Next & previous buttons */
-.prev,
-.next {
-  cursor: pointer;
-  position: absolute;
-  top: 150px;
-  width: auto;
-  padding: 16px;
-  margin-top: -50px;
-  color: gray;
-  font-weight: bold;
-  font-size: 20px;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-  -webkit-user-select: none;
-}
 
-/* Position the "prev button" to the left */
-.prev {
-  left: 0;
-  border-radius: 3px 0 0 3px;
-}
 
-/* Position the "next button" to the right */
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
 
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover,
-.next:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-/* Number text (1/3 etc) */
-.numbertext {
-  color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
-  position: absolute;
-  top: 0;
-}
-
-/* Container for image text */
-.caption-container {
-  text-align: center;
-  background-color: #222;
-  padding: 2px 16px;
-  color: white;
-}
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Six columns side by side */
-.column {
-  float: left;
-  width: 16.66%;
-}
-
-/* Add a transparency effect for thumnbail images */
-.demo {
-  opacity: 0.6;
-}
-
-.active,
-.demo:hover {
-  opacity: 1;
-}
 
 	</style>
 	
@@ -396,7 +323,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 
 				
 						//strforhome = '<img  class="centered-and-cropped" width="100" height="100" style="border-radius:5%" src="' + strtmp + '" title="' + strtxt.replace(">","") + '"></img>'
-						strforhome = '<img  class="centered-and-cropped" height="350px"  src="' + strtmp + '" title="' + strtxt + '"></img>'
+						strforhome = '<img  class="centered-and-cropped" width="80%"  max-width="600px" src="' + strtmp + '" title="' + strtxt + '"></img>'
 						
 						if ( photocountall < 200)
 						{
@@ -563,8 +490,10 @@ window.setInterval(function(){
 	<br>
 	<table ><tr><td>
 	<center>
-		
-	<div  class="container"><a class="prev" onclick="plusSlides(-1)"><</a><a class="next" onclick="plusSlides(1)">></a><div id="pictureforhome"></div></div><br>
+	
+	<div  class="container"><div id="pictureforhome"></div></div><br>
+	<a  onclick="plusSlides(-1)">prev</a> | <a  onclick="plusSlides(1)">next</a>
+	<br><br>
 	
 	</center>
 		</tr></td></table>
