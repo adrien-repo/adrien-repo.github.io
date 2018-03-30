@@ -176,7 +176,7 @@ function showSlides(n) {
 			
 	var feedsLibrary = {
 
-bot001:  ["https://twitrss.me/twitter_user_to_rss/?user=RosesAreRedBot","roses","pod"],
+bot001:  ["https://twitrss.me/twitter_user_to_rss/?user=TwoHeadlines","roses","pod"],
 		
 feed002: ["http://www.bloombergview.com/rss/contributors/the-editors.rss","Bloomberg - The Editors","news"],
 feed003: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
@@ -286,8 +286,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 
 		myrosetxt = myrosetxt.replace(/(\r\n|\n|\r)/gm,",<br> ")
 		
-		myrosetxt = myrosetxt.replace('violets', 'the world')
-		myrosetxt = myrosetxt.replace('roses are red,<br>', 'bots are happy,')
+		 
 		  
 		  myrose.innerHTML += '<div><b>'+ '&ldquo; ' + myrosetxt.capitalize()  + '&rdquo;' + '</b></div>'
 		  
