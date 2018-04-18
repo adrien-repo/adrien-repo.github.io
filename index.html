@@ -1,6 +1,7 @@
 
 
 
+
 <!doctype html>
 <html lang="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -236,13 +237,13 @@ feed056: ["https://blog.variantperception.com/feed/","Variant Perception","marke
 
 
 
-pod001:  ["http://widget.websta.me/rss/n/reuters","","pod"],
-pod002:  ["http://widget.websta.me/rss/n/afpphoto","","pod"],
+pod001:  ["https://queryfeed.net/instagram?q=reuters","","pod"],
+pod002:  ["https://queryfeed.net/instagram?q=afpphoto","","pod"],
 
-pod003:  ["http://widget.websta.me/rss/n/wsj","","pod"],
-pod004:  ["http://widget.websta.me/rss/n/lemondefr","","pod"],
-pod005:  ["http://widget.websta.me/rss/n/nytimes","","pod"],
-pod006:  ["http://widget.websta.me/rss/n/financialtimes","","pod"],
+pod003:  ["https://queryfeed.net/instagram?q=nasa","","pod"],
+pod004:  ["https://queryfeed.net/instagram?q=lemondefr","","pod"],
+pod005:  ["https://queryfeed.net/instagram?q=nytimes","","pod"],
+pod006:  ["https://queryfeed.net/instagram?q=500px","","pod"],
 
 
 
@@ -301,7 +302,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 					
 					
 						try {
-						var strtmp = item.thumbnail.url 
+						var strtmp = item.enclosure.url 
 						
 						str = '<img src="' + strtmp + '" width="300"></img>'
 						
@@ -322,12 +323,12 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 
 				
 						//strforhome = '<img  class="centered-and-cropped" width="100" height="100" style="border-radius:5%" src="' + strtmp + '" title="' + strtxt.replace(">","") + '"></img>'
-						strforhome = '<img  class="centered-and-cropped" width="80%"  max-width="600px" src="' + strtmp + '" title="' + strtxt + '"></img>'
+						strforhome = '<img  class="centered-and-cropped" width="80%"  max-width="600px" max-height="200px" src="' + strtmp + '" title="' + strtxt + '"></img>'
 						
 						if ( photocountall < 200)
 						{
 						//document.getElementById("pictureforhome").innerHTML+=  '<div class="collumn"><center>'+strforhome+'</center><br></div>'
-						document.getElementById("pictureforhome").innerHTML+= '<div class="mySlides"><div style = "font-family:  \'IBM Plex Mono\', monospace; font-size: 0.75em; max-width: 600px; text-align: justify; text-justify: inter-word;">' + strtxt + '</div><br><br>' + strforhome + '</div>'
+						document.getElementById("pictureforhome").innerHTML+= '<div class="mySlides"><br>' + strforhome + '<br><br><div style = "font-family:  \'IBM Plex Mono\', monospace; font-size: 0.75em; max-width: 600px; text-align: justify; text-justify: inter-word;">' + strtxt + '</div></div>'
 						showSlides(2);
 						}
 						else { photocount = 0}
@@ -489,9 +490,9 @@ window.setInterval(function(){
 	<br>
 	<table ><tr><td>
 	<center>
-	
-	<div  class="container"><div id="pictureforhome"></div></div><br>
 	<a  onclick="plusSlides(-1)">prev</a> | <a  onclick="plusSlides(1)">next</a>
+	<br><br>
+	<div  class="container"><div id="pictureforhome"></div></div><br>
 	<br><br>
 	
 	</center>
