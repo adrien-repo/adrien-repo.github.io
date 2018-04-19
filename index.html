@@ -2,6 +2,7 @@
 
 
 
+
 <!doctype html>
 <html lang="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -374,6 +375,7 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	
 	var div = document.createElement("div");
 	div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
+	div.setAttribute("style","border: 1px solid lightgrey; padding: 10px 10px 10px 10px; margin: 10px 10px 10px 10px;")
 	
 	div.innerHTML = '<h3><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><br>';
 	firstarticle = 0
@@ -519,7 +521,7 @@ window.setInterval(function(){
 	
 	
 	
-	<div id="id-newspapers" style = "column-width: 400px; column-gap: 40px; border-bottom:1px solid black">
+	<div id="id-newspapers" style = "column-width: 400px; column-gap: 10px; border-bottom:1px solid black; border-top:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Newspapers</a></h1>
 		<table><tr><td>
@@ -529,7 +531,7 @@ window.setInterval(function(){
 	</div>
 	<br><br><br>
    
-	<div id="id-periodics" style = "column-width: 400px; column-gap: 40px;border-bottom:1px solid black">
+	<div id="id-periodics" style = "column-width: 400px; column-gap: 10px;border-bottom:1px solid black; border-top:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Magazines</a></h1>
 		<table><tr><td>
@@ -539,7 +541,7 @@ window.setInterval(function(){
 	</div>   
 	<br><br><br>
    
-	<div id="id-science" style = "column-width: 400px; column-gap: 40px;border-bottom:1px solid black">
+	<div id="id-science" style = "column-width: 400px; column-gap: 10px;border-bottom:1px solid black; border-top:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Science</a></h1>
 		<table><tr><td>
@@ -551,7 +553,7 @@ window.setInterval(function(){
 
 
    
-	<div id="id-markets" style = "column-width: 400px; column-gap: 40px;border-bottom:1px solid black">
+	<div id="id-markets" style = "column-width: 400px; column-gap: 10px;border-bottom:1px solid black; border-top:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Markets</a></h1>
 		<table><tr><td>
@@ -561,7 +563,7 @@ window.setInterval(function(){
    </div>   
    <br><br><br>
    
-	<div id="id-blogs" style = "column-width: 400px; column-gap: 40px;border-bottom:1px solid black">
+	<div id="id-blogs" style = "column-width: 400px; column-gap: 10px;border-bottom:1px solid black; border-top:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Blogs</a></h1>
 		<table><tr><td>
@@ -571,7 +573,7 @@ window.setInterval(function(){
 	</div>
 	<br><br><br>
 		
-	<div id="id-bookreviews" style = "column-width: 400px; border-bottom:1px solid black">
+	<div id="id-bookreviews" style = "column-width: 400px; column-gap: 10px;border-bottom:1px solid black; border-top:1px solid black">
 		<center>
 		<h1><a href="#mymenu">Books</a></h1>
 		<table ><tr><td>
