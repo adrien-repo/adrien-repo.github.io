@@ -3,6 +3,7 @@
 
 
 
+
 <!doctype html>
 <html lang="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -188,7 +189,7 @@ feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
 feed005: ["http://www.ft.com/rss/home/us","Financial Times","news"],
 feed006: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
 feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","periodics"],
-feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty's blog","blogs"],
+feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty","blogs"],
 feed009: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
 feed010: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","periodics"],
 feed011: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
@@ -246,7 +247,7 @@ pod002:  ["https://queryfeed.net/instagram?q=afpphoto","","pod"],
 pod003:  ["https://queryfeed.net/instagram?q=nasa","","pod"],
 pod004:  ["https://queryfeed.net/instagram?q=lemondefr","","pod"],
 pod005:  ["https://queryfeed.net/instagram?q=nytimes","","pod"],
-pod006:  ["https://queryfeed.net/instagram?q=500px","","pod"],
+//pod006:  ["https://queryfeed.net/instagram?q=500px","","pod"],
 
 
 
@@ -373,11 +374,15 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	{
 	
 	
-	var div = document.createElement("div");
-	div.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
-	div.setAttribute("style","border: 1px solid lightgrey; padding: 10px 10px 10px 10px; margin: 10px 10px 10px 10px;")
+	var div2 = document.createElement("div");
+	div2.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
+	div2.setAttribute("style","border: 1px solid lightgrey; padding: 10px 10px 10px 10px; margin: 10px 10px 10px 10px;")
 	
-	div.innerHTML = '<h3><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + feedsUrl[1] + '</h3><br>';
+	div2.innerHTML = '<h3><img src="https://www.google.com/s2/favicons?domain_url=' + feedItems[0].link + '" alt="" height="20" width="20"> ' + '<a onclick="showhide(\'' + feedsUrl[1].replace(/\s/g, '') + '-child\')">' + feedsUrl[1] + '</a></h3><br>';
+	
+	var div = document.createElement("div");
+	div.setAttribute("id",feedsUrl[1].replace(/\s/g, '') + "-child")
+	
 	firstarticle = 0
     $.each(feedItems, function( index ) {
       var item = feedItems[index];
@@ -417,7 +422,8 @@ $.each(feedsLibrary, function(siteId, feedsUrl) {
 	  
     });
 	var tablechild = document.getElementById(feedsUrl[2] + '-child');
-	tablechild.appendChild(div);
+	tablechild.appendChild(div2);
+	div2.appendChild(div);
 	
 	
 	}
@@ -450,7 +456,18 @@ window.setInterval(function(){
 }, 5000);
 </script>
 	 
-	
+<script>
+
+function showhide(mydiv) {
+    var x = document.getElementById(mydiv);
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
+</script>
 	
 	
   </head>
@@ -523,7 +540,7 @@ window.setInterval(function(){
 	
 	<div id="id-newspapers" style = "column-width: 400px; column-gap: 10px; border-bottom:1px solid black; border-top:1px solid black">
 		<center>
-		<h1><a href="#mymenu">Newspapers</a></h1>
+		<h1><a onclick="showhide('news-child')">&#9753; Newspapers &#10087;</a></h1>
 		<table><tr><td>
 			<div id="news-child"></div>
 		</tr></td></table>
@@ -533,7 +550,7 @@ window.setInterval(function(){
    
 	<div id="id-periodics" style = "column-width: 400px; column-gap: 10px;border-bottom:1px solid black; border-top:1px solid black">
 		<center>
-		<h1><a href="#mymenu">Magazines</a></h1>
+		<h1><a onclick="showhide('periodics-child')">&#9753; Magazines &#10087;</a></h1>
 		<table><tr><td>
 			<div id="periodics-child"></div>
 		</tr></td></table>
@@ -543,7 +560,7 @@ window.setInterval(function(){
    
 	<div id="id-science" style = "column-width: 400px; column-gap: 10px;border-bottom:1px solid black; border-top:1px solid black">
 		<center>
-		<h1><a href="#mymenu">Science</a></h1>
+		<h1><a onclick="showhide('science-child')">&#9753; Science &#10087;</a></h1>
 		<table><tr><td>
 			<div id="science-child"></div>
 		</tr></td></table>
@@ -555,7 +572,7 @@ window.setInterval(function(){
    
 	<div id="id-markets" style = "column-width: 400px; column-gap: 10px;border-bottom:1px solid black; border-top:1px solid black">
 		<center>
-		<h1><a href="#mymenu">Markets</a></h1>
+		<h1><a onclick="showhide('markets-child')">&#9753; Markets &#10087;</a></h1>
 		<table><tr><td>
 			<div id="markets-child"></div>
 		</tr></td></table>
@@ -565,7 +582,7 @@ window.setInterval(function(){
    
 	<div id="id-blogs" style = "column-width: 400px; column-gap: 10px;border-bottom:1px solid black; border-top:1px solid black">
 		<center>
-		<h1><a href="#mymenu">Blogs</a></h1>
+		<h1><a onclick="showhide('blogs-child')">&#9753; Blogs &#10087;</a></h1>
 		<table><tr><td>
 			<div id="blogs-child"></div>
 		</tr></td></table>
@@ -575,7 +592,7 @@ window.setInterval(function(){
 		
 	<div id="id-bookreviews" style = "column-width: 400px; column-gap: 10px;border-bottom:1px solid black; border-top:1px solid black">
 		<center>
-		<h1><a href="#mymenu">Books</a></h1>
+		<h1><a onclick="showhide('bookreviews-child')">&#9753; Books &#10087;</a></h1>
 		<table ><tr><td>
 			<div id="bookreviews-child"></div>
 		</tr></td></table>
