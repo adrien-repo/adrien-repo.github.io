@@ -131,7 +131,7 @@ function showSlides(n) {
           
         }
       );
-  $.getJSON('http://api.wunderground.com/api/c6dc8e785d943109/conditions/q/fr/paris.json', function(json) {
+  $.getJSON('http://api.wunderground.com/api/c6dc8e785d943109/conditions/q/bermuda.json', function(json) {
      
           $('div#city2 strong').text(json.current_observation.display_location.full)
           $('div#icon2').html('<img src=' + json.current_observation.icon_url + '>')
