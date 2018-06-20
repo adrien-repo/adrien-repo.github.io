@@ -109,38 +109,38 @@ body {
 								mycount = 1
 									if (feedsUrl[2] == "news" && mycountnews == 0) {
 										var destdiv = document.getElementById("news-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title + "</a>. (" + feedsUrl[1] +")"
+										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. (" + feedsUrl[1] +")"
 										mycountnews = 1
 									}
 									if (feedsUrl[2] == "periodics" && mycountmagaz == 0) {
 										var destdiv = document.getElementById("periodics-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title + "</a>. (" + feedsUrl[1] +")"
+										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. (" + feedsUrl[1] +")"
 										mycountmagaz = 1
 									}
 									if (feedsUrl[2] == "science" && mycountscience == 0) {
 										var destdiv = document.getElementById("science-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title + "</a>. (" + feedsUrl[1] +")"
+										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. (" + feedsUrl[1] +")"
 										mycountscience = 1
 									}
 									if (feedsUrl[2] == "markets" && mycountmarket == 0) {
 										var destdiv = document.getElementById("markets-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title + "</a>. (" + feedsUrl[1] +")"
+										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. (" + feedsUrl[1] +")"
 										mycountmarket = 1
 									}
 									if (feedsUrl[2] == "blogs" && mycountblog == 0) {
 										var destdiv = document.getElementById("blogs-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title + "</a>. (" + feedsUrl[1] +")"
+										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. (" + feedsUrl[1] +")"
 										mycountblog = 1
 									}
 									if (feedsUrl[2] == "bookreviews" && mycountbook == 0) {
 										var destdiv = document.getElementById("bookreviews-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title + "</a>. (" + feedsUrl[1] +")"
+										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. (" + feedsUrl[1] +")"
 										mycountbook = 1
 									}
 								}
 								else
 								{
-									mystr  += '<li><a href="'+item.link+'" target="_blank">' + item.title + "</a>" + "</li>"
+									mystr  += '<li><a href="'+item.link+'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>" + "</li>"
 								}
 							});
 							div2.innerHTML +=  mystr 
@@ -277,12 +277,12 @@ body {
 								feedsresult[j].dict = finalWordsArray[i].name
 								if (mycount == 0){
 									mystr  +=  '<b><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title + "</a></b>. " + feedsresult[j].content + " (" +  feedsresult[j].srcname + ")<br><br>"
-									mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title + "</a>. (" +  feedsresult[j].srcname + ")"
+									mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. (" +  feedsresult[j].srcname + ")"
 									mycount = 1
 								}
 								else
 								{
-									mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title + " (" +  feedsresult[j].srcname + ")</a>" + "</li>"
+									mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + " (" +  feedsresult[j].srcname + ")</a>" + "</li>"
 								}
 							}
 						}
