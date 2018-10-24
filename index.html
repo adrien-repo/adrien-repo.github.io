@@ -336,7 +336,8 @@ body {
 					sets.push(keywordset)
 				}
 			}
-			var chart = venn.VennDiagram();
+						var chart = venn.VennDiagram()
+								.width(Math.min(screen.availWidth,500));
 			
 			d3.select("#venn").datum(sets).call(chart);
 			//window.alert(keywordlength);
