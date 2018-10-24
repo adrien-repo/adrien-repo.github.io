@@ -1,9 +1,11 @@
 
 
 
+
 <!doctype html>
 <html lang="en">
 	<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>The Happy Bots</title>
 		<style>
 			a {cursor: pointer;}
@@ -45,6 +47,7 @@ body {
 		</script>
 		<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<script>
+			mystartTime = new Date();
 			function strip(html)
 			{
 			var tmp = document.createElement("DIV");
@@ -107,12 +110,23 @@ body {
 			var mycountmarket = 0
 			var mycountblog = 0
 			var mycountbook = 0
+			
+			var nbsources = 0
+			var nbnews = 0
+			var nbmagaz = 0
+			var nbscience = 0
+			var nbmarket = 0
+			var nbblog = 0
+			var nbbook = 0
 
 			$.each(feedsLibrary, function(siteId, feedsUrl) {
 				var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
 				var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 5");
 				var format = "&format=json";
 				var rssFeedPath = baseUrl.concat(queryString, format);
+				nbsources = nbsources+1
+
+
 				$.getJSON(rssFeedPath, function(response) {
 					var feedItems = response.query.results.item;
 					var div2 = document.createElement("div")
@@ -120,12 +134,20 @@ body {
 					div2.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
 					div2.innerHTML += "<br><b><div class='chip'>" + feedsUrl[1] + "</div></b> "
 					var mycount = 0
+
 						$.each(feedItems, function( index ) {
+							
+							if (feedsUrl[2] == "news"){nbnews = nbnews+1}
+							if (feedsUrl[2] == "periodics"){nbmagaz = nbmagaz+1}
+							if (feedsUrl[2] == "science"){nbscience = nbscience+1}
+							if (feedsUrl[2] == "markets"){nbmarket = nbmarket+1}
+							if (feedsUrl[2] == "blogs"){nbblog = nbblog+1}
+							if (feedsUrl[2] == "bookreviews"){nbbook = nbbook+1}
 							var item = feedItems[index];
 							var article = {srcname: feedsUrl[1], title:item.title, link: item.link, content:strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,""), dict:"none"}
 							feedsresult.push(article)
 								if (mycount == 0){
-								mystr  +=  '<b><a href="'+item.link +'" target="_blank">' + item.title + "</a></b>. " + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "<br><br>"
+								mystr  +=  '<br><br><b><a href="'+item.link +'" target="_blank">' + item.title + "</a></b>. <br>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "<br><br>"
 								mycount = 1
 									if (feedsUrl[2] == "news" && mycountnews == 0) {
 										var destdiv = document.getElementById("news-home")
@@ -181,20 +203,22 @@ body {
 	</b>
 	<div id="myhome"  style="display: block">
 		<br>
-		<b><div class='minichip'>Newspapers</b></div>
+		<b><div class='minichip' id='nbnews'></div><div class='minichip'>Newspapers</div></b>
 		<span id="news-home"></span><br>
-		<b><div class='minichip'>Magazines</b></div>
+		<b><div class='minichip' id='nbmagaz'></div><div class='minichip'>Magazines</b></div>
 		<span id="periodics-home"></span><br>
-		<b><div class='minichip'>Science</b></div>
+		<b><div class='minichip' id='nbscience'></div><div class='minichip'>Science</b></div>
 		<span id="science-home"></span><br>
-		<b><div class='minichip'>Markets</b></div>
+		<b><div class='minichip' id='nbmarket'></div><div class='minichip'>Markets</b></div>
 		<span id="markets-home"></span><br>
-		<b><div class='minichip'>Blogs</b></div>
+		<b><div class='minichip' id='nbblog'></div><div class='minichip'>Blogs</b></div>
 		<span id="blogs-home"></span><br>
-		<b><div class='minichip'>Books</b></div>
+		<b><div class='minichip' id='nbbook'></div><div class='minichip'>Books</b></div>
 		<span id="bookreviews-home"></span><br>
 		<br>
 		<div id="subjects-home"></div>
+		<br>
+		<div id="coutrecap"></div>
 	</div>
 	<div id="content" style="display: none"></div>
 	<div id="bysource" style="display: none">
@@ -272,9 +296,20 @@ body {
 		}
 		function refreshsubject()
 		{
+		document.getElementById('nbnews').innerHTML = nbnews
+		document.getElementById('nbmagaz').innerHTML = nbmagaz
+		document.getElementById('nbscience').innerHTML = nbscience
+		document.getElementById('nbmarket').innerHTML = nbmarket
+		document.getElementById('nbblog').innerHTML = nbblog
+		document.getElementById('nbbook').innerHTML = nbbook
+		myendTime = new Date();
+		var mytimeDiff = myendTime - mystartTime; 
+		mytimeDiff = Math.round(100* mytimeDiff /1000) /100
+		document.getElementById('coutrecap').innerHTML = '<font color="silver">' + (nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook) + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font>'
+		
 		var divtoadd = document.getElementById('content');
 		var divhome = document.getElementById('subjects-home');
-		var frequentenglish = "[Article] [article] about About After after Still still a  and  away  big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
+		var frequentenglish = "[Article] [article] about About After after What's what's Still still They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
 		frequentenglish = frequentenglish.capitalize()
 		divhome.innerHTML = "" 
 		divtoadd.innerHTML = "" 
@@ -291,7 +326,7 @@ body {
 			 var wordsMap = createWordMap(wordsArray);
 			 var finalWordsArray = sortByCount(wordsMap);
 				for (var i = 0; i < finalWordsArray.length; i++) {
-					if (finalWordsArray[i].total > 2 && finalWordsArray[i].name.length > 4){
+					if (finalWordsArray[i].total > 2 && finalWordsArray[i].name.length > 3){
 					var mystr = ""
 					var mystrhome = ""
 					var mycount = 0
@@ -299,7 +334,7 @@ body {
 							if  (feedsresult[j].dict == "none" && feedsresult[j].title.indexOf(finalWordsArray[i].name) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.capitalize()) <0 ){  //here
 								feedsresult[j].dict = finalWordsArray[i].name
 								if (mycount == 0){
-									mystr  +=  '<b><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>") + "</a></b>. " + feedsresult[j].content + " <font color='silver'>(" +  feedsresult[j].srcname + ")</font><br><br>"
+									mystr  +=  '<br><br><b><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>") + "</a></b>.<br> " + feedsresult[j].content + " <font color='silver'>(" +  feedsresult[j].srcname + ")</font><br><br>"
 									mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" +  feedsresult[j].srcname + ")</font>"
 									mycount = 1
 								}
@@ -311,7 +346,7 @@ body {
 						}
 						if (mystr == ""){} else {
 							divtoadd.innerHTML += "<br><b><div class='chip'>" + finalWordsArray[i].name.capitalize() + "</div></b>   "
-							divhome.innerHTML += "<b><div class='minichip'>" + finalWordsArray[i].name.capitalize() + "</b></div> " + mystrhome + "<br> "
+							divhome.innerHTML += "<b><div class='minichip'>" + finalWordsArray[i].total + "</div><div class='minichip'>" + finalWordsArray[i].name.capitalize() + "</b></div> " + mystrhome + "<br> "
 							divtoadd.innerHTML += mystr 
 						}
 					}
