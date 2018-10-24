@@ -46,6 +46,8 @@ body {
 			}	
 		</script>
 		<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<script src="/venn.js"></script>
 		<script>
 			mystartTime = new Date();
 			function strip(html)
@@ -118,6 +120,8 @@ body {
 			var nbmarket = 0
 			var nbblog = 0
 			var nbbook = 0
+			
+			var mykeywords = []
 
 			$.each(feedsLibrary, function(siteId, feedsUrl) {
 				var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
@@ -219,6 +223,9 @@ body {
 		<div id="subjects-home"></div>
 		<br>
 		<div id="coutrecap"></div>
+		<br>
+		
+		<div id="venn"></div>
 	</div>
 	<div id="content" style="display: none"></div>
 	<div id="bysource" style="display: none">
@@ -294,6 +301,48 @@ body {
 			x.style.display = "block"
 			refreshsubject()
 		}
+		
+		function venndiagramm()
+		{
+			var keywordlength = mykeywords.length;
+			var arrayLength = feedsresult.length;
+
+
+			sets = [];
+			//d3.select("#venn").html("")
+			for (var z = 0; z< keywordlength;z++) {
+				mykeywordname = mykeywords[z]
+				mykeywordcountalone = 0
+					for (var j = 0; j < arrayLength; j++) {
+						mykeywordcountalone = mykeywordcountalone + Math.max(feedsresult[j].title.indexOf(mykeywordname),0)
+					}
+					var keywordset = {sets: [mykeywordname], size: mykeywordcountalone}
+					sets.push(keywordset)
+			}
+			for (var z = 0; z< keywordlength;z++) {
+				mykeywordname = mykeywords[z]
+				for (var y = z; y< keywordlength;y++) {
+					mykeywordname2 = mykeywords[y]
+					mykeywordcountcombo = 0
+					for (var j = 0; j < arrayLength; j++) {
+						if (Math.max(feedsresult[j].title.indexOf(mykeywordname),0) >0){
+							if (Math.max(feedsresult[j].title.indexOf(mykeywordname2),0) >0){
+								mykeywordcountcombo = mykeywordcountcombo + Math.max(feedsresult[j].title.indexOf(mykeywordname),0) + Math.max(feedsresult[j].title.indexOf(mykeywordname2),0)
+								
+							}
+						}
+					}
+					var keywordset = {sets: [mykeywordname , mykeywordname2], size: mykeywordcountcombo}
+					sets.push(keywordset)
+				}
+			}
+			var chart = venn.VennDiagram();
+			
+			d3.select("#venn").datum(sets).call(chart);
+			//window.alert(keywordlength);
+			
+		}
+		
 		function refreshsubject()
 		{
 		document.getElementById('nbnews').innerHTML = nbnews
@@ -314,6 +363,7 @@ body {
 		divhome.innerHTML = "" 
 		divtoadd.innerHTML = "" 
 		var allelements = ""
+		mykeywords = []
 			var arrayLength = feedsresult.length;
 			for (var j = 0; j < arrayLength; j++) {
 			feedsresult[j].dict = "none"
@@ -327,16 +377,19 @@ body {
 			 var finalWordsArray = sortByCount(wordsMap);
 				for (var i = 0; i < finalWordsArray.length; i++) {
 					if (finalWordsArray[i].total > 2 && finalWordsArray[i].name.length > 3){
+					
 					var mystr = ""
 					var mystrhome = ""
 					var mycount = 0
 						for (var j = 0; j < arrayLength; j++) {
 							if  (feedsresult[j].dict == "none" && feedsresult[j].title.indexOf(finalWordsArray[i].name) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.capitalize()) <0 ){  //here
 								feedsresult[j].dict = finalWordsArray[i].name
+								
 								if (mycount == 0){
 									mystr  +=  '<br><br><b><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>") + "</a></b>.<br> " + feedsresult[j].content + " <font color='silver'>(" +  feedsresult[j].srcname + ")</font><br><br>"
 									mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" +  feedsresult[j].srcname + ")</font>"
 									mycount = 1
+									mykeywords.push(finalWordsArray[i].name)
 								}
 								else
 								{
@@ -351,6 +404,12 @@ body {
 						}
 					}
 				}
+		
+		venndiagramm();
 		}
+
+		
+		
+		
 	</script>
 </html>
