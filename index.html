@@ -316,7 +316,7 @@ body {
 					for (var j = 0; j < arrayLength; j++) {
 						mykeywordcountalone = mykeywordcountalone + Math.max(feedsresult[j].title.indexOf(mykeywordname),0)
 					}
-					var keywordset = {sets: [mykeywordname], size: mykeywordcountalone}
+					var keywordset = {sets: [mykeywordname.capitalize()], size: mykeywordcountalone}
 					sets.push(keywordset)
 			}
 			for (var z = 0; z< keywordlength;z++) {
@@ -332,7 +332,7 @@ body {
 							}
 						}
 					}
-					var keywordset = {sets: [mykeywordname , mykeywordname2], size: mykeywordcountcombo}
+					var keywordset = {sets: [mykeywordname.capitalize() , mykeywordname2.capitalize()], size: mykeywordcountcombo}
 					sets.push(keywordset)
 				}
 			}
