@@ -1,7 +1,3 @@
-
-
-
-
 <!doctype html>
 <html lang="en">
 	<head>
@@ -32,13 +28,14 @@
 				background-color: #f1f1f1;
 			}
 			@font-face {
-  font-family: 'Product Sans';
-  font-style: normal;
-  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
-}
-body {
-	
-	font-family: Product Sans;}
+				  font-family: 'Product Sans';
+				  font-style: normal;
+				  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+			}
+			body {
+				width: 100%; text-align: center; 
+				font-family: Product Sans;}
+			#centerContainer { width: 700px; text-align: left; margin: 0px auto; }
 		</style>
 		<script>
 			String.prototype.capitalize = function() {
@@ -47,7 +44,7 @@ body {
 		</script>
 		<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
-		<script src="/venn.js"></script>
+		<script src="http://www.thehappybots.com/venn.js"></script>
 		<script>
 			mystartTime = new Date();
 			function strip(html)
@@ -201,46 +198,52 @@ body {
 	</head>
 	
 	<body>
-	<b><a onclick="showhome()">Home</a> |
-	<a onclick="showbysource()">By Source</a> |
-	<a onclick="showbysubject()">By Subject</a>
-	</b>
-	<div id="myhome"  style="display: block">
-		<br>
-		<b><div class='minichip' id='nbnews'></div><div class='minichip'>Newspapers</div></b>
-		<span id="news-home"></span><br>
-		<b><div class='minichip' id='nbmagaz'></div><div class='minichip'>Magazines</b></div>
-		<span id="periodics-home"></span><br>
-		<b><div class='minichip' id='nbscience'></div><div class='minichip'>Science</b></div>
-		<span id="science-home"></span><br>
-		<b><div class='minichip' id='nbmarket'></div><div class='minichip'>Markets</b></div>
-		<span id="markets-home"></span><br>
-		<b><div class='minichip' id='nbblog'></div><div class='minichip'>Blogs</b></div>
-		<span id="blogs-home"></span><br>
-		<b><div class='minichip' id='nbbook'></div><div class='minichip'>Books</b></div>
-		<span id="bookreviews-home"></span><br>
-		<br>
-		<div id="subjects-home"></div>
-		<br>
-		<div id="coutrecap"></div>
-		<br>
-		
-		<div id="venn" onclick="venndiagramm()"></div>
-	</div>
-	<div id="content" style="display: none"></div>
-	<div id="bysource" style="display: none">
-		<h2><font color='silver'>Newspapers</font></h2>
-		<div id="news"></div>
-		<h2><font color='silver'>Magazines</font></h2>
-		<div id="periodics"></div>
-		<h2><font color='silver'>Science</font></h2>
-		<div id="science"></div>
-		<h2><font color='silver'>Markets</font></h2>
-		<div id="markets"></div>
-		<h2><font color='silver'>Blogs</font></h2>
-		<div id="blogs"></div>
-		<h2><font color='silver'>Books</font></h2>
-		<div id="bookreviews"></div>
+	<div id="centerContainer">
+		<b><a onclick="showhome()">Home</a> |
+		<a onclick="showbysource()">By Source</a> |
+		<a onclick="showbysubject()">By Subject</a>
+		</b>
+		<div id="myhome"  style="display: block">
+
+			<div id='snippets'></div>
+
+			<h3><font color='silver'>Talking Points</font></h3>
+			<b><div class='minichip' id='nbnews'></div><div class='minichip'>Newspapers</div></b>
+			<span id="news-home"></span><br>
+			<b><div class='minichip' id='nbmagaz'></div><div class='minichip'>Magazines</b></div>
+			<span id="periodics-home"></span><br>
+			<b><div class='minichip' id='nbscience'></div><div class='minichip'>Science</b></div>
+			<span id="science-home"></span><br>
+			<b><div class='minichip' id='nbmarket'></div><div class='minichip'>Markets</b></div>
+			<span id="markets-home"></span><br>
+			<b><div class='minichip' id='nbblog'></div><div class='minichip'>Blogs</b></div>
+			<span id="blogs-home"></span><br>
+			<b><div class='minichip' id='nbbook'></div><div class='minichip'>Books</b></div>
+			<span id="bookreviews-home"></span><br>
+
+			<h3><font color='silver'>Concepts</font></h3>
+			<div id="subjects-home"></div>
+			
+			<div id="coutrecap"></div>
+			
+			<h3><font color='silver'>Relationships</font></h3>
+			<div id="venn" onclick="venndiagramm()"></div>
+		</div>
+		<div id="content" style="display: none"></div>
+		<div id="bysource" style="display: none">
+			<h2><font color='silver'>Newspapers</font></h2>
+			<div id="news"></div>
+			<h2><font color='silver'>Magazines</font></h2>
+			<div id="periodics"></div>
+			<h2><font color='silver'>Science</font></h2>
+			<div id="science"></div>
+			<h2><font color='silver'>Markets</font></h2>
+			<div id="markets"></div>
+			<h2><font color='silver'>Blogs</font></h2>
+			<div id="blogs"></div>
+			<h2><font color='silver'>Books</font></h2>
+			<div id="bookreviews"></div>
+		</div>
 	</div>
 	</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -316,7 +319,7 @@ body {
 					for (var j = 0; j < arrayLength; j++) {
 						mykeywordcountalone = mykeywordcountalone + Math.max(feedsresult[j].title.indexOf(mykeywordname),0)
 					}
-					var keywordset = {sets: [mykeywordname.capitalize()], size: mykeywordcountalone}
+					var keywordset = {sets: [mykeywordname.capitalize()], size: mykeywordcountalone * mykeywordcountalone}
 					sets.push(keywordset)
 			}
 			for (var z = 0; z< keywordlength;z++) {
@@ -332,12 +335,13 @@ body {
 							}
 						}
 					}
-					var keywordset = {sets: [mykeywordname.capitalize() , mykeywordname2.capitalize()], size: mykeywordcountcombo}
+					var keywordset = {sets: [mykeywordname.capitalize() , mykeywordname2.capitalize()], size: mykeywordcountcombo * mykeywordcountcombo}
 					sets.push(keywordset)
 				}
 			}
 						var chart = venn.VennDiagram()
-								.width(Math.min(screen.availWidth,500));
+								.width(Math.min(screen.availWidth,650))
+								.height(Math.min(screen.availWidth,650));
 			
 			d3.select("#venn").datum(sets).call(chart);
 			//window.alert(keywordlength);
@@ -355,11 +359,11 @@ body {
 		myendTime = new Date();
 		var mytimeDiff = myendTime - mystartTime; 
 		mytimeDiff = Math.round(100* mytimeDiff /1000) /100
-		document.getElementById('coutrecap').innerHTML = '<font color="silver">' + (nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook) + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font>'
+		document.getElementById('coutrecap').innerHTML = '<h5><font color="silver">' + (nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook) + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></h5>'
 		
 		var divtoadd = document.getElementById('content');
 		var divhome = document.getElementById('subjects-home');
-		var frequentenglish = "[Article] [article] about About After after What's what's Still still They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
+		var frequentenglish = "[Article] [article] about About After after What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
 		frequentenglish = frequentenglish.capitalize()
 		divhome.innerHTML = "" 
 		divtoadd.innerHTML = "" 
@@ -376,9 +380,10 @@ body {
 			 var wordsArray = splitByWords(allelements);
 			 var wordsMap = createWordMap(wordsArray);
 			 var finalWordsArray = sortByCount(wordsMap);
+			 var mymaxcount = 0
 				for (var i = 0; i < finalWordsArray.length; i++) {
 					if (finalWordsArray[i].total > 2 && finalWordsArray[i].name.length > 4){
-					
+
 					var mystr = ""
 					var mystrhome = ""
 					var mycount = 0
@@ -391,19 +396,33 @@ body {
 									mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" +  feedsresult[j].srcname + ")</font>"
 									mycount = 1
 									mykeywords.push(finalWordsArray[i].name)
+									
+									if (finalWordsArray[i].total > mymaxcount){
+									mymaxcount = finalWordsArray[i].total
+									var destdivtitle = document.getElementById('snippets')
+									destdivtitle.innerHTML = "<h2>" + '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></h2> " + feedsresult[j].content
+									}
 								}
 								else
 								{
 									mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <font color='silver'>(" +  feedsresult[j].srcname + ")</font></a>" + "</li>"
 								}
+								
+
+									
 							}
 						}
 						if (mystr == ""){} else {
 							divtoadd.innerHTML += "<br><b><div class='chip'>" + finalWordsArray[i].name.capitalize() + "</div></b>   "
 							divhome.innerHTML += "<b><div class='minichip'>" + finalWordsArray[i].total + "</div><div class='minichip'>" + finalWordsArray[i].name.capitalize() + "</b></div> " + mystrhome + "<br> "
 							divtoadd.innerHTML += mystr 
+								
+			
+							
 						}
+						
 					}
+
 				}
 		
 		venndiagramm();
