@@ -35,7 +35,20 @@
 			body {
 				width: 100%; text-align: center; 
 				font-family: Product Sans;}
-			#centerContainer { width: 700px; text-align: left; margin: 0px auto; }
+			#centerContainer { max-width: 700px; text-align: left; margin: 5px auto; padding: 15px; border-left: 1px solid black; border-right: 1px solid black;}
+			
+			#topmenu {
+  position: sticky;
+  top: 0;
+  
+   
+  background-color: white;
+  border-bottom: 1px solid black;
+  
+}
+
+#venn { background-color: #f7f7f7; }
+
 		</style>
 		<script>
 			String.prototype.capitalize = function() {
@@ -122,7 +135,7 @@
 
 			$.each(feedsLibrary, function(siteId, feedsUrl) {
 				var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
-				var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 5");
+				var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 6");
 				var format = "&format=json";
 				var rssFeedPath = baseUrl.concat(queryString, format);
 				nbsources = nbsources+1
@@ -199,10 +212,13 @@
 	
 	<body>
 	<div id="centerContainer">
-		<b><a onclick="showhome()">Home</a> |
-		<a onclick="showbysource()">By Source</a> |
-		<a onclick="showbysubject()">By Subject</a>
-		</b>
+		<div id="topmenu">
+			<br><b><a onclick="showhome()">Home</a> |
+			<a onclick="showbysource()">By Source</a> |
+			<a onclick="showbysubject()">By Subject</a>
+			</b><br><font color='white'>.</font> 
+		</div>
+		<br><br>
 		<div id="myhome"  style="display: block">
 
 			<div id='snippets'></div>
@@ -223,11 +239,13 @@
 
 			<h3><font color='silver'>Concepts</font></h3>
 			<div id="subjects-home"></div>
-			
+			<br>
 			<div id="coutrecap"></div>
 			
 			<h3><font color='silver'>Relationships</font></h3>
+			
 			<div id="venn" onclick="venndiagramm()"></div>
+			
 		</div>
 		<div id="content" style="display: none"></div>
 		<div id="bysource" style="display: none">
@@ -244,7 +262,9 @@
 			<h2><font color='silver'>Books</font></h2>
 			<div id="bookreviews"></div>
 		</div>
+	<br><br>
 	</div>
+	
 	</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script>
@@ -319,7 +339,7 @@
 					for (var j = 0; j < arrayLength; j++) {
 						mykeywordcountalone = mykeywordcountalone + Math.max(feedsresult[j].title.indexOf(mykeywordname),0)
 					}
-					var keywordset = {sets: [mykeywordname.capitalize()], size: mykeywordcountalone * mykeywordcountalone}
+					var keywordset = {sets: [mykeywordname.capitalize()], size: mykeywordcountalone  }
 					sets.push(keywordset)
 			}
 			for (var z = 0; z< keywordlength;z++) {
@@ -335,13 +355,13 @@
 							}
 						}
 					}
-					var keywordset = {sets: [mykeywordname.capitalize() , mykeywordname2.capitalize()], size: mykeywordcountcombo * mykeywordcountcombo}
+					var keywordset = {sets: [mykeywordname.capitalize() , mykeywordname2.capitalize()], size: mykeywordcountcombo  }
 					sets.push(keywordset)
 				}
 			}
 						var chart = venn.VennDiagram()
 								.width(Math.min(screen.availWidth,650))
-								.height(Math.min(screen.availWidth,650));
+								.height(Math.min(screen.availWidth,650/2));
 			
 			d3.select("#venn").datum(sets).call(chart);
 			//window.alert(keywordlength);
@@ -359,7 +379,7 @@
 		myendTime = new Date();
 		var mytimeDiff = myendTime - mystartTime; 
 		mytimeDiff = Math.round(100* mytimeDiff /1000) /100
-		document.getElementById('coutrecap').innerHTML = '<h5><font color="silver">' + (nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook) + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></h5>'
+		document.getElementById('coutrecap').innerHTML = '<small><font color="silver">' + (nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook) + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
 		
 		var divtoadd = document.getElementById('content');
 		var divhome = document.getElementById('subjects-home');
@@ -374,8 +394,8 @@
 			feedsresult[j].dict = "none"
 			}
 			for (var i = 0; i < arrayLength; i++) {
-				allelements += (feedsresult[i].title.capitalize()) +" "; //here
-				allelements = allelements.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
+				allelements += (feedsresult[i].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize()) +" "; //here
+				allelements = allelements.capitalize()
 				}
 			 var wordsArray = splitByWords(allelements);
 			 var wordsMap = createWordMap(wordsArray);
@@ -388,14 +408,14 @@
 					var mystrhome = ""
 					var mycount = 0
 						for (var j = 0; j < arrayLength; j++) {
-							if  (feedsresult[j].dict == "none" && feedsresult[j].title.indexOf(finalWordsArray[i].name) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.capitalize()) <0 ){  //here
+							if  ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
 								feedsresult[j].dict = finalWordsArray[i].name
 								
 								if (mycount == 0){
 									mystr  +=  '<br><br><b><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>") + "</a></b>.<br> " + feedsresult[j].content + " <font color='silver'>(" +  feedsresult[j].srcname + ")</font><br><br>"
 									mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" +  feedsresult[j].srcname + ")</font>"
 									mycount = 1
-									mykeywords.push(finalWordsArray[i].name)
+									mykeywords.push(finalWordsArray[i].name.replace(/\s/g, '').capitalize())
 									
 									if (finalWordsArray[i].total > mymaxcount){
 									mymaxcount = finalWordsArray[i].total
