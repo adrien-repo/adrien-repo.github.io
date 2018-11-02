@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -218,11 +219,15 @@
 			<a onclick="showbysubject()">By Subject</a>
 			</b><br><font color='white'>.</font> 
 		</div>
-		<br><br>
+		<br>
 		<div id="myhome"  style="display: block">
-
+			<div id="coutrecap"></div>
 			<div id='snippets'></div>
 
+			<h3><font color='silver'>Relationships</font></h3>
+			
+			<div id="venn" onclick="venndiagramm()"></div>
+			
 			<h3><font color='silver'>Talking Points</font></h3>
 			<b><div class='minichip' id='nbnews'></div><div class='minichip'>Newspapers</div></b>
 			<span id="news-home"></span><br>
@@ -240,11 +245,9 @@
 			<h3><font color='silver'>Concepts</font></h3>
 			<div id="subjects-home"></div>
 			<br>
-			<div id="coutrecap"></div>
 			
-			<h3><font color='silver'>Relationships</font></h3>
 			
-			<div id="venn" onclick="venndiagramm()"></div>
+			
 			
 		</div>
 		<div id="content" style="display: none"></div>
