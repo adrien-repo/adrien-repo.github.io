@@ -370,6 +370,7 @@
 								.height(Math.min(screen.availWidth,650/2));
 			
 			d3.select("#venn").datum(sets).call(chart);
+			d3.selectAll("text").style("font-size", "10px")
 			//window.alert(keywordlength);
 			
 		}
