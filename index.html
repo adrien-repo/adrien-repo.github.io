@@ -2,6 +2,7 @@
 
 
 
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -37,9 +38,9 @@
 				  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
 			}
 			body {
-				width: 100%; text-align: center; 
+				 text-align: center; 
 				font-family: Product Sans;}
-			#centerContainer { max-width: 700px; text-align: left; margin: 5px auto; padding: 15px; border-left: 1px solid black; border-right: 1px solid black;background-color: white;}
+			#centerContainer { max-width: 700px; text-align: left; margin: 5px 5px; padding: 15px; border-left: 1px solid black; border-right: 1px solid black; background-color: white; border-radius: 5px;}
 			
 			#topmenu {
   position: sticky;
@@ -54,6 +55,7 @@
 #venn { background-color: #f7f7f7; }
 
 		</style>
+
 		<script>
 			String.prototype.capitalize = function() {
 			return this.charAt(0).toUpperCase() + this.slice(1);
@@ -76,7 +78,7 @@
 				feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
 				feed005: ["http://www.ft.com/rss/home/us","Financial Times","news"],
 				feed006: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
-				feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","periodics"],
+				//feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","periodics"],
 				feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty","blogs"],
 				feed009: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
 				feed010: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","periodics"],
@@ -216,74 +218,19 @@
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 	
+	
 	<script>
-    fetch('https://techytricks97.000webhostapp.com/')
-      .then(response => response.text())
-      .then(text=>{document.body.style.background="url('"+text+"')";document.body.style.backgroundSize='auto';});
-
+	function showhide(mydivname) {
+    var x = document.getElementById(mydivname);
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+	}
 	</script>
 	
-	</head>
-	
-	<body>
-	<div id="centerContainer">
-		<div id="topmenu">
-			<br><b><a onclick="showhome()">Home</a> |
-			<a onclick="showbysource()">By Source</a> |
-			<a onclick="showbysubject()">By Subject</a>
-			</b><br><font color='white'>.</font> 
-		</div>
-		<br>
-		<div id="myhome"  style="display: block">
-			<div id="coutrecap"></div>
-			<div id='snippets'></div>
-
-			<h3><font color='silver'>Relationships</font></h3>
-			
-			<div id="venn" onclick="venndiagramm()"></div>
-			
-			<h3><font color='silver'>Talking Points</font></h3>
-			<b><div class='minichip' id='nbnews'></div><div class='minichip'>Newspapers</div></b>
-			<span id="news-home"></span><br>
-			<b><div class='minichip' id='nbmagaz'></div><div class='minichip'>Magazines</b></div>
-			<span id="periodics-home"></span><br>
-			<b><div class='minichip' id='nbscience'></div><div class='minichip'>Science</b></div>
-			<span id="science-home"></span><br>
-			<b><div class='minichip' id='nbmarket'></div><div class='minichip'>Markets</b></div>
-			<span id="markets-home"></span><br>
-			<b><div class='minichip' id='nbblog'></div><div class='minichip'>Blogs</b></div>
-			<span id="blogs-home"></span><br>
-			<b><div class='minichip' id='nbbook'></div><div class='minichip'>Books</b></div>
-			<span id="bookreviews-home"></span><br>
-
-			<h3><font color='silver'>Concepts</font></h3>
-			<div id="subjects-home"></div>
-			<br>
-			
-			
-			
-			
-		</div>
-		<div id="content" style="display: none"></div>
-		<div id="bysource" style="display: none">
-			<h2><font color='silver'>Newspapers</font></h2>
-			<div id="news"></div>
-			<h2><font color='silver'>Magazines</font></h2>
-			<div id="periodics"></div>
-			<h2><font color='silver'>Science</font></h2>
-			<div id="science"></div>
-			<h2><font color='silver'>Markets</font></h2>
-			<div id="markets"></div>
-			<h2><font color='silver'>Blogs</font></h2>
-			<div id="blogs"></div>
-			<h2><font color='silver'>Books</font></h2>
-			<div id="bookreviews"></div>
-		</div>
-	<br><br>
-	</div>
-	
-	</body>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script>
 		function splitByWords (text) {
 			var wordsArray = text.split(/\s+/);
@@ -469,5 +416,75 @@
 		
 		
 		
+	</script>
+	
+	</head>
+	
+	<body><center>
+	<div id="centerContainer" style="display: block">
+		<div id="topmenu">
+			<br><b><a onclick="showhome()">Home</a> |
+			<a onclick="showbysource()">By Source</a> |
+			<a onclick="showbysubject()">By Subject</a>
+			</b><br><font color='white'>.</font> 
+		</div>
+		<br>
+		<div id="myhome"  style="display: block">
+			<div id="coutrecap"></div>
+			<div id='snippets'></div>
+
+			<a onclick="showhide('relationships')"><h3><font color='silver'>Relationships</font></h3></a>
+			<div id="relationships" style="display: none">
+			<div id="venn" onclick="venndiagramm()"></div>
+			</div>
+			<a onclick="showhide('talkingpoints')"><h3><font color='silver'>Talking Points</font></h3></a>
+			<div id="talkingpoints" style="display: none">
+				<b><div class='minichip' id='nbnews'></div><div class='minichip'>Newspapers</div></b>
+				<span id="news-home"></span><br>
+				<b><div class='minichip' id='nbmagaz'></div><div class='minichip'>Magazines</b></div>
+				<span id="periodics-home"></span><br>
+				<b><div class='minichip' id='nbscience'></div><div class='minichip'>Science</b></div>
+				<span id="science-home"></span><br>
+				<b><div class='minichip' id='nbmarket'></div><div class='minichip'>Markets</b></div>
+				<span id="markets-home"></span><br>
+				<b><div class='minichip' id='nbblog'></div><div class='minichip'>Blogs</b></div>
+				<span id="blogs-home"></span><br>
+				<b><div class='minichip' id='nbbook'></div><div class='minichip'>Books</b></div>
+				<span id="bookreviews-home"></span><br>
+			</div>
+			<a onclick="showhide('concepts')"><h3><font color='silver'>Concepts</font></h3></a>
+			<div id="concepts" style="display: none">
+				<div id="subjects-home"></div>
+			</div>
+			<br>
+			
+			
+			
+			
+		</div>
+		<div id="content" style="display: none"></div>
+		<div id="bysource" style="display: none">
+			<h2><font color='silver'>Newspapers</font></h2>
+			<div id="news"></div>
+			<h2><font color='silver'>Magazines</font></h2>
+			<div id="periodics"></div>
+			<h2><font color='silver'>Science</font></h2>
+			<div id="science"></div>
+			<h2><font color='silver'>Markets</font></h2>
+			<div id="markets"></div>
+			<h2><font color='silver'>Blogs</font></h2>
+			<div id="blogs"></div>
+			<h2><font color='silver'>Books</font></h2>
+			<div id="bookreviews"></div>
+		</div>
+	<br><br>
+	</div>
+	</center>
+	</body>
+		<script>
+    fetch('https://techytricks97.000webhostapp.com/')
+      .then(response => response.text())
+      .then(text=>{document.body.style.background="url('"+text+"')";document.body.style.backgroundSize='auto';});
+
 	</script>
 </html>
