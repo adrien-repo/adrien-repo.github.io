@@ -1,4 +1,6 @@
 
+
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -36,7 +38,7 @@
 			body {
 				width: 100%; text-align: center; 
 				font-family: Product Sans;}
-			#centerContainer { max-width: 700px; text-align: left; margin: 5px auto; padding: 15px; border-left: 1px solid black; border-right: 1px solid black;}
+			#centerContainer { max-width: 700px; text-align: left; margin: 5px auto; padding: 15px; border-left: 1px solid black; border-right: 1px solid black;background-color: white;}
 			
 			#topmenu {
   position: sticky;
@@ -212,6 +214,14 @@
 	</script>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+	
+	<script>
+    fetch('https://techytricks97.000webhostapp.com/')
+      .then(response => response.text())
+      .then(text=>{document.body.style.background="url('"+text+"')";document.body.style.backgroundSize='auto';});
+
+	</script>
+	
 	</head>
 	
 	<body>
