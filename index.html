@@ -68,9 +68,34 @@
 			return this.charAt(0).toUpperCase() + this.slice(1);
 			}	
 		</script>
+
 		<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 		<script src="http://www.thehappybots.com/venn.js"></script>
+		
+				<script>
+    
+	  
+
+
+
+	      $.getJSON("https://query.yahooapis.com/v1/public/yql", {
+          q:      "select * from json where url='https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=de-DE'",
+          format: "json"
+      },
+      function (data) {
+          if (data.query.results) {
+              suffix = data.query.results.json.images.url;
+			  
+			      document.body.style.background=  'url("https://www.bing.com' + suffix + '"';
+					document.body.style.backgroundSize='auto';
+          }
+      }
+    );
+	  
+	  
+	</script>
+	
 		<script>
 			mystartTime = new Date();
 			function strip(html)
@@ -520,10 +545,5 @@
 			
 	</center>
 	</body>
-		<script>
-    fetch('https://techytricks97.000webhostapp.com/')
-      .then(response => response.text())
-      .then(text=>{document.body.style.background="url('"+text+"')";document.body.style.backgroundSize='auto';});
-
-	</script>
+		
 </html>
