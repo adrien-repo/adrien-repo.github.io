@@ -3,6 +3,7 @@
 
 
 
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -32,6 +33,12 @@
 				border-radius: 20px;
 				background-color: #f1f1f1;
 			}
+			.mykiosk{
+				display: block;
+				max-width: 700px; text-align: left; margin: 5px 5px; padding: 15px; border: 1px solid black; background-color: white; border-radius: 5px;
+			}
+			
+			
 			@font-face {
 				  font-family: 'Product Sans';
 				  font-style: normal;
@@ -176,32 +183,32 @@
 								mycount = 1
 									if (feedsUrl[2] == "news" && mycountnews == 0) {
 										var destdiv = document.getElementById("news-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" + feedsUrl[1] +")</font>"
+										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
 										mycountnews = 1
 									}
 									if (feedsUrl[2] == "periodics" && mycountmagaz == 0) {
 										var destdiv = document.getElementById("periodics-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" + feedsUrl[1] +")</font>"
+										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
 										mycountmagaz = 1
 									}
 									if (feedsUrl[2] == "science" && mycountscience == 0) {
 										var destdiv = document.getElementById("science-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" + feedsUrl[1] +")</font>"
+										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
 										mycountscience = 1
 									}
 									if (feedsUrl[2] == "markets" && mycountmarket == 0) {
 										var destdiv = document.getElementById("markets-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" + feedsUrl[1] +")</font>"
+										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
 										mycountmarket = 1
 									}
 									if (feedsUrl[2] == "blogs" && mycountblog == 0) {
 										var destdiv = document.getElementById("blogs-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" + feedsUrl[1] +")</font>"
+										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
 										mycountblog = 1
 									}
 									if (feedsUrl[2] == "bookreviews" && mycountbook == 0) {
 										var destdiv = document.getElementById("bookreviews-home")
-										destdiv.innerHTML = '<a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" + feedsUrl[1] +")</font>"
+										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
 										mycountbook = 1
 									}
 								}
@@ -270,6 +277,10 @@
 			x.style.display = "none"
 			var x = document.getElementById("bysource");
 			x.style.display = "block"
+			var x = document.getElementById("talkingpoints");
+			x.style.display = "none"
+			var x = document.getElementById("concepts");
+			x.style.display = "none"
 		}
 		function showhome()
 			{	
@@ -278,6 +289,10 @@
 			var x = document.getElementById("myhome");
 			x.style.display = "block"
 			var x = document.getElementById("bysource");
+			x.style.display = "none"
+						var x = document.getElementById("talkingpoints");
+			x.style.display = "none"
+			var x = document.getElementById("concepts");
 			x.style.display = "none"
 		}
 		function showbysubject()
@@ -288,6 +303,10 @@
 			x.style.display = "none"
 			var x = document.getElementById("content");
 			x.style.display = "block"
+						var x = document.getElementById("talkingpoints");
+			x.style.display = "none"
+			var x = document.getElementById("concepts");
+			x.style.display = "none"
 			refreshsubject()
 		}
 		
@@ -435,30 +454,10 @@
 			<div id="coutrecap"></div>
 			<div id='snippets'></div>
 
-			<a onclick="showhide('relationships')"><h3><font color='silver'>Relationships</font></h3></a>
-			<div id="relationships" style="display: none">
-			<div id="venn" onclick="venndiagramm()"></div>
-			</div>
-			<a onclick="showhide('talkingpoints')"><h3><font color='silver'>Talking Points</font></h3></a>
-			<div id="talkingpoints" style="display: none">
-				<b><div class='minichip' id='nbnews'></div><div class='minichip'>Newspapers</div></b>
-				<span id="news-home"></span><br>
-				<b><div class='minichip' id='nbmagaz'></div><div class='minichip'>Magazines</b></div>
-				<span id="periodics-home"></span><br>
-				<b><div class='minichip' id='nbscience'></div><div class='minichip'>Science</b></div>
-				<span id="science-home"></span><br>
-				<b><div class='minichip' id='nbmarket'></div><div class='minichip'>Markets</b></div>
-				<span id="markets-home"></span><br>
-				<b><div class='minichip' id='nbblog'></div><div class='minichip'>Blogs</b></div>
-				<span id="blogs-home"></span><br>
-				<b><div class='minichip' id='nbbook'></div><div class='minichip'>Books</b></div>
-				<span id="bookreviews-home"></span><br>
-			</div>
-			<a onclick="showhide('concepts')"><h3><font color='silver'>Concepts</font></h3></a>
-			<div id="concepts" style="display: none">
-				<div id="subjects-home"></div>
-			</div>
-			<br>
+
+			<h4><a onclick="showhide('talkingpoints')"><font color='black'>Headlines</font></a> + <a onclick="showhide('concepts')"><font color='black'>Analysis</font></a></h4>
+			
+				
 			
 			
 			
@@ -479,8 +478,46 @@
 			<h2><font color='silver'>Books</font></h2>
 			<div id="bookreviews"></div>
 		</div>
-	<br><br>
+	
 	</div>
+	<div id="talkingpoints" style="display: none">
+				<div class='mykiosk'>
+					<b><div class='minichip' id='nbnews'></div><div class='minichip'>Newspapers</div></b>
+					<span id="news-home"></span><br>
+				</div>
+				<div class='mykiosk'>
+					<b><div class='minichip' id='nbmagaz'></div><div class='minichip'>Magazines</b></div>
+					<span id="periodics-home"></span><br>
+				</div>
+				<div class='mykiosk'>
+					<b><div class='minichip' id='nbscience'></div><div class='minichip'>Science</b></div>
+					<span id="science-home"></span><br>
+				</div>
+				<div class='mykiosk'>
+					<b><div class='minichip' id='nbmarket'></div><div class='minichip'>Markets</b></div>
+					<span id="markets-home"></span><br>
+				</div>
+				<div class='mykiosk'>
+					<b><div class='minichip' id='nbblog'></div><div class='minichip'>Blogs</b></div>
+					<span id="blogs-home"></span><br>
+				</div>
+				<div class='mykiosk'>
+					<b><div class='minichip' id='nbbook'></div><div class='minichip'>Books</b></div>
+					<span id="bookreviews-home"></span><br>
+				</div>
+			</div>
+			
+			<div id="concepts" style="display: none">
+				<div class='mykiosk'>
+					<h2><font color='silver'>Relationships</font></h2>
+					<div id="venn" onclick="venndiagramm()"></div>
+				</div>
+				<div class='mykiosk'>
+				<h2><font color='silver'>Talking points</font></h2>
+				<div id="subjects-home"></div>
+				</div>
+			</div>
+			
 	</center>
 	</body>
 		<script>
