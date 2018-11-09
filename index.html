@@ -1,162 +1,108 @@
-
-
-
-
-
-
 <!doctype html>
 <html lang="en">
 	<head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>The Happy Bots</title>
 		<style>
+			::-webkit-scrollbar {width: 0px;}
 			a {cursor: pointer;}
 			a:link {text-decoration: none; color: black}
 			a:visited {text-decoration: none;color: black}
 			a:hover {text-decoration: underline}
 			a:active {text-decoration: underline}
-			.chip {
-				display: inline-block;
-				padding: 0 15px;
-				height: 25px;
-				font-size: 20px;
-				line-height: 25px;
-				border-radius: 25px;
-				background-color: #f1f1f1;
-			}
-			.minichip {
-				display: inline-block;
-				padding: 0 8px;
-				height: 20px;
-				font-size: 15px;
-				line-height: 20px;
-				border-radius: 20px;
-				background-color: #f1f1f1;
-			}
-			.mykiosk{
-				display: block;
-				max-width: 700px; text-align: left; margin: 5px 5px; padding: 15px; border: 1px solid black; background-color: white; border-radius: 5px;
-			}
+			.chip {display: inline-block; padding: 0 15px; height: 25px; font-size: 20px; line-height: 25px; border-radius: 25px; background-color: #f1f1f1; }
+			.minichip {display: inline-block;padding: 0 8px;height: 20px;font-size: 15px;line-height: 20px;border-radius: 20px;background-color: #f1f1f1;}
+			.mykiosk{display: block;max-width: 700px; text-align: left; margin: 5px 5px; padding: 15px; border: 1px solid black; background-color: white; border-radius: 5px}
+			.mykioskblack{text-shadow: 0 0 3px black;}
+			@font-face {font-family: 'Product Sans';font-style: normal;src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');			}
+			body {text-align: center; font-family: Product Sans;}
 			
-			
-			@font-face {
-				  font-family: 'Product Sans';
-				  font-style: normal;
-				  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
-			}
-			body {
-				 text-align: center; 
-				font-family: Product Sans;}
-			#centerContainer { max-width: 700px; text-align: left; margin: 5px 5px; padding: 15px; border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; border-top: 1px solid black; background-color: white; border-radius: 5px;}
-			
-			#topmenu {
-  position: sticky;
-  top: 0;
-  
-   
-  background-color: white;
-  border-bottom: 1px solid black;
-  
-}
-
-#venn { background-color: #f7f7f7; }
-
+			#topmenu {position: relative;top: 8px;max-width: 700px;}
+			#topmenutext{background-color: white;border-bottom: 1px solid black; border-radius: 5px 5px 0px 0px;margin: 5px 5px; padding: 15px;width:auto}
+			#topmenubar{background-color: white;border-bottom: 2px solid white; }
+			#scrollcontent{position: relative;top: 15px;overflow: auto; max-height: 90vh;max-width: 700px;}
+			#venn {background-color: #f7f7f7;}
 		</style>
-
 		<script>
 			String.prototype.capitalize = function() {
-			return this.charAt(0).toUpperCase() + this.slice(1);
+				return this.charAt(0).toUpperCase() + this.slice(1);
 			}	
 		</script>
-
 		<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 		<script src="http://www.thehappybots.com/venn.js"></script>
-		
-				<script>
-    
-	  
-
-
-
-	      $.getJSON("https://query.yahooapis.com/v1/public/yql", {
-          q:      "select * from json where url='https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=de-DE'",
-          format: "json"
-      },
-      function (data) {
-          if (data.query.results) {
-              suffix = data.query.results.json.images.url;
-			  
-			      document.body.style.background=  'url("https://www.bing.com' + suffix + '"';
+		<script>
+			$.getJSON("https://query.yahooapis.com/v1/public/yql", {
+			q: "select * from json where url='https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=de-DE'",
+			format: "json"
+			},
+			function (data) {
+				if (data.query.results) {
+					suffix = data.query.results.json.images.url;
+					document.body.style.background=  'url("https://www.bing.com' + suffix + '"';
 					document.body.style.backgroundSize='auto';
-          }
-      }
-    );
-	  
-	  
-	</script>
-	
+					}
+				}
+			);
+		</script>
 		<script>
 			mystartTime = new Date();
-			function strip(html)
-			{
-			var tmp = document.createElement("DIV");
-			tmp.innerHTML = html;
-			return tmp.textContent||tmp.innerText;
-			}
+			function strip(html){
+				var tmp = document.createElement("DIV");
+				tmp.innerHTML = html;
+				return tmp.textContent||tmp.innerText;
+				}
 			var feedsLibrary = {
-				feed002: ["https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss","Bloomberg - The Editors","news"],
-				feed003: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
-				feed004: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
-				feed005: ["http://www.ft.com/rss/home/us","Financial Times","news"],
-				feed006: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
-				//feed007: ["http://rss.lemonde.fr/c/205/f/3050/index.rss","Le Monde","periodics"],
-				feed008: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty","blogs"],
-				feed009: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
-				feed010: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","periodics"],
-				feed011: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
-				feed013: ["http://longform.org/feed.rss","Long Form","periodics"],
-				feed014: ["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
-				feed015: ["http://fusion.net/feed/","Fusion","periodics"],
-				feed016: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
-				feed017: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
-				feed018: ["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
-				feed019: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
-				feed020: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
-				feed022: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
-				feed023: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
-				feed024: ["https://www.edge.org/feed","Edge Magazine","periodics"],
-				feed025: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
-				feed026: ["https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss","Bloomberg - Matt Levine","markets"],
-				feed027: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
-				feed028: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
-				feed030: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
-				feed031: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
-				feed032: ["http://www.salon.com/feed/","Salon","periodics"],
-				feed033: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
-				feed034: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
-				feed035: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
-				feed037: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
-				feed038: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
-				feed039: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
-				feed040: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
-				feed041: ["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
-				feed043: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
-				feed044: ["http://stratechery.com/feed/","Stratechery","periodics"],
-				feed045: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
-				feed046: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
-				feed047: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
-				feed048: ["http://evonomics.com/feed/","Evonomics","markets"],
-				feed049: ["https://aeon.co/feed.rss","Aeon","periodics"],
-				feed052: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
-				feed053: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
-				feed054: ["http://scitation.aip.org/rss/content/aip/magazine/physicstoday/latestonlinestories;jsessionid=riTi5BaycDFvMSC0goCjE-t1.x-aip-live-02?fmt=rss","Physics Today","science"],
-				feed055: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
-				feed056: ["https://www.mcsweeneys.net/rss","Mc Sweeneys","periodics"],
-				feed057: ["https://xkcd.com/rss.xml","XKCD","blogs"],
-				feed057: ["https://news.ycombinator.com/rss","Hacker News","periodics"],
-				feed058: ["https://phys.org/rss-feed/breaking/","Phys Org","science"],
-				
+				feed001: ["https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss","Bloomberg - The Editors","news"],
+				feed002: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
+				feed003: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
+				feed004: ["http://www.ft.com/rss/home/us","Financial Times","news"],
+				feed005: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
+				feed006: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty","blogs"],
+				feed007: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
+				feed008: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","periodics"],
+				feed009: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
+				feed010: ["http://longform.org/feed.rss","Long Form","periodics"],
+				feed011: ["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
+				feed012: ["http://fusion.net/feed/","Fusion","periodics"],
+				feed013: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
+				feed014: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
+				feed015: ["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
+				feed016: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
+				feed017: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
+				feed018: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
+				feed019: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
+				feed020: ["https://www.edge.org/feed","Edge Magazine","periodics"],
+				feed021: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
+				feed022: ["https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss","Bloomberg - Matt Levine","markets"],
+				feed023: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
+				feed024: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
+				feed025: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
+				feed026: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
+				feed027: ["http://www.salon.com/feed/","Salon","periodics"],
+				feed028: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
+				feed029: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
+				feed030: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
+				feed031: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
+				feed032: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
+				feed033: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
+				feed034: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
+				feed035: ["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
+				feed036: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
+				feed037: ["http://stratechery.com/feed/","Stratechery","periodics"],
+				feed038: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
+				feed039: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
+				feed040: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
+				feed041: ["http://evonomics.com/feed/","Evonomics","markets"],
+				feed042: ["https://aeon.co/feed.rss","Aeon","periodics"],
+				feed043: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
+				feed044: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
+				feed045: ["http://scitation.aip.org/rss/content/aip/magazine/physicstoday/latestonlinestories;jsessionid=riTi5BaycDFvMSC0goCjE-t1.x-aip-live-02?fmt=rss","Physics Today","science"],
+				feed046: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
+				feed047: ["https://www.mcsweeneys.net/rss","Mc Sweeneys","periodics"],
+				feed048: ["https://xkcd.com/rss.xml","XKCD","blogs"],
+				feed049: ["https://news.ycombinator.com/rss","Hacker News","periodics"],
+				feed050: ["https://phys.org/rss-feed/breaking/","Phys Org","science"],
 			};
 			var feedsresult = [];
 			var mycountnews = 0
@@ -165,7 +111,6 @@
 			var mycountmarket = 0
 			var mycountblog = 0
 			var mycountbook = 0
-			
 			var nbsources = 0
 			var nbnews = 0
 			var nbmagaz = 0
@@ -173,27 +118,22 @@
 			var nbmarket = 0
 			var nbblog = 0
 			var nbbook = 0
-			
 			var mykeywords = []
-
 			$.each(feedsLibrary, function(siteId, feedsUrl) {
 				var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
 				var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 6");
 				var format = "&format=json";
 				var rssFeedPath = baseUrl.concat(queryString, format);
 				nbsources = nbsources+1
-
-
 				$.getJSON(rssFeedPath, function(response) {
 					var feedItems = response.query.results.item;
 					var div2 = document.createElement("div")
 					var mystr = ""
 					div2.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
-					div2.innerHTML += "<br><b><div class='chip'>" + feedsUrl[1] + "</div></b> "
+					div2.setAttribute("class",'mykiosk')
+					div2.innerHTML += "<b><div class='chip'>" + feedsUrl[1] + "</div></b> "
 					var mycount = 0
-
 						$.each(feedItems, function( index ) {
-							
 							if (feedsUrl[2] == "news"){nbnews = nbnews+1}
 							if (feedsUrl[2] == "periodics"){nbmagaz = nbmagaz+1}
 							if (feedsUrl[2] == "science"){nbscience = nbscience+1}
@@ -204,7 +144,7 @@
 							var article = {srcname: feedsUrl[1], title:item.title, link: item.link, content:strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,""), dict:"none"}
 							feedsresult.push(article)
 								if (mycount == 0){
-								mystr  +=  '<br><br><b><a href="'+item.link +'" target="_blank">' + item.title + "</a></b>. <br>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "<br><br>"
+								mystr  +=  '<b><a href="'+item.link +'" target="_blank">' + item.title + "</a></b>. <br>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "<br><br>"
 								mycount = 1
 									if (feedsUrl[2] == "news" && mycountnews == 0) {
 										var destdiv = document.getElementById("news-home")
@@ -251,36 +191,33 @@
 	</script>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-	
-	
 	<script>
-	function showhide(mydivname) {
-    var x = document.getElementById(mydivname);
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-	}
+		function showhide(mydivname) {
+			var x = document.getElementById(mydivname);
+			if (x.style.display === "none") {
+				x.style.display = "block";
+				} else {
+				x.style.display = "none";
+				}
+			}
 	</script>
-	
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script>
 		function splitByWords (text) {
 			var wordsArray = text.split(/\s+/);
 			return wordsArray;
-		}
+			}
 		function createWordMap (wordsArray) {
 			var wordsMap = {};
 			wordsArray.forEach(function (key) {
 			if (wordsMap.hasOwnProperty(key)) {
 				wordsMap[key]++;
-			} else {
+				} else {
 				wordsMap[key] = 1;
+				}
+			});
+			return wordsMap;
 			}
-		  });
-		return wordsMap;
-		}
 		function sortByCount (wordsMap) {
 			var finalWordsArray = [];
 			finalWordsArray = Object.keys(wordsMap).map(function(key) {
@@ -293,7 +230,7 @@
 				return b.total - a.total;
 				});
 			return finalWordsArray;
-		}
+			}
 		function showbysource()
 			{	
 			var x = document.getElementById("content");
@@ -306,7 +243,7 @@
 			x.style.display = "none"
 			var x = document.getElementById("concepts");
 			x.style.display = "none"
-		}
+			}
 		function showhome()
 			{	
 			var x = document.getElementById("content");
@@ -315,11 +252,11 @@
 			x.style.display = "block"
 			var x = document.getElementById("bysource");
 			x.style.display = "none"
-						var x = document.getElementById("talkingpoints");
+			var x = document.getElementById("talkingpoints");
 			x.style.display = "none"
 			var x = document.getElementById("concepts");
 			x.style.display = "none"
-		}
+			}
 		function showbysubject()
 			{	
 			var x = document.getElementById("bysource");
@@ -328,21 +265,29 @@
 			x.style.display = "none"
 			var x = document.getElementById("content");
 			x.style.display = "block"
-						var x = document.getElementById("talkingpoints");
+			var x = document.getElementById("talkingpoints");
 			x.style.display = "none"
 			var x = document.getElementById("concepts");
 			x.style.display = "none"
-			refreshsubject()
-		}
-		
+			}
+		function showindepth()
+			{	
+			var x = document.getElementById("bysource");
+			x.style.display = "none"
+			var x = document.getElementById("myhome");
+			x.style.display = "none"
+			var x = document.getElementById("content");
+			x.style.display = "none"
+			var x = document.getElementById("talkingpoints");
+			x.style.display = "block"
+			var x = document.getElementById("concepts");
+			x.style.display = "block"
+			}
 		function venndiagramm()
-		{
+			{
 			var keywordlength = mykeywords.length;
 			var arrayLength = feedsresult.length;
-
-
 			sets = [];
-			//d3.select("#venn").html("")
 			for (var z = 0; z< keywordlength;z++) {
 				mykeywordname = mykeywords[z]
 				mykeywordcountalone = 0
@@ -351,7 +296,7 @@
 					}
 					var keywordset = {sets: [mykeywordname.capitalize()], size: mykeywordcountalone  }
 					sets.push(keywordset)
-			}
+				}
 			for (var z = 0; z< keywordlength;z++) {
 				mykeywordname = mykeywords[z]
 				for (var y = z; y< keywordlength;y++) {
@@ -367,183 +312,150 @@
 					}
 					var keywordset = {sets: [mykeywordname.capitalize() , mykeywordname2.capitalize()], size: mykeywordcountcombo  }
 					sets.push(keywordset)
+					}
 				}
-			}
-						var chart = venn.VennDiagram()
-								.width(Math.min(screen.availWidth,650))
-								.height(Math.min(screen.availWidth,650/1.6));
-			
+			var chart = venn.VennDiagram()
+				.width(Math.min(screen.availWidth,650))
+				.height(Math.min(screen.availWidth,650/1.6));
 			d3.select("#venn").datum(sets).call(chart);
 			d3.selectAll("text").style("font-size", "11px")
-			//window.alert(keywordlength);
-			
-		}
-		
-		function refreshsubject()
-		{
-		document.getElementById('nbnews').innerHTML = nbnews
-		document.getElementById('nbmagaz').innerHTML = nbmagaz
-		document.getElementById('nbscience').innerHTML = nbscience
-		document.getElementById('nbmarket').innerHTML = nbmarket
-		document.getElementById('nbblog').innerHTML = nbblog
-		document.getElementById('nbbook').innerHTML = nbbook
-		myendTime = new Date();
-		var mytimeDiff = myendTime - mystartTime; 
-		mytimeDiff = Math.round(100* mytimeDiff /1000) /100
-		document.getElementById('coutrecap').innerHTML = '<small><font color="silver">' + (nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook) + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
-		
-		var divtoadd = document.getElementById('content');
-		var divhome = document.getElementById('subjects-home');
-		var frequentenglish = "[Article] [article] about About After don't won't can't after weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
-		frequentenglish = frequentenglish.capitalize()
-		divhome.innerHTML = "" 
-		divtoadd.innerHTML = "" 
-		var allelements = ""
-		mykeywords = []
-			var arrayLength = feedsresult.length;
-			for (var j = 0; j < arrayLength; j++) {
-			feedsresult[j].dict = "none"
 			}
-			for (var i = 0; i < arrayLength; i++) {
-				allelements += (feedsresult[i].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize()) +" "; //here
-				allelements = allelements.capitalize()
-				}
-			 var wordsArray = splitByWords(allelements);
-			 var wordsMap = createWordMap(wordsArray);
-			 var finalWordsArray = sortByCount(wordsMap);
-			 var mymaxcount = 0
+		function refreshsubject() {
+			document.getElementById('nbnews').innerHTML = nbnews
+			document.getElementById('nbmagaz').innerHTML = nbmagaz
+			document.getElementById('nbscience').innerHTML = nbscience
+			document.getElementById('nbmarket').innerHTML = nbmarket
+			document.getElementById('nbblog').innerHTML = nbblog
+			document.getElementById('nbbook').innerHTML = nbbook
+			myendTime = new Date();
+			var mytimeDiff = myendTime - mystartTime; 
+			mytimeDiff = Math.round(100* mytimeDiff /1000) /100
+			document.getElementById('coutrecap').innerHTML = '<small><font color="silver">' + (nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook) + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
+			var divtoadd = document.getElementById('content');
+			var divhome = document.getElementById('subjects-home');
+			var frequentenglish = "[Article] [article] about About After don't won't can't after could weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
+			frequentenglish = frequentenglish.capitalize()
+			divhome.innerHTML = "" 
+			divtoadd.innerHTML = "" 
+			var allelements = ""
+			mykeywords = []
+				var arrayLength = feedsresult.length;
+				for (var j = 0; j < arrayLength; j++) {
+				feedsresult[j].dict = "none"
+					}
+				for (var i = 0; i < arrayLength; i++) {
+					allelements += (feedsresult[i].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize()) +" "; //here
+					allelements = allelements.capitalize()
+					}
+				var wordsArray = splitByWords(allelements);
+				var wordsMap = createWordMap(wordsArray);
+				var finalWordsArray = sortByCount(wordsMap);
+				var mymaxcount = 0
 				for (var i = 0; i < finalWordsArray.length; i++) {
 					if (finalWordsArray[i].total > 2 && finalWordsArray[i].name.length > 4){
-
-					var mystr = ""
-					var mystrhome = ""
-					var mycount = 0
-						for (var j = 0; j < arrayLength; j++) {
-							if  ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
-								feedsresult[j].dict = finalWordsArray[i].name
-								
-								if (mycount == 0){
-									mystr  +=  '<br><br><b><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>") + "</a></b>.<br> " + feedsresult[j].content + " <font color='silver'>(" +  feedsresult[j].srcname + ")</font><br><br>"
-									mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" +  feedsresult[j].srcname + ")</font>"
-									mycount = 1
-									mykeywords.push(finalWordsArray[i].name.replace(/\s/g, '').capitalize())
-									
-									if (finalWordsArray[i].total > mymaxcount){
-									mymaxcount = finalWordsArray[i].total
-									var destdivtitle = document.getElementById('snippets')
-									destdivtitle.innerHTML = "<h2>" + '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></h2> " + feedsresult[j].content.replace('undefined', '')
+						var mystr = ""
+						var mystrhome = ""
+						var mycount = 0
+							for (var j = 0; j < arrayLength; j++) {
+								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
+									feedsresult[j].dict = finalWordsArray[i].name
+									if (mycount == 0){
+										mystr  +=  '<br><br><b><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>") + "</a></b>.<br> " + feedsresult[j].content + " <font color='silver'>(" +  feedsresult[j].srcname + ")</font><br><br>"
+										mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" +  feedsresult[j].srcname + ")</font>"
+										mycount = 1
+										mykeywords.push(finalWordsArray[i].name.replace(/\s/g, '').capitalize())
+										if (finalWordsArray[i].total > mymaxcount){
+											mymaxcount = finalWordsArray[i].total
+											var destdivtitle = document.getElementById('snippets')
+											destdivtitle.innerHTML = "<h2>" + '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></h2> " + feedsresult[j].content.replace('undefined', '')
+											}
+										} else {
+											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <font color='silver'>(" +  feedsresult[j].srcname + ")</font></a>" + "</li>"
+										}
 									}
 								}
-								else
-								{
-									mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <font color='silver'>(" +  feedsresult[j].srcname + ")</font></a>" + "</li>"
+							if (mystr == ""){} else {
+								divtoadd.innerHTML += "<div id = 'test' class='mykiosk'><b><div class='chip'>" + finalWordsArray[i].name.capitalize() + "</div></b>   " + mystr +'</div>'
+								divhome.innerHTML += "<b><div class='minichip'>" + finalWordsArray[i].total + "</div><div class='minichip'>" + finalWordsArray[i].name.capitalize() + "</b></div> " + mystrhome + "<br> "
+								//divtoadd.innerHTML += 
 								}
-								
-
-									
-							}
-						}
-						if (mystr == ""){} else {
-							divtoadd.innerHTML += "<br><b><div class='chip'>" + finalWordsArray[i].name.capitalize() + "</div></b>   "
-							divhome.innerHTML += "<b><div class='minichip'>" + finalWordsArray[i].total + "</div><div class='minichip'>" + finalWordsArray[i].name.capitalize() + "</b></div> " + mystrhome + "<br> "
-							divtoadd.innerHTML += mystr 
-								
-			
-							
-						}
 						
+						}
 					}
-
-				}
-		
-		venndiagramm();
-		}
-
-		
-		
-		
-	</script>
-	
+				venndiagramm();
+			}
+		</script>
 	</head>
-	
 	<body><center>
-	<div id="centerContainer" style="display: block">
+	
 		<div id="topmenu">
-			<br><b><a onclick="showhome()">Home</a> |
-			<a onclick="showbysource()">By Source</a> |
-			<a onclick="showbysubject()">By Subject</a>
-			</b><br><font color='white'>.</font> 
+			<div id="topmenutext">
+				<b><a onclick="showhome()">Home</a> |
+				<a onclick="showindepth()">Kiosk</a> |
+				<a onclick="showbysource()">By Source</a> |
+				<a onclick="showbysubject()">By Subject</a></b>
+			</div>
+			<div id="topmenubar">
+			</div>
 		</div>
-		<br>
-		<div id="myhome"  style="display: block">
+		<div id="scrollcontent">
+		<div id="myhome" class='mykiosk' style="display: block">
 			<div id="coutrecap"></div>
 			<div id='snippets'></div>
-
-
-			<h4><a onclick="showhide('talkingpoints')"><font color='black'>Headlines</font></a> + <a onclick="showhide('concepts')"><font color='black'>Analysis</font></a></h4>
-			
-				
-			
-			
-			
-			
 		</div>
-		<div id="content" style="display: none"></div>
-		<div id="bysource" style="display: none">
-			<h2><font color='silver'>Newspapers</font></h2>
+		<div id="content"  style="display: none"></div>
+		<div id="bysource"  style="display: none">
+			<div class='mykioskblack'><h2><font color='white'>Newspapers</font></h2></div>
 			<div id="news"></div>
-			<h2><font color='silver'>Magazines</font></h2>
+			<div class='mykioskblack'><h2><font color='white'>Magazines</font></h2></div>
 			<div id="periodics"></div>
-			<h2><font color='silver'>Science</font></h2>
+			<div class='mykioskblack'><h2><font color='white'>Science</font></h2></div>
 			<div id="science"></div>
-			<h2><font color='silver'>Markets</font></h2>
+			<div class='mykioskblack'><h2><font color='white'>Markets</font></h2></div>
 			<div id="markets"></div>
-			<h2><font color='silver'>Blogs</font></h2>
+			<div class='mykioskblack'><h2><font color='white'>Blogs</font></h2></div>
 			<div id="blogs"></div>
-			<h2><font color='silver'>Books</font></h2>
+			<div class='mykioskblack'><h2><font color='white'>Books</font></h2></div>
 			<div id="bookreviews"></div>
 		</div>
-	
+		<span id="talkingpoints" style="display: none">
+			<div class='mykiosk'>
+				<b><div class='minichip' id='nbnews'></div><div class='minichip'>Newspapers</div></b>
+				<span id="news-home"></span><br>
+			</div>
+			<div class='mykiosk'>
+				<b><div class='minichip' id='nbmagaz'></div><div class='minichip'>Magazines</b></div>
+				<span id="periodics-home"></span><br>
+			</div>
+			<div class='mykiosk'>
+				<b><div class='minichip' id='nbscience'></div><div class='minichip'>Science</b></div>
+				<span id="science-home"></span><br>
+			</div>
+			<div class='mykiosk'>
+				<b><div class='minichip' id='nbmarket'></div><div class='minichip'>Markets</b></div>
+				<span id="markets-home"></span><br>
+			</div>
+			<div class='mykiosk'>
+				<b><div class='minichip' id='nbblog'></div><div class='minichip'>Blogs</b></div>
+				<span id="blogs-home"></span><br>
+			</div>
+			<div class='mykiosk'>
+				<b><div class='minichip' id='nbbook'></div><div class='minichip'>Books</b></div>
+				<span id="bookreviews-home"></span><br>
+			</div>
+		</span>
+		<span id="concepts" style="display: none">
+			<div class='mykiosk'>
+				<h2><font color='silver'>Relationships</font></h2>
+				<div id="venn" onclick="venndiagramm()"></div>
+			</div>
+			<div class='mykiosk'>
+			<h2><font color='silver'>Talking points</font></h2>
+			<div id="subjects-home"></div>
+			</div>
+		</span>
+		<br><br><br><br><br><br><br>
 	</div>
-	<div id="talkingpoints" style="display: none">
-				<div class='mykiosk'>
-					<b><div class='minichip' id='nbnews'></div><div class='minichip'>Newspapers</div></b>
-					<span id="news-home"></span><br>
-				</div>
-				<div class='mykiosk'>
-					<b><div class='minichip' id='nbmagaz'></div><div class='minichip'>Magazines</b></div>
-					<span id="periodics-home"></span><br>
-				</div>
-				<div class='mykiosk'>
-					<b><div class='minichip' id='nbscience'></div><div class='minichip'>Science</b></div>
-					<span id="science-home"></span><br>
-				</div>
-				<div class='mykiosk'>
-					<b><div class='minichip' id='nbmarket'></div><div class='minichip'>Markets</b></div>
-					<span id="markets-home"></span><br>
-				</div>
-				<div class='mykiosk'>
-					<b><div class='minichip' id='nbblog'></div><div class='minichip'>Blogs</b></div>
-					<span id="blogs-home"></span><br>
-				</div>
-				<div class='mykiosk'>
-					<b><div class='minichip' id='nbbook'></div><div class='minichip'>Books</b></div>
-					<span id="bookreviews-home"></span><br>
-				</div>
-			</div>
-			
-			<div id="concepts" style="display: none">
-				<div class='mykiosk'>
-					<h2><font color='silver'>Relationships</font></h2>
-					<div id="venn" onclick="venndiagramm()"></div>
-				</div>
-				<div class='mykiosk'>
-				<h2><font color='silver'>Talking points</font></h2>
-				<div id="subjects-home"></div>
-				</div>
-			</div>
-			
 	</center>
 	</body>
-		
 </html>
