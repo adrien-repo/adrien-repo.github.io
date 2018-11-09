@@ -10,13 +10,21 @@
 			a:visited {text-decoration: none;color: black}
 			a:hover {text-decoration: underline}
 			a:active {text-decoration: underline}
+			.lds-ellipsis {  display: inline-block;  position: relative;  width: 32px;  height: 32px;}
+			.lds-ellipsis div {  position: absolute;  top: 13px;  width: 5px;  height: 5px;  border-radius: 50%;  background: #fff;  animation-timing-function: cubic-bezier(0, 1, 1, 0);}
+			.lds-ellipsis div:nth-child(1) {  left: 3px;  animation: lds-ellipsis1 0.6s infinite;}
+			.lds-ellipsis div:nth-child(2) {  left: 3px;  animation: lds-ellipsis2 0.6s infinite;}
+			.lds-ellipsis div:nth-child(3) {  left: 13px;  animation: lds-ellipsis2 0.6s infinite;}
+			.lds-ellipsis div:nth-child(4) {  left: 22px;  animation: lds-ellipsis3 0.6s infinite;}
+			@keyframes lds-ellipsis1 {  0% {    transform: scale(0);  }  100% {    transform: scale(1);  }}
+			@keyframes lds-ellipsis3 {  0% {    transform: scale(1);  }  100% {    transform: scale(0);  }}
+			@keyframes lds-ellipsis2 {  0% {    transform: translate(0, 0);  }  100% {    transform: translate(19px, 0);  }}
 			.chip {display: inline-block; padding: 0 15px; height: 25px; font-size: 20px; line-height: 25px; border-radius: 25px; background-color: #f1f1f1; }
 			.minichip {display: inline-block;padding: 0 8px;height: 20px;font-size: 15px;line-height: 20px;border-radius: 20px;background-color: #f1f1f1;}
 			.mykiosk{display: block;max-width: 700px; text-align: left; margin: 5px 5px; padding: 15px; border: 1px solid black; background-color: white; border-radius: 5px}
 			.mykioskblack{text-shadow: 0 0 3px black;}
 			@font-face {font-family: 'Product Sans';font-style: normal;src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');			}
 			body {text-align: center; font-family: Product Sans;}
-			
 			#topmenu {position: relative;top: 8px;max-width: 700px;}
 			#topmenutext{background-color: white;border-bottom: 1px solid black; border-radius: 5px 5px 0px 0px;margin: 5px 5px; padding: 15px;width:auto}
 			#topmenubar{background-color: white;border-bottom: 2px solid white; }
@@ -60,10 +68,10 @@
 				feed005: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
 				feed006: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty","blogs"],
 				feed007: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
-				feed008: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","periodics"],
+				//feed008: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","periodics"],
 				feed009: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
 				feed010: ["http://longform.org/feed.rss","Long Form","periodics"],
-				feed011: ["http://feeds.feedburner.com/TheAtlantic","The Atlantic","periodics"],
+				feed011: ["https://www.theatlantic.com/feed/best-of/","The Atlantic","periodics"],
 				feed012: ["http://fusion.net/feed/","Fusion","periodics"],
 				feed013: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
 				feed014: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
@@ -87,8 +95,8 @@
 				feed032: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
 				feed033: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
 				feed034: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
-				feed035: ["https://www.scientificamerican.com/feed.rss","Scientific American","science"],
-				feed036: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
+				feed035: ["http://rss.sciam.com/ScientificAmerican-Global","Scientific American","science"],
+				//feed036: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
 				feed037: ["http://stratechery.com/feed/","Stratechery","periodics"],
 				feed038: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
 				feed039: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
@@ -97,7 +105,7 @@
 				feed042: ["https://aeon.co/feed.rss","Aeon","periodics"],
 				feed043: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
 				feed044: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
-				feed045: ["http://scitation.aip.org/rss/content/aip/magazine/physicstoday/latestonlinestories;jsessionid=riTi5BaycDFvMSC0goCjE-t1.x-aip-live-02?fmt=rss","Physics Today","science"],
+				feed045: ["https://physicstoday.scitation.org/action/showFeed?type=etoc&feed=rss&jc=pto","Physics Today","science"],
 				feed046: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
 				feed047: ["https://www.mcsweeneys.net/rss","Mc Sweeneys","periodics"],
 				feed048: ["https://xkcd.com/rss.xml","XKCD","blogs"],
@@ -332,6 +340,8 @@
 			var mytimeDiff = myendTime - mystartTime; 
 			mytimeDiff = Math.round(100* mytimeDiff /1000) /100
 			document.getElementById('coutrecap').innerHTML = '<small><font color="silver">' + (nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook) + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
+			if ((nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook)>49*5){document.getElementById("loadingimg").style.display = "none"}
+			
 			var divtoadd = document.getElementById('content');
 			var divhome = document.getElementById('subjects-home');
 			var frequentenglish = "[Article] [article] about About After don't won't can't after could weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
@@ -399,11 +409,13 @@
 			<div id="topmenubar">
 			</div>
 		</div>
+		
 		<div id="scrollcontent">
 		<div id="myhome" class='mykiosk' style="display: block">
 			<div id="coutrecap"></div>
 			<div id='snippets'></div>
 		</div>
+		
 		<div id="content"  style="display: none"></div>
 		<div id="bysource"  style="display: none">
 			<div class='mykioskblack'><h2><font color='white'>Newspapers</font></h2></div>
@@ -455,6 +467,7 @@
 			<div id="subjects-home"></div>
 			</div>
 		</span>
+		<div class="lds-ellipsis" id = "loadingimg" style="display: block"><div></div><div></div><div></div><div></div></div>
 		<br><br><br><br><br><br><br>
 	</div>
 	</center>
