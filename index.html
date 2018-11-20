@@ -113,6 +113,7 @@
 				feed050: ["https://phys.org/rss-feed/breaking/","Phys Org","science"],
 				feed051: ["https://www.moonofalabama.org/index.rdf","Moon of Alabama","periodics"],
 				feed051: ["https://webb-site.com/rss.asp","Webb","markets"],
+				feed052: ["http://www.sciencemag.org/rss/news_current.xml","ScienceMag","science"],
 			};
 			var feedsresult = [];
 			var mycountnews = 0
@@ -341,7 +342,7 @@
 			var mytimeDiff = myendTime - mystartTime; 
 			mytimeDiff = Math.round(100* mytimeDiff /1000) /100
 			document.getElementById('coutrecap').innerHTML = '<small><font color="silver">' + (nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook) + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
-			if ((nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook)>49*5){document.getElementById("loadingimg").style.display = "none"}
+			if ((nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook)>51*5){document.getElementById("loadingimg").style.display = "none"}
 			
 			var divtoadd = document.getElementById('content');
 			var divhome = document.getElementById('subjects-home');
