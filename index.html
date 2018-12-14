@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -458,6 +459,46 @@
 				<b><div class='minichip' id='nbbook'></div><div class='minichip'>Books</b></div>
 				<span id="bookreviews-home"></span><br>
 			</div>
+			<span id="chart" >
+				<div class='mykiosk'>
+					<a onclick="showhide('widget_spx')"><h3><font color='silver'>S&P500 </font></h3></a>
+						<div id="widget_spx" style="display:none">
+						<div class="tradingview-widget-container">
+								<div id="tradingview_sp500"></div>
+								<div class="tradingview-widget-copyright"></div>
+								<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+								<script type="text/javascript">
+									new TradingView.widget(	{"height": Math.min(screen.availWidth,650/1.6),"width": Math.min(screen.availWidth,650),"symbol": "OANDA:SPX500USD","interval": "5","timezone": "Etc/UTC","theme": "Light","style": "1","locale": "en","toolbar_bg": "#f1f3f6","enable_publishing": false,"allow_symbol_change": true,"show_popup_button": true,"save_image": false,"container_id": "tradingview_sp500"}
+									);
+							  </script>
+						</div>
+						</div>
+					<a onclick="showhide('widget_cl')"><h3><font color='silver'>Crude Oil </font></h3></a>
+						<div id="widget_cl" style="display:none">
+						<div class="tradingview-widget-container">
+								<div id="tradingview_cl"></div>
+								<div class="tradingview-widget-copyright"></div>
+								<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+								<script type="text/javascript">
+									new TradingView.widget(	{"height": Math.min(screen.availWidth,650/1.6),"width": Math.min(screen.availWidth,650),"symbol": "TVC:USOIL","interval": "5","timezone": "Etc/UTC","theme": "Light","style": "1","locale": "en","toolbar_bg": "#f1f3f6","enable_publishing": false,"allow_symbol_change": true,"show_popup_button": true,"save_image": false,"container_id": "tradingview_cl"										}
+									);
+							  </script>
+						</div>
+						</div>					
+					<a onclick="showhide('widget_xau')"><h3><font color='silver'>Gold </font></h3></a>
+						<div id="widget_xau" style="display:none">
+						<div class="tradingview-widget-container">
+								<div id="tradingview_xau"></div>
+								<div class="tradingview-widget-copyright"></div>
+								<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+								<script type="text/javascript">
+									new TradingView.widget(	{"height": Math.min(screen.availWidth,650/1.6),"width": Math.min(screen.availWidth,650),"symbol": "TVC:GOLD","interval": "5","timezone": "Etc/UTC","theme": "Light","style": "1","locale": "en","toolbar_bg": "#f1f3f6","enable_publishing": false,"allow_symbol_change": true,"show_popup_button": true,"save_image": false,"container_id": "tradingview_xau"}
+									);
+							  </script>
+						</div>
+						</div>					
+				</div>
+			</span>
 		</span>
 		<span id="concepts" style="display: none">
 			<div class='mykiosk'>
@@ -469,6 +510,7 @@
 			<div id="subjects-home"></div>
 			</div>
 		</span>
+
 		<div class="lds-ellipsis" id = "loadingimg" style="display: block"><div></div><div></div><div></div><div></div></div>
 		<br><br><br><br><br><br><br>
 	</div>
