@@ -1,67 +1,161 @@
-
-<!doctype html>
-<html lang="en">
-	<head>
+<!DOCTYPE html><html lang='en' class=''>
+<head>
+	<meta charset='UTF-8'><meta name="robots" content="noindex">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>The Happy Bots</title>
-		<style>
-			::-webkit-scrollbar {width: 0px;}
-			a {cursor: pointer;}
-			a:link {text-decoration: none; color: black}
-			a:visited {text-decoration: none;color: black}
-			a:hover {text-decoration: underline}
-			a:active {text-decoration: underline}
-			.lds-ellipsis {  display: inline-block;  position: relative;  width: 32px;  height: 32px;}
-			.lds-ellipsis div {  position: absolute;  top: 13px;  width: 5px;  height: 5px;  border-radius: 50%;  background: #fff;  animation-timing-function: cubic-bezier(0, 1, 1, 0);}
-			.lds-ellipsis div:nth-child(1) {  left: 3px;  animation: lds-ellipsis1 0.6s infinite;}
-			.lds-ellipsis div:nth-child(2) {  left: 3px;  animation: lds-ellipsis2 0.6s infinite;}
-			.lds-ellipsis div:nth-child(3) {  left: 13px;  animation: lds-ellipsis2 0.6s infinite;}
-			.lds-ellipsis div:nth-child(4) {  left: 22px;  animation: lds-ellipsis3 0.6s infinite;}
-			@keyframes lds-ellipsis1 {  0% {    transform: scale(0);  }  100% {    transform: scale(1);  }}
-			@keyframes lds-ellipsis3 {  0% {    transform: scale(1);  }  100% {    transform: scale(0);  }}
-			@keyframes lds-ellipsis2 {  0% {    transform: translate(0, 0);  }  100% {    transform: translate(19px, 0);  }}
-			.chip {display: inline-block; padding: 0 15px; height: 25px; font-size: 20px; line-height: 25px; border-radius: 25px; background-color: #f1f1f1; }
-			.minichip {display: inline-block;padding: 0 8px;height: 20px;font-size: 15px;line-height: 20px;border-radius: 20px;background-color: #f1f1f1;}
-			.mykiosk{display: block;max-width: 700px; text-align: left; margin: 5px 5px; padding: 15px; border: 1px solid black; background-color: white; border-radius: 5px}
-			.mykioskblack{text-shadow: 0 0 3px black;}
-			@font-face {font-family: 'Product Sans';font-style: normal;src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/productsans/v5/HYvgU2fE2nRJvZ5JFAumwegdm0LZdjqr5-oayXSOefg.woff2) format('woff2');			}
-			body {text-align: center; font-family: Product Sans;}
-			#topmenu {position: relative;top: 8px;max-width: 700px;}
-			#topmenutext{background-color: white;border: 1px solid black; border-radius: 5px 5px 0px 0px;margin: 5px 5px; padding: 15px;width:auto}
-			#topmenubar{background-color: white;border-bottom: 2px solid white; }
-			#scrollcontent{position: relative;top: 15px;overflow: auto; max-height: 90vh;max-width: 700px;}
-			#venn {background-color: #f7f7f7;}
-		</style>
-		<script>
-			String.prototype.capitalize = function() {
-				return this.charAt(0).toUpperCase() + this.slice(1);
-			}	
-		</script>
-		<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-		<script src="https://d3js.org/d3.v4.min.js"></script>
-		<script src="http://www.thehappybots.com/venn.js"></script>
-		<script>
-			$.getJSON("https://query.yahooapis.com/v1/public/yql", {
-			q: "select * from json where url='https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=de-DE'",
-			format: "json"
-			},
-			function (data) {
-				if (data.query.results) {
-					suffix = data.query.results.json.images.url;
-					document.body.style.background=  'url("https://www.bing.com' + suffix + '"';
-					document.body.style.backgroundSize='auto';
-					}
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
+	<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+	<style>
+		html, body {font-family: Roboto;}
+		a:link {text-decoration: none; color: black}
+		a:visited {text-decoration: none;color: black}
+		a:hover {text-decoration: underline}
+		a:active {text-decoration: underline}
+		.feed {margin: auto;}
+		.feed li {  background-color: white; align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;}
+		.feed li a {  margin: 0;  padding: 0.5em;}
+		.feed li:hover {  background-color: #f7f7f7;}
+		.card {border: 1px solid white;  border-radius: 0.5em; margin: 0.5em; background-color: #f7f7f7;}
+		@media only screen and (min-width: 780px) {  .feed {    width: 900px; }}
+		@media only screen and (min-width: 680px) and (max-width: 779px) {  .feed {    width: 600px;  }}
+		@media only screen and (min-width: 480px) and (max-width: 679px) {  .feed {    width: 400px;  }}
+		@media only screen and (min-width: 320px) and (max-width: 479px) {  .feed {    width: 300px;  }}
+		@media only screen and (max-width: 319px) {  .feed {    width: 200px;  }}
+		.wrapper {  align-items: center;  display: flex;  flex-direction: column;  margin: auto;}
+		
+		.tab {  overflow: hidden;  border: 1px solid white;  background-color: white;}
+		.tab button {  background-color: inherit;  float: left;  border: none;  outline: none;  cursor: pointer;  padding: 14px 16px;  transition: 0.3s;  font-size: 17px;}
+		.tab button:hover {  background-color: #f7f7f7;}
+		.tab button.active {  background-color: #f7f7f7;}
+		.tabcontent {  display: none;  padding: 6px 12px;  -webkit-animation: fadeEffect 1s;  animation: fadeEffect 1s;}
+		@-webkit-keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
+		@keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
+
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="feed">
+			
+			<div class="tab">
+			  <button class="tablinks" onclick="opentab(event, 'home')" id="homebtn">Home</button>
+			  <button class="tablinks" onclick="opentab(event, 'news')">News</button>
+			  <button class="tablinks" onclick="opentab(event, 'markets')">Markets</button>
+			  <button class="tablinks" onclick="opentab(event, 'science')">Science</button>
+			  <button class="tablinks" onclick="opentab(event, 'periodics')">Periodics</button>
+			  <button class="tablinks" onclick="opentab(event, 'bookreviews')">Books</button>
+			  <button class="tablinks" onclick="opentab(event, 'blogs')">Blogs</button>
+			  
+			</div>
+
+			<div id="home" class="tabcontent">
+							<div id='snippets'></div>
+							<br>
+							
+						<div id="content"></div>
+						<br>
+						<br>
+						<br>
+						<div id="progressline"></div>
+						
+			</div>
+
+			
+			  <div id="news" class="tabcontent"><h4>News</h4></div>
+			<div id="markets" class="tabcontent"><h4>Markets</h4></div>
+			<div id="science" class="tabcontent"><h4>Science</h4></div>
+			<div id="periodics" class="tabcontent"><h4>Periodics</h4></div>
+			<div id="bookreviews" class="tabcontent"><h4>Book reviews</h4></div>
+			<div id="blogs" class="tabcontent"><h4>Blogs</h4></div>
+			
+
+			
+			
+
+			
+		</div>
+	</div>
+
+	<script>
+function opentab(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+
+opentab(event, 'home');
+</script>
+   
+   
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
+<script>
+function showhide(mydiv) {
+  var x = document.getElementById(mydiv);
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+function strip(html){
+	var tmp = document.createElement("DIV");
+	tmp.innerHTML = html;
+	return tmp.textContent||tmp.innerText;
+	}
+
+</script>
+<script>
+	String.prototype.capitalize = function() {
+		return this.charAt(0).toUpperCase() + this.slice(1);
+	}	
+	
+			function splitByWords (text) {
+			var wordsArray = text.split(/\s+/);
+			return wordsArray;
+			}
+			
+					function createWordMap (wordsArray) {
+			var wordsMap = {};
+			wordsArray.forEach(function (key) {
+			if (wordsMap.hasOwnProperty(key)) {
+				wordsMap[key]++;
+				} else {
+				wordsMap[key] = 1;
 				}
-			);
-		</script>
-		<script>
-			mystartTime = new Date();
-			function strip(html){
-				var tmp = document.createElement("DIV");
-				tmp.innerHTML = html;
-				return tmp.textContent||tmp.innerText;
-				}
-			var feedsLibrary = {
+			});
+			return wordsMap;
+			}
+		function sortByCount (wordsMap) {
+			var finalWordsArray = [];
+			finalWordsArray = Object.keys(wordsMap).map(function(key) {
+				return {
+					name: key,
+					total: wordsMap[key]
+					};
+				});
+				finalWordsArray.sort(function(a, b) {
+				return b.total - a.total;
+				});
+			return finalWordsArray;
+			}
+</script>
+
+<script id="rendered-js">
+
+$(function () {
+//link, title, content, contentSnippet
+//https://toolkit.sekando.com/docs/en/feednami
+	var feedsLibrary = {
 				feed001: ["https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss","Bloomberg - The Editors","news"],
 				feed002: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
 				feed003: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
@@ -69,7 +163,6 @@
 				feed005: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
 				feed006: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty","blogs"],
 				feed007: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
-				//feed008: ["http://www.latimes.com/rss2.0.xml","Los Angeles Times","periodics"],
 				feed009: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
 				feed010: ["http://longform.org/feed.rss","Long Form","periodics"],
 				feed011: ["https://www.theatlantic.com/feed/best-of/","The Atlantic","periodics"],
@@ -97,7 +190,6 @@
 				feed033: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
 				feed034: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
 				feed035: ["http://rss.sciam.com/ScientificAmerican-Global","Scientific American","science"],
-				//feed036: ["http://rss.liberation.fr/rss/latest/","Liberation","news"],
 				feed037: ["http://stratechery.com/feed/","Stratechery","periodics"],
 				feed038: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
 				feed039: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
@@ -115,241 +207,48 @@
 				feed051: ["https://www.moonofalabama.org/index.rdf","Moon of Alabama","periodics"],
 				feed051: ["https://webb-site.com/rss.asp","Webb","markets"],
 				feed052: ["http://www.sciencemag.org/rss/news_current.xml","ScienceMag","science"],
-			};
-			var feedsresult = [];
-			var mycountnews = 0
-			var mycountmagaz = 0
-			var mycountscience = 0
-			var mycountmarket = 0
-			var mycountblog = 0
-			var mycountbook = 0
-			var nbsources = 0
-			var nbnews = 0
-			var nbmagaz = 0
-			var nbscience = 0
-			var nbmarket = 0
-			var nbblog = 0
-			var nbbook = 0
-			var mykeywords = []
-			$.each(feedsLibrary, function(siteId, feedsUrl) {
-				var baseUrl = "http://query.yahooapis.com/v1/public/yql?q=";
-				var queryString = encodeURI("SELECT * FROM feed WHERE url='" + feedsUrl[0] + "' LIMIT 6");
-				var format = "&format=json";
-				var rssFeedPath = baseUrl.concat(queryString, format);
-				nbsources = nbsources+1
-				$.getJSON(rssFeedPath, function(response) {
-					var feedItems = response.query.results.item;
-					var div2 = document.createElement("div")
-					var mystr = ""
-					div2.setAttribute("id",feedsUrl[1].replace(/\s/g, ''))
-					div2.setAttribute("class",'mykiosk')
-					div2.innerHTML += "<b><div class='chip'>" + feedsUrl[1] + "</div></b> "
-					var mycount = 0
-						$.each(feedItems, function( index ) {
-							if (feedsUrl[2] == "news"){nbnews = nbnews+1}
-							if (feedsUrl[2] == "periodics"){nbmagaz = nbmagaz+1}
-							if (feedsUrl[2] == "science"){nbscience = nbscience+1}
-							if (feedsUrl[2] == "markets"){nbmarket = nbmarket+1}
-							if (feedsUrl[2] == "blogs"){nbblog = nbblog+1}
-							if (feedsUrl[2] == "bookreviews"){nbbook = nbbook+1}
-							var item = feedItems[index];
-							var article = {srcname: feedsUrl[1], title:item.title, link: item.link, content:strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,""), dict:"none"}
-							feedsresult.push(article)
-								if (mycount == 0){
-								mystr  +=  '<b><a href="'+item.link +'" target="_blank">' + item.title + "</a></b>. <br>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "<br><br>"
-								mycount = 1
-									if (feedsUrl[2] == "news" && mycountnews == 0) {
-										var destdiv = document.getElementById("news-home")
-										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
-										mycountnews = 1
-									}
-									if (feedsUrl[2] == "periodics" && mycountmagaz == 0) {
-										var destdiv = document.getElementById("periodics-home")
-										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
-										mycountmagaz = 1
-									}
-									if (feedsUrl[2] == "science" && mycountscience == 0) {
-										var destdiv = document.getElementById("science-home")
-										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
-										mycountscience = 1
-									}
-									if (feedsUrl[2] == "markets" && mycountmarket == 0) {
-										var destdiv = document.getElementById("markets-home")
-										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
-										mycountmarket = 1
-									}
-									if (feedsUrl[2] == "blogs" && mycountblog == 0) {
-										var destdiv = document.getElementById("blogs-home")
-										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
-										mycountblog = 1
-									}
-									if (feedsUrl[2] == "bookreviews" && mycountbook == 0) {
-										var destdiv = document.getElementById("bookreviews-home")
-										destdiv.innerHTML = "<font color='silver'>" + feedsUrl[1] +'</font><b><h3><a href="'+item.link +'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>.</b></h3>" + strip(item.description).substring(0,500).replace(/(\r\n|\n|\r)/gm,"").replace('undefined', '')
-										mycountbook = 1
-									}
-								}
-								else
-								{
-									mystr  += '<li><a href="'+item.link+'" target="_blank">' + item.title.replace(/<strong>/g,'') + "</a>" + "</li>"
-								}
-							});
-							div2.innerHTML +=  mystr 
-							var sourcediv = document.getElementById(feedsUrl[2])
-							sourcediv.appendChild(div2)
-							refreshsubject()
+	}
+	var feedsresult = [];
+	mystartTime = new Date();
+	var nbarticles = 0
+	var nbsources = 0
+	
+	$.each(feedsLibrary, function(siteId, feedsUrl) {
+		feednami.loadGoogleFormat(feedsUrl[0], function(result){
+			if (result.error) {
+				console.log(result.error);
+			} else {
+				nbsources = nbsources +1 
+				var elements = result.feed.entries.slice(0, 10)
+				var div = document.createElement("div");
+				div.className = "card"
+				div.setAttribute("id", feedsUrl[1])
+				div.setAttribute('onclick','showhide("'+feedsUrl[1]+"-child"+'");');
+				div.innerHTML = '<span style="margin: 0; padding: 0.5em;">' + elements[0].title.replace(/<strong>/g,'') + ' <small><font color="silver">(' + feedsUrl[1] + ')</font></small></span><br>'
+				var divchild = document.createElement("div");
+				divchild.setAttribute("id", feedsUrl[1]+"-child")
+				divchild.style.display = "none"
+				var list = [];
+				$(elements).each(function (index, element) {
+					divchild.innerHTML += "<li><a href='" + element.link + "'>" + element.title.replace(/<strong>/g,'') + '<br><font color="#a8a8a8">' + strip(element.content).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "</font></a></li>";
+					var article = {srcname: feedsUrl[1], title:element.title, link: element.link, content:strip(element.content).substring(0,1000).replace(/(\r\n|\n|\r)/gm,""), dict:"none"}
+					feedsresult.push(article)
+					nbarticles = nbarticles + 1
 				});
-			});
-	</script>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-	<script>
-		function showhide(mydivname) {
-			var x = document.getElementById(mydivname);
-			if (x.style.display === "none") {
-				x.style.display = "block";
-				} else {
-				x.style.display = "none";
-				}
-			}
-	</script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script>
-		function splitByWords (text) {
-			var wordsArray = text.split(/\s+/);
-			return wordsArray;
-			}
-		function createWordMap (wordsArray) {
-			var wordsMap = {};
-			wordsArray.forEach(function (key) {
-			if (wordsMap.hasOwnProperty(key)) {
-				wordsMap[key]++;
-				} else {
-				wordsMap[key] = 1;
-				}
-			});
-			return wordsMap;
-			}
-		function sortByCount (wordsMap) {
-			var finalWordsArray = [];
-			finalWordsArray = Object.keys(wordsMap).map(function(key) {
-				return {
-					name: key,
-					total: wordsMap[key]
-					};
-				});
-				finalWordsArray.sort(function(a, b) {
-				return b.total - a.total;
-				});
-			return finalWordsArray;
-			}
-		function showbysource()
-			{	
-			var x = document.getElementById("content");
-			x.style.display = "none"
-			var x = document.getElementById("myhome");
-			x.style.display = "none"
-			var x = document.getElementById("bysource");
-			x.style.display = "block"
-			var x = document.getElementById("talkingpoints");
-			x.style.display = "none"
-			var x = document.getElementById("concepts");
-			x.style.display = "none"
-			}
-		function showhome()
-			{	
-			var x = document.getElementById("content");
-			x.style.display = "none"
-			var x = document.getElementById("myhome");
-			x.style.display = "block"
-			var x = document.getElementById("bysource");
-			x.style.display = "none"
-			var x = document.getElementById("talkingpoints");
-			x.style.display = "none"
-			var x = document.getElementById("concepts");
-			x.style.display = "none"
-			}
-		function showbysubject()
-			{	
-			var x = document.getElementById("bysource");
-			x.style.display = "none"
-			var x = document.getElementById("myhome");
-			x.style.display = "none"
-			var x = document.getElementById("content");
-			x.style.display = "block"
-			var x = document.getElementById("talkingpoints");
-			x.style.display = "none"
-			var x = document.getElementById("concepts");
-			x.style.display = "none"
-			}
-		function showindepth()
-			{	
-			var x = document.getElementById("bysource");
-			x.style.display = "none"
-			var x = document.getElementById("myhome");
-			x.style.display = "none"
-			var x = document.getElementById("content");
-			x.style.display = "none"
-			var x = document.getElementById("talkingpoints");
-			x.style.display = "block"
-			var x = document.getElementById("concepts");
-			x.style.display = "block"
-			}
-		function venndiagramm()
-			{
-			var keywordlength = mykeywords.length;
-			var arrayLength = feedsresult.length;
-			sets = [];
-			for (var z = 0; z< keywordlength;z++) {
-				mykeywordname = mykeywords[z]
-				mykeywordcountalone = 0
-					for (var j = 0; j < arrayLength; j++) {
-						mykeywordcountalone = mykeywordcountalone + Math.max(feedsresult[j].title.indexOf(mykeywordname),0)
-					}
-					var keywordset = {sets: [mykeywordname.capitalize()], size: mykeywordcountalone  }
-					sets.push(keywordset)
-				}
-			for (var z = 0; z< keywordlength;z++) {
-				mykeywordname = mykeywords[z]
-				for (var y = z; y< keywordlength;y++) {
-					mykeywordname2 = mykeywords[y]
-					mykeywordcountcombo = 0
-					for (var j = 0; j < arrayLength; j++) {
-						if (Math.max(feedsresult[j].title.indexOf(mykeywordname),0) >0){
-							if (Math.max(feedsresult[j].title.indexOf(mykeywordname2),0) >0){
-								mykeywordcountcombo = mykeywordcountcombo + Math.max(feedsresult[j].title.indexOf(mykeywordname),0) + Math.max(feedsresult[j].title.indexOf(mykeywordname2),0)
-								
-							}
-						}
-					}
-					var keywordset = {sets: [mykeywordname.capitalize() , mykeywordname2.capitalize()], size: mykeywordcountcombo  }
-					sets.push(keywordset)
-					}
-				}
-			var chart = venn.VennDiagram()
-				.width(Math.min(screen.availWidth,650))
-				.height(Math.min(screen.availWidth,650/1.6));
-			d3.select("#venn").datum(sets).call(chart);
-			d3.selectAll("text").style("font-size", "11px")
-			}
-		function refreshsubject() {
-			document.getElementById('nbnews').innerHTML = nbnews
-			document.getElementById('nbmagaz').innerHTML = nbmagaz
-			document.getElementById('nbscience').innerHTML = nbscience
-			document.getElementById('nbmarket').innerHTML = nbmarket
-			document.getElementById('nbblog').innerHTML = nbblog
-			document.getElementById('nbbook').innerHTML = nbbook
-			myendTime = new Date();
-			var mytimeDiff = myendTime - mystartTime; 
-			mytimeDiff = Math.round(100* mytimeDiff /1000) /100
-			document.getElementById('coutrecap').innerHTML = '<small><font color="silver">' + (nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook) + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
-			if ((nbnews + nbmagaz + nbscience + nbmarket + nbblog + nbbook)>51*5){document.getElementById("loadingimg").style.display = "none"}
+				div.appendChild(divchild);
+				document.getElementById(feedsUrl[2]).appendChild(div);
+				
+				
+				
+				
+				
+				
+				
+				var divtoadd = document.getElementById('content');
 			
-			var divtoadd = document.getElementById('content');
-			var divhome = document.getElementById('subjects-home');
-			var frequentenglish = "[Article] [article] about About After don't won't can't after could weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
+			var frequentenglish = "[Article] [article] about Exponent Podcast First About After don't won't can't after Should could should weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
 			frequentenglish = frequentenglish.capitalize()
-			divhome.innerHTML = "" 
+			
 			divtoadd.innerHTML = "" 
 			var allelements = ""
 			mykeywords = []
@@ -364,9 +263,9 @@
 				var wordsArray = splitByWords(allelements);
 				var wordsMap = createWordMap(wordsArray);
 				var finalWordsArray = sortByCount(wordsMap);
-				var mymaxcount = 0
+				var mymaxcount = 5
 				for (var i = 0; i < finalWordsArray.length; i++) {
-					if (finalWordsArray[i].total > 2 && finalWordsArray[i].name.length > 4){
+					if (finalWordsArray[i].total > 4 && finalWordsArray[i].name.length > 4){
 						var mystr = ""
 						var mystrhome = ""
 						var mycount = 0
@@ -374,8 +273,8 @@
 								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
 									feedsresult[j].dict = finalWordsArray[i].name
 									if (mycount == 0){
-										mystr  +=  '<br><br><b><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>") + "</a></b>.<br> " + feedsresult[j].content + " <font color='silver'>(" +  feedsresult[j].srcname + ")</font><br><br>"
-										mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <font color='silver'>(" +  feedsresult[j].srcname + ")</font>"
+										mystr  +=  '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
+										mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small>"
 										mycount = 1
 										mykeywords.push(finalWordsArray[i].name.replace(/\s/g, '').capitalize())
 										if (finalWordsArray[i].total > mymaxcount){
@@ -384,136 +283,42 @@
 											destdivtitle.innerHTML = "<h2>" + '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></h2> " + feedsresult[j].content.replace('undefined', '')
 											}
 										} else {
-											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <font color='silver'>(" +  feedsresult[j].srcname + ")</font></a>" + "</li>"
+											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
 										}
 									}
 								}
 							if (mystr == ""){} else {
-								divtoadd.innerHTML += "<div id = 'test' class='mykiosk'><b><div class='chip'>" + finalWordsArray[i].name.capitalize() + "</div></b>   " + mystr +'</div>'
-								divhome.innerHTML += "<b><div class='minichip'>" + finalWordsArray[i].total + "</div><div class='minichip'>" + finalWordsArray[i].name.capitalize() + "</b></div> " + mystrhome + "<br> "
-								//divtoadd.innerHTML += 
+								divtoadd.innerHTML += "<div id = '" +finalWordsArray[i].name.capitalize() +"' class='card' ><div onclick='showhide(\"" + finalWordsArray[i].name.capitalize() +"-subjectchild\");'>" + "<span style='margin: 0; padding: 0.5em;'>" + finalWordsArray[i].name.capitalize() + "</span><br></div>   " + "<div id='" +finalWordsArray[i].name.capitalize() + "-subjectchild' style='display: none'>" + mystr +'</div></div>'
+								
+								myendTime = new Date();
+						var mytimeDiff = myendTime - mystartTime; 
+						mytimeDiff = Math.round(100* mytimeDiff /1000) /100
+						document.getElementById('progressline').innerHTML = '<small><font color="silver">' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
+			
 								}
 						
 						}
 					}
-				venndiagramm();
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			}
-		</script>
-	</head>
-	<body><center>
-	
-		<div id="topmenu">
-			<div id="topmenutext">
-				<b><a onclick="showhome()">Home</a> |
-				<a onclick="showindepth()">News Stand</a> |
-				<a onclick="showbysource()">By Source</a> |
-				<a onclick="showbysubject()">By Subject</a></b>
-			</div>
-			<div id="topmenubar">
-			</div>
-		</div>
-		
-		<div id="scrollcontent">
-		<div id="myhome" class='mykiosk' style="display: block">
-			<div id="coutrecap"></div>
-			<div id='snippets'></div>
-		</div>
-		
-		<div id="content"  style="display: none"></div>
-		<div id="bysource"  style="display: none">
-			<div class='mykioskblack'><h2><font color='white'>Newspapers</font></h2></div>
-			<div id="news"></div>
-			<div class='mykioskblack'><h2><font color='white'>Magazines</font></h2></div>
-			<div id="periodics"></div>
-			<div class='mykioskblack'><h2><font color='white'>Science</font></h2></div>
-			<div id="science"></div>
-			<div class='mykioskblack'><h2><font color='white'>Markets</font></h2></div>
-			<div id="markets"></div>
-			<div class='mykioskblack'><h2><font color='white'>Blogs</font></h2></div>
-			<div id="blogs"></div>
-			<div class='mykioskblack'><h2><font color='white'>Books</font></h2></div>
-			<div id="bookreviews"></div>
-		</div>
-		<span id="talkingpoints" style="display: none">
-			<div class='mykiosk'>
-				<b><div class='minichip' id='nbnews'></div><div class='minichip'>Newspapers</div></b>
-				<span id="news-home"></span><br>
-			</div>
-			<div class='mykiosk'>
-				<b><div class='minichip' id='nbmagaz'></div><div class='minichip'>Magazines</b></div>
-				<span id="periodics-home"></span><br>
-			</div>
-			<div class='mykiosk'>
-				<b><div class='minichip' id='nbscience'></div><div class='minichip'>Science</b></div>
-				<span id="science-home"></span><br>
-			</div>
-			<div class='mykiosk'>
-				<b><div class='minichip' id='nbmarket'></div><div class='minichip'>Markets</b></div>
-				<span id="markets-home"></span><br>
-			</div>
-			<div class='mykiosk'>
-				<b><div class='minichip' id='nbblog'></div><div class='minichip'>Blogs</b></div>
-				<span id="blogs-home"></span><br>
-			</div>
-			<div class='mykiosk'>
-				<b><div class='minichip' id='nbbook'></div><div class='minichip'>Books</b></div>
-				<span id="bookreviews-home"></span><br>
-			</div>
-			<span id="chart" >
-				<div class='mykiosk'>
-					<a onclick="showhide('widget_spx')"><h3><font color='silver'>S&P500 </font></h3></a>
-						<div id="widget_spx" style="display:none">
-						<div class="tradingview-widget-container">
-								<div id="tradingview_sp500"></div>
-								<div class="tradingview-widget-copyright"></div>
-								<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-								<script type="text/javascript">
-									new TradingView.widget(	{"height": Math.min(screen.availWidth,650/1.6),"width": Math.min(screen.availWidth,650),"symbol": "OANDA:SPX500USD","interval": "5","timezone": "Etc/UTC","theme": "Light","style": "1","locale": "en","toolbar_bg": "#f1f3f6","enable_publishing": false,"allow_symbol_change": true,"show_popup_button": true,"save_image": false,"container_id": "tradingview_sp500"}
-									);
-							  </script>
-						</div>
-						</div>
-					<a onclick="showhide('widget_cl')"><h3><font color='silver'>Crude Oil </font></h3></a>
-						<div id="widget_cl" style="display:none">
-						<div class="tradingview-widget-container">
-								<div id="tradingview_cl"></div>
-								<div class="tradingview-widget-copyright"></div>
-								<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-								<script type="text/javascript">
-									new TradingView.widget(	{"height": Math.min(screen.availWidth,650/1.6),"width": Math.min(screen.availWidth,650),"symbol": "TVC:USOIL","interval": "5","timezone": "Etc/UTC","theme": "Light","style": "1","locale": "en","toolbar_bg": "#f1f3f6","enable_publishing": false,"allow_symbol_change": true,"show_popup_button": true,"save_image": false,"container_id": "tradingview_cl"										}
-									);
-							  </script>
-						</div>
-						</div>					
-					<a onclick="showhide('widget_xau')"><h3><font color='silver'>Gold </font></h3></a>
-						<div id="widget_xau" style="display:none">
-						<div class="tradingview-widget-container">
-								<div id="tradingview_xau"></div>
-								<div class="tradingview-widget-copyright"></div>
-								<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-								<script type="text/javascript">
-									new TradingView.widget(	{"height": Math.min(screen.availWidth,650/1.6),"width": Math.min(screen.availWidth,650),"symbol": "TVC:GOLD","interval": "5","timezone": "Etc/UTC","theme": "Light","style": "1","locale": "en","toolbar_bg": "#f1f3f6","enable_publishing": false,"allow_symbol_change": true,"show_popup_button": true,"save_image": false,"container_id": "tradingview_xau"}
-									);
-							  </script>
-						</div>
-						</div>					
-				</div>
-			</span>
-		</span>
-		<span id="concepts" style="display: none">
-			<div class='mykiosk'>
-				<h2><font color='silver'>Relationships</font></h2>
-				<div id="venn" onclick="venndiagramm()"></div>
-			</div>
-			<div class='mykiosk'>
-			<h2><font color='silver'>Talking points</font></h2>
-			<div id="subjects-home"></div>
-			</div>
-		</span>
+		});
+	});
+});
+          
+</script>
 
-		<div class="lds-ellipsis" id = "loadingimg" style="display: block"><div></div><div></div><div></div><div></div></div>
-		<br><br><br><br><br><br><br>
-	</div>
-	</center>
-	</body>
+</body>
 </html>
