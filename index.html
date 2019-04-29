@@ -2,9 +2,11 @@
 <head>
 	<meta charset='UTF-8'><meta name="robots" content="noindex">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="The Happy Bots">
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+	<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
 	<style>
 		html, body {font-family: Roboto;}
 		a:link {text-decoration: none; color: black}
@@ -15,14 +17,13 @@
 		.feed li {  background-color: white; align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;}
 		.feed li a {  margin: 0;  padding: 0.5em;}
 		.feed li:hover {  background-color: #f7f7f7;}
-		.card {border: 1px solid white;  border-radius: 0.5em; margin: 0.5em; background-color: #f7f7f7;}
+		.card {border: 1px solid white;  border-radius: 0.5em; margin: 0.5em; background-color: #f7f7f7;cursor: pointer}
 		@media only screen and (min-width: 780px) {  .feed {    width: 900px; }}
 		@media only screen and (min-width: 680px) and (max-width: 779px) {  .feed {    width: 600px;  }}
 		@media only screen and (min-width: 480px) and (max-width: 679px) {  .feed {    width: 400px;  }}
 		@media only screen and (min-width: 320px) and (max-width: 479px) {  .feed {    width: 300px;  }}
 		@media only screen and (max-width: 319px) {  .feed {    width: 200px;  }}
 		.wrapper {  align-items: center;  display: flex;  flex-direction: column;  margin: auto;}
-		
 		.tab {  overflow: hidden;  border: 1px solid white;  background-color: white;}
 		.tab button {  background-color: inherit;  float: left;  border: none;  outline: none;  cursor: pointer;  padding: 14px 16px;  transition: 0.3s;  font-size: 17px;}
 		.tab button:hover {  background-color: #f7f7f7;}
@@ -30,189 +31,162 @@
 		.tabcontent {  display: none;  padding: 6px 12px;  -webkit-animation: fadeEffect 1s;  animation: fadeEffect 1s;}
 		@-webkit-keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		@keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
-
 	</style>
 </head>
 <body>
 	<div class="wrapper">
 		<div class="feed">
-			
 			<div class="tab">
-			  <button class="tablinks" onclick="opentab(event, 'home')" id="homebtn">Home</button>
-			  <button class="tablinks" onclick="opentab(event, 'news')">News</button>
-			  <button class="tablinks" onclick="opentab(event, 'markets')">Markets</button>
-			  <button class="tablinks" onclick="opentab(event, 'science')">Science</button>
-			  <button class="tablinks" onclick="opentab(event, 'periodics')">Periodics</button>
-			  <button class="tablinks" onclick="opentab(event, 'bookreviews')">Books</button>
-			  <button class="tablinks" onclick="opentab(event, 'blogs')">Blogs</button>
-			  
+				<button class="tablinks" onclick="opentab(event, 'home')" id="homebtn">Home</button>
+				<button class="tablinks" onclick="opentab(event, 'news')">News</button>
+				<button class="tablinks" onclick="opentab(event, 'markets')">Markets</button>
+				<button class="tablinks" onclick="opentab(event, 'science')">Science</button>
+				<button class="tablinks" onclick="opentab(event, 'periodics')">Periodics</button>
+				<button class="tablinks" onclick="opentab(event, 'bookreviews')">Books</button>
+				<button class="tablinks" onclick="opentab(event, 'blogs')">Blogs</button>
 			</div>
-
 			<div id="home" class="tabcontent">
-							<div id='snippets'></div>
-							<br>
-							
-						<div id="content"></div>
-						<br>
-						<br>
-						<br>
-						<div id="progressline"></div>
-						
+				<div id='snippets'></div>
+				<br>
+				<div id="content"></div>
+				<br><br><br>
+				<div id="progressline"></div>
 			</div>
-
-			
-			  <div id="news" class="tabcontent"><h4>News</h4></div>
+			<div id="news" class="tabcontent"><h4>News</h4></div>
 			<div id="markets" class="tabcontent"><h4>Markets</h4></div>
 			<div id="science" class="tabcontent"><h4>Science</h4></div>
 			<div id="periodics" class="tabcontent"><h4>Periodics</h4></div>
 			<div id="bookreviews" class="tabcontent"><h4>Book reviews</h4></div>
 			<div id="blogs" class="tabcontent"><h4>Blogs</h4></div>
-			
-
-			
-			
-
-			
 		</div>
 	</div>
-
-	<script>
+<script>
 function opentab(evt, cityName) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-
-
+	var i, tabcontent, tablinks;
+	tabcontent = document.getElementsByClassName("tabcontent");
+	for (i = 0; i < tabcontent.length; i++) {
+		tabcontent[i].style.display = "none";
+	}
+	tablinks = document.getElementsByClassName("tablinks");
+	for (i = 0; i < tablinks.length; i++) {
+		tablinks[i].className = tablinks[i].className.replace(" active", "");
+	}
+	document.getElementById(cityName).style.display = "block";
+	evt.currentTarget.className += " active";
+	}
 opentab(event, 'home');
 </script>
-   
-   
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 <script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
 <script>
 function showhide(mydiv) {
-  var x = document.getElementById(mydiv);
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
+	var x = document.getElementById(mydiv);
+	if (x.style.display === "none") {
+		x.style.display = "block";
+	} else {
+		x.style.display = "none";
+	}
+	}
 function strip(html){
 	var tmp = document.createElement("DIV");
 	tmp.innerHTML = html;
 	return tmp.textContent||tmp.innerText;
 	}
-
 </script>
 <script>
-	String.prototype.capitalize = function() {
-		return this.charAt(0).toUpperCase() + this.slice(1);
+String.prototype.capitalize = function() {
+	return this.charAt(0).toUpperCase() + this.slice(1);
 	}	
-	
-			function splitByWords (text) {
-			var wordsArray = text.split(/\s+/);
-			return wordsArray;
-			}
-			
-					function createWordMap (wordsArray) {
-			var wordsMap = {};
-			wordsArray.forEach(function (key) {
-			if (wordsMap.hasOwnProperty(key)) {
-				wordsMap[key]++;
-				} else {
-				wordsMap[key] = 1;
-				}
-			});
-			return wordsMap;
-			}
-		function sortByCount (wordsMap) {
-			var finalWordsArray = [];
-			finalWordsArray = Object.keys(wordsMap).map(function(key) {
-				return {
-					name: key,
-					total: wordsMap[key]
-					};
-				});
-				finalWordsArray.sort(function(a, b) {
-				return b.total - a.total;
-				});
-			return finalWordsArray;
-			}
+function splitByWords (text) {
+	var wordsArray = text.split(/\s+/);
+	return wordsArray;
+	}
+function createWordMap (wordsArray) {
+	var wordsMap = {};
+	wordsArray.forEach(function (key) {
+	if (wordsMap.hasOwnProperty(key)) {
+		wordsMap[key]++;
+		} else {
+		wordsMap[key] = 1;
+		}
+	});
+	return wordsMap;
+	}
+function sortByCount (wordsMap) {
+	var finalWordsArray = [];
+	finalWordsArray = Object.keys(wordsMap).map(function(key) {
+		return {
+			name: key,
+			total: wordsMap[key]
+			};
+		});
+finalWordsArray.sort(function(a, b) {
+	return b.total - a.total;
+	});
+	return finalWordsArray;
+	}
 </script>
-
 <script id="rendered-js">
-
 $(function () {
 //link, title, content, contentSnippet
 //https://toolkit.sekando.com/docs/en/feednami
 	var feedsLibrary = {
-				feed001: ["https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss","Bloomberg - The Editors","news"],
-				feed002: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
-				feed003: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
-				feed004: ["http://www.ft.com/rss/home/us","Financial Times","news"],
-				feed005: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
-				feed006: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty","blogs"],
-				feed007: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
-				feed009: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
-				feed010: ["http://longform.org/feed.rss","Long Form","periodics"],
-				feed011: ["https://www.theatlantic.com/feed/best-of/","The Atlantic","periodics"],
-				feed012: ["http://fusion.net/feed/","Fusion","periodics"],
-				feed013: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
-				feed014: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
-				feed015: ["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
-				feed016: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
-				feed017: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
-				feed018: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
-				feed019: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
-				feed020: ["https://www.edge.org/feed","Edge Magazine","periodics"],
-				feed021: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
-				feed022: ["https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss","Bloomberg - Matt Levine","markets"],
-				feed023: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
-				feed024: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
-				feed025: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
-				feed026: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
-				feed027: ["http://www.salon.com/feed/","Salon","periodics"],
-				feed028: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
-				feed029: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
-				feed030: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
-				feed031: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
-				feed032: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
-				feed033: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
-				feed034: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
-				feed035: ["http://rss.sciam.com/ScientificAmerican-Global","Scientific American","science"],
-				feed037: ["http://stratechery.com/feed/","Stratechery","periodics"],
-				feed038: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
-				feed039: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
-				feed040: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
-				feed041: ["http://evonomics.com/feed/","Evonomics","markets"],
-				feed042: ["https://aeon.co/feed.rss","Aeon","periodics"],
-				feed043: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
-				feed044: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
-				feed045: ["https://physicstoday.scitation.org/action/showFeed?type=etoc&feed=rss&jc=pto","Physics Today","science"],
-				feed046: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
-				feed047: ["https://www.mcsweeneys.net/rss","Mc Sweeneys","periodics"],
-				feed048: ["https://xkcd.com/rss.xml","XKCD","blogs"],
-				feed049: ["https://news.ycombinator.com/rss","Hacker News","periodics"],
-				feed050: ["https://phys.org/rss-feed/breaking/","Phys Org","science"],
-				feed051: ["https://www.moonofalabama.org/index.rdf","Moon of Alabama","periodics"],
-				feed051: ["https://webb-site.com/rss.asp","Webb","markets"],
-				feed052: ["http://www.sciencemag.org/rss/news_current.xml","ScienceMag","science"],
+	feed001: ["https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss","Bloomberg - The Editors","news"],
+	feed002: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
+	feed003: ["http://www.wsj.com/xml/rss/3_7085.xml","Wall Street Journal","news"],
+	feed004: ["http://www.ft.com/rss/home/us","Financial Times","news"],
+	feed005: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
+	feed006: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty","blogs"],
+	feed007: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
+	feed009: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
+	feed010: ["http://longform.org/feed.rss","Long Form","periodics"],
+	feed011: ["https://www.theatlantic.com/feed/best-of/","The Atlantic","periodics"],
+	feed012: ["http://fusion.net/feed/","Fusion","periodics"],
+	feed013: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
+	feed014: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
+	feed015: ["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
+	feed016: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
+	feed017: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
+	feed018: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
+	feed019: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
+	feed020: ["https://www.edge.org/feed","Edge Magazine","periodics"],
+	feed021: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
+	feed022: ["https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss","Bloomberg - Matt Levine","markets"],
+	feed023: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
+	feed024: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
+	feed025: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
+	feed026: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
+	feed027: ["http://www.salon.com/feed/","Salon","periodics"],
+	feed028: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
+	feed029: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
+	feed030: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
+	feed031: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
+	feed032: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
+	feed033: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
+	feed034: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
+	feed035: ["http://rss.sciam.com/ScientificAmerican-Global","Scientific American","science"],
+	feed037: ["http://stratechery.com/feed/","Stratechery","periodics"],
+	feed038: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
+	feed039: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
+	feed040: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
+	feed041: ["http://evonomics.com/feed/","Evonomics","markets"],
+	feed042: ["https://aeon.co/feed.rss","Aeon","periodics"],
+	feed043: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
+	feed044: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
+	feed045: ["https://physicstoday.scitation.org/action/showFeed?type=etoc&feed=rss&jc=pto","Physics Today","science"],
+	feed046: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
+	feed047: ["https://www.mcsweeneys.net/rss","Mc Sweeneys","periodics"],
+	feed048: ["https://xkcd.com/rss.xml","XKCD","blogs"],
+	feed049: ["https://news.ycombinator.com/rss","Hacker News","periodics"],
+	feed050: ["https://phys.org/rss-feed/breaking/","Phys Org","science"],
+	feed051: ["https://www.moonofalabama.org/index.rdf","Moon of Alabama","periodics"],
+	feed051: ["https://webb-site.com/rss.asp","Webb","markets"],
+	feed052: ["http://www.sciencemag.org/rss/news_current.xml","ScienceMag","science"],
 	}
 	var feedsresult = [];
 	mystartTime = new Date();
 	var nbarticles = 0
 	var nbsources = 0
-	
 	$.each(feedsLibrary, function(siteId, feedsUrl) {
 		feednami.loadGoogleFormat(feedsUrl[0], function(result){
 			if (result.error) {
@@ -237,24 +211,15 @@ $(function () {
 				});
 				div.appendChild(divchild);
 				document.getElementById(feedsUrl[2]).appendChild(div);
-				
-				
-				
-				
-				
-				
-				
 				var divtoadd = document.getElementById('content');
-			
-			var frequentenglish = "[Article] [article] about Exponent Podcast Recode First About After don't won't can't after Should could should weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
-			frequentenglish = frequentenglish.capitalize()
-			
-			divtoadd.innerHTML = "" 
-			var allelements = ""
-			mykeywords = []
+				var frequentenglish = "[Article] [article] about Exponent Podcast Recode First About After don't won't can't after Should could should weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
+				frequentenglish = frequentenglish.capitalize()
+				divtoadd.innerHTML = "" 
+				var allelements = ""
+				mykeywords = []
 				var arrayLength = feedsresult.length;
 				for (var j = 0; j < arrayLength; j++) {
-				feedsresult[j].dict = "none"
+					feedsresult[j].dict = "none"
 					}
 				for (var i = 0; i < arrayLength; i++) {
 					allelements += (feedsresult[i].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize()) +" "; //here
@@ -294,31 +259,13 @@ $(function () {
 						var mytimeDiff = myendTime - mystartTime; 
 						mytimeDiff = Math.round(100* mytimeDiff /1000) /100
 						document.getElementById('progressline').innerHTML = '<small><font color="silver">' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
-			
-								}
-						
 						}
 					}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+				}
 			}
 		});
 	});
 });
-          
 </script>
-
 </body>
 </html>
