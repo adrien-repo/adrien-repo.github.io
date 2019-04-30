@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html><html lang='en' class=''>
 <head>
 	<meta charset='UTF-8'><meta name="robots" content="noindex">
@@ -14,8 +15,8 @@
 		a:visited {text-decoration: none;color: black}
 		a:hover {text-decoration: underline}
 		a:active {text-decoration: underline}
-		.feed {margin: auto;}
-		.feed li {  background-color: white; align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;}
+		.feed {margin: auto;border: 0.3em solid #f7f7f7;border-radius: 0.5em;background-color: white}
+		.feed li {  background-color: white; align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;border-bottom: 1px solid #f7f7f7;}
 		.feed li a {  margin: 0;  padding: 0.5em;}
 		.feed li:hover {  background-color: #f7f7f7;}
 		.card {border: 1px solid white;  border-radius: 0.5em; margin: 0.5em; background-color: #f7f7f7;cursor: pointer}
@@ -26,7 +27,7 @@
 		@media only screen and (min-width: 320px) and (max-width: 479px) {  .feed {    width: 300px;  }}
 		@media only screen and (max-width: 319px) {  .feed {    width: 200px;  }}
 		.wrapper {  align-items: center;  display: flex;  flex-direction: column;  margin: auto;}
-		.tab {  overflow: hidden;  border: 1px solid white;  background-color: white;}
+		.tab {  overflow: hidden;   background-color: white;}
 		.tab button {  background-color: inherit;  float: left;  border: none;  outline: none;  cursor: pointer;  padding: 14px 16px;  transition: 0.3s;  font-size: 17px;}
 		.tab button:hover {  background-color: #f7f7f7;}
 		.tab button.active {  background-color: #f7f7f7;}
@@ -35,11 +36,12 @@
 		@keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 	</style>
 </head>
-<body>
+<body bgcolor="#fcfcfc">
 	<div class="wrapper">
+		<small><br></small>
 		<div class="feed">
 			<div class="tab">
-				<button class="tablinks" onclick="opentab(event, 'home')" id="homebtn">Home</button>
+				<button class="tablinks active" onclick="opentab(event, 'home')" id="homebtn">Home</button>
 				<button class="tablinks" onclick="opentab(event, 'news')">News</button>
 				<button class="tablinks" onclick="opentab(event, 'markets')">Markets</button>
 				<button class="tablinks" onclick="opentab(event, 'science')">Science</button>
@@ -47,11 +49,11 @@
 				<button class="tablinks" onclick="opentab(event, 'bookreviews')">Books</button>
 				<button class="tablinks" onclick="opentab(event, 'blogs')">Blogs</button>
 			</div>
-			<div id="home" class="tabcontent">
+			<div id="home" class="tabcontent" style="display: block">
 				<div id='snippets'></div>
 				<br>
 				<div id="content"></div>
-				<br><br><br>
+				<br><br>
 				<div id="progressline"></div>
 			</div>
 			<div id="news" class="tabcontent"><h4>News</h4></div>
@@ -60,8 +62,15 @@
 			<div id="periodics" class="tabcontent"><h4>Periodics</h4></div>
 			<div id="bookreviews" class="tabcontent"><h4>Book reviews</h4></div>
 			<div id="blogs" class="tabcontent"><h4>Blogs</h4></div>
+			<br>
 		</div>
+		<br>
 	</div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
+<script>
+$.getJSON({ url: 'view-source:https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=de-DE', success: function(data) { alert(data); } });
+</script>
 <script>
 function opentab(evt, cityName) {
 	var i, tabcontent, tablinks;
@@ -76,10 +85,8 @@ function opentab(evt, cityName) {
 	document.getElementById(cityName).style.display = "block";
 	evt.currentTarget.className += " active";
 	}
-opentab(event, 'home');
 </script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
-<script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
+
 <script>
 function showhide(mydiv) {
 	var x = document.getElementById(mydiv);
@@ -206,7 +213,7 @@ $(function () {
 				divchild.style.display = "none"
 				var list = [];
 				$(elements).each(function (index, element) {
-					divchild.innerHTML += "<li><a href='" + element.link + "'>" + element.title.replace(/<strong>/g,'') + '<br><font color="#a8a8a8">' + strip(element.content).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "</font></a></li>";
+					divchild.innerHTML += "<li><a href='" + element.link + "'>" + element.title.replace(/<strong>/g,'') + '<br><div style="text-align:justify"><font color="#a8a8a8">' + strip(element.content).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "</font></div></a></li>";
 					var article = {srcname: feedsUrl[1], title:element.title, link: element.link, content:strip(element.content).substring(0,1000).replace(/(\r\n|\n|\r)/gm,""), dict:"none"}
 					feedsresult.push(article)
 					nbarticles = nbarticles + 1
@@ -214,7 +221,7 @@ $(function () {
 				div.appendChild(divchild);
 				document.getElementById(feedsUrl[2]).appendChild(div);
 				var divtoadd = document.getElementById('content');
-				var frequentenglish = "[Article] [article] about Exponent Worked Rsquo Another the're impuestos Shipp Wrote wrote Other other three Three Being People Charges Decode Podcast Could Recode First About After don't won't can't after Should could should weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
+				var frequentenglish = "[Article] [article] about Exponent Worked While Rsquo Another the're Largest impuestos Shipp Would Wrote wrote Other other three Three Being People Charges Decode Podcast Could Recode First About After don't won't can't after Should could should weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
 				frequentenglish = frequentenglish.capitalize()
 				divtoadd.innerHTML = "" 
 				var allelements = ""
@@ -237,7 +244,7 @@ $(function () {
 						var mystrhome = ""
 						var mysubstr = ""
 						var mycount = 0
-						var myArraysymbol = ['&#8592;', '&#8594;', '&#8596;', '&#8602;', '&#8603;', '&#8604;', '&#8605;', '&#8608;', '&#8609;', '&#8610;', '&#8611;', '&#8612;', '&#8614;', '&#8617;', '&#8618;', '&#8619;', '&#8620;', '&#8621;', '&#8622;', '&#8630;', '&#8631;', '&#8633;', '&#8644;', '&#8646;', '&#8647;', '&#8649;', '&#8651;', '&#8652;', '&#8653;', '&#8654;', '&#8655;', '&#8656;', '&#8658;', '&#8660;', '&#8666;', '&#8667;', '&#8668;', '&#8669;', '&#8672;', '&#8674;', '&#8676;', '&#8677;', '&#8678;', '&#8680;', '&#8688;', '&#8692;', '&#8694;', '&#8695;', '&#8696;', '&#8697;', '&#8698;', '&#8699;', '&#8700;', '&#8701;', '&#8702;', '&#10562;', '&#10563;', '&#10564;', '&#10565;', '&#10566;', '&#10567;']; 
+						
 							for (var j = 0; j < arrayLength; j++) {
 								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$?%\^&\*;:{}=\-_`~()]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
 									feedsresult[j].dict = finalWordsArray[i].name
@@ -251,7 +258,7 @@ $(function () {
 										if (finalWordsArray[i].total > mymaxcount){
 											mymaxcount = finalWordsArray[i].total
 											var destdivtitle = document.getElementById('snippets')
-											destdivtitle.innerHTML = "<h2>" + '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></h2> " + feedsresult[j].content.replace('undefined', '')
+											destdivtitle.innerHTML = "<h2>" + '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></h2> <div style='text-align:justify'>" + feedsresult[j].content.replace('undefined', '') + "</div>"
 											}
 										} else {
 											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
@@ -264,12 +271,12 @@ $(function () {
 								var subwordsMap = createWordMap(subwordsArray);
 								var subfinalWordsArray = sortByCount(subwordsMap);
 								var conceptcount = 0
-								var maxrandom = Math.floor(Math.random() * 4)+5
+								var maxrandom = Math.floor(Math.random() * 4)+2
 								for (var subi = 0; subi < subfinalWordsArray.length; subi++) {
-									if (conceptcount <= maxrandom && subfinalWordsArray[subi].total >= 2 && subfinalWordsArray[subi].name.length > 5 && subfinalWordsArray[subi].name.indexOf(finalWordsArray[i].name.capitalize())<0 && frequentenglish.indexOf(subfinalWordsArray[subi].name.replace(/\s/g, '').capitalize()) <0 && mysubkeywords.indexOf(subfinalWordsArray[subi].name.replace(/\s/g, '').capitalize()) <0){
+									if (conceptcount <= maxrandom && subfinalWordsArray[subi].total >= 2 && subfinalWordsArray[subi].name.length > 4 && subfinalWordsArray[subi].name.indexOf(finalWordsArray[i].name.capitalize())<0 && frequentenglish.indexOf(subfinalWordsArray[subi].name.replace(/\s/g, '').capitalize()) <0 && mysubkeywords.indexOf(subfinalWordsArray[subi].name.replace(/\s/g, '').capitalize()) <0){
 										conceptcount = conceptcount + 1
-										var smbrand = myArraysymbol[Math.floor(Math.random() * myArraysymbol.length)];
-										mysubkeywords += "   " + smbrand + " <small><i>" + subfinalWordsArray[subi].name.capitalize() + "</i></small>"
+										
+										mysubkeywords += "<small><i>, " + subfinalWordsArray[subi].name.capitalize() + "</i></small>"
 										}
 									}
 								divtoadd.innerHTML += "<div id = '" +finalWordsArray[i].name.capitalize() +"' class='card' ><div onclick='showhide(\"" + finalWordsArray[i].name.capitalize() +"-subjectchild\");'>" + "<span style='margin: 0; padding: 0.5em;'>" + mysubkeywords + "</span><br></div>   " + "<div id='" +finalWordsArray[i].name.capitalize() + "-subjectchild' style='display: none'>" + mystr +'</div></div>'
@@ -286,5 +293,6 @@ $(function () {
 	});
 });
 </script>
+
 </body>
 </html>
