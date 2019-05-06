@@ -37,9 +37,12 @@
 		@keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		.mySlides {display: none}
 		img {vertical-align: middle;}
-		.slideshow-container {   max-width: 400px;   position: relative;   margin: auto; }
+		.slideshow-container {   max-width: 100%;   position: relative;   margin: 0.5em; }
 		.active, {   background-color: #717171; }
 		.fade {   -webkit-animation-name: fade;   -webkit-animation-duration: 1.5s;   animation-name: fade;   animation-duration: 1s; }
+		.zoom {  transition: transform .2s; /* Animation */ }
+
+		.zoom:hover { transform: scale(10);}
 		
 	</style>
 </head>
@@ -62,6 +65,7 @@
 				<br>
 				<div id="content"></div>
 				<br><br>
+				<center><div id="mini-home" style="display: inline"></div></center><br><br>
 				<div id="progressline"></div>
 			</div>
 			<div id="news" class="tabcontent"><h4>News</h4></div>
@@ -73,13 +77,11 @@
 			<div id="kiosk" class="tabcontent">
 				<h4>Kiosk</h4>
 					<center>
-					<a onclick="plusSlides(-1)">&#10094; prev</a> | <a onclick="plusSlides(1)">next &#10095;</a>
+					<button style="background-color: #e7e7e7; color: black;border: none;" onclick="plusSlides(-1)" style="cursor:pointer;">&#10094; prev</button> <button style="background-color: #e7e7e7; color: black;border: none;" onclick="plusSlides(1)" style="cursor:pointer;">next &#10095;</button>
 					<br><br>
 					</center>
 				<div class="slideshow-container">
-
 					<div id="mini"></div>
-					
 				</div>
 			</div>
 			<br>
@@ -99,8 +101,12 @@ function addmini(mystr){
 	if(mm<10) {    mm='0'+mm;} 
 	foldertoday = yyyy+'/'+mm+'/'+dd;
 	var mydiv = document.getElementById("mini");
-	var imgstr = '<div class="mySlides fade"><img src="http://img9.kiosko.net/' + foldertoday + '/' + mystr + '.750.jpg"   style="width:400px";"></div> '
+	var mydivhome = document.getElementById("mini-home");
+	var imgstr = '<div class="mySlides fade"><img src="http://img9.kiosko.net/' + foldertoday + '/' + mystr + '.750.jpg" style="width:100%";"></div> '
+	var imgstr2 = '<div class="zoom" style="display: inline-block"><img src="http://img9.kiosko.net/' + foldertoday + '/' + mystr + '.750.jpg" style="height:35px";></div>'
 	mydiv.innerHTML +=imgstr
+	mydivhome.innerHTML +=imgstr2
+	
 	}
 addmini("us/newyork_times")
 addmini("us/washington_post")
@@ -158,9 +164,7 @@ function showSlides(n) {
 	slides[slideIndex-1].style.display = "block";  
 	}
 </script>
-<script>
-$.getJSON({ url: 'view-source:https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=de-DE', success: function(data) { alert(data); } });
-</script>
+
 <script>
 function opentab(evt, cityName) {
 	var i, tabcontent, tablinks;
