@@ -191,6 +191,18 @@ function showhide(mydiv) {
 		x.style.display = "none";
 	}
 	}
+function showhideswitchtitle(mydiv,oldtitle,newtitle) {
+	var x = document.getElementById(mydiv);
+	if (x.style.display === "none") {
+		x.style.display = "block";
+		var y = document.getElementById(mydiv.replace("-child","")+"-child2")
+		y.innerHTML = newtitle
+	} else {
+		x.style.display = "none";
+		var y = document.getElementById(mydiv.replace("-child","")+"-child2")
+		y.innerHTML = oldtitle
+	}
+	}
 function strip(html){
 	var tmp = document.createElement("DIV");
 	tmp.innerHTML = html;
@@ -301,8 +313,12 @@ $(function () {
 				var div = document.createElement("div");
 				div.className = "card"
 				div.setAttribute("id", feedsUrl[1])
-				div.setAttribute('onclick','showhide("'+feedsUrl[1]+"-child"+'");');
-				div.innerHTML = '<span style="margin: 0; padding: 0.5em;">' + elements[0].title.replace(/<strong>/g,'') + ' <small><font color="silver">(' + feedsUrl[1] + ')</font></small></span><br>'
+				myunactivetitle = 'No'
+				myactivetitle = 'Yes'
+				myunactivetitle = '<span style=\'margin: 0; padding: 0.5em;\'>' + elements[0].title.replace(/<strong>/g,'').replace(/["']/g, "") + ' <small><font color=\'silver\'>(' + feedsUrl[1] + ')</font></small></span>'
+				myactivetitle = '<span style=\'margin: 0; padding: 0.5em;\'><b>' + feedsUrl[1] + '</b></span>'
+				div.setAttribute('onclick','showhideswitchtitle("'+feedsUrl[1]+'-child'+'","' + myunactivetitle +'","' + myactivetitle + '");');
+				div.innerHTML = '<div id=\'' + feedsUrl[1]+"-child2" + '\'>' + myunactivetitle + '</span><br>'
 				var divchild = document.createElement("div");
 				divchild.setAttribute("id", feedsUrl[1]+"-child")
 				divchild.style.display = "none"
