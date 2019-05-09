@@ -2,6 +2,7 @@
 
 
 
+
 <!DOCTYPE html><html lang='en' class=''>
 <head>
 	<meta charset='UTF-8'><meta name="robots" content="noindex">
@@ -10,6 +11,7 @@
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+	<link href="https://fonts.googleapis.com/css?family=B612+Mono|Rock+Salt" rel="stylesheet">
 	<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
 	<style>
 		html, body {font-family: Roboto;}
@@ -60,6 +62,7 @@
 			<div id="home" class="tabcontent" style="display: block">
 				<div id='snippets'></div>
 				<br>
+				<center><div id='pics'  style="height: 200px; overflow:hidden"></div></center>
 				<div id="content"></div>
 				<br><br>
 				<div id="progressline"></div>
@@ -303,6 +306,7 @@ $(function () {
 	mystartTime = new Date();
 	var nbarticles = 0
 	var nbsources = 0
+	var mypickeyword = 1
 	$.each(feedsLibrary, function(siteId, feedsUrl) {
 		feednami.loadGoogleFormat(feedsUrl[0], function(result){
 			if (result.error) {
@@ -349,6 +353,8 @@ $(function () {
 				var wordsMap = createWordMap(wordsArray);
 				var finalWordsArray = sortByCount(wordsMap);
 				var mymaxcount = 5
+				var alreadyusedkey = ""
+				
 				for (var i = 0; i < finalWordsArray.length; i++) {
 					if (finalWordsArray[i].total > 3 && finalWordsArray[i].name.length > 4){
 						var mystr = ""
@@ -369,7 +375,7 @@ $(function () {
 										if (finalWordsArray[i].total > mymaxcount){
 											mymaxcount = finalWordsArray[i].total
 											var destdivtitle = document.getElementById('snippets')
-											destdivtitle.innerHTML = "<h2>" + '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></h2> <div style='text-align:justify'>" + feedsresult[j].content.replace('undefined', '') + "</div>"
+											destdivtitle.innerHTML = "<h2>" + '<font face="Rock Salt"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h2> <div style='text-align:justify'><font face='B612 Mono'>" + feedsresult[j].content.replace('undefined', '') + "</div>"
 											}
 										} else {
 											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
@@ -378,6 +384,28 @@ $(function () {
 								}
 							if (mystr == ""){} else {
 								var mysubkeywords = "<b>" + finalWordsArray[i].name.capitalize() + "</b>"
+								varpickeyword = finalWordsArray[i].name.capitalize()
+								if (mypickeyword <=3 ) {
+									mypickeyword = mypickeyword+1
+									
+									alreadyusedkey = alreadyusedkey + varpickeyword 
+									$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+										{
+											tags: varpickeyword,
+											tagmode: "any",
+											format: "json"
+										},
+										function(data) {
+											var rnd = Math.floor(Math.random() * data.items.length);
+
+											var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
+
+											var imgstrhome = '&nbsp;<img id="' + varpickeyword + '" src="' + image_src + '" width="280px" height="280px" style="object-fit: cover;border-radius:3%" ></img>&nbsp;'
+											var destdivpics = document.getElementById('pics')
+											destdivpics.innerHTML +=imgstrhome
+
+										});
+								}
 								var subwordsArray = splitByWords(mysubstr.replace(/[.,\/#!?$%\^&\*;:{}=\-_`~()]/g," ").capitalize());
 								var subwordsMap = createWordMap(subwordsArray);
 								var subfinalWordsArray = sortByCount(subwordsMap);
