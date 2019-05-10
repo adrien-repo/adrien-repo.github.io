@@ -1,8 +1,3 @@
-
-
-
-
-
 <!DOCTYPE html><html lang='en' class=''>
 <head>
 	<meta charset='UTF-8'><meta name="robots" content="noindex">
@@ -89,9 +84,7 @@
 	</div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 <script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
-
 <script>
-
 function addmini(mystr){
 	var today = new Date();
 	var dd = today.getDate();var mm = today.getMonth()+1;var yyyy = today.getFullYear();
@@ -147,7 +140,6 @@ addmini("br/br_oglobo")
 addmini("ar/ar_clarin")
 addmini("au/au_australian")
 </script>
-
 <script>
 var slideIndex = 1;
 showSlides(slideIndex);
@@ -168,7 +160,6 @@ function showSlides(n) {
 	slides[slideIndex-1].style.display = "block";  
 	}
 </script>
-
 <script>
 function opentab(evt, cityName) {
 	var i, tabcontent, tablinks;
@@ -184,7 +175,6 @@ function opentab(evt, cityName) {
 	evt.currentTarget.className += " active";
 	}
 </script>
-
 <script>
 function showhide(mydiv) {
 	var x = document.getElementById(mydiv);
@@ -307,6 +297,7 @@ $(function () {
 	var nbarticles = 0
 	var nbsources = 0
 	var mypickeyword = 1
+	var alreadyusedkey = ""
 	$.each(feedsLibrary, function(siteId, feedsUrl) {
 		feednami.loadGoogleFormat(feedsUrl[0], function(result){
 			if (result.error) {
@@ -353,15 +344,12 @@ $(function () {
 				var wordsMap = createWordMap(wordsArray);
 				var finalWordsArray = sortByCount(wordsMap);
 				var mymaxcount = 5
-				var alreadyusedkey = ""
-				
 				for (var i = 0; i < finalWordsArray.length; i++) {
 					if (finalWordsArray[i].total > 3 && finalWordsArray[i].name.length > 4){
 						var mystr = ""
 						var mystrhome = ""
 						var mysubstr = ""
 						var mycount = 0
-						
 							for (var j = 0; j < arrayLength; j++) {
 								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$?%\^&\*;:{}=\-_`~()]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
 									feedsresult[j].dict = finalWordsArray[i].name
@@ -385,9 +373,8 @@ $(function () {
 							if (mystr == ""){} else {
 								var mysubkeywords = "<b>" + finalWordsArray[i].name.capitalize() + "</b>"
 								varpickeyword = finalWordsArray[i].name.capitalize()
-								if (mypickeyword <=3 ) {
+								if (mypickeyword <=3 && alreadyusedkey.indexOf(varpickeyword)==-1) {
 									mypickeyword = mypickeyword+1
-									
 									alreadyusedkey = alreadyusedkey + varpickeyword 
 									$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
 										{
@@ -397,15 +384,12 @@ $(function () {
 										},
 										function(data) {
 											var rnd = Math.floor(Math.random() * data.items.length);
-
 											var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
-
-											var imgstrhome = '&nbsp;<img id="' + varpickeyword + '" src="' + image_src + '" width="280px" height="280px" style="object-fit: cover;border-radius:3%" ></img>&nbsp;'
+											var imgstrhome = '&nbsp;<table style="display: inline-block;"><tr><td><b><center><font face="Rock Salt">' +  varpickeyword + '</font></center><b></td></tr><tr><td><img id="' + varpickeyword + '" src="' + image_src + '" width="270px" height="270px" style="object-fit: cover;border-radius:3%" ></img>&nbsp;</td></tr></table>'
 											var destdivpics = document.getElementById('pics')
 											destdivpics.innerHTML +=imgstrhome
-
 										});
-								}
+									}
 								var subwordsArray = splitByWords(mysubstr.replace(/[.,\/#!?$%\^&\*;:{}=\-_`~()]/g," ").capitalize());
 								var subwordsMap = createWordMap(subwordsArray);
 								var subfinalWordsArray = sortByCount(subwordsMap);
@@ -430,6 +414,5 @@ $(function () {
 	});
 });
 </script>
-
 </body>
 </html>
