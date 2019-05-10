@@ -368,7 +368,7 @@ $(function () {
 										if (finalWordsArray[i].total > mymaxcount){
 											mymaxcount = finalWordsArray[i].total
 											var destdivtitle = document.getElementById('snippets')
-											destdivtitle.innerHTML = "<h2>" + '<font face="Rock Salt"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h2> <div style='text-align:justify'><font face='B612 Mono'>" + feedsresult[j].content.replace('undefined', '') + "</div>"
+											destdivtitle.innerHTML = "<h2>" + '<font face="B612 Mono"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h2> <div style='text-align:justify'><font face='B612 Mono'>" + feedsresult[j].content.replace('undefined', '') + "</div>"
 											}
 										} else {
 											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
@@ -391,7 +391,7 @@ $(function () {
 										function(data) {
 											var rnd = Math.floor(Math.random() * data.items.length);
 											var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
-											var imgstrhome = '&nbsp;<table style="display: inline-block;"><tr><td><b><center><font face="Rock Salt">' +  varpickeywordjson + '</font></center><b></td></tr><tr><td><img id="' + varpickeywordjson + '" src="' + image_src + '" width="270px" height="270px" style="object-fit: cover;border-radius:3%" ></img>&nbsp;</td></tr></table>'
+											var imgstrhome = '&nbsp;<table style="display: inline-block;"><tr><td><b><center><font face="Rock Salt" color = "#0800ad"><small>' +  varpickeywordjson + '</small></font></center><b></td></tr><tr><td><img id="' + varpickeywordjson + '" src="' + image_src + '" width="270px" height="270px" style="object-fit: cover;border-radius:3%" ></img>&nbsp;</td></tr></table>'
 											var destdivpics = document.getElementById('pics')
 											picstr3 = picstr2
 											picstr2 = picstr1
