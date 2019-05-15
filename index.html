@@ -1,3 +1,4 @@
+
 <!DOCTYPE html><html lang='en' class=''>
 <head>
 	<meta charset='UTF-8'><meta name="robots" content="noindex">
@@ -55,9 +56,14 @@
 				<button class="tablinks" onclick="opentab(event, 'kiosk')">Kiosk</button>
 			</div>
 			<div id="home" class="tabcontent" style="display: block">
+
 				<div id='snippets' style="text-align:justify"></div>
 				<br>
+				<div id="headlines" style="text-align:justify; "></div>
+				<br>
 				<center><div id='pics'  style="height: 200px; overflow:hidden"></div></center>
+				<br>
+				
 				<div id="content"></div>
 				<br><br>
 				<div id="progressline"></div>
@@ -301,6 +307,12 @@ $(function () {
 	var picstr1 = ""
 	var picstr2 = ""
 	var picstr3 = ""
+	var head_news = ""
+	var head_markets = ""
+	var head_science = ""
+	var head_periodics = ""
+	var head_books = ""
+	var head_blogs = ""
 	$.each(feedsLibrary, function(siteId, feedsUrl) {
 		feednami.loadGoogleFormat(feedsUrl[0], function(result){
 			if (result.error) {
@@ -329,11 +341,32 @@ $(function () {
 				});
 				div.appendChild(divchild);
 				document.getElementById(feedsUrl[2]).appendChild(div);
+				var myheadline = "<i><b><a href='" + elements[0].link + "'>" + elements[0].title.replace(/<strong>/g,'').replace(/["']/g, "") + "</a></b></i>.....&nbsp;&nbsp;"
+				switch (feedsUrl[2]) {
+					case "news":
+						if (head_news == ""){head_news = myheadline}
+						break;
+					case "markets":
+						if (head_markets == ""){head_markets = myheadline}
+						break;
+					case "science":
+						if (head_science == ""){head_science = myheadline}
+						break;
+					case "periodics":
+						if (head_periodics == ""){head_periodics = myheadline}
+						break;
+					case "bookreviews":
+						if (head_books == ""){head_books = myheadline}
+						break;
+					case "blogs":
+						if (head_blogs == ""){head_blogs = myheadline}
+						break;
+					}
+				document.getElementById('headlines').innerHTML =head_news + head_markets + head_science + head_periodics + head_books + head_blogs
 				var divtoadd = document.getElementById('content');
 				var frequentenglish = "[Article] [article] about Exponent Worked While Rsquo Future Small Market Stock State Watch What's Don't Another the're Largest impuestos Shipp Would Wrote wrote Other other three Three Being People Charges Decode Podcast Could Recode First About After don't won't can't after Should could should weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
 				frequentenglish = frequentenglish.capitalize()
 				divtoadd.innerHTML = "" 
-
 				var allelements = ""
 				mykeywords = []
 				var arrayLength = feedsresult.length;
@@ -367,7 +400,7 @@ $(function () {
 										if (finalWordsArray[i].total > mymaxcount){
 											mymaxcount = finalWordsArray[i].total
 											var destdivtitle = document.getElementById('snippets')
-											destdivtitle.innerHTML = "<h2>" + '<font face="Quicksand"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h2> <div style='text-align:justify'><font face='Quicksand'>" + feedsresult[j].content.replace('undefined', '') + "</div>"
+											destdivtitle.innerHTML = "<h1>" + '<font face="Quicksand"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify'><font face='Quicksand'>" + feedsresult[j].content.replace('undefined', '') + "</div>"
 											}
 										} else {
 											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
