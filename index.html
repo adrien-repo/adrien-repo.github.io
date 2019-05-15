@@ -19,23 +19,23 @@
 		.feed li {  background-color: white; align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;border-bottom: 1px solid #eff4f4;}
 		.feed li a {  margin: 0;  padding: 0.5em;}
 		.feed li:hover {  background-color: #eff4f4;}
-		.card {border: 1px solid white;  border-radius: 0.5em; margin: 0.5em; background-color: #eff4f4;cursor: pointer}
-		.card:hover {  background-color: #ccf3ff;}
+		.card {border: 1px solid white;  border-radius: 0.5em; margin: 0.5em;padding: 0.2em;cursor: pointer}
+		.card:hover {  background-color: #eff4f4;}
 		@media only screen and (min-width: 780px) {  .feed {    width: 900px; }}
 		@media only screen and (min-width: 680px) and (max-width: 779px) {  .feed {    width: 600px;  }}
 		@media only screen and (min-width: 480px) and (max-width: 679px) {  .feed {    width: 400px;  }}
 		@media only screen and (min-width: 320px) and (max-width: 479px) {  .feed {    width: 300px;  }}
 		@media only screen and (max-width: 319px) {  .feed {    width: 200px;  }}
 		.wrapper {  align-items: center;  display: flex;  flex-direction: column;  margin: auto;}
-		.tab {  overflow: hidden;   background-color: white;}
+		<!--.tab {  overflow: hidden;   background-color: white;}
 		.tab button {  background-color: inherit;  float: left;  border: none;  outline: none;  cursor: pointer;  padding: 14px 16px;  transition: 0.3s;  font-size: 17px;}
 		.tab button:hover {  background-color: #eff4f4;}
 		.tab button.active {  background-color: #eff4f4;}
-		.tabcontent {  display: none;  padding: 6px 12px;  -webkit-animation: fadeEffect 1s;  animation: fadeEffect 1s;}
+		.tabcontent {  display: none;  padding: 6px 12px;  -webkit-animation: fadeEffect 1s;  animation: fadeEffect 1s;}-->
 		@-webkit-keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		@keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		.mySlides {display: none}
-		img {vertical-align: top;-webkit-filter: grayscale(50%); filter: grayscale(50%);}
+		img {vertical-align: top;-webkit-filter: grayscale(60%); filter: grayscale(60%);}
 		.slideshow-container {   max-width: 100%;   position: relative;   margin: 0.5em; }
 		.active, {   background-color: #717171; }
 		.fade {   -webkit-animation-name: fade;   -webkit-animation-duration: 1.5s;   animation-name: fade;   animation-duration: 1s; }
@@ -45,44 +45,35 @@
 	<div class="wrapper">
 		<small><br></small>
 		<div class="feed">
-			<div class="tab">
-				<button class="tablinks active" onclick="opentab(event, 'home')" id="homebtn">Home</button>
-				<button class="tablinks" onclick="opentab(event, 'news')">News</button>
-				<button class="tablinks" onclick="opentab(event, 'markets')">Markets</button>
-				<button class="tablinks" onclick="opentab(event, 'science')">Science</button>
-				<button class="tablinks" onclick="opentab(event, 'periodics')">Periodics</button>
-				<button class="tablinks" onclick="opentab(event, 'bookreviews')">Books</button>
-				<button class="tablinks" onclick="opentab(event, 'blogs')">Blogs</button>
-				<button class="tablinks" onclick="opentab(event, 'kiosk')">Kiosk</button>
-			</div>
-			<div id="home" class="tabcontent" style="display: block">
-
+			<div id="home" style="display: block;margin: 0; padding: 0.5em;">
+				<small><div id="headlines" style="text-align:justify; "></div></small>
 				<div id='snippets' style="text-align:justify"></div>
-				<br>
-				<div id="headlines" style="text-align:justify; "></div>
 				<br>
 				<center><div id='pics'  style="height: 200px; overflow:hidden"></div></center>
 				<br>
-				
 				<div id="content"></div>
-				<br><br>
-				<div id="progressline"></div>
+				<br>
+				<table width="100%" ><tr><td>
+								<div id="progressline"></div>
+								</td><td style="text-align: right">
+								<small><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","[+]","[-]");'>[+]</div></small>
+								</td></tr></table>
+		
+		</div>
 			</div>
-			<div id="news" class="tabcontent"><h4>News</h4></div>
-			<div id="markets" class="tabcontent"><h4>Markets</h4></div>
-			<div id="science" class="tabcontent"><h4>Science</h4></div>
-			<div id="periodics" class="tabcontent"><h4>Periodics</h4></div>
-			<div id="bookreviews" class="tabcontent"><h4>Book reviews</h4></div>
-			<div id="blogs" class="tabcontent"><h4>Blogs</h4></div>
-			<div id="kiosk" class="tabcontent">
-				<h4>Kiosk</h4>
-					<center>
-					<button style="background-color: #e7e7e7; color: black;border: none;" onclick="plusSlides(-1)" style="cursor:pointer;">&#10094; prev</button> <button style="background-color: #e7e7e7; color: black;border: none;" onclick="plusSlides(1)" style="cursor:pointer;">next &#10095;</button>
-					<br><br>
-					</center>
-				<div class="slideshow-container">
-					<div id="mini"></div>
-				</div>
+			<br>
+				<div class="wrapper" id ="allarticles" style="display: none">
+		<small><br></small>
+		<div class="feed">
+		
+				<div id="news"><h3><span style="margin: 0; padding: 0.5em;">News</h3></span></div>
+			<div id="markets"><h3><span style="margin: 0; padding: 0.5em;">Markets</h3></span></div>
+			<div id="science"><h3><span style="margin: 0; padding: 0.5em;">Science</h3></span></div>
+			<div id="periodics"><h3><span style="margin: 0; padding: 0.5em;">Periodics</h3></span></div>
+			<div id="bookreviews"><h3><span style="margin: 0; padding: 0.5em;">Book reviews</h3></span></div>
+			<div id="blogs"><h3><span style="margin: 0; padding: 0.5em;">Blogs</h3></span></div>
+			<br>
+
 			</div>
 			<br>
 		</div>
@@ -90,97 +81,7 @@
 	</div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 <script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
-<script>
-function addmini(mystr){
-	var today = new Date();
-	var dd = today.getDate();var mm = today.getMonth()+1;var yyyy = today.getFullYear();
-	if(dd<10) {    dd='0'+dd;} 
-	if(mm<10) {    mm='0'+mm;} 
-	foldertoday = yyyy+'/'+mm+'/'+dd;
-	var yesterday = new Date();
-	yesterday.setDate(today.getDate() - 1);
-	var yesterdaydd = yesterday.getDate();var yesterdaymm = yesterday.getMonth()+1;var yesterdayyyyy = yesterday.getFullYear();
-	if(yesterdaydd<10) {    yesterdaydd='0'+yesterdaydd;} 
-	if(yesterdaymm<10) {    yesterdaymm='0'+yesterdaymm;} 
-	folderyesterday = yesterdayyyyy+'/'+yesterdaymm+'/'+yesterdaydd;
-	var mydiv = document.getElementById("mini");
-	var imgstr = ""
-	imgname = mystr.replace("/", "_")
-	imgtoday = 'http://img9.kiosko.net/' + foldertoday + '/' + mystr + '.750.jpg'
-	imgyesterday = 'http://img9.kiosko.net/' + folderyesterday + '/' + mystr + '.750.jpg'
-	var imgstr = '<div class="mySlides fade"><img style="width:100%" src="' + imgtoday +'" onerror="this.onerror=null;this.src=\'' + imgyesterday + '\';"' + ';"/></div> ';
-	mydiv.innerHTML +=imgstr
-	}
-addmini("us/newyork_times")
-addmini("us/washington_post")
-addmini("us/newyork_post")
-addmini("us/wsj")
-addmini("us/ft_us")
-addmini("uk/guardian")
-addmini("uk/the_times")
-addmini("uk/daily_mail")
-addmini("uk/daily_telegraph")
-addmini("fr/lefigaro")
-addmini("fr/lacroix")
-addmini("fr/liberation")
-addmini("fr/depeche")
-addmini("fr/dauphine")
-addmini("de/die_welt")
-addmini("de/tagesspiegel")
-addmini("de/sueddeutsche")
-addmini("es/elpais")
-addmini("es/elmundo")
-addmini("it/repubblica")
-addmini("it/ilmessaggero")
-addmini("ch/tribune_geneve")
-addmini("be/morgen")
-addmini("ca/ca_globe_mail")
-addmini("ru/izvestia")
-addmini("ru/kommersant")
-addmini("in/hindustan_times")
-addmini("cn/cn_renmin_ribao")
-addmini("ir/iran_daily")
-addmini("tr/cumhuriyet")
-addmini("za/star")
-addmini("br/br_oglobo")
-addmini("ar/ar_clarin")
-addmini("au/au_australian")
-</script>
-<script>
-var slideIndex = 1;
-showSlides(slideIndex);
-function plusSlides(n) {
-	showSlides(slideIndex += n);
-	}
-function currentSlide(n) {
-	showSlides(slideIndex = n);
-	}
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  if (n > slides.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";  
-	}
-	slides[slideIndex-1].style.display = "block";  
-	}
-</script>
-<script>
-function opentab(evt, cityName) {
-	var i, tabcontent, tablinks;
-	tabcontent = document.getElementsByClassName("tabcontent");
-	for (i = 0; i < tabcontent.length; i++) {
-		tabcontent[i].style.display = "none";
-	}
-	tablinks = document.getElementsByClassName("tablinks");
-	for (i = 0; i < tablinks.length; i++) {
-		tablinks[i].className = tablinks[i].className.replace(" active", "");
-	}
-	document.getElementById(cityName).style.display = "block";
-	evt.currentTarget.className += " active";
-	}
-</script>
+
 <script>
 function showhide(mydiv) {
 	var x = document.getElementById(mydiv);
@@ -341,7 +242,7 @@ $(function () {
 				});
 				div.appendChild(divchild);
 				document.getElementById(feedsUrl[2]).appendChild(div);
-				var myheadline = "<i><b><a href='" + elements[0].link + "'>" + elements[0].title.replace(/<strong>/g,'').replace(/["']/g, "") + "</a></b></i>.....&nbsp;&nbsp;"
+				var myheadline = "<i><a href='" + elements[0].link + "'>" + elements[0].title.replace(/<strong>/g,'').replace(/["']/g, "") + "</a></i>.....&nbsp;&nbsp;"
 				switch (feedsUrl[2]) {
 					case "news":
 						if (head_news == ""){head_news = myheadline}
@@ -364,7 +265,7 @@ $(function () {
 					}
 				document.getElementById('headlines').innerHTML =head_news + head_markets + head_science + head_periodics + head_books + head_blogs
 				var divtoadd = document.getElementById('content');
-				var frequentenglish = "[Article] [article] about Exponent Worked While Rsquo Future Small Market Stock State Watch What's Don't Another the're Largest impuestos Shipp Would Wrote wrote Other other three Three Being People Charges Decode Podcast Could Recode First About After don't won't can't after Should could should weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
+				var frequentenglish = "[Article] [article] about Exponent Worked While Rsquo Future Years Small Trade Market Stock State Watch What's Don't Another the're Largest impuestos Shipp Would Wrote wrote Other other three Three Being People Charges Decode Podcast Could Recode First About After don't won't can't after Should could should weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
 				frequentenglish = frequentenglish.capitalize()
 				divtoadd.innerHTML = "" 
 				var allelements = ""
