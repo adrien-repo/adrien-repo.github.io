@@ -1,4 +1,3 @@
-
 <!DOCTYPE html><html lang='en' class=''>
 <head>
 	<meta charset='UTF-8'><meta name="robots" content="noindex">
@@ -30,7 +29,7 @@
 		@-webkit-keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		@keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		.mySlides {display: none}
-		img {vertical-align: top;-webkit-filter: grayscale(60%); filter: grayscale(60%);}
+		img {vertical-align: top;-webkit-filter: grayscale(60%); filter: grayscale(60%);border:0.2em solid white}
 		.slideshow-container {   max-width: 100%;   position: relative;   margin: 0.5em; }
 		.active, {   background-color: #717171; }
 		.fade {   -webkit-animation-name: fade;   -webkit-animation-duration: 1.5s;   animation-name: fade;   animation-duration: 1s; }
@@ -39,8 +38,8 @@
 	</style>
 </head>
 <body bgcolor="#fcfcfc">
-	<div class="wrapper" id="loading"><small><br><br><br></small>
-		
+	<div class="wrapper" id="loading">
+		<small><br><br><br></small>
 		Loading...
 		<br><br>
 		<div class="progress-bar">
@@ -48,7 +47,6 @@
 		</div>
 		<div id="progresslinesplash"></div>
 		<br>
-		
 	</div>
 	<div class="wrapper" id="rendered">
 		<small><br></small>
@@ -57,31 +55,28 @@
 				<small><div id="headlines" style="text-align:justify; "></div></small>
 				<div id='snippets' style="text-align:justify"></div>
 				<br>
-				<center><div id='pics'  style="height: 200px; overflow:hidden"></div></center>
+				<center><div id='pics'  style="height: 200px; overflow:hidden;border-bottom:0.2em solid white;"></div></center>
 				<br>
 				<div id="content"></div>
 				<br>
 				<table width="100%" ><tr><td>
-								<div id="progressline"></div>
-								</td><td style="text-align: right">
-								<small><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","[+]","[-]");'><font color="silver">[+]</font></div></small>
-								</td></tr></table>
-		
-		</div>
+					<div id="progressline"></div>
+				</td><td style="text-align: right">
+					<small><font color="silver"><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","[+]","[-]");'>[+]</div></font></small>
+				</td></tr></table>
+			</div>
 			</div>
 			<br>
-				<div class="wrapper" id ="allarticles" style="display: none">
-		<small><br></small>
-		<div class="feed">
-		
+			<div class="wrapper" id ="allarticles" style="display: none">
+				<small><br></small>
+				<div class="feed">
 				<div id="news"><h3><span style="margin: 0; padding: 0.5em;">News</h3></span></div>
-			<div id="markets"><h3><span style="margin: 0; padding: 0.5em;">Markets</h3></span></div>
-			<div id="science"><h3><span style="margin: 0; padding: 0.5em;">Science</h3></span></div>
-			<div id="periodics"><h3><span style="margin: 0; padding: 0.5em;">Periodics</h3></span></div>
-			<div id="bookreviews"><h3><span style="margin: 0; padding: 0.5em;">Book reviews</h3></span></div>
-			<div id="blogs"><h3><span style="margin: 0; padding: 0.5em;">Blogs</h3></span></div>
-			<br>
-
+				<div id="markets"><h3><span style="margin: 0; padding: 0.5em;">Markets</h3></span></div>
+				<div id="science"><h3><span style="margin: 0; padding: 0.5em;">Science</h3></span></div>
+				<div id="periodics"><h3><span style="margin: 0; padding: 0.5em;">Periodics</h3></span></div>
+				<div id="bookreviews"><h3><span style="margin: 0; padding: 0.5em;">Book reviews</h3></span></div>
+				<div id="blogs"><h3><span style="margin: 0; padding: 0.5em;">Blogs</h3></span></div>
+				<br>
 			</div>
 			<br>
 		</div>
@@ -89,7 +84,6 @@
 	</div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 <script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
-
 <script>
 function showhide(mydiv) {
 	var x = document.getElementById(mydiv);
@@ -157,12 +151,11 @@ $('.progress-bar-fill').delay(0).queue(function () {
 setTimeout(function(){
 	$("#loading").hide();
 	$("#rendered").fadeIn("slow","swing");
-},3000);
+	},3000);
 </script>
 <script id="rendered-js">
 $(function () {
-//link, title, content, contentSnippet
-//https://toolkit.sekando.com/docs/en/feednami
+//link, title, content, contentSnippet as per feednami api
 	var feedsLibrary = {
 	feed001: ["https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss","Bloomberg - The Editors","news"],
 	feed002: ["http://lens.blogs.nytimes.com/feed/","New York Times - Lens","blogs"],
@@ -259,7 +252,7 @@ $(function () {
 				});
 				div.appendChild(divchild);
 				document.getElementById(feedsUrl[2]).appendChild(div);
-				var myheadline = "<i><a href='" + elements[0].link + "'>" + elements[0].title.replace(/<strong>/g,'').replace(/["']/g, "") + "</a></i>.....&nbsp;&nbsp;"
+				var myheadline = "<i><a href='" + elements[0].link + "'>" + elements[0].title.replace(/<strong>/g,'').replace(/["']/g, "") + "</a></i>&nbsp;&mdash;&nbsp;"
 				switch (feedsUrl[2]) {
 					case "news":
 						if (head_news == ""){head_news = myheadline}
@@ -277,12 +270,12 @@ $(function () {
 						if (head_books == ""){head_books = myheadline}
 						break;
 					case "blogs":
-						if (head_blogs == ""){head_blogs = myheadline}
+						if (head_blogs == ""){head_blogs = myheadline.replace('&mdash;','')}
 						break;
 					}
 				document.getElementById('headlines').innerHTML =head_news + head_markets + head_science + head_periodics + head_books + head_blogs
 				var divtoadd = document.getElementById('content');
-				var frequentenglish = "[Article] [article] about Exponent Worked While Rsquo Future Years Small Trade Market Stock State Watch What's Don't Another the're Largest impuestos Shipp Would Wrote wrote Other other three Three Being People Charges Decode Podcast Could Recode First About After don't won't can't after Should could should weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
+				var frequentenglish = "[Article] [article] about Exponent Worked While Rsquo Today Future Years Ldquo Lsquo Rdquo Small Trade Market Stock State Watch What's Don't Another the're Largest impuestos Shipp Would Wrote wrote Other other three Three Being People Charges Decode Podcast Could Recode First About After don't won't can't after Should could should weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood"
 				frequentenglish = frequentenglish.capitalize()
 				divtoadd.innerHTML = "" 
 				var allelements = ""
@@ -341,12 +334,11 @@ $(function () {
 										function(data) {
 											var rnd = Math.floor(Math.random() * data.items.length);
 											var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
-											var imgstrhome = '&nbsp;<table style="display: inline-block;"><tr><td><b><center><font face="Indie Flower" color = "#6b6b6b"><small>' +  varpickeywordjson + '</small></font></center><b></td></tr><tr><td><img id="' + varpickeywordjson + '" src="' + image_src + '" width="270px" height="270px" style="object-fit: cover;border-radius:3%" ></img>&nbsp;</td></tr></table>'
+											var imgstrhome = '&nbsp;<table style="display: inline-block;"><tr><td><b><center><font  color = "#6b6b6b"><small>&nbsp;&nbsp;' +  varpickeywordjson + '&nbsp;&nbsp;</small></font></center><b></td></tr><tr><td><img id="' + varpickeywordjson + '" src="' + image_src + '" width="270px" height="270px" style="object-fit: cover;" ></img>&nbsp;</td></tr></table>'
 											var destdivpics = document.getElementById('pics')
 											picstr3 = picstr2
 											picstr2 = picstr1
 											picstr1 = imgstrhome
-											
 											destdivpics.innerHTML = picstr1 + picstr2 + picstr3
 										});
 									}
@@ -361,7 +353,7 @@ $(function () {
 										mysubkeywords += "<small><i>, " + subfinalWordsArray[subi].name.capitalize() + "</i></small>"
 										}
 									}
-								divtoadd.innerHTML += "<div id = '" +finalWordsArray[i].name.capitalize() +"' class='card' ><div onclick='showhide(\"" + finalWordsArray[i].name.capitalize() +"-subjectchild\");'>" + "<span style='margin: 0; padding: 0.5em;'>" + mysubkeywords + "</span><br></div>   " + "<div id='" +finalWordsArray[i].name.capitalize() + "-subjectchild' style='display: none'>" + mystr +'</div></div>'
+								divtoadd.innerHTML += "<div id = '" +finalWordsArray[i].name.capitalize() +"' class='card' ><div onclick='showhide(\"" + finalWordsArray[i].name.capitalize() +"-subjectchild\");'>" + "<span style='margin: 0; padding: 0.5em;'><font size='+1.5'>" + mysubkeywords + "</font></span></div>   " + "<div id='" +finalWordsArray[i].name.capitalize() + "-subjectchild' style='display: none'>" + mystr +'</div></div>'
 								myendTime = new Date();
 						var mytimeDiff = myendTime - mystartTime; 
 						mytimeDiff = Math.round(100* mytimeDiff /1000) /100
@@ -375,6 +367,5 @@ $(function () {
 	});
 });
 </script>
-
 </body>
 </html>
