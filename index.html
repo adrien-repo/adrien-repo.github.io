@@ -58,12 +58,12 @@
 		<small><br></small>
 		<div class="feed">
 			<div id="home" style="display: block;margin: 0; padding: 0.5em;">
-				<small><div id="headlines" style="text-align:justify; "></div></small><br>
-								<small><font color="silver"><div id="mynetwork-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("mynetwork","[+]","[-]");'>[+]</div></font></small>
+				<small><font color="silver"><div id="mynetwork-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("mynetwork","[+]","[-]");'>[+]</div></font></small><br>
+				<small><div id="headlines" style="text-align:justify; "></div></small>
 				<div id="mynetwork" style="display: none"></div>
 				<div id='snippets' style="text-align:justify"></div>
 				<br>
-				<center><div id='pics'  style="height: 200px; overflow:hidden;border-bottom:0.2em solid white;"></div></center>
+				<center><div id='pics'  style="height: 200px; overflow:hidden;border-bottom:0.2em solid white"></div></center>
 				<br>
 				<div id="content"></div>
 				<br>
@@ -131,6 +131,7 @@ function showhideswitchtitle(mydiv,oldtitle,newtitle) {
 		showhide("snippets")
 		showhide("pics")
 		showhide("content")
+		showhide("headlines")
 		}
 	}
 function strip(html){
@@ -379,7 +380,7 @@ $(function () {
 										if (finalWordsArray[i].total > mymaxcount){
 											mymaxcount = finalWordsArray[i].total
 											var destdivtitle = document.getElementById('snippets')
-											destdivtitle.innerHTML = "<h1>" + '<font face="Quicksand"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify'><font face='Quicksand'>" + feedsresult[j].content.replace('undefined', '') + "</div>"
+											destdivtitle.innerHTML = "<h1>" + '<font face="Quicksand"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify'><font face='Quicksand'><big>" + feedsresult[j].content.replace('undefined', '') + "</big></div>"
 											}
 										} else {
 											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
