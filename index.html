@@ -110,12 +110,12 @@ function showhideswitchtitle(mydiv,oldtitle,newtitle) {
 		var y = document.getElementById(mydiv.replace("-child","")+"-child2")
 		y.innerHTML = oldtitle
 	}
-	if (mydiv === "mynetwork")
+	if (mydiv === "mynetwork"){
 		network.stabilize();
 		showhide("snippets")
 		showhide("pics")
 		showhide("content")
-		
+		}
 	}
 function strip(html){
 	var tmp = document.createElement("DIV");
