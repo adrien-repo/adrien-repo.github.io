@@ -43,13 +43,15 @@
 <body bgcolor="#fcfcfc">
 	<div class="wrapper" id="loading">
 		<small><br><br><br></small>
-		Loading...
+		<center><big><font color="black">&#9749; &#127796;<br>The Happy Bots</font></big><br>a curated rss crawler<br><br><br><br><br><br><br><br></center>
+		<center>Loading...</center>
 		<br><br>
 		<div class="progress-bar">
 			<span class="progress-bar-fill" style="width: 0%"></span>
 		</div>
 		<div id="progresslinesplash"></div>
 		<br>
+		
 	</div>
 	<div class="wrapper" id="rendered">
 		<small><br></small>
@@ -70,22 +72,35 @@
 					<small><font color="silver"><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","[+]","[-]");'>[+]</div></font></small>
 				</td></tr></table>
 			</div>
-			</div>
+		</div>
+		<br>
+		<div class="wrapper" id ="allarticles" style="display: none">
+			<small><br></small>
+			<div class="feed">
+			<div id="news"><h3><span style="margin: 0; padding: 0.5em;">News</h3></span></div>
+			</div><br><br>
+			<div class="feed">
+			<div id="markets"><h3><span style="margin: 0; padding: 0.5em;">Markets</h3></span></div>
+			</div><br><br>
+			<div class="feed">
+			<div id="science"><h3><span style="margin: 0; padding: 0.5em;">Science</h3></span></div>
+			</div><br><br>
+			<div class="feed">
+			<div id="periodics"><h3><span style="margin: 0; padding: 0.5em;">Periodics</h3></span></div>
+			</div><br><br>
+			<div class="feed">
+			<div id="bookreviews"><h3><span style="margin: 0; padding: 0.5em;">Book reviews</h3></span></div>
+			</div><br><br>
+			<div class="feed">
+			<div id="blogs"><h3><span style="margin: 0; padding: 0.5em;">Blogs</h3></span></div>
 			<br>
-			<div class="wrapper" id ="allarticles" style="display: none">
-				<small><br></small>
-				<div class="feed">
-				<div id="news"><h3><span style="margin: 0; padding: 0.5em;">News</h3></span></div>
-				<div id="markets"><h3><span style="margin: 0; padding: 0.5em;">Markets</h3></span></div>
-				<div id="science"><h3><span style="margin: 0; padding: 0.5em;">Science</h3></span></div>
-				<div id="periodics"><h3><span style="margin: 0; padding: 0.5em;">Periodics</h3></span></div>
-				<div id="bookreviews"><h3><span style="margin: 0; padding: 0.5em;">Book reviews</h3></span></div>
-				<div id="blogs"><h3><span style="margin: 0; padding: 0.5em;">Blogs</h3></span></div>
-				<br>
 			</div>
 			<br>
 		</div>
-		<br>
+		
+		<div class="wrapper">
+		<center><small><font color="silver">&#9749; &#127796;<br>The Happy Bots<br>a curated rss crawler</font></small></center>
+		</div>
 	</div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 <script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
@@ -192,8 +207,6 @@ function afterloading(){
 		"physics": {"minVelocity": 0.75  }
 		}
 	var network = new vis.Network(container, data, options);
-	var container2 = document.getElementById('mynetwork2');
-	var network2 = new vis.Network(container2, data, options2);
 function resetAllNodes() {
 	try{        
 		nodes.clear();
