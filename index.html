@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html><html lang='en' class=''>
 <head>
 	<meta charset='UTF-8'><meta name="robots" content="noindex">
@@ -206,8 +207,7 @@ function afterloading(){
 		"edges": {
 			"smooth": {	"forceDirection": "none"	}
 			},
-		"physics": {"minVelocity": 0.75  }
-		}
+		"physics": {"forceAtlas2Based": {      "springLength": 200    },    "minVelocity": 0.75,    "solver": "forceAtlas2Based" }		}
 	var network = new vis.Network(container, data, options);
 function resetAllNodes() {
 	try{        
@@ -367,6 +367,7 @@ $(function () {
 						var mystrhome = ""
 						var mysubstr = ""
 						var mycount = 0
+						var articlenamefornode = ""
 							for (var j = 0; j < arrayLength; j++) {
 								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$?%\^&\*;:{}=\-_`~()]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
 									feedsresult[j].dict = finalWordsArray[i].name
@@ -374,7 +375,7 @@ $(function () {
 									if (mycount == 0){
 										mystr  +=  '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
 										mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small>"
-										
+										articlenamefornode = feedsresult[j].title.replace(/<strong>/g,'')
 										mycount = 1
 										mykeywords.push(finalWordsArray[i].name.replace(/\s/g, '').capitalize())
 										if (finalWordsArray[i].total > mymaxcount){
@@ -412,7 +413,7 @@ $(function () {
 										});
 									}
 								var nodeidmain = noddeidtrack.length +1
-								nodes.add({id:nodeidmain, label:'<b>'+finalWordsArray[i].name.capitalize()+'</b>', color: {background:'#eff4f4', border:'silver'}});
+								nodes.add({id:nodeidmain, label:'<b>'+finalWordsArray[i].name.capitalize()+':\n' + articlenamefornode.replace(/(.{25}[^ ]* )/g, "$1\n") , shape: 'box', color: {background:'#eff4f4', border:'silver'}});
 								nodetnameracker.push(finalWordsArray[i].name.capitalize())
 								noddeidtrack.push(nodeidmain)
 								var subwordsArray = splitByWords(mysubstr.replace(/[.,\/#!?$%\^&\*;:{}=\-_`~()]/g," ").capitalize());
