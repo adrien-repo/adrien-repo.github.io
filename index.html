@@ -4,40 +4,38 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="The Happy Bots">
 	<title>The Happy Bots</title>
-	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.css" rel="stylesheet" type="text/css" />
 	<style>
-		:root {--light-color: #efefef; --strong-color: #e0e0e0;}
-		html, body {font-family: Roboto;font-size: 0.92em}
+		:root {--light-color: #fcfcfc; --strong-color: #f7f7f7; --hover-color:#e1e3e8 }
+		html, body {font-family: Roboto;font-size: 0.97em}
 		a:link {text-decoration: none; color: black}
 		a:visited {text-decoration: none;color: black}
 		a:hover {text-decoration: underline}
 		a:active {text-decoration: underline}
 		.feed {margin: auto;border: 0em solid var(--strong-color);border-radius: 0.5em;background-color: #fcfcfc}
-		.feed li {  background-color: white; align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;border-bottom: 1px solid var(--strong-color);}
+		.feed li {  background-color: #fcfcfc; align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;border-bottom: 1px solid var(--strong-color);}
 		.feed li a {  margin: 0;  padding: 0.5em;}
-		.feed li:hover {  background-color: var(--light-color);}
-		.card {border: 0.1em solid white;  border-radius: 0.5em; margin: 0.5em;padding: 0.1em;cursor: pointer; background-color:var(--light-color)}
-		.card:hover {  background-color: var(--strong-color);}
-		@media only screen and (min-width: 780px) {  .feed {    width: 900px; }}
-		@media only screen and (min-width: 680px) and (max-width: 779px) {  .feed {    width: 600px;  }}
+		.feed li:hover {  background-color: var(--strong-color);}
+		.card {border: 0.1em solid #fcfcfc;  border-radius: 0.5em; margin: 0.5em;padding: 0.1em;cursor: pointer; background-color:var(--strong-color)}
+		.card:hover {  background-color: var(--hover-color);}
+		@media only screen and (min-width: 1080px) {  .feed {    width: 900px; }}
+		@media only screen and (min-width: 680px) and (max-width: 1079px) {  .feed {    width: 600px;  }}
 		@media only screen and (min-width: 480px) and (max-width: 679px) {  .feed {    width: 400px;  }}
 		@media only screen and (min-width: 320px) and (max-width: 479px) {  .feed {    width: 300px;  }}
 		@media only screen and (max-width: 319px) {  .feed {    width: 200px;  }}
 		.wrapper {  align-items: center;  display: flex;  flex-direction: column;  margin: auto;}
 		@-webkit-keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		@keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
-		img {vertical-align: top;-webkit-filter: grayscale(60%); filter: grayscale(60%);border:0.2em solid white}
+		img {vertical-align: top;-webkit-filter: grayscale(60%); filter: grayscale(60%);border:0.2em solid #fcfcfc}
 		.slideshow-container {   max-width: 100%;   position: relative;   margin: 0.5em; }
 		.active, {   background-color: #717171; }
 		.fade {   -webkit-animation-name: fade;   -webkit-animation-duration: 1.5s;   animation-name: fade;   animation-duration: 1s; }
 		.progress-bar { width: calc(250px - 6px);    height: 5px;    background: var(--strong-color);    padding: 3px;    border-radius: 3px;    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);}
 		.progress-bar-fill {    display: block;    height: 5px;    background: #ffffff;    border-radius: 3px;    transition: width 3s ease-in-out;}
-		#mynetwork { width: 100%; height: 700px; }
 	</style>
 </head>
 <body bgcolor="#fcfcfc">
@@ -56,9 +54,7 @@
 		<small><br></small>
 		<div class="feed">
 			<div id="home" style="display: block;margin: 0; padding: 0.5em;">
-				<small><font color="silver"><div id="mynetwork-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("mynetwork","&#129418","&#10060");'>&#129418</div></font></small><br>
 				<small><div id="headlines" style="text-align:justify; "></div></small>
-				<div id="mynetwork" style="display: none"></div>
 				<div id='snippets' style="text-align:justify"></div>
 				<br>
 				<center><div id='pics'  style="height: 200px; overflow:hidden;border-bottom:0.2em solid white"></div></center>
@@ -68,7 +64,7 @@
 				<table width="100%" ><tr><td>
 					<div id="progressline"></div>
 				</td><td style="text-align: right">
-					<small><font color="silver"><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","&#128240","&#10060");'>&#128240</div></font></small>
+					<small><font color="silver"><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","view more","view less");'>view more</div></font></small>
 				</td></tr></table>
 			</div>
 		</div>
@@ -102,7 +98,6 @@
 	</div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 <script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.js"></script>
 <script>
 function showhide(mydiv) {
 	var x = document.getElementById(mydiv);
@@ -123,13 +118,6 @@ function showhideswitchtitle(mydiv,oldtitle,newtitle) {
 		var y = document.getElementById(mydiv.replace("-child","")+"-child2")
 		y.innerHTML = oldtitle
 	}
-	if (mydiv === "mynetwork"){
-		network.stabilize();
-		showhide("snippets")
-		showhide("pics")
-		showhide("content")
-		showhide("headlines")
-		}
 	}
 function strip(html){
 	var tmp = document.createElement("DIV");
@@ -183,29 +171,6 @@ function afterloading(){
 	$("#rendered").fadeIn("slow","swing");
 }
 </script>
-<script type="text/javascript">
-	nodesArray = [];
-	nodes = new vis.DataSet(nodesArray);
-	edgesArray = [];
-	edges = new vis.DataSet(edgesArray);
-	var container = document.getElementById('mynetwork');
-	var data = {     nodes: nodes,     edges: edges   };
-	var options = {
-		"nodes": {"borderWidth": null, "color": {"highlight": {}, "hover": {}}, "font": {"size": 30, "face": "Roboto", "multi": "html", "strokeWidth": null}, "scaling": {"min": null, "max": null}, "shape": "text", "shapeProperties": {"borderRadius": null}, "size": null},
-		"edges": {"smooth": {"forceDirection": "none"}},
-		"physics": {"forceAtlas2Based": {"springLength": 300}, "minVelocity": 0.75, "solver": "forceAtlas2Based"}		
-		}
-	var network = new vis.Network(container, data, options);
-function resetAllNodes() {
-	try{        
-		nodes.clear();
-		edges.clear();
-		nodes.add(nodesArray);
-		edges.add(edgesArray);
-		}
-	catch(err){}
-	}
-</script>
 <script id="rendered-js">
 $(function () {
 //link, title, content, contentSnippet as per feednami api
@@ -252,7 +217,7 @@ $(function () {
 	feed040: ["https://aeon.co/feed.rss","Aeon","periodics"],
 	feed041: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
 	feed042: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
-	feed043: ["https://physicstoday.scitation.org/action/showFeed?type=etoc&feed=rss&jc=pto","Physics Today","science"],
+	//feed043: ["https://physicstoday.scitation.org/action/showFeed?type=etoc&feed=rss&jc=pto","Physics Today","science"],
 	feed044: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
 	feed045: ["https://www.mcsweeneys.net/rss","Mc Sweeneys","periodics"],
 	feed046: ["https://xkcd.com/rss.xml","XKCD","blogs"],
@@ -344,16 +309,12 @@ $(function () {
 				var wordsMap = createWordMap(wordsArray);
 				var finalWordsArray = sortByCount(wordsMap);
 				var mymaxcount = 5
-				resetAllNodes();
-				var nodetnameracker = []
-				var noddeidtrack = []
 				for (var i = 0; i < finalWordsArray.length; i++) {
 					if (finalWordsArray[i].total > 3 && finalWordsArray[i].name.length > 4){
 						var mystr = ""
 						var mystrhome = ""
 						var mysubstr = ""
 						var mycount = 0
-						var articlenamefornode = ""
 							for (var j = 0; j < arrayLength; j++) {
 								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$?%\^&\*;:{}=\-_`~()]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
 									feedsresult[j].dict = finalWordsArray[i].name
@@ -361,7 +322,6 @@ $(function () {
 									if (mycount == 0){
 										mystr  +=  '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
 										mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small>"
-										articlenamefornode = feedsresult[j].title.replace(/<strong>/g,'')
 										mycount = 1
 										mykeywords.push(finalWordsArray[i].name.replace(/\s/g, '').capitalize())
 										if (finalWordsArray[i].total > mymaxcount){
@@ -398,10 +358,6 @@ $(function () {
 											destdivpics.innerHTML = picstr1 + picstr2 + picstr3
 										});
 									}
-								var nodeidmain = noddeidtrack.length +1
-								nodes.add({id:nodeidmain, label:'<b>'+finalWordsArray[i].name.capitalize()+':\n' + articlenamefornode.replace(/(.{25}[^ ]* )/g, "$1\n") , shape: 'box', color: {background:'#eff4f4', border:'silver'}});
-								nodetnameracker.push(finalWordsArray[i].name.capitalize())
-								noddeidtrack.push(nodeidmain)
 								var subwordsArray = splitByWords(mysubstr.replace(/[.,\/#!?$%\^&\*;:{}=\-_`~()]/g," ").capitalize());
 								var subwordsMap = createWordMap(subwordsArray);
 								var subfinalWordsArray = sortByCount(subwordsMap);
@@ -412,24 +368,6 @@ $(function () {
 										if (conceptcount <= maxrandom){
 											conceptcount = conceptcount + 1
 											mysubkeywords += "<small><i>, " + subfinalWordsArray[subi].name.capitalize() + "</i></small>"
-											}
-										var nodeid = -1
-										var nodexalreadyexists = 0
-										for(var yy = 0; yy < nodetnameracker.length; yy++) {
-										   if(nodetnameracker[yy] === subfinalWordsArray[subi].name.capitalize() ) {
-											 nodexalreadyexists = 1
-											 nodeid = noddeidtrack[yy]
-										   }
-										}
-										if (nodexalreadyexists == 1)
-											{
-												edges.add({from: nodeidmain, to: nodeid})}
-											else {
-												nodeid = noddeidtrack.length +1
-												nodes.add({id:nodeid, label:subfinalWordsArray[subi].name.capitalize(), color: {background:'#eff4f4', border:'silver'} });
-												nodetnameracker.push(subfinalWordsArray[subi].name.capitalize())
-												noddeidtrack.push(nodeid)
-											edges.add({from: nodeidmain, to: nodeid})
 											}
 										}
 									}
