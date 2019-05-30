@@ -7,21 +7,22 @@
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-	<link href="https://fonts.googleapis.com/css?family=Quicksand|Indie+Flower" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.css" rel="stylesheet" type="text/css" />
 	<style>
-		html, body {font-family: Quicksand;font-size: 0.92em}
+		:root {--light-color: #efefef; --strong-color: #e0e0e0;}
+		html, body {font-family: Roboto;font-size: 0.92em}
 		a:link {text-decoration: none; color: black}
 		a:visited {text-decoration: none;color: black}
 		a:hover {text-decoration: underline}
 		a:active {text-decoration: underline}
-		.feed {margin: auto;border: 0.3em solid #eff4f4;border-radius: 0.5em;background-color: white}
-		.feed li {  background-color: white; align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;border-bottom: 1px solid #eff4f4;}
+		.feed {margin: auto;border: 0.15em solid var(--strong-color);border-radius: 0.5em;background-color: #fcfcfc}
+		.feed li {  background-color: white; align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;border-bottom: 1px solid var(--strong-color);}
 		.feed li a {  margin: 0;  padding: 0.5em;}
-		.feed li:hover {  background-color: #eff4f4;}
-		.card {border: 1px solid white;  border-radius: 0.5em; margin: 0.5em;padding: 0.2em;cursor: pointer; background-color:#fcfcfc}
-		.card:hover {  background-color: #eff4f4;}
+		.feed li:hover {  background-color: var(--light-color);}
+		.card {border: 0.1em solid white;  border-radius: 0.5em; margin: 0.5em;padding: 0.1em;cursor: pointer; background-color:var(--light-color)}
+		.card:hover {  background-color: var(--strong-color);}
 		@media only screen and (min-width: 780px) {  .feed {    width: 900px; }}
 		@media only screen and (min-width: 680px) and (max-width: 779px) {  .feed {    width: 600px;  }}
 		@media only screen and (min-width: 480px) and (max-width: 679px) {  .feed {    width: 400px;  }}
@@ -30,12 +31,11 @@
 		.wrapper {  align-items: center;  display: flex;  flex-direction: column;  margin: auto;}
 		@-webkit-keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		@keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
-		.mySlides {display: none}
 		img {vertical-align: top;-webkit-filter: grayscale(60%); filter: grayscale(60%);border:0.2em solid white}
 		.slideshow-container {   max-width: 100%;   position: relative;   margin: 0.5em; }
 		.active, {   background-color: #717171; }
 		.fade {   -webkit-animation-name: fade;   -webkit-animation-duration: 1.5s;   animation-name: fade;   animation-duration: 1s; }
-		.progress-bar { width: calc(250px - 6px);    height: 5px;    background: #e0e0e0;    padding: 3px;    border-radius: 3px;    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);}
+		.progress-bar { width: calc(250px - 6px);    height: 5px;    background: var(--strong-color);    padding: 3px;    border-radius: 3px;    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);}
 		.progress-bar-fill {    display: block;    height: 5px;    background: #ffffff;    border-radius: 3px;    transition: width 3s ease-in-out;}
 		#mynetwork { width: 100%; height: 700px; }
 	</style>
@@ -56,7 +56,7 @@
 		<small><br></small>
 		<div class="feed">
 			<div id="home" style="display: block;margin: 0; padding: 0.5em;">
-				<small><font color="silver"><div id="mynetwork-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("mynetwork","[+]","[-]");'>[+]</div></font></small><br>
+				<small><font color="silver"><div id="mynetwork-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("mynetwork","&#129418","&#10060");'>&#129418</div></font></small><br>
 				<small><div id="headlines" style="text-align:justify; "></div></small>
 				<div id="mynetwork" style="display: none"></div>
 				<div id='snippets' style="text-align:justify"></div>
@@ -68,7 +68,7 @@
 				<table width="100%" ><tr><td>
 					<div id="progressline"></div>
 				</td><td style="text-align: right">
-					<small><font color="silver"><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","[+]","[-]");'>[+]</div></font></small>
+					<small><font color="silver"><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","&#128240","&#10060");'>&#128240</div></font></small>
 				</td></tr></table>
 			</div>
 		</div>
@@ -191,19 +191,10 @@ function afterloading(){
 	var container = document.getElementById('mynetwork');
 	var data = {     nodes: nodes,     edges: edges   };
 	var options = {
-		"nodes": {    
-			"borderWidth": null,
-			"color": {      "highlight": {},      "hover": {}    },
-			"font": {      "size": 30,      "face": "Quicksand",	  "multi": "html",      "strokeWidth": null    },
-			"scaling": {      "min": null,      "max": null    },
-			"shape": "text",
-			"shapeProperties": {  "borderRadius": null	},
-			"size": null
-		},
-		"edges": {
-			"smooth": {	"forceDirection": "none"	}
-			},
-		"physics": {"forceAtlas2Based": {      "springLength": 200    },    "minVelocity": 0.75,    "solver": "forceAtlas2Based" }		}
+		"nodes": {"borderWidth": null, "color": {"highlight": {}, "hover": {}}, "font": {"size": 30, "face": "Roboto", "multi": "html", "strokeWidth": null}, "scaling": {"min": null, "max": null}, "shape": "text", "shapeProperties": {"borderRadius": null}, "size": null},
+		"edges": {"smooth": {"forceDirection": "none"}},
+		"physics": {"forceAtlas2Based": {"springLength": 200}, "minVelocity": 0.75, "solver": "forceAtlas2Based"}		
+		}
 	var network = new vis.Network(container, data, options);
 function resetAllNodes() {
 	try{        
@@ -226,50 +217,49 @@ $(function () {
 	feed005: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
 	feed006: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty","blogs"],
 	feed007: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
-	feed009: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
-	feed010: ["http://longform.org/feed.rss","Long Form","periodics"],
-	feed011: ["https://www.theatlantic.com/feed/best-of/","The Atlantic","periodics"],
-	feed012: ["http://fusion.net/feed/","Fusion","periodics"],
-	feed013: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
-	feed014: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
-	feed015: ["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
-	feed016: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
-	feed017: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
-	feed018: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
-	feed019: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
-	feed020: ["https://www.edge.org/feed","Edge Magazine","periodics"],
-	feed021: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
-	feed022: ["https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss","Bloomberg - Matt Levine","markets"],
-	feed023: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
-	feed024: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
-	feed025: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
-	feed026: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
-	feed027: ["http://www.salon.com/feed/","Salon","periodics"],
-	feed028: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
-	feed029: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
-	feed030: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
-	feed031: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
-	feed032: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
-	feed033: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
-	feed034: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
-	feed035: ["http://rss.sciam.com/ScientificAmerican-Global","Scientific American","science"],
-	feed037: ["http://stratechery.com/feed/","Stratechery","periodics"],
-	feed038: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
-	feed039: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
-	feed040: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
-	feed041: ["http://evonomics.com/feed/","Evonomics","markets"],
-	feed042: ["https://aeon.co/feed.rss","Aeon","periodics"],
-	feed043: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
-	feed044: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
-	feed045: ["https://physicstoday.scitation.org/action/showFeed?type=etoc&feed=rss&jc=pto","Physics Today","science"],
-	feed046: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
-	feed047: ["https://www.mcsweeneys.net/rss","Mc Sweeneys","periodics"],
-	feed048: ["https://xkcd.com/rss.xml","XKCD","blogs"],
-	feed049: ["https://news.ycombinator.com/rss","Hacker News","periodics"],
-	feed050: ["https://phys.org/rss-feed/breaking/","Phys Org","science"],
-	feed051: ["https://www.moonofalabama.org/index.rdf","Moon of Alabama","periodics"],
-	feed051: ["https://webb-site.com/rss.asp","Webb","markets"],
-	feed052: ["http://www.sciencemag.org/rss/news_current.xml","ScienceMag","science"],
+	feed008: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
+	feed009: ["http://longform.org/feed.rss","Long Form","periodics"],
+	feed010: ["https://www.theatlantic.com/feed/best-of/","The Atlantic","periodics"],
+	feed011: ["http://fusion.net/feed/","Fusion","periodics"],
+	feed012: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
+	feed013: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
+	feed014: ["http://cdn.lrb.co.uk/feeds/lrb","The London review of Books","bookreviews"],
+	feed015: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
+	feed016: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
+	feed017: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
+	feed018: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
+	feed019: ["https://www.edge.org/feed","Edge Magazine","periodics"],
+	feed020: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
+	feed021: ["https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss","Bloomberg - Matt Levine","markets"],
+	feed022: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
+	feed023: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
+	feed024: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
+	feed025: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
+	feed026: ["http://www.salon.com/feed/","Salon","periodics"],
+	feed027: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
+	feed028: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
+	feed029: ["http://www.vanityfair.com/news/rss","VanityFair","periodics"],
+	feed030: ["http://www.recode.net/rss/index.xml","ReCode","periodics"],
+	feed031: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
+	feed032: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
+	feed033: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
+	feed034: ["http://rss.sciam.com/ScientificAmerican-Global","Scientific American","science"],
+	feed035: ["http://stratechery.com/feed/","Stratechery","periodics"],
+	feed036: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
+	feed037: ["http://feeds.feedburner.com/marginalrevolution/feed","Marginal Revolution","periodics"],
+	feed038: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
+	feed039: ["http://evonomics.com/feed/","Evonomics","markets"],
+	feed040: ["https://aeon.co/feed.rss","Aeon","periodics"],
+	feed041: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
+	feed042: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
+	feed043: ["https://physicstoday.scitation.org/action/showFeed?type=etoc&feed=rss&jc=pto","Physics Today","science"],
+	feed044: ["http://magazine.atavist.com/feed.rss","The Atavist","periodics"],
+	feed045: ["https://www.mcsweeneys.net/rss","Mc Sweeneys","periodics"],
+	feed046: ["https://xkcd.com/rss.xml","XKCD","blogs"],
+	feed047: ["https://news.ycombinator.com/rss","Hacker News","periodics"],
+	feed048: ["https://phys.org/rss-feed/breaking/","Phys Org","science"],
+	feed049: ["https://webb-site.com/rss.asp","Webb","markets"],
+	feed050: ["http://www.sciencemag.org/rss/news_current.xml","ScienceMag","science"],
 	}
 	var feedsresult = [];
 	mystartTime = new Date();
@@ -307,14 +297,14 @@ $(function () {
 				divchild.style.display = "none"
 				var list = [];
 				$(elements).each(function (index, element) {
-					divchild.innerHTML += "<li><a href='" + element.link + "'>" + element.title.replace(/<strong>/g,'') + '<br><div style="text-align:justify"><font color="#a8a8a8">' + strip(element.content).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "</font></div></a></li>";
+					divchild.innerHTML += "<li><a href='" + element.link + "' target='_blank'>" + element.title.replace(/<strong>/g,'') + '<br><div style="text-align:justify"><font color="#a8a8a8">' + strip(element.content).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "</font></div></a></li>";
 					var article = {srcname: feedsUrl[1], title:element.title, link: element.link, content:strip(element.content).substring(0,1000).replace(/(\r\n|\n|\r)/gm,""), dict:"none"}
 					feedsresult.push(article)
 					nbarticles = nbarticles + 1
 				});
 				div.appendChild(divchild);
 				document.getElementById(feedsUrl[2]).appendChild(div);
-				var myheadline = "<i><a href='" + elements[0].link + "'>" + elements[0].title.replace(/<strong>/g,'').replace(/["']/g, "") + "</a></i>&nbsp;&mdash;&nbsp;"
+				var myheadline = "<i><a href='" + elements[0].link + "' target='_blank'>" + elements[0].title.replace(/<strong>/g,'').replace(/["']/g, "") + "</a></i>&nbsp;&mdash;&nbsp;"
 				switch (feedsUrl[2]) {
 					case "news":
 						if (head_news == ""){head_news = myheadline}
@@ -377,7 +367,7 @@ $(function () {
 										if (finalWordsArray[i].total > mymaxcount){
 											mymaxcount = finalWordsArray[i].total
 											var destdivtitle = document.getElementById('snippets')
-											destdivtitle.innerHTML = "<h1>" + '<font face="Quicksand"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify'><font face='Quicksand'><big>" + feedsresult[j].content.replace('undefined', '') + "</big></div>"
+											destdivtitle.innerHTML = "<h1>" + '<font face="Roboto"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify'><font face='Roboto'><big>" + feedsresult[j].content.replace('undefined', '') + "</big></div>"
 											}
 										} else {
 											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
