@@ -46,6 +46,9 @@
 		input:checked + .slider:before {  transform: translateX(13px);}
 		.slider.round {  border-radius: 1em;}
 		.slider.round:before {  border-radius: 50%;}
+		.up {cursor: pointer;color: var(--strong-color)}
+		.down {cursor: pointer;color: var(--strong-color)}
+		.lettrine::first-letter {  font-size:2em;  padding-right:0.1em;  float:left;}
 	</style>
 </head>
 <body>
@@ -65,18 +68,20 @@
 		<div class="feed">
 			<div id="home" style="display: block;margin: 0; padding: 0.5em;">
 				<small>
-					
-				<table width="100%" ><tr><td style="text-align: right">
-					<span class="theme-switch-wrapper"><label class="theme-switch" for="checkbox"><input type="checkbox" id="checkbox" /><span class="slider round"></span></label></span><br>
-				</td></tr></table>
-				
+					<table width="100%" >
+					<tr>
+					<td style="text-align: right">
+						<b><span class="down"><small>A</small></span> <span class="up"><big>A</big></span></b>
+						<span class="theme-switch-wrapper"><label class="theme-switch" for="checkbox"><input type="checkbox" id="checkbox" /><span class="slider round"></span></label></span><br>
+					</td>
+					</tr></table><br>
 					<div id="headlines" style="text-align:justify; "></div>
 				</small>
 				<div id='snippets' style="text-align:justify"></div>
 				<br>
 				<center><div id='pics'  style="height: 200px; overflow:hidden"></div></center>
 				<br>
-				<div id="content"></div>
+				<div id="content" style="text-align:justify"></div>
 				<br>
 				<table width="100%" ><tr><td>
 					<div id="progressline"></div>
@@ -116,6 +121,8 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 <script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
 <script>
+$('.up').on('click', function() {  $('.wrapper').animate({    'font-size': '+=1'  });});
+$('.down').on('click', function() {  $('.wrapper').animate({    'font-size': '-=1'  });});
 const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
 function switchTheme(e) {
     if (e.target.checked) {
@@ -386,7 +393,7 @@ $(function () {
 											titlearticle = feedsresult[j].content.replace('undefined', '')
 											charcut = 1000
 											if (titlearticle.length >charcut) {titlearticle = titlearticle.capitalize().substring(0,charcut) + '...' } else {titlearticle = titlearticle.capitalize() }
-											destdivtitle.innerHTML = "<h1>" + '<font face="Roboto"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify'><font face='Roboto'><big>" + titlearticle + "</big></div>"
+											destdivtitle.innerHTML = "<h1>" + '<font face="Roboto"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify' class='lettrine'><font face='Roboto'><big>" + titlearticle + "</big></div>"
 											}
 										} else {
 											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
@@ -394,7 +401,7 @@ $(function () {
 									}
 								}
 							if (mystr == ""){} else {
-								var mysubkeywords = "<b>" + finalWordsArray[i].name.capitalize() + "</b>"
+								var mysubkeywords = "<b><big>" + finalWordsArray[i].name.capitalize() + "</big></b>"
 								varpickeyword = finalWordsArray[i].name.capitalize()
 								if (mypickeyword <=3 && alreadyusedkey.indexOf(varpickeyword)==-1) {
 									mypickeyword = mypickeyword+1
@@ -441,8 +448,8 @@ $(function () {
 								}
 								charcut = 1000
 								if (myexcerpt.length >charcut) {myexcerpt = myexcerpt.capitalize().substring(0,charcut) + '...' } else {myexcerpt = myexcerpt.capitalize() }
-								mysubkeywords += "&nbsp;<small> " + myexcerpt + "</small>"
-						divtoadd.innerHTML += "<div id = '" +finalWordsArray[i].name.capitalize() +"' class='card' ><div  onclick='showhide(\"" + finalWordsArray[i].name.capitalize() +"-subjectchild\");'>" + "<span style='margin: 0; padding: 0.5em;'><font size='+1'>" + mysubkeywords + "</font></span></div>   " + "<div id='" +finalWordsArray[i].name.capitalize() + "-subjectchild' style='display: none'>" + mystr +'</div></div>'
+								mysubkeywords += "&nbsp; " + myexcerpt 
+						divtoadd.innerHTML += "<div id = '" +finalWordsArray[i].name.capitalize() +"' class='card' ><div  onclick='showhide(\"" + finalWordsArray[i].name.capitalize() +"-subjectchild\");'>" + "<span style='margin: 0; padding: 0.5em;'>" + mysubkeywords + "</span></div>   " + "<div id='" +finalWordsArray[i].name.capitalize() + "-subjectchild' style='display: none'>" + mystr +'</div></div>'
 						myendTime = new Date();
 						var mytimeDiff = myendTime - mystartTime; 
 						mytimeDiff = Math.round(100* mytimeDiff /1000) /100
