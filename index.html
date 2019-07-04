@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html><html lang='en' class=''>
 <head>
 	<meta charset='UTF-8'><meta name="robots" content="noindex">
@@ -13,7 +14,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.css" rel="stylesheet" type="text/css" />
 	<style>
 		:root {--light-color: #fcfcfc; --strong-color: #f0f0f0; --hover-color:#f0f0f0; --font-color:#000000 }
-		[data-theme="dark"] {--light-color: #000000; --strong-color: #666666; --hover-color:#666666;  --font-color:#ffffff}
+		[data-theme="dark"] {--light-color: #000000; --strong-color: #454545; --hover-color:#454545;  --font-color:#ffffff}
 		html, body {font-family: Roboto;font-size: 0.97em;background-color: var(--light-color);color: var(--font-color)}
 		a:link {text-decoration: none; color: var(--font-color)}
 		a:visited {text-decoration: none;color: var(--font-color)}
@@ -26,21 +27,17 @@
 		.card {border: 0.1em solid var(--strong-color);  border-radius: 0.5em; margin: 0.5em;padding: 0.5em;cursor: pointer; background-color:var(--light-color)}
 		.card:hover {  background-color: var(--hover-color);}
 		@media only screen and (min-width: 1080px) {  .feed {    width: 900px; }}
-		@media only screen and (min-width: 680px) and (max-width: 1079px) {  .feed {    width: 600px;  }}
-		@media only screen and (min-width: 480px) and (max-width: 679px) {  .feed {    width: 400px;  }}
-		@media only screen and (min-width: 320px) and (max-width: 479px) {  .feed {    width: 300px;  }}
-		@media only screen and (max-width: 319px) {  .feed {    width: 280px;  }}
+		@media only screen and (min-width: 320px) and (max-width: 1079px) {  .feed {    width: 95vw;  }}
+		@media only screen and (max-width: 319px) {  .feed {    width: 95vw;  }}
 		.wrapper {  align-items: center;  display: flex;  flex-direction: column;  margin: auto;}
 		@-webkit-keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		@keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		img {vertical-align: top;-webkit-filter: grayscale(60%); filter: grayscale(60%);border:0.2em solid var(--light-color)}
+		img:hover {-webkit-filter: grayscale(0%);}
 		.slideshow-container {   max-width: 100%;   position: relative;   margin: 0.5em; }
 		.fade {   -webkit-animation-name: fade;   -webkit-animation-duration: 1.5s;   animation-name: fade;   animation-duration: 1s; }
 		.progress-bar { width: calc(250px - 6px);    height: 5px;    background: var(--hover-color);    padding: 3px;    border-radius: 3px;    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);}
 		.progress-bar-fill {    display: block;    height: 5px;    background: #ffffff;    border-radius: 3px;    transition: width 3s ease-in-out;}
-		
-		/*Simple css to style it like a toggle switch*/
-		/*.theme-switch-wrapper {  display: flex;  align-items: center;  em {margin-left: 5px;}} */
 		.theme-switch {  display: inline-block;  height: 17px;  position: relative;  width: 30px;}
 		.theme-switch input {  display:none;}
 		.slider {  background-color: var(--hover-color);  bottom: 0;  cursor: pointer;  left: 0;  position: absolute;  right: 0;  top: 0;  transition: .4s;}
@@ -49,7 +46,6 @@
 		input:checked + .slider:before {  transform: translateX(13px);}
 		.slider.round {  border-radius: 1em;}
 		.slider.round:before {  border-radius: 50%;}
-
 	</style>
 </head>
 <body>
@@ -387,7 +383,10 @@ $(function () {
 										if (finalWordsArray[i].total > mymaxcount){
 											mymaxcount = finalWordsArray[i].total
 											var destdivtitle = document.getElementById('snippets')
-											destdivtitle.innerHTML = "<h1>" + '<font face="Roboto"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify'><font face='Roboto'><big>" + feedsresult[j].content.replace('undefined', '') + "</big></div>"
+											titlearticle = feedsresult[j].content.replace('undefined', '')
+											charcut = 1000
+											if (titlearticle.length >charcut) {titlearticle = titlearticle.capitalize().substring(0,charcut) + '...' } else {titlearticle = titlearticle.capitalize() }
+											destdivtitle.innerHTML = "<h1>" + '<font face="Roboto"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify'><font face='Roboto'><big>" + titlearticle + "</big></div>"
 											}
 										} else {
 											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
@@ -428,7 +427,7 @@ $(function () {
 								{
 									conceptsentence = 0
 									sentencecapitalized = articlesbysentence[z].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize()
-									myexcerpttry = strip (articlesbysentence[z]) //strip(articlesbysentence[z])
+									myexcerpttry = strip (articlesbysentence[z]) 
 									for (var subi = 0; subi <subfinalWordsArray.length; subi++) {
 									if (subfinalWordsArray[subi].total >= 2 && subfinalWordsArray[subi].name.length > 4  && frequentenglish.indexOf(subfinalWordsArray[subi].name.replace(/\s/g, '').capitalize()) <0 ){
 										conceptsentence = conceptsentence + occurrences(sentencecapitalized,subfinalWordsArray[subi].name.capitalize() )*(subfinalWordsArray[subi].total)^2
