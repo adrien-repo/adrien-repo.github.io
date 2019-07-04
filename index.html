@@ -268,7 +268,7 @@ $(function () {
 				div.setAttribute("id", feedsUrl[1])
 				myunactivetitle = 'No'
 				myactivetitle = 'Yes'
-				myunactivetitle = '<span style=\'margin: 0; padding: 0.5em;\'>' + elements[0].title.replace(/<strong>/g,'').replace(/["']/g, "") + ' <small><font color=\'silver\'>(' + feedsUrl[1] + ')</font></small></span>'
+				myunactivetitle = '<span style=\'margin: 0; padding: 0.5em;\'>' + elements[0].title.replace(/<strong>/g,'') + ' <small><font color=\'silver\'>(' + feedsUrl[1] + ')</font></small></span>'
 				myactivetitle = '<span style=\'margin: 0; padding: 0.5em;\'><b>' + feedsUrl[1] + '</b></span>'
 				div.setAttribute('onclick','showhideswitchtitle("'+feedsUrl[1]+'-child'+'","' + myunactivetitle +'","' + myactivetitle + '");');
 				div.innerHTML = '<div id=\'' + feedsUrl[1]+"-child2" + '\'>' + myunactivetitle + '</span><br>'
@@ -278,13 +278,13 @@ $(function () {
 				var list = [];
 				$(elements).each(function (index, element) {
 					divchild.innerHTML += "<li><a href='" + element.link + "' target='_blank'>" + element.title.replace(/<strong>/g,'') + '<br><div style="text-align:justify"><font color="#a8a8a8">' + strip(element.content).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "</font></div></a></li>";
-					var article = {srcname: feedsUrl[1], title:element.title.replace(/’/g, " "), link: element.link, content:strip(element.content).replace(/(\r\n|\n|\r)/gm,". "), dict:"none"}
+					var article = {srcname: feedsUrl[1], title:element.title.replace(/U.S./gm,"US").replace(/U.K./gm,"UK"), link: element.link, content:strip(element.content).replace(/(\r\n|\n|\r)/gm,". ").replace(/U.S./gm,"US").replace(/U.K./gm,"UK"), dict:"none"}
 					feedsresult.push(article)
 					nbarticles = nbarticles + 1
 				});
 				div.appendChild(divchild);
 				document.getElementById(feedsUrl[2]).appendChild(div);
-				var myheadline = "<i><a href='" + elements[0].link + "' target='_blank'>" + elements[0].title.replace(/<strong>/g,'').replace(/["']/g, "") + "</a></i>&nbsp;&mdash;&nbsp;"
+				var myheadline = "<i><a href='" + elements[0].link + "' target='_blank'>" + elements[0].title.replace(/<strong>/g,'') + "</a></i>&nbsp;&mdash;&nbsp;"
 				switch (feedsUrl[2]) {
 					case "news":
 						if (head_news == ""){head_news = myheadline}
@@ -317,7 +317,7 @@ $(function () {
 					feedsresult[j].dict = "none"
 					}
 				for (var i = 0; i < arrayLength; i++) {
-					allelements += (feedsresult[i].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").replace(/['’"]/g, '').capitalize()) +" "; //here
+					allelements += (feedsresult[i].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize()) +" "; //here
 					allelements = allelements.capitalize()
 					}
 				var wordsArray = splitByWords(allelements);
@@ -332,12 +332,12 @@ $(function () {
 						var mysubstr2 = ""
 						var mycount = 0
 							for (var j = 0; j < arrayLength; j++) {
-								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").replace(/'"’/g,"").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
+								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
 									feedsresult[j].dict = finalWordsArray[i].name
 									
 									mysubstr += strip(feedsresult[j].title).replace(/<strong>/g,'') + '. ' + strip(feedsresult[j].content).replace(/<strong>/g,'') + '. '
 									if (mycount == 0){
-										mystr  +=  '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
+										mystr  +=  '<li><a href="'+feedsresult[j].link+'" target="_blank">'  + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
 										mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small>"
 										mycount = 1
 										mykeywords.push(finalWordsArray[i].name.replace(/\s/g, '').capitalize())
@@ -347,7 +347,7 @@ $(function () {
 											destdivtitle.innerHTML = "<h1>" + '<font face="Roboto"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify'><font face='Roboto'><big>" + feedsresult[j].content.replace('undefined', '') + "</big></div>"
 											}
 										} else {
-											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
+											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
 										}
 									}
 								}
@@ -384,7 +384,7 @@ $(function () {
 								for (var z = 0; z < articlesbysentence.length; z++)
 								{
 									conceptsentence = 0
-									sentencecapitalized = articlesbysentence[z].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").replace(/'"’/g,"").capitalize()
+									sentencecapitalized = articlesbysentence[z].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize()
 									myexcerpttry = strip (articlesbysentence[z]) //strip(articlesbysentence[z])
 									for (var subi = 0; subi <subfinalWordsArray.length; subi++) {
 									if (subfinalWordsArray[subi].total >= 2 && subfinalWordsArray[subi].name.length > 4  && frequentenglish.indexOf(subfinalWordsArray[subi].name.replace(/\s/g, '').capitalize()) <0 ){
@@ -399,7 +399,7 @@ $(function () {
 								}
 								charcut = 1000
 								if (myexcerpt.length >charcut) {myexcerpt = myexcerpt.capitalize().substring(0,charcut) + '...' } else {myexcerpt = myexcerpt.capitalize() }
-								mysubkeywords += "<small><font color='black'><i> " + myexcerpt + ".</small></font></i>"
+								mysubkeywords += "<small> " + myexcerpt + "</small>"
 						divtoadd.innerHTML += "<div id = '" +finalWordsArray[i].name.capitalize() +"' class='card' ><div  onclick='showhide(\"" + finalWordsArray[i].name.capitalize() +"-subjectchild\");'>" + "<span style='margin: 0; padding: 0.5em;'><font size='+1'>" + mysubkeywords + "</font></span></div>   " + "<div id='" +finalWordsArray[i].name.capitalize() + "-subjectchild' style='display: none'>" + mystr +'</div></div>'
 						myendTime = new Date();
 						var mytimeDiff = myendTime - mystartTime; 
