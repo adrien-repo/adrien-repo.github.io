@@ -1,3 +1,4 @@
+
 <!DOCTYPE html><html lang='en' class=''>
 <head>
 	<meta charset='UTF-8'><meta name="robots" content="noindex">
@@ -22,7 +23,7 @@
 		.feed li {  background-color: var(--light-color); align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;border-bottom: 1px solid var(--strong-color);border-top: 1px solid var(--strong-color)}
 		.feed li a {  margin: 0;  padding: 0.5em;}
 		.feed li:hover {  background-color: var(--strong-color);}
-		.card {border: 0.1em solid var(--strong-color);  border-radius: 0.5em; margin: 0.5em;padding: 0.1em;cursor: pointer; background-color:var(--light-color)}
+		.card {border: 0.1em solid var(--strong-color);  border-radius: 0.5em; margin: 0.5em;padding: 0.5em;cursor: pointer; background-color:var(--light-color)}
 		.card:hover {  background-color: var(--hover-color);}
 		@media only screen and (min-width: 1080px) {  .feed {    width: 900px; }}
 		@media only screen and (min-width: 680px) and (max-width: 1079px) {  .feed {    width: 600px;  }}
@@ -441,7 +442,7 @@ $(function () {
 								}
 								charcut = 1000
 								if (myexcerpt.length >charcut) {myexcerpt = myexcerpt.capitalize().substring(0,charcut) + '...' } else {myexcerpt = myexcerpt.capitalize() }
-								mysubkeywords += "<small> " + myexcerpt + "</small>"
+								mysubkeywords += "&nbsp;<small> " + myexcerpt + "</small>"
 						divtoadd.innerHTML += "<div id = '" +finalWordsArray[i].name.capitalize() +"' class='card' ><div  onclick='showhide(\"" + finalWordsArray[i].name.capitalize() +"-subjectchild\");'>" + "<span style='margin: 0; padding: 0.5em;'><font size='+1'>" + mysubkeywords + "</font></span></div>   " + "<div id='" +finalWordsArray[i].name.capitalize() + "-subjectchild' style='display: none'>" + mystr +'</div></div>'
 						myendTime = new Date();
 						var mytimeDiff = myendTime - mystartTime; 
