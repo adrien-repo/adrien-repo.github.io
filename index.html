@@ -40,14 +40,14 @@
 		.progress-bar-fill {    display: block;    height: 5px;    background: #ffffff;    border-radius: 3px;    transition: width 3s ease-in-out;}
 		.theme-switch {  display: inline-block;  height: 17px;  position: relative;  width: 30px;}
 		.theme-switch input {  display:none;}
-		.slider {  background-color: var(--hover-color);  bottom: 0;  cursor: pointer;  left: 0;  position: absolute;  right: 0;  top: 0;  transition: .4s;}
+		.slider {  background-color: var(--font-color);  bottom: 0;  cursor: pointer;  left: 0;  position: absolute;  right: 0;  top: 0;  transition: .4s;}
 		.slider:before {  background-color: var(--light-color);  bottom: 2px;  content: "";  height: 13px;  left: 2px;  position: absolute;  transition: .4s;  width: 13px;}
-		input:checked + .slider {  background-color: var(--hover-color);}
+		input:checked + .slider {  background-color: var(--font-color);}
 		input:checked + .slider:before {  transform: translateX(13px);}
 		.slider.round {  border-radius: 1em;}
 		.slider.round:before {  border-radius: 50%;}
-		.up {cursor: pointer;color: var(--strong-color)}
-		.down {cursor: pointer;color: var(--strong-color)}
+		.up {cursor: pointer;color: var(--font-color)}
+		.down {cursor: pointer;color: var(--font-color)}
 		.lettrine::first-letter {  font-size:2em;  padding-right:0.1em;  float:left;}
 	</style>
 </head>
@@ -79,14 +79,14 @@
 				</small>
 				<div id='snippets' style="text-align:justify"></div>
 				<br>
-				<center><div id='pics'  style="height: 200px; overflow:hidden"></div></center>
+				<center><div id='pics'  style="height: 200px; overflow:hidden; "></div></center>
 				<br>
 				<div id="content" style="text-align:justify"></div>
 				<br>
 				<table width="100%" ><tr><td>
 					<div id="progressline"></div>
 				</td><td style="text-align: right">
-					<small><font color="silver"><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","view more","view less");'>view more</div></font></small>
+					<small><b><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","view more","view less");'>view more</div></b></small>
 				</td></tr></table>
 			</div>
 		</div>
@@ -115,7 +115,7 @@
 			<br>
 		</div>
 		<div class="wrapper">
-		<center><small><font color="silver">&#9749; &#127796;<br>The Happy Bots<br>a curated rss crawler</font></small></center><br><br>
+		<center><small><font >&#9749; &#127796;<br>The Happy Bots<br>a curated rss crawler</font></small></center><br><br>
 		</div>
 	</div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
@@ -416,7 +416,7 @@ $(function () {
 										function(data) {
 											var rnd = Math.floor(Math.random() * data.items.length);
 											var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
-											var imgstrhome = '&nbsp;<table style="display: inline-block;"><tr><td><b><center><font  color = "#6b6b6b"><small>&nbsp;&nbsp;' +  varpickeywordjson + '&nbsp;&nbsp;</small></font></center><b></td></tr><tr><td><img id="' + varpickeywordjson + '" src="' + image_src + '" width="270px" height="270px" style="object-fit: cover;" ></img>&nbsp;</td></tr></table>'
+											var imgstrhome = '&nbsp;<table style="display: inline-block;"><tr><td><center><i><small>&nbsp;&nbsp;' +  varpickeywordjson + '&nbsp;&nbsp;</small></i></center></td></tr><tr><td><img id="' + varpickeywordjson + '" src="' + image_src + '" width="270px" height="270px" style="object-fit: cover;" ></img>&nbsp;</td></tr></table>'
 											var destdivpics = document.getElementById('pics')
 											picstr3 = picstr2
 											picstr2 = picstr1
@@ -453,7 +453,7 @@ $(function () {
 						myendTime = new Date();
 						var mytimeDiff = myendTime - mystartTime; 
 						mytimeDiff = Math.round(100* mytimeDiff /1000) /100
-						document.getElementById('progressline').innerHTML = '<small><font color="silver">' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
+						document.getElementById('progressline').innerHTML = '<small><font >' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
 						document.getElementById('progresslinesplash').innerHTML = '<small><font color="silver">' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
 						}
 					}
