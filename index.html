@@ -10,10 +10,11 @@
 	<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.css" rel="stylesheet" type="text/css" />
 	<style>
-		:root {--light-color: #fcfcfc; --strong-color: #f0f0f0; --hover-color:#f0f0f0 }
-		html, body {font-family: Roboto;font-size: 0.97em;background-color: var(--light-color)}
-		a:link {text-decoration: none; color: black}
-		a:visited {text-decoration: none;color: black}
+		:root {--light-color: #fcfcfc; --strong-color: #f0f0f0; --hover-color:#f0f0f0; --font-color:#000000 }
+		[data-theme="dark"] {--light-color: #000000; --strong-color: #666666; --hover-color:#666666;  --font-color:#ffffff}
+		html, body {font-family: Roboto;font-size: 0.97em;background-color: var(--light-color);color: var(--font-color)}
+		a:link {text-decoration: none; color: var(--font-color)}
+		a:visited {text-decoration: none;color: var(--font-color)}
 		a:hover {text-decoration: underline}
 		a:active {text-decoration: underline}
 		.feed {margin: auto;border: 0em solid var(--strong-color);border-radius: 0.5em;background-color: var(--light-color)}
@@ -35,12 +36,24 @@
 		.fade {   -webkit-animation-name: fade;   -webkit-animation-duration: 1.5s;   animation-name: fade;   animation-duration: 1s; }
 		.progress-bar { width: calc(250px - 6px);    height: 5px;    background: var(--hover-color);    padding: 3px;    border-radius: 3px;    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);}
 		.progress-bar-fill {    display: block;    height: 5px;    background: #ffffff;    border-radius: 3px;    transition: width 3s ease-in-out;}
+		
+		/*Simple css to style it like a toggle switch*/
+		/*.theme-switch-wrapper {  display: flex;  align-items: center;  em {margin-left: 5px;}} */
+		.theme-switch {  display: inline-block;  height: 17px;  position: relative;  width: 30px;}
+		.theme-switch input {  display:none;}
+		.slider {  background-color: var(--hover-color);  bottom: 0;  cursor: pointer;  left: 0;  position: absolute;  right: 0;  top: 0;  transition: .4s;}
+		.slider:before {  background-color: var(--light-color);  bottom: 2px;  content: "";  height: 13px;  left: 2px;  position: absolute;  transition: .4s;  width: 13px;}
+		input:checked + .slider {  background-color: var(--hover-color);}
+		input:checked + .slider:before {  transform: translateX(13px);}
+		.slider.round {  border-radius: 1em;}
+		.slider.round:before {  border-radius: 50%;}
+
 	</style>
 </head>
 <body>
 	<div class="wrapper" id="loading">
 		<small><br><br><br></small>
-		<center><big><font color="black">&#9749; &#127796;<br>The Happy Bots</font></big><br>a curated rss crawler<br><br><br><br><br><br><br><br></center>
+		<center><big><font >&#9749; &#127796;<br>The Happy Bots</font></big><br>a curated rss crawler<br><br><br><br><br><br><br><br></center>
 		<center>Loading...</center>
 		<br><br>
 		<div class="progress-bar">
@@ -53,10 +66,17 @@
 		<small><br></small>
 		<div class="feed">
 			<div id="home" style="display: block;margin: 0; padding: 0.5em;">
-				<small><div id="headlines" style="text-align:justify; "></div></small>
+				<small>
+					
+				<table width="100%" ><tr><td style="text-align: right">
+					<span class="theme-switch-wrapper"><label class="theme-switch" for="checkbox"><input type="checkbox" id="checkbox" /><span class="slider round"></span></label></span><br>
+				</td></tr></table>
+				
+					<div id="headlines" style="text-align:justify; "></div>
+				</small>
 				<div id='snippets' style="text-align:justify"></div>
 				<br>
-				<center><div id='pics'  style="height: 200px; overflow:hidden;border-bottom:0.2em solid #fcfcfc"></div></center>
+				<center><div id='pics'  style="height: 200px; overflow:hidden"></div></center>
 				<br>
 				<div id="content"></div>
 				<br>
@@ -97,6 +117,27 @@
 	</div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 <script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
+<script>
+const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+function switchTheme(e) {
+    if (e.target.checked) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark'); 
+	}
+    else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light'); 
+    }    
+}
+const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+if (currentTheme) {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    if (currentTheme === 'dark') {
+        toggleSwitch.checked = true;
+    }
+}
+toggleSwitch.addEventListener('change', switchTheme, false);
+</script>
 <script>
 function showhide(mydiv) {
 	var x = document.getElementById(mydiv);
@@ -337,7 +378,7 @@ $(function () {
 									
 									mysubstr += strip(feedsresult[j].title).replace(/<strong>/g,'') + '. ' + strip(feedsresult[j].content).replace(/<strong>/g,'') + '. '
 									if (mycount == 0){
-										mystr  +=  '<li><a href="'+feedsresult[j].link+'" target="_blank">'  + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
+										mystr  +=  '<li><a href="'+feedsresult[j].link+'" target="_blank">'  + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
 										mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small>"
 										mycount = 1
 										mykeywords.push(finalWordsArray[i].name.replace(/\s/g, '').capitalize())
@@ -347,7 +388,7 @@ $(function () {
 											destdivtitle.innerHTML = "<h1>" + '<font face="Roboto"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify'><font face='Roboto'><big>" + feedsresult[j].content.replace('undefined', '') + "</big></div>"
 											}
 										} else {
-											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font color="black"><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
+											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
 										}
 									}
 								}
