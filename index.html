@@ -163,9 +163,11 @@ function showhideswitchtitle(mydiv,oldtitle,newtitle) {
 	}
 	}
 function strip(html){
-	var tmp = document.createElement("DIV");
-	tmp.innerHTML = html;
-	return tmp.textContent||tmp.innerText;
+	//var tmp = document.createElement("DIV");
+	//tmp.innerHTML = html;
+	//return tmp.textContent||tmp.innerText;
+	var doc = new DOMParser().parseFromString(html, 'text/html');
+	return doc.body.textContent || "";
 	}
 String.prototype.capitalize = function() {
 	return this.charAt(0).toUpperCase() + this.slice(1);
