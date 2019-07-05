@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html><html lang='en' class=''>
 <head>
 	<meta charset='UTF-8'><meta name="robots" content="noindex">
@@ -371,7 +369,7 @@ $(function () {
 				var finalWordsArray = sortByCount(wordsMap);
 				var mymaxcount = 5
 				for (var i = 0; i < finalWordsArray.length; i++) {
-					if (finalWordsArray[i].total > 3 && finalWordsArray[i].name.length > 4 && finalWordsArray[i].name.substring(0, 3)!=="Don"){
+					if (finalWordsArray[i].total > 3 && finalWordsArray[i].name.length > 4 && finalWordsArray[i].name.substring(0, 3)!=="Don"){ 
 						var mystr = ""
 						var mystrhome = ""
 						var mysubstr = ""
@@ -403,7 +401,7 @@ $(function () {
 							if (mystr == ""){} else {
 								var mysubkeywords = "<b><big>" + finalWordsArray[i].name.capitalize() + "</big></b>"
 								varpickeyword = finalWordsArray[i].name.capitalize()
-								if (mypickeyword <=3 && alreadyusedkey.indexOf(varpickeyword)==-1) {
+								if (mypickeyword <=3 && alreadyusedkey.indexOf(varpickeyword)==-1 && picstr3 == "") {
 									mypickeyword = mypickeyword+1
 									alreadyusedkey = alreadyusedkey + varpickeyword 
 									var varpickeywordjson = varpickeyword
