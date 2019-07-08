@@ -363,7 +363,7 @@ $(function () {
 					feedsresult[j].dict = "none"
 					}
 				for (var i = 0; i < arrayLength; i++) {
-					allelements += (feedsresult[i].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize()) +" "; //here
+					allelements += (feedsresult[i].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\'\"\’]/g," ").capitalize()) +" "; //here
 					allelements = allelements.capitalize()
 					}
 				var wordsArray = splitByWords(allelements);
@@ -378,7 +378,7 @@ $(function () {
 						var mysubstr2 = ""
 						var mycount = 0
 							for (var j = 0; j < arrayLength; j++) {
-								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
+								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\'\"\’]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
 									feedsresult[j].dict = finalWordsArray[i].name
 									
 									mysubstr += strip(feedsresult[j].title).replace(/<strong>/g,'') + '. ' + strip(feedsresult[j].content).replace(/<strong>/g,'') + '. '
@@ -433,7 +433,7 @@ $(function () {
 								for (var z = 0; z < articlesbysentence.length; z++)
 								{
 									conceptsentence = 0
-									sentencecapitalized = articlesbysentence[z].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ").capitalize()
+									sentencecapitalized = articlesbysentence[z].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\'\"\’]/g," ").capitalize()
 									myexcerpttry = strip (articlesbysentence[z]) 
 									for (var subi = 0; subi <subfinalWordsArray.length; subi++) {
 									if (subfinalWordsArray[subi].total >= 2 && subfinalWordsArray[subi].name.length > 4  && frequentenglish.indexOf(subfinalWordsArray[subi].name.replace(/\s/g, '').capitalize()) <0 ){
