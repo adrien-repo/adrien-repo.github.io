@@ -381,7 +381,7 @@ $(function () {
 								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\'\"\’]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
 									feedsresult[j].dict = finalWordsArray[i].name
 									mysubstr += strip(feedsresult[j].title).replace(/<strong>/g,'') + '. ' + strip(feedsresult[j].content).replace(/<strong>/g,'') + '. '
-									mysubstr = mysubstr.replace(/Dr./gm,'Dr').replace(/Mr. /gm,'Mr').replace(/M./gm,'M').replace(/Mrs./gm,'Mrs').replace(/U.S./gm,"US").replace(/U.K./gm,"UK")
+									mysubstr = mysubstr.replace(/Dr. /g,'Dr ').replace(/Mr. /g,'Mr ').replace(/M. /g,'M ').replace(/Mrs. /g,'Mrs ').replace(/U.S./gm,"US").replace(/U.K./gm,"UK")
 									if (mycount == 0){
 										mystr  +=  '<li><a href="'+feedsresult[j].link+'" target="_blank">'  + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
 										mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small>"
