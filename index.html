@@ -391,6 +391,7 @@ $(function () {
 						var mysubstr = ""
 						var mysubstr2 = ""
 						var mycount = 0
+						document.getElementById('progresslinelist').innerHTML = '<small><font color="silver">Reading about <b>' +finalWordsArray[Math.floor(Math.random() * finalWordsArray.length)].name.capitalize() + '</b> in <b>'+ mysourcename +'</b></font></small>'
 							for (var j = 0; j < arrayLength; j++) {
 								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\'\"\’]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
 									feedsresult[j].dict = finalWordsArray[i].name
@@ -419,7 +420,7 @@ $(function () {
 								varpickeyword = finalWordsArray[i].name.capitalize()
 								if (mypickeyword <=3 && alreadyusedkey.indexOf(varpickeyword)==-1 && picstr3 == "") {
 									mypickeyword = mypickeyword+1
-									alreadyusedkey = alreadyusedkey + varpickeyword 
+									alreadyusedkey = varpickeyword 
 									var varpickeywordjson = varpickeyword
 									$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
 										{
@@ -470,7 +471,7 @@ $(function () {
 						mytimeDiff = Math.round(100* mytimeDiff /1000) /100
 						document.getElementById('progressline').innerHTML = '<small><font >' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
 						document.getElementById('progresslinesplash').innerHTML = '<small><font color="silver">' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
-						document.getElementById('progresslinelist').innerHTML = '<small><font color="silver">Reading about ' +varpickeyword + ' in '+ mysourcename +'</font></small>'
+						
 						}
 					}
 				}
