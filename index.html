@@ -70,6 +70,7 @@
 				<small>
 					<table width="100%" >
 					<tr>
+					<td><big><b>The Happy Bots</b>, a curated rss crawler &#9749; &#127796; <br><small><span id="edition"></span>, <span id="progressline"></span></small></big></td>
 					<td style="text-align: right">
 						<b><span class="down"><small>A</small></span>&nbsp; <span class="up"><big>A</big>&nbsp; </span></b>
 						<span class="theme-switch-wrapper"><label class="theme-switch" for="checkbox"><input type="checkbox" id="checkbox" /><span class="slider round"></span></label></span><br>
@@ -84,7 +85,7 @@
 				<div id="content" style="text-align:justify"></div>
 				<br>
 				<table width="100%" ><tr><td>
-					<div id="progressline"></div>
+					
 				</td><td style="text-align: right">
 					<small><b><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","view more","view less");'>view more</div></b></small>
 				</td></tr></table>
@@ -115,11 +116,17 @@
 			<br>
 		</div>
 		<div class="wrapper">
-		<center><small><font >&#9749; &#127796;<br>The Happy Bots<br>a curated rss crawler</font></small></center><br><br>
+		<center><small><font >&#9749; &#127796;<br></font></small></center><br><br>
 		</div>
 	</div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 <script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
+<script>
+var d = new Date();
+var weekday = new Array(7);weekday[0] = "Sunday";weekday[1] = "Monday";weekday[2] = "Tuesday";weekday[3] = "Wednesday";weekday[4] = "Thursday";weekday[5] = "Friday";weekday[6] = "Saturday";
+var n = weekday[d.getDay()];
+document.getElementById("edition").innerHTML = n + "'s edition";
+</script>
 <script>
 $('.up').on('click', function() {  $('.wrapper').animate({    'font-size': '+=1'  });});
 $('.down').on('click', function() {  $('.wrapper').animate({    'font-size': '-=1'  });});
@@ -469,7 +476,7 @@ $(function () {
 						myendTime = new Date();
 						var mytimeDiff = myendTime - mystartTime; 
 						mytimeDiff = Math.round(100* mytimeDiff /1000) /100
-						document.getElementById('progressline').innerHTML = '<small><font >' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
+						document.getElementById('progressline').innerHTML = '' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)'
 						document.getElementById('progresslinesplash').innerHTML = '<small><font color="silver">' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
 						
 						}
