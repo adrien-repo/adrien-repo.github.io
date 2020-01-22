@@ -11,14 +11,14 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
 	<style>
-		:root {--light-color: #fcfcfc; --strong-color: #f0f0f0; --hover-color:#f0f0f0; --font-color:#000000 }
-		[data-theme="dark"] {--light-color: #000000; --strong-color: #454545; --hover-color:#454545;  --font-color:#ffffff}
-		html, body {font-family: Roboto;font-size: 0.97em;background-color: var(--light-color);color: var(--font-color)}
+		:root {--light-color: #fcfcfc; --strong-color: #f0f0f0; --hover-color:#f0f0f0; --font-color:#000000 ; --whiteorblack:white; --feedbackground: white}
+		[data-theme="dark"] {--light-color: #000000; --strong-color: #454545; --hover-color:#454545;  --font-color:#ffffff; --whiteorblack:black;--feedbackground: black}
+		html, body {font-family: Roboto;font-size: 0.97em;background-color: var(--whiteorblack);color: var(--font-color)}
 		a:link {text-decoration: none; color: var(--font-color)}
 		a:visited {text-decoration: none;color: var(--font-color)}
 		a:hover {text-decoration: underline}
 		a:active {text-decoration: underline}
-		.feed {margin: auto;border: 0em solid var(--light-color);border-radius: 0.5em;background-color: var(--light-color)}
+		.feed {margin: auto;border: 0.1em solid var(--strong-color);border-radius: 0.5em;background-color: var(--feedbackground)}
 		.feed li {  background-color: var(--light-color); align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;border-bottom: 1px solid var(--strong-color);border-top: 1px solid var(--strong-color)}
 		.feed li a {  margin: 0;  padding: 0.5em;}
 		.feed li:hover {  background-color: var(--strong-color);}
@@ -27,7 +27,7 @@
 		@media only screen and (min-width: 1080px) {  .feed {    width: 900px; }}
 		@media only screen and (min-width: 320px) and (max-width: 1079px) {  .feed {    width: 95vw;  }}
 		@media only screen and (max-width: 319px) {  .feed {    width: 95vw;  }}
-		.wrapper {  align-items: center;  display: flex;  flex-direction: column;  margin: auto;}
+		.wrapper {  align-items: center;  display: flex;  flex-direction: column;  margin: auto;background-color:var(--whiteorblack)}
 		@-webkit-keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		@keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
 		img {vertical-align: top;-webkit-filter: grayscale(0%); filter: grayscale(0%);border:0.2em solid var(--light-color)}
@@ -95,22 +95,22 @@
 		<div class="wrapper" id ="allarticles" style="display: none">
 			<small><br></small>
 			<div class="feed">
-			<div id="news"><h3><span style="margin: 0; padding: 0.5em;">News</h3></span></div>
+			<div id="news"><h3><span style="margin: 0; padding: 0.5em;">&#128240 News</h3></span></div>
 			</div><br><br>
 			<div class="feed">
-			<div id="markets"><h3><span style="margin: 0; padding: 0.5em;">Markets</h3></span></div>
+			<div id="markets"><h3><span style="margin: 0; padding: 0.5em;">&#127906 Markets</h3></span></div>
 			</div><br><br>
 			<div class="feed">
-			<div id="science"><h3><span style="margin: 0; padding: 0.5em;">Science</h3></span></div>
+			<div id="science"><h3><span style="margin: 0; padding: 0.5em;">&#128640 Science</h3></span></div>
 			</div><br><br>
 			<div class="feed">
-			<div id="periodics"><h3><span style="margin: 0; padding: 0.5em;">Periodics</h3></span></div>
+			<div id="periodics"><h3><span style="margin: 0; padding: 0.5em;">&#127913 Periodics</h3></span></div>
 			</div><br><br>
 			<div class="feed">
-			<div id="bookreviews"><h3><span style="margin: 0; padding: 0.5em;">Book reviews</h3></span></div>
+			<div id="bookreviews"><h3><span style="margin: 0; padding: 0.5em;">&#128218 Book reviews</h3></span></div>
 			</div><br><br>
 			<div class="feed">
-			<div id="blogs"><h3><span style="margin: 0; padding: 0.5em;">Blogs</h3></span></div>
+			<div id="blogs"><h3><span style="margin: 0; padding: 0.5em;">&#128101 Blogs</h3></span></div>
 			<br>
 			</div>
 			<br>
