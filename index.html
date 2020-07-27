@@ -76,8 +76,7 @@
 						<span class="theme-switch-wrapper"><label class="theme-switch" for="checkbox"><input type="checkbox" id="checkbox" /><span class="slider round"></span></label></span><br>
 					</td>
 					</tr></table><small></small>
-					<center><div id='titlemoodall'></div></center>
-					<div id="headlines" style="text-align:justify; "></div>
+					<div  style="text-align:justify;" ><span id='titlemoodall'></span><big><span id="headlines"></span></big></div>
 				</small>
 				
 				<div id='snippets' style="text-align:justify"></div>
@@ -456,7 +455,7 @@ $(function () {
 											titlemood3 = titlemood2
 											titlemood2 = titlemood1
 											titlemood1 = rdmadj +' '+ varpickeywordjson
-											titlemooddiv.innerHTML = "<br><big><big><small>&#9749; </small>&laquo; "+titlemood1 + ", " + titlemood2 + ", " + titlemood3 +" &raquo; <small>&#127796;</small></big></big><br><br>"
+											titlemooddiv.innerHTML = "<br><big><b><i>"+titlemood1 + ", " + titlemood2 + ", " + titlemood3 +"</b></i></big><br> "
 											destdivpics.innerHTML = picstr1 + picstr2 + picstr3
 										});
 									}
