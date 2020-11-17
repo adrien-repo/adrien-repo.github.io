@@ -7,7 +7,6 @@
 	<meta name="description" content="The Happy Bots"><meta name="keywords" content="curated, RSS, crawler"><meta name="author" content="The Happy Bots">
 	<title>The Happy Bots</title>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
-	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Times New Roman'>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 	<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
@@ -421,7 +420,7 @@ $(function () {
 											titlearticle = feedsresult[j].content.replace('undefined', '')
 											charcut = 1000
 											if (titlearticle.length >charcut) {titlearticle = titlearticle.capitalize().substring(0,charcut) + '...' } else {titlearticle = titlearticle.capitalize() }
-											destdivtitle.innerHTML = "<h1>" + '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></h1> <div style='text-align:justify' class='lettrine'><font face='Times New Roman'><big>" + titlearticle + "</big></div>"
+											destdivtitle.innerHTML = "<h1>" + '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></h1> <div style='text-align:justify' class='lettrine'><big>" + titlearticle + "</big></div>"
 											}
 										} else {
 											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
