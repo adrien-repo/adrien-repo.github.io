@@ -8,12 +8,13 @@
 	<title>The Happy Bots</title>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Times New Roman'>
-	<link href="https://fonts.googleapis.com/css?family=Times New Roman" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 	<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
 	<style>
-		:root {--light-color: #fcfcfc; --strong-color: #f0f0f0; --hover-color:#f0f0f0; --font-color:#000000 ; --whiteorblack:white; --feedbackground: white}
+		:root {--light-color: #fcfcfc; --strong-color: #d9d9d9; --hover-color:#d9d9d9; --font-color:#000000 ; --whiteorblack:white; --feedbackground: white}
 		[data-theme="dark"] {--light-color: #000000; --strong-color: #454545; --hover-color:#454545;  --font-color:#ffffff; --whiteorblack:black;--feedbackground: black}
-		html, body {font-family: Times New Roman;font-size: 0.97em;background-color: var(--whiteorblack);color: var(--font-color)}
+		html, body {font-family: 'Roboto', sans-serif;font-size: 0.97em;background-color: var(--whiteorblack);color: var(--font-color)}
 		a:link {text-decoration: none; color: var(--font-color)}
 		a:visited {text-decoration: none;color: var(--font-color)}
 		a:hover {text-decoration: underline}
@@ -60,7 +61,7 @@
 		</div>
 		<div id="progresslinesplash"></div>
 		<br>
-		<div id="progresslinelist"></div>
+		<center><div id="progresslinelist"></div></center>
 		<br> 
 	</div>
 	<div class="wrapper" id="rendered" style="display:none">
@@ -403,7 +404,7 @@ $(function () {
 						var mysubstr = ""
 						var mysubstr2 = ""
 						var mycount = 0
-						document.getElementById('progresslinelist').innerHTML = '<small><font color="silver">Reading about <b>' +finalWordsArray[Math.floor(Math.random() * finalWordsArray.length)].name.capitalize() + '</b> in <b>'+ mysourcename +'</b></font></small>'
+						document.getElementById('progresslinelist').innerHTML = '<small><font color="silver">Reading about <b>' +finalWordsArray[Math.floor(Math.random() * finalWordsArray.length)].name.capitalize() + '</b> in <b>'+ mysourcename +'</b></font></small>'   
 							for (var j = 0; j < arrayLength; j++) {
 								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\'\"\’]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
 									feedsresult[j].dict = finalWordsArray[i].name
@@ -420,7 +421,7 @@ $(function () {
 											titlearticle = feedsresult[j].content.replace('undefined', '')
 											charcut = 1000
 											if (titlearticle.length >charcut) {titlearticle = titlearticle.capitalize().substring(0,charcut) + '...' } else {titlearticle = titlearticle.capitalize() }
-											destdivtitle.innerHTML = "<h1>" + '<font face="Times New Roman"><a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></font></h1> <div style='text-align:justify' class='lettrine'><font face='Times New Roman'><big>" + titlearticle + "</big></div>"
+											destdivtitle.innerHTML = "<h1>" + '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></h1> <div style='text-align:justify' class='lettrine'><font face='Times New Roman'><big>" + titlearticle + "</big></div>"
 											}
 										} else {
 											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
