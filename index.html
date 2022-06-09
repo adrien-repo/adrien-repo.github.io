@@ -47,6 +47,7 @@
 		.up {cursor: pointer;color: var(--font-color)}
 		.down {cursor: pointer;color: var(--font-color)}
 		/*.lettrine::first-letter {  font-size:2em;  padding-right:0.1em;  float:left;}*/
+		.halfsize {    -moz-transform:scale(0.5);    -webkit-transform:scale(0.5);    transform:scale(0.5);}
 	</style>
 </head>
 <body>
@@ -62,6 +63,8 @@
 		<br>
 		<center><div id="progresslinelist"></div></center>
 		<br> 
+		<br>
+		<img class="halfsize" src="bot.gif">
 	</div>
 	<div class="wrapper" id="rendered" style="display:none">
 		<small><br></small>
@@ -503,3 +506,4 @@ $(function () {
 </script>
 </body>
 </html>
+
