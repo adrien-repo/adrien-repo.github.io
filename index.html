@@ -120,9 +120,20 @@
 			</div>
 			<br>
 		</div>
+		<small>
 		<div class="wrapper">
-		<center><small><font >&#9749; &#127796;<br></font></small></center><br><br>
+		<div id="seestatus" style="cursor: pointer; color:#AFAFAF " onclick="showhideswitchtitle(&quot;sourcesstatus&quot;,&quot;data status&quot;,&quot;hide status&quot;);">feed status</div>
+		<br>
+		<div id="sourcesstatus" style="display: none"></div>
+		<br>
 		</div>
+		</small>
+		
+		<div class="wrapper">
+			<center><small><font >&#9749; &#127796;<br></font></small></center><br><br>
+		</div>
+		<br>
+		
 	</div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 <script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
@@ -332,10 +343,12 @@ $(function () {
 	var head_books = ""
 	var head_blogs = ""
 	$.each(feedsLibrary, function(siteId, feedsUrl) {
+		document.getElementById('sourcesstatus').innerHTML += '<div id="' + feedsUrl[1] + ' status">&#x1F62E;  <a href="' + feedsUrl[0] + '" target="_blank">' + feedsUrl[1] + '</a></div>'
 		feednami.loadGoogleFormat(feedsUrl[0], function(result){
 			if (result.error) {
 				console.log(result.error);
 			} else {
+				document.getElementById(feedsUrl[1] + ' status').innerHTML = '&#x2714; <a href="' + feedsUrl[0] + '" target="_blank">' + feedsUrl[1] + '</a>'
 				nbsources = nbsources +1 
 				var elements = result.feed.entries.slice(0, 10)
 				var div = document.createElement("div");
@@ -507,4 +520,3 @@ $(function () {
 </script>
 </body>
 </html>
-
