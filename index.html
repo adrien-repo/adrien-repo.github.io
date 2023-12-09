@@ -85,8 +85,6 @@
 				
 				<div id='snippets' style="text-align:justify"></div>
 				<br>
-				<center><div id='pics'  style="height: 200px; overflow:hidden; "></div></center>
-				<br>
 				<div id="content" style="text-align:justify"></div>
 				<br>
 				<table width="100%" ><tr><td>
@@ -328,11 +326,7 @@ $(function () {
 	mystartTime = new Date();
 	var nbarticles = 0
 	var nbsources = 0
-	var mypickeyword = 1
 	var alreadyusedkey = ""
-	var picstr1 = ""
-	var picstr2 = ""
-	var picstr3 = ""
 	var titlemood1 = ""
 	var titlemood2 = ""
 	var titlemood3 = ""
@@ -447,36 +441,6 @@ $(function () {
 								}
 							if (mystr == ""){} else {
 								var mysubkeywords = "<b><big>" + finalWordsArray[i].name.capitalize() + "</big></b>"
-								varpickeyword = finalWordsArray[i].name.capitalize()
-								varpicfilter = "Trump Biden China Twitter"
-								if (mypickeyword <=3 && alreadyusedkey.indexOf(varpickeyword)==-1 && picstr3 == "" && varpicfilter.indexOf(varpickeyword)==-1) {
-									mypickeyword = mypickeyword+1
-									alreadyusedkey = alreadyusedkey + varpickeyword 
-									var varpickeywordjson = varpickeyword
-									$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
-										{
-											tags: varpickeywordjson,
-											tagmode: "any",
-											format: "json"
-										},
-										function(data) {
-											var rnd = Math.floor(Math.random() * data.items.length);
-											var image_src = data.items[rnd]['media']['m'].replace("_m", "");
-											var rdmadj = frequentadj[Math.floor(Math.random()*frequentadj.length)];
-											
-											var imgstrhome = '&nbsp;<table style="display: inline-block;"><tr><td><center><i><small>&nbsp;&nbsp;' + rdmadj +' '+ varpickeywordjson + '&nbsp;&nbsp;</small></i></center></td></tr><tr><td><img id="' + varpickeywordjson + '" src="' + image_src + '" width="260px" height="260px" style="object-fit: cover;" ></img>&nbsp;</td></tr></table>'
-											var destdivpics = document.getElementById('pics')
-											var titlemooddiv = document.getElementById('titlemoodall')
-											picstr3 = picstr2
-											picstr2 = picstr1
-											picstr1 = imgstrhome
-											titlemood3 = titlemood2
-											titlemood2 = titlemood1
-											titlemood1 = rdmadj +' '+ varpickeywordjson
-											titlemooddiv.innerHTML = "<br><big><big><b><i>"+titlemood1 + ", " + titlemood2 + ", " + titlemood3 +"</b></i></big></big><br> "
-											destdivpics.innerHTML = picstr1 + picstr2 + picstr3
-										});
-									}
 								var subwordsArray = splitByWords(mysubstr.capitalize());
 								var subwordsMap = createWordMap(subwordsArray);
 								var subfinalWordsArray = sortByCount(subwordsMap);
