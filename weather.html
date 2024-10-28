@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local Weather</title>
-    <link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
     <style>
         body {
             font-family: Roboto, sans-serif;
-			border-left: 10px solid white;
-			border-right: 10px solid white;
+
 			}
-		 .container {
+		.feed {align-items: center;margin: 10px; border: 0.1em solid #d9d9d9;border-radius: 0.5em}
+		@media only screen and (min-width: 720px) {  .feed {    width: 700px; }}
+		@media only screen and (min-width: 320px) and (max-width: 699px) {  .feed {    width: 95vw;  }}
+		@media only screen and (max-width: 319px) {  .feed {    width: 95vw;  }}
+		.container {
             display: flex;
             flex-wrap: wrap; /* Allow items to wrap to the next line if there's not enough space */
             gap: 10px; /* Optional: Add space between items */
@@ -30,11 +32,15 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
 </head>
 <body>
-    <h3>Weather in <span id="locationName"></span></h3>
-	<div class="container">
-        <canvas id="weatherChart"></canvas>
-        <canvas id="windUvChart"></canvas>
-    </div>
+    <center>
+		<div class="feed">
+			<h3>Weather in <span id="locationName"></span></h3>
+			<div class="container">
+				<canvas id="weatherChart"></canvas>
+				<canvas id="windUvChart"></canvas>
+			</div>
+		</div>
+	</center>
 
 	<script>
 		async function fetchWeatherData() {
@@ -105,6 +111,7 @@
 						{
 							type: 'line',
 							label: 'Temperature (°C)',
+							color: 'black',
 							data: temperatureData,
 							borderColor: 'black',
 							backgroundColor: 'black',
@@ -116,6 +123,7 @@
 						{
 							type: 'bar',
 							label: 'Precipitation (mm)',
+							color: 'black',
 							data: precipitationData,
 							backgroundColor: 'rgba(54, 162, 235, 0.6)',
 							yAxisID: 'y2'
@@ -142,7 +150,8 @@
 							beginAtZero: true,
 							title: {
 								display: true,
-								text: 'Temperature (°C)'
+								text: 'Temperature (°C)',
+								color: 'black'
 							}
 						},
 						y2: {
@@ -151,7 +160,8 @@
 							beginAtZero: true,
 							title: {
 								display: true,
-								text: 'Precipitation (mm)'
+								text: 'Precipitation (mm)',
+								color: 'black'
 							},
 							grid: {
 								drawOnChartArea: false
@@ -161,7 +171,8 @@
 					plugins: {
 						title: {
 							display: true, 
-							text: 'Temperature (line), Precipitations (bars)' 
+							text: 'Temperature (line), Precipitations (bars)',
+							color: 'black'
 						},
 						legend: {
 							display: false 
@@ -190,6 +201,7 @@
 					datasets: [
 						{
 							label: 'Wind Speed (10 m) (km/h)',
+							color: 'black',
 							data: windSpeedData,
 							borderColor: 'green',
 							backgroundColor: 'green',
@@ -200,6 +212,7 @@
 						},
 						{
 							label: 'UV Index',
+							color: 'black',
 							data: uvIndexData,
 							borderColor: 'orange',
 							backgroundColor: 'orange',
@@ -230,7 +243,8 @@
 							beginAtZero: true,
 							title: {
 								display: true,
-								text: 'Wind Speed (km/h)'
+								text: 'Wind Speed (km/h)',
+								color: 'black'
 							}
 						},
 						y2: {
@@ -239,7 +253,8 @@
 							beginAtZero: true,
 							title: {
 								display: true,
-								text: 'UV Index'
+								text: 'UV Index',
+								color: 'black'
 							},
 							grid: {
 								drawOnChartArea: false
@@ -249,7 +264,8 @@
 					plugins: {
 						title: {
 							display: true, 
-							text: 'Wind Speed (green), UV Index (yellow)' 
+							text: 'Wind Speed (green), UV Index (yellow)',
+							color: 'black'
 						},
 						legend: {
 							display: false 
