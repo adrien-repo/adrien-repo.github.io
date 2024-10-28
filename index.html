@@ -1,479 +1,58 @@
-<!DOCTYPE html><html lang='en' class=''>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143524272-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);} gtag('js', new Date());  gtag('config', 'UA-143524272-1');</script>
-	<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-CC7H2GEB7V"></script><script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date());  gtag('config', 'G-CC7H2GEB7V'); </script>
 	<meta charset='UTF-8'><meta name="robots" content="index, follow">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="description" content="The Happy Bots"><meta name="keywords" content="curated, RSS, crawler"><meta name="author" content="The Happy Bots">
+	<meta name="description" content="The Happy Bots"><meta name="keywords" content="the, happy, bots"><meta name="author" content="The Happy Bots">
 	<title>The Happy Bots</title>
 	<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 	<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
-	<style>
-		:root {--light-color: #fcfcfc; --strong-color: #d9d9d9; --hover-color:#d9d9d9; --font-color:#000000 ; --whiteorblack:white; --feedbackground: white}
-		[data-theme="dark"] {--light-color: #000000; --strong-color: #454545; --hover-color:#454545;  --font-color:#ffffff; --whiteorblack:black;--feedbackground: black}
-		html, body {font-family: 'Roboto', sans-serif;font-size: 0.97em;background-color: var(--whiteorblack);color: var(--font-color)}
-		a:link {text-decoration: none; color: var(--font-color)}
-		a:visited {text-decoration: none;color: var(--font-color)}
-		a:hover {text-decoration: underline}
-		a:active {text-decoration: underline}
-		.feed {margin: auto;border: 0.1em solid var(--strong-color);border-radius: 0.5em;background-color: var(--feedbackground)}
-		.feed li {  background-color: var(--light-color); align-items: center;  display: flex;  justify-content: flex-start;  list-style: none;  transition: background-color 0.3s ease;  width: 100%;border-bottom: 1px solid var(--strong-color);border-top: 1px solid var(--strong-color)}
-		.feed li a {  margin: 0;  padding: 0.5em;}
-		.feed li:hover {  background-color: var(--strong-color);}
-		.card {border: 0.1em solid var(--strong-color);  border-radius: 0.5em; margin: 0.5em;padding: 0.5em;cursor: pointer; background-color:var(--light-color)}
-		.card:hover {  background-color: var(--hover-color);}
-		@media only screen and (min-width: 1080px) {  .feed {    width: 900px; }}
-		@media only screen and (min-width: 320px) and (max-width: 1079px) {  .feed {    width: 95vw;  }}
+    <style>
+        body {font-family: Roboto, sans-serif;}
+		.feed {align-items: center;margin: 10px; border: 0.1em solid #d9d9d9;border-radius: 0.5em}
+		.container {text-align: left; margin: 10px;}
+		@media only screen and (min-width: 720px) {  .feed {    width: 700px; }}
+		@media only screen and (min-width: 320px) and (max-width: 699px) {  .feed {    width: 95vw;  }}
 		@media only screen and (max-width: 319px) {  .feed {    width: 95vw;  }}
-		.wrapper {  align-items: center;  display: flex;  flex-direction: column;  margin: auto;background-color:var(--whiteorblack)}
-		@-webkit-keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
-		@keyframes fadeEffect {  from {opacity: 0;}  to {opacity: 1;}}
-		img {vertical-align: top;-webkit-filter: grayscale(0%); filter: grayscale(0%);border:0.2em solid var(--light-color)}
-		img:hover {-webkit-filter: grayscale(0%);}
-		.slideshow-container {   max-width: 100%;   position: relative;   margin: 0.5em; }
-		.fade {   -webkit-animation-name: fade;   -webkit-animation-duration: 1.5s;   animation-name: fade;   animation-duration: 1s; }
-		.progress-bar { width: calc(250px - 6px);    height: 5px;    background: var(--hover-color);    padding: 3px;    border-radius: 3px;    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);}
-		.progress-bar-fill {    display: block;    height: 5px;    background: #ffffff;    border-radius: 3px;    transition: width 3s ease-in-out;}
-		.theme-switch {  display: inline-block;  height: 17px;  position: relative;  width: 30px;}
-		.theme-switch input {  display:none;}
-		.slider {  background-color: var(--font-color);  bottom: 0;  cursor: pointer;  left: 0;  position: absolute;  right: 0;  top: 0;  transition: .4s;}
-		.slider:before {  background-color: var(--light-color);  bottom: 2px;  content: "";  height: 13px;  left: 2px;  position: absolute;  transition: .4s;  width: 13px;}
-		input:checked + .slider {  background-color: var(--font-color);}
-		input:checked + .slider:before {  transform: translateX(13px);}
-		.slider.round {  border-radius: 1em;}
-		.slider.round:before {  border-radius: 50%;}
-		.up {cursor: pointer;color: var(--font-color)}
-		.down {cursor: pointer;color: var(--font-color)}
-		/*.lettrine::first-letter {  font-size:2em;  padding-right:0.1em;  float:left;}*/
-		.halfsize {    -moz-transform:scale(0.5);    -webkit-transform:scale(0.5);    transform:scale(0.5);}
+		a:link, a:visited, a:hover, a:active {color: blue;}
 	</style>
 </head>
 <body>
-	<div class="wrapper" id="loading">
-		<small><br><br><br></small>
-		<center><big><font >&#9749; &#127796;<br>The Happy Bots</font></big><br>a curated rss crawler<br><br><br><br><br><br><br><br></center>
-		<center>Loading...</center>
-		<br><br>
-		<div class="progress-bar">
-			<span class="progress-bar-fill" style="width: 0%"></span>
-		</div>
-		<div id="progresslinesplash"></div>
-		<br>
-		<center><div id="progresslinelist"></div></center>
-	</div>
-	<div class="wrapper" id="rendered" style="display:none">
-		<small><br></small>
+    <center>
 		<div class="feed">
-			<div id="home" style="display: block;margin: 0; padding: 0.5em;">
-				<small>
-					<table width="100%" >
-					<tr>
-					<td><b>The Happy Bots</b> is a curated rss crawler. <br><span id="edition"></span> contains <span id="progressline"></span>.</td>
-					<td style="text-align: right">
-						<b><span class="down"><small>A</small></span>&nbsp; <span class="up"><big>A</big>&nbsp; </span></b>
-						<span class="theme-switch-wrapper"><label class="theme-switch" for="checkbox"><input type="checkbox" id="checkbox" /><span class="slider round"></span></label></span><br>
-					</td>
-					</tr></table><small></small>
-					<div  style="text-align:justify;" ><span id='titlemoodall'></span><big><span id="headlines"></span></big></div>
-				</small>
-				
-				<div id='snippets' style="text-align:justify"></div>
-				<br>
-				<div id="content" style="text-align:justify"></div>
-				<br>
-				<table width="100%" ><tr><td>
-					
-				</td><td style="text-align: right">
-					<small><b><div id="allarticles-child2" style ="cursor: pointer;" onclick='showhideswitchtitle("allarticles","view more","view less");'>view more</div></b></small>
-				</td></tr></table>
-			</div>
-		</div>
-		<br>
-		<div class="wrapper" id ="allarticles" style="display: none">
-			<small><br></small>
-			<div class="feed">
-			<div id="news"><h3><span style="margin: 0; padding: 0.5em;">&#128240 News</h3></span></div>
-			</div><br><br>
-			<div class="feed">
-			<div id="markets"><h3><span style="margin: 0; padding: 0.5em;">&#127906 Markets</h3></span></div>
-			</div><br><br>
-			<div class="feed">
-			<div id="science"><h3><span style="margin: 0; padding: 0.5em;">&#128640 Science</h3></span></div>
-			</div><br><br>
-			<div class="feed">
-			<div id="periodics"><h3><span style="margin: 0; padding: 0.5em;">&#127913 Periodics</h3></span></div>
-			</div><br><br>
-			<div class="feed">
-			<div id="bookreviews"><h3><span style="margin: 0; padding: 0.5em;">&#128218 Book reviews</h3></span></div>
-			</div><br><br>
-			<div class="feed">
-			<div id="blogs"><h3><span style="margin: 0; padding: 0.5em;">&#128101 Blogs</h3></span></div>
+			<h3>The Happy Bots</h3>
 			<br>
+			<div class="container">
+				This domain hosts small tools I've been working on and use every day. 
+				<br>
+				My professional code repo is kept private. ¯\_(ツ)_/¯
 			</div>
 			<br>
+			<div class="container">
+				<a href="news.html">RSS News</a>
+				<br>
+				A curated RSS crawler that pulls news from around 60 selected sources, analyzes each content and automatically editorializes articles into relevant sections, excluding common English words from keyword selection.
+			</div>
+			<div class="container">
+				<a href="weather.html">Local Weather</a>
+				<br>
+				A minimalist weather app that provides a 7-day forecast for temperature, precipitation, wind speed, and UV index, based on the user’s location.
+			</div>
+			<div class="container">
+				<a href="arxiv.html">arXiv Article Browser</a>
+				<br>
+				A lightweight tool that fetches and organizes recent submissions to arXiv, and includes a small built-in search engine.
+			</div>
+			<br>
+			<small>
+				<a href="adrienlafeuille.com">Adrien Lafeuille</a>
+			</small>
+			<br>
+			<br>
 		</div>
-		<small>
-		<div class="wrapper">
-		<div id="seestatus" style="cursor: pointer; color:#AFAFAF " onclick="showhideswitchtitle(&quot;sourcesstatus&quot;,&quot;data status&quot;,&quot;hide status&quot;);">feed status</div>
-		<br>
-		<div id="sourcesstatus" style="display: none"></div>
-		<br>
-		</div>
-		</small>
-		
-		<div class="wrapper">
-			<center><small><font >&#9749; &#127796;<br></font></small></center><br><br>
-		</div>
-		<br>
-		
-	</div>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
-<script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
-<script>
-var d = new Date();
-var weekday = new Array(7);weekday[0] = "Sunday";weekday[1] = "Monday";weekday[2] = "Tuesday";weekday[3] = "Wednesday";weekday[4] = "Thursday";weekday[5] = "Friday";weekday[6] = "Saturday";
-var n = weekday[d.getDay()];
-document.getElementById("edition").innerHTML = n + "'s edition";
-</script>
-<script>
-$('.up').on('click', function() {  $('.wrapper').animate({    'font-size': '+=1'  });});
-$('.down').on('click', function() {  $('.wrapper').animate({    'font-size': '-=1'  });});
-const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
-function switchTheme(e) {
-    if (e.target.checked) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark'); 
-	}
-    else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light'); 
-    }    
-}
-const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
-if (currentTheme) {
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    if (currentTheme === 'dark') {
-        toggleSwitch.checked = true;
-    }
-}
-toggleSwitch.addEventListener('change', switchTheme, false);
-</script>
-<script>
-function showhide(mydiv) {
-	var x = document.getElementById(mydiv);
-	if (x.style.display === "none") {
-		x.style.display = "block";
-	} else {
-		x.style.display = "none";
-	}
-	}
-function showhideswitchtitle(mydiv,oldtitle,newtitle) {
-	var x = document.getElementById(mydiv);
-	if (x.style.display === "none") {
-		x.style.display = "block";
-		var y = document.getElementById(mydiv.replace("-child","")+"-child2")
-		y.innerHTML = newtitle
-	} else {
-		x.style.display = "none";
-		var y = document.getElementById(mydiv.replace("-child","")+"-child2")
-		y.innerHTML = oldtitle
-	}
-	}
-function strip(html){
-	//var tmp = document.createElement("DIV");
-	//tmp.innerHTML = html;
-	//return tmp.textContent||tmp.innerText;
-	var doc = new DOMParser().parseFromString(html, 'text/html');
-	return doc.body.textContent || "";
-	}
-String.prototype.capitalize = function() {
-	return this.charAt(0).toUpperCase() + this.slice(1);
-	}	
-function splitByWords (text) {
-	var wordsArray = text.split(/\s+/);
-	return wordsArray;
-	}
-function createWordMap (wordsArray) {
-	var wordsMap = {};
-	wordsArray.forEach(function (key) {
-	if (wordsMap.hasOwnProperty(key)) {
-		wordsMap[key]++;
-		} else {
-		wordsMap[key] = 1;
-		}
-	});
-	return wordsMap;
-	}
-function sortByCount (wordsMap) {
-	var finalWordsArray = [];
-	finalWordsArray = Object.keys(wordsMap).map(function(key) {
-		return {
-			name: key,
-			total: wordsMap[key]
-			};
-		});
-finalWordsArray.sort(function(a, b) {
-	return b.total - a.total;
-	});
-	return finalWordsArray;
-	}
-function occurrences(string, subString, allowOverlapping) {
-    string += "";
-    subString += "";
-    if (subString.length <= 0) return (string.length + 1);
-    var n = 0,
-        pos = 0,
-        step = allowOverlapping ? 1 : subString.length;
-    while (true) {
-        pos = string.indexOf(subString, pos);
-        if (pos >= 0) {
-            ++n;
-            pos += step;
-        } else break;
-    }
-    return n;
-}
-</script>
-<script>
-$("#rendered").hide();
-$("#loading").show();
-$('.progress-bar-fill').delay(0).queue(function () {
-        $(this).css('width', '100%')
-    });
-setTimeout(function(){
-afterloading();
-	},4000);
-	
-function afterloading(){
-	$("#loading").hide();
-	$("#rendered").fadeIn(400,"swing");
-}
-</script>
-<script id="rendered-js">
-$(function () {
-//link, title, content, contentSnippet as per feednami api
-	var feedsLibrary = {
-	feed001: ["https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss","Bloomberg - The Editors","news"],
-	feed002: ["https://feeds.a.dj.com/rss/RSSWorldNews.xml","Wall Street Journal","news"],
-	feed003: ["https://www.ft.com/news-feed?format=rss","Financial Times","news"],
-	feed004: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
-	feed005: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty","blogs"],
-	feed006: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
-	feed007: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
-	feed008: ["http://longform.org/feed.rss","Long Form","periodics"],
-	feed009: ["https://www.theatlantic.com/feed/best-of/","The Atlantic","periodics"],
-	feed010: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
-	feed011: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
-	feed012: ["https://www.lrb.co.uk/blog/feed","The London review of Books","bookreviews"],
-	feed013: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
-	feed014: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
-	feed015: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
-	feed016: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
-	feed017: ["https://www.edge.org/feed","Edge Magazine","periodics"],
-	feed018: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
-	feed019: ["https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss","Bloomberg - Matt Levine","markets"],
-	feed020: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
-	feed021: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
-	feed022: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
-	feed023: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
-	feed024: ["http://www.salon.com/feed/","Salon","periodics"],
-	feed025: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
-	feed026: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
-	feed027: ["https://www.vanityfair.com/feed/rss","VanityFair","periodics"],
-	feed028: ["https://www.vox.com/rss/index.xml","Vox","periodics"],
-	feed029: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
-	feed030: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
-	feed031: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
-	feed032: ["http://rss.sciam.com/ScientificAmerican-Global","Scientific American","science"],
-	feed033: ["http://stratechery.com/feed/","Stratechery","periodics"],
-	feed034: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
-	feed035: ["https://feeds.feedblitz.com/marginalrevolution&x=1","Marginal Revolution","periodics"],
-	feed036: ["https://www.bondvigilantes.com/feed/","Bond Vigilantes","markets"],
-	feed037: ["http://evonomics.com/feed/","Evonomics","markets"],
-	feed038: ["https://aeon.co/feed.rss","Aeon","periodics"],
-	feed039: ["http://prospect.org/rss.xml","The American Prospect","periodics"],
-	feed040: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
-	feed041: ["https://prospect.org/api/rss/all.rss","The American Prospect","periodics"],
-	feed042: ["https://magazine.atavist.com/feed/","The Atavist","periodics"],
-	feed043: ["https://www.mcsweeneys.net/rss","Mc Sweeneys","periodics"],
-	feed044: ["https://xkcd.com/rss.xml","XKCD","blogs"],
-	feed045: ["https://news.ycombinator.com/rss","Hacker News","periodics"],
-	feed046: ["https://phys.org/rss-feed/breaking/","Phys Org","science"],
-	feed047: ["https://webb-site.com/rss.asp","Webb","markets"],
-	feed048: ["http://www.sciencemag.org/rss/news_current.xml","ScienceMag","science"],
-	feed049: ["https://www.e-ir.info/category/blogs/feed/","E-International Relations","periodics"],
-	feed050: ["https://timesofindia.indiatimes.com/rssfeeds/296589292.cms","Times of India","news"],
-	feed051: ["https://www.npr.org/rss/rss.php?id=1004","NPR","news"],
-	feed052: ["https://www.smh.com.au/rss/world.xml","Sydney Morning Herald","news"],
-	feed053: ["https://www.thestar.com/search/?f=rss","Toronto Star","news"],
-	feed054: ["https://www.france24.com/en/rss","France24","news"],
-	feed055: ["https://unherd.com/feed/","UnHerd","news"],
-	feed056: ["https://www.aljazeera.com/xml/rss/all.xml","Al Jazeera","news"],
-	feed057: ["http://www.globaltimes.cn/rss/outbrain.xml","Global Times","news"],
-	feed058: ["https://thecritic.co.uk/feed/","The Critic","periodics"],
-	}
-	var feedsresult = [];
-	mystartTime = new Date();
-	var nbarticles = 0
-	var nbsources = 0
-	var alreadyusedkey = ""
-	var titlemood1 = ""
-	var titlemood2 = ""
-	var titlemood3 = ""
-	var head_news = ""
-	var head_markets = ""
-	var head_science = ""
-	var head_periodics = ""
-	var head_books = ""
-	var head_blogs = ""
-	$.each(feedsLibrary, function(siteId, feedsUrl) {
-		document.getElementById('sourcesstatus').innerHTML += '<div id="' + feedsUrl[1] + ' status">&#x1F62E;  <a href="' + feedsUrl[0] + '" target="_blank">' + feedsUrl[1] + '</a></div>'
-		feednami.loadGoogleFormat(feedsUrl[0], function(result){
-			if (result.error) {
-				console.log(result.error);
-			} else {
-				document.getElementById(feedsUrl[1] + ' status').innerHTML = '&#x2714; <a href="' + feedsUrl[0] + '" target="_blank">' + feedsUrl[1] + '</a>'
-				nbsources = nbsources +1 
-				var elements = result.feed.entries.slice(0, 10)
-				var div = document.createElement("div");
-				div.className = "card"
-				div.setAttribute("id", feedsUrl[1])
-				myunactivetitle = 'No'
-				myactivetitle = 'Yes'
-				mysourcename = feedsUrl[1]
-				myunactivetitle = '<span style=\'margin: 0; padding: 0.5em;\'>' + elements[0].title.replace(/<strong>/g,'').replace(/["']/g, "") + ' <small><font color=\'silver\'>(' + feedsUrl[1] + ')</font></small></span>'
-				myactivetitle = '<span style=\'margin: 0; padding: 0.5em;\'><b>' + feedsUrl[1].replace(/["']/g, "") + '</b></span>'
-				div.setAttribute('onclick','showhideswitchtitle("'+feedsUrl[1]+'-child'+'","' + myunactivetitle +'","' + myactivetitle + '");');
-				div.innerHTML = '<div id=\'' + feedsUrl[1]+"-child2" + '\'>' + myunactivetitle + '</span><br>'
-				var divchild = document.createElement("div");
-				divchild.setAttribute("id", feedsUrl[1]+"-child")
-				divchild.style.display = "none"
-				var list = [];
-				$(elements).each(function (index, element) {
-					divchild.innerHTML += "<li><a href='" + element.link + "' target='_blank'>" + element.title.replace(/<strong>/g,'') + '<br><div style="text-align:justify"><font color="#a8a8a8">' + strip(element.content).substring(0,500).replace(/(\r\n|\n|\r)/gm,"") + "</font></div></a></li>";
-					var article = {srcname: feedsUrl[1], title:element.title, link: element.link, content:strip(element.content).replace(/(\r\n|\n|\r)/gm,". "), dict:"none"}
-					feedsresult.push(article)
-					nbarticles = nbarticles + 1
-				});
-				div.appendChild(divchild);
-				document.getElementById(feedsUrl[2]).appendChild(div);
-				var myheadline = "<i><a href='" + elements[0].link + "' target='_blank'>" + elements[0].title.replace(/<strong>/g,'') + "</a></i>&nbsp;&mdash;&nbsp;"
-				switch (feedsUrl[2]) {
-					case "news":
-						if (head_news == ""){head_news = myheadline}
-						break;
-					case "markets":
-						if (head_markets == ""){head_markets = myheadline}
-						break;
-					case "science":
-						if (head_science == ""){head_science = myheadline}
-						break;
-					case "periodics":
-						if (head_periodics == ""){head_periodics = myheadline}
-						break;
-					case "bookreviews":
-						if (head_books == ""){head_books = myheadline}
-						break;
-					case "blogs":
-						if (head_blogs == ""){head_blogs = myheadline.replace('&mdash;','')}
-						break;
-					}
-				document.getElementById('headlines').innerHTML =head_news + head_markets + head_science + head_periodics + head_books + head_blogs
-				var divtoadd = document.getElementById('content');
-				var frequentenglish = "[Article] [article] longform Weekly Review Without Former January February March April May June July August September October November December Longform review Access about Dont Don’t Don't Podcast Passed Signed Seeking Search Country Government Administration GoFundMe Including Press Social Reports UNews Exponent Donald Worked Business, Against Before Exchange Securities Capital Reveals While Rsquo Today Future Years Ldquo Lsquo Rdquo Small Market Stock State Watch What's Don't Another the're Largest impuestos Shipp Would Wrote wrote Other other three Three Being People Charges Decode Podcast Could Recode First About After don't won't can't after Should could should weekly years What's what's Still still Their Harper's They they from From a More more and  away  say says with With big  blue  can  come  down  find  for  funny  go  help  here  I  in  is  it  jump  little  look  make  me  my  not  one  play  red  run  said  see  the  three  to  two  up  we  where  yellow  you all  am  are  at  ate  be  black  brown  but  came  did  do  eat  four  get  good  have  he  into  like  must  new  no  now  on  our  out  please  pretty  ran  ride  saw  say  she  so  soon  that  there  they  this  too  under  want  was  well  went  what  white  who  will  with  yes after  again  an  any  as  ask  by  could  every  fly  from  give  giving  had  has  her  him  his  how  just  know  let  live  may  of  old  once  open  over  put  round  some  stop  take  thank  them  then  think  walk  were  when always  around  because  been  before  best  both  buy  call  cold  does  don't  fast  first  five  found  gave  goes  green  its  made  many  off  or  pull  read  right  sing  sit  sleep  tell  their  these  those  upon  us  use  very  wash  which  why  wish  work  would  write  your about  better  bring  carry  clean  cut  done  draw  drink  eight  fall  far  full  got  grow  hold  hot  hurt  if  keep  kind  laugh  light  long  much  myself  never  nine  only  own  pick  seven  shall  show  six  small  start  ten  today  together  try  warm apple  baby  back  ball  bear  bed  bell  bird  birthday  boat  box  boy  bread  brother  cake  car  cat  chair  chicken  children  coat  corn  cow  day  dog  doll  door  duck  egg  eye  farm  farmer  father  feet  fire  fish  floor  flower  game  garden  girl  good-bye  grass  ground  hand  head  hill  home  horse  house  kitty  leg  letter  man  men  milk  money  morning  mother  name  nest  night  paper  party  picture  pig  rabbit  rain  ring  robin  Santa Claus  school  seed  sheep  shoe  sister  snow  song  squirrel  stick  street  sun  table  thing  time  top  toy  tree  watch  water  way  wind  window  wood African-American administration characteristic constitutional discrimination identification interpretation recommendation representation representative responsibility transformation transportation administrator approximately communication comprehensive concentration congressional consciousness consideration controversial correspondent demonstration entertainment environmental establishment extraordinary institutional international investigation manufacturing participation psychological significantly sophisticated understanding unfortunately agricultural championship characterize circumstance conservative considerable construction contemporary contribution conventional conversation distribution dramatically headquarters increasingly independence intellectual intelligence intervention introduction investigator manufacturer neighborhood nevertheless occasionally organization particularly photographer prescription presentation presidential professional psychologist relationship satisfaction significance specifically successfully surprisingly achievement acknowledge advertising alternative anniversary application appointment appropriate arrangement association celebration cholesterol combination comfortable communicate competition competitive complicated composition concentrate consequence consumption controversy cooperation corporation demonstrate description destruction development differently distinction distinguish educational effectively electricity enforcement engineering environment essentially examination expectation explanation frustration fundamental furthermore grandfather grandmother imagination immediately immigration implication improvement incorporate independent information institution instruction interaction interesting investigate involvement legislation maintenance measurement necessarily negotiation nonetheless observation opportunity orientation Palestinian participant participate partnership performance personality perspective politically possibility potentially preparation publication quarterback recognition requirement reservation responsible restriction scholarship significant substantial temperature traditional absolutely accomplish additional adjustment adolescent aggressive anticipate apparently appearance appreciate assessment assignment assistance assumption atmosphere attractive background basketball biological capability collection collective commercial commission commitment comparison competitor completely conclusion conference confidence connection consistent constantly constitute consultant contribute convention conviction curriculum definitely definition democratic department depression developing difference difficulty disability discipline discussion distribute efficiency electronic elementary employment enterprise especially evaluation eventually everything everywhere exhibition experience experiment expression foundation frequently friendship generation girlfriend government helicopter historical hypothesis illustrate importance impossible impression impressive increasing incredible indication individual industrial ingredient initiative instructor instrument interested investment journalist laboratory leadership legitimate limitation literature management medication membership motivation nomination obligation occupation opposition originally particular percentage perception permission personally phenomenon philosophy photograph physically politician population preference previously production profession proportion prosecutor protection psychology punishment reasonable reflection regardless regulation relatively remarkable repeatedly Republican reputation researcher resistance resolution respondent restaurant retirement revolution scientific settlement specialist statistics strengthen subsequent successful sufficient suggestion surprising tablespoon technology television themselves throughout tournament transition tremendous ultimately understand university vulnerable widespread accompany according admission advantage adventure afternoon agreement apartment architect assistant associate attention attribute authority available awareness basically beautiful beginning boyfriend breakfast brilliant calculate candidate carefully celebrate celebrity certainly challenge character childhood chocolate Christian Christmas cigarette classroom coalition cognitive colleague commander committee community complaint component concerned condition confident confusion consensus construct container continued corporate counselor criticism criticize currently dangerous defendant defensive democracy dependent depending desperate determine different difficult dimension direction disappear discourse discovery diversity economics economist education effective efficient eliminate elsewhere emergency emotional emphasize encounter encourage equipment essential establish everybody evolution excellent exception executive existence expansion expensive explosion extension extensive extremely financial following formation framework frequency furniture generally gentleman gradually guarantee guideline highlight historian household immediate immigrant implement important incentive including increased infection inflation influence initially insurance intensity intention interpret interview introduce knowledge landscape lifestyle literally long-term marketing meanwhile mechanism narrative naturally necessary negotiate newspaper objective obviously offensive operating operation otherwise ourselves passenger perfectly permanent personnel physician political pollution potential practical precisely pregnancy president primarily principal principle procedure professor prominent provision publisher recognize recommend recording reduction reference regarding regularly reinforce religious remaining represent satellite scientist secretary selection sensitive seriously similarly situation so-called something sometimes somewhere spiritual spokesman stability statement strategic structure substance supporter surprised technical technique telephone telescope temporary territory terrorism terrorist testimony therefore tradition transform translate treatment typically universal variation vegetable violation virtually volunteer wonderful yesterday abortion absolute academic accident accurate activist activity actually addition adequate advanced advocate aircraft alliance although American analysis announce anything anywhere apparent approach approval argument artistic athletic attitude attorney audience baseball bathroom behavior birthday boundary building business campaign Canadian capacity category Catholic ceremony chairman champion changing chemical civilian clinical clothing collapse colonial complain complete computer conclude concrete conflict confront Congress consider constant consumer continue contract contrast convince coverage creation creative creature criminal criteria critical cultural customer darkness daughter decision decrease delivery Democrat describe designer detailed dialogue directly director disagree disaster discover disorder distance distinct district division document domestic dominant dominate downtown dramatic earnings economic educator election electric emission emphasis employee employer engineer enormous entirely entrance estimate evaluate everyday everyone evidence exchange exciting exercise existing exposure external facility familiar favorite fighting football frequent friendly function generate governor graduate greatest headline heritage historic homeless hospital identify identity incident increase indicate industry innocent instance interest internal Internet invasion investor involved Japanese judgment language learning lifetime literary location magazine maintain majority marriage material medicine military minister minority moderate moreover mortgage mountain movement multiple musician national negative neighbor normally northern numerous observer occasion official operator opponent opposite ordinary organize original overcome overlook painting perceive personal persuade physical planning platform pleasure politics portrait position positive possible possibly powerful practice pregnant presence preserve pressure previous priority prisoner probably producer progress properly property proposal proposed prospect provider province publicly purchase question reaction recently recovery regional register regulate relation relative relevant religion remember reporter research resemble resident resource response romantic sanction scenario schedule security sentence separate sequence shooting shopping shoulder slightly software solution somebody somewhat southern specific spending standard standing straight stranger strategy strength strongly struggle suddenly supposed surprise surround survival survivor taxpayer teaching teaspoon teenager tendency terrible thinking thousand threaten together tomorrow training transfer ultimate universe unlikely vacation valuable variable violence whatever whenever withdraw workshop yourself abandon ability absence account achieve acquire actress address advance adviser African against airline airport alcohol already amazing analyst analyze ancient another anxiety anybody anymore appoint approve arrange arrival article assault athlete attempt attract average balance barrier battery because bedroom believe beneath benefit besides between billion blanket bombing breathe briefly British brother cabinet capable capital captain capture careful carrier ceiling central century certain chamber channel chapter charity chicken Chinese citizen classic clearly climate closely clothes cluster collect college combine comfort command comment company compare compete complex compose concept concern concert conduct confirm connect consist consume contact contain content contest context control convert cooking correct council counter country courage crucial culture curious current declare decline defense deficit deliver deserve despite destroy develop digital discuss disease dismiss display dispute distant diverse divorce drawing eastern economy edition educate elderly element embrace emotion English enhance episode equally evening exactly examine example exhibit expense explain explode explore express extreme factory faculty failure fantasy fashion feature federal feeling fiction fifteen fighter finally finance finding fishing fitness foreign forever formula fortune forward founder freedom funding funeral gallery general genetic gesture grocery growing habitat handful healthy hearing heavily helpful herself highway himself history holiday horizon housing however hundred hunting husband illegal illness imagine impress improve include initial inquiry insight inspire install instead intense involve Islamic Israeli Italian journal journey justice justify killing kitchen largely lawsuit leading leather liberal library license limited machine manager married massive meaning measure medical meeting mention message Mexican million miracle missile mission mistake mixture monitor morning musical mystery natural neither nervous network nothing nowhere nuclear observe obvious offense officer Olympic ongoing opening operate opinion organic outcome outside overall package painful painter parking partner passage passion patient pattern payment penalty perfect perform perhaps picture plastic popular portion portray possess poverty predict prepare present pretend prevent primary privacy private problem proceed process produce product profile program project promise promote propose protect protein protest provide publish purpose qualify quality quarter quickly quietly radical rapidly reading reality realize receive recover recruit reflect refugee regular release replace request require resolve respect respond restore revenue roughly routine running Russian satisfy scandal scholar science section segment senator serious service session setting several shelter shortly silence similar society soldier somehow someone Spanish speaker special species squeeze station stomach storage strange stretch student subject succeed success suggest suicide support suppose Supreme surface surgery survive suspect sustain symptom teacher tension testify testing theater therapy thought through tobacco tonight totally tourist towards traffic tragedy trouble typical undergo uniform unknown unusual usually utility variety various vehicle venture version veteran victory village violate violent visible visitor warning wealthy weather wedding weekend welcome welfare western whereas whether whisper willing without witness working worried writing abroad absorb accept access accuse across action active actual adjust admire advice advise affair affect afford afraid agency agenda almost always amount animal annual answer anyone anyway appeal appear around arrest arrive artist asleep aspect assert assess assign assist assume assure attach attack attend author barely barrel basket battle beauty become before behind belief belong beside better beyond border borrow bother bottle bottom branch breast breath bridge bright broken budget bullet burden butter button camera campus cancer carbon career center chance change charge cheese choice choose church circle client clinic closer coffee column comedy commit common cookie corner cotton county couple course cousin create credit crisis critic custom damage danger dealer debate decade decide deeply defeat defend define degree demand depend depict deputy derive desert design desire detail detect device devote differ dining dinner direct divide doctor double driver during easily editor effect effort either e-mail emerge employ enable energy engage engine enough ensure entire escape estate ethics ethnic evolve exceed except expand expect expert expose extend extent fabric factor fairly family famous farmer father fellow female figure finger finish flavor flight flower follow forest forget formal former fourth freeze French friend future galaxy garage garden garlic gather gender gently German gifted glance global golden ground growth guilty handle happen hardly health heaven height highly honest horror hungry hunter ignore impact impose income indeed Indian infant inform injury inside insist intend invest invite island itself jacket Jewish junior killer latter launch lawyer leader league legacy legend length lesson letter likely listen little living locate lovely mainly makeup manage manner margin market master matter medium member memory mental merely method middle minute mirror mm-hmm modern modest moment mostly mother motion murder muscle museum Muslim mutual myself narrow nation native nature nearby nearly nobody normal notice notion number object obtain occupy office online oppose option orange origin others parent partly people pepper period permit person phrase planet player please plenty pocket poetry police policy potato powder prayer prefer pretty priest prison profit prompt proper public pursue racial rarely rather rating reader really reason recall recent recipe record reduce reform refuse regard regime region reject relate relief remain remind remote remove repeat report resist resort result retain retire return reveal review rhythm sacred safety salary sample saving scared scheme school scream screen script search season second secret sector secure select Senate senior series settle severe sexual shadow should shower signal silent silver simple simply singer single sister slight slowly smooth soccer social source Soviet speech spirit spread spring square stable status steady stream street stress strike string stroke strong studio stupid submit sudden suffer summer summit supply surely survey switch symbol system tactic talent target tennis terror thanks theory thirty though threat throat ticket tissue tomato tongue toward travel treaty tunnel twelve twenty unable unique United unless unlike useful valley versus vessel victim viewer virtue vision visual volume wander wealth weapon weekly weight widely window winner winter wisdom within wonder wooden worker writer yellow about above abuse actor adapt admit adopt adult after again agent agree ahead album alive allow alone along alter among anger angle angry apart apple apply argue arise armed Asian aside asset avoid award aware awful badly basic basis beach begin being below bench Bible birth black blade blame blind block blood board brain brand bread break brick brief bring broad brown brush build bunch buyer cabin cable carry catch cause chain chair chart chase cheap check cheek chest chief child civil claim class clean clear climb clock close cloud coach coast color couch could count court cover crack craft crash crazy cream crime cross crowd cycle daily dance death delay depth dirty doubt dozen draft drama dream dress drink drive eager early earth eight elect elite empty enemy enjoy enter entry equal error essay event every exact exist extra faith FALSE fault favor fence fewer fiber field fifth fifty fight final first flame flesh float floor focus force forth found frame fresh front fruit fully funny ghost giant given glass glove grade grain grand grant grass grave great green group guard guess guest guide habit happy heart heavy hello honey honor horse hotel house human humor ideal image imply index inner Iraqi Irish issue joint judge juice knife knock label labor large later Latin laugh layer learn least leave legal lemon level light limit local loose lover lower lucky lunch major maker marry match maybe mayor media metal meter might minor model money month moral motor mount mouse mouth movie music naked nerve never newly night noise north novel nurse occur ocean offer often onion order other ought owner paint panel paper party patch pause peace phase phone photo piano piece pilot pitch place plane plant plate point porch pound power press price pride prime print prior proof proud prove quick quiet quite quote radio raise range rapid ratio reach react ready refer relax reply rifle right river rough round route rural salad sales sauce scale scene scope score seize sense serve seven shade shake shall shape share sharp sheet shelf shell shift shine shirt shock shoot shore short shout shrug sight since skill slave sleep slice slide small smart smell smile smoke solar solid solve sorry sound south space speak speed spend split sport staff stage stair stake stand stare start state steal steel stick still stock stone store storm story strip study stuff style sugar super swear sweep sweet swing table taste teach terms thank their theme there these thick thing think third those three throw tight tired title today tooth topic total touch tough tower trace track trade trail train treat trend trial tribe trick troop truck truly trust truth twice uncle under union until upper urban usual value video virus visit vital voice voter waste watch water weigh wheel where which while white whole whose woman works world worry worth would wound write wrong yield young yours youth"
-				var frequentadj = ['Bad', 'Odd', 'Shy', 'Blue', 'Busy', 'Calm', 'Cute', 'Dark', 'Dead', 'Dull', 'Easy', 'Evil', 'Fair', 'Fine', 'Good', 'Kind', 'Lazy', 'Long', 'Nice', 'Open', 'Poor', 'Real', 'Rich', 'Sore', 'Tame', 'Ugly', 'Vast', 'Wild', 'Alert', 'Alive', 'Angry', 'Awful', 'Black', 'Bored', 'Brave', 'Clean', 'Clear', 'Crazy', 'Cruel', 'Dizzy', 'Eager', 'Fancy', 'Frail', 'Funny', 'Happy', 'Itchy', 'Jolly', 'Light', 'Lucky', 'Misty', 'Muddy', 'Mushy', 'Nasty', 'Nutty', 'Plain', 'Proud', 'Scary', 'Shiny', 'Silly', 'Super', 'Tense', 'Tasty', 'Tired', 'Tough', 'Upset', 'Weary', 'Witty', 'Wrong', 'Amused', 'Better', 'Bloody', 'Brainy', 'Bright', 'Clever', 'Cloudy', 'Clumsy', 'Creepy', 'Elated', 'Famous', 'Fierce', 'Filthy', 'Gentle', 'Gifted', 'Grumpy', 'Homely', 'Hungry', 'Joyous', 'Lively', 'Lonely', 'Lovely', 'Modern', 'Poised', 'Putrid', 'Quaint', 'Sleepy', 'Smoggy', 'Stormy', 'Stupid', 'Tender', 'Wicked', 'Annoyed', 'Anxious', 'Ashamed', 'Average', 'Careful', 'Crowded', 'Curious', 'Defiant', 'Elegant', 'Envious', 'Excited', 'Foolish', 'Fragile', 'Frantic', 'Healthy', 'Helpful', 'Jealous', 'Jittery', 'Naughty', 'Nervous', 'Panicky', 'Perfect', 'Prickly', 'Puzzled', 'Selfish', 'Smiling', 'Strange', 'Ugliest', 'Unusual', 'Uptight', 'Worried', 'Zealous', 'Adorable', 'Annoying', 'Arrogant', 'Blushing', 'Cautious', 'Charming', 'Cheerful', 'Colorful', 'Confused', 'Defeated', 'Distinct', 'Doubtful', 'Faithful', 'Friendly', 'Gleaming', 'Glorious', 'Gorgeous', 'Graceful', 'Grieving', 'Handsome', 'Helpless', 'Homeless', 'Horrible', 'Innocent', 'Obedient', 'Pleasant', 'Powerful', 'Precious', 'Relieved', 'Splendid', 'Spotless', 'Talented', 'Terrible', 'Thankful', 'Troubled', 'Agreeable', 'Beautiful', 'Blue-eyed', 'Breakable', 'Combative', 'Concerned', 'Condemned', 'Dangerous', 'Depressed', 'Different', 'Difficult', 'Disgusted', 'Disturbed', 'Energetic', 'Expensive', 'Exuberant', 'Fantastic', 'Glamorous', 'Grotesque', 'Hilarious', 'Important', 'Obnoxious', 'Repulsive', 'Sparkling', 'Unsightly', 'Vivacious', 'Wandering', 'Wide-eyed', 'Worrisome', 'Aggressive', 'Attractive', 'Bewildered', 'Courageous', 'Delightful', 'Determined', 'Enchanting', 'Frightened', 'Impossible', 'Motionless', 'Mysterious', 'Outrageous', 'Successful', 'Thoughtful', 'Victorious', 'Adventurous', 'Comfortable', 'Cooperative', 'Embarrassed', 'Encouraging', 'Inexpensive', 'Inquisitive', 'Magnificent', 'Outstanding', 'Thoughtless', 'Enthusiastic', 'Uninterested', 'Old-fashioned'];
-				frequentenglish = frequentenglish.capitalize()
-				divtoadd.innerHTML = "" 
-				var allelements = ""
-				mykeywords = []
-				var arrayLength = feedsresult.length;
-				for (var j = 0; j < arrayLength; j++) {
-					feedsresult[j].dict = "none"
-					}
-				for (var i = 0; i < arrayLength; i++) {
-					allelements += (feedsresult[i].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\'\"\’]/g," ").capitalize()) +" "; //here
-					allelements = allelements.capitalize()
-					}
-				var wordsArray = splitByWords(allelements);
-				var wordsMap = createWordMap(wordsArray);
-				var finalWordsArray = sortByCount(wordsMap);
-				var mymaxcount = 5
-				for (var i = 0; i < finalWordsArray.length; i++) {
-					if (finalWordsArray[i].total > 3 && finalWordsArray[i].name.length > 4 && finalWordsArray[i].name.substring(0, 3)!=="Don"){ 
-						var mystr = ""
-						var mystrhome = ""
-						var mysubstr = ""
-						var mysubstr2 = ""
-						var mycount = 0
-						document.getElementById('progresslinelist').innerHTML = '<small><font color="silver">Reading about <b>' +finalWordsArray[Math.floor(Math.random() * finalWordsArray.length)].name.capitalize() + '</b> in <b>'+ mysourcename +'</b></font></small>'   
-							for (var j = 0; j < arrayLength; j++) {
-								if ( feedsresult[j].dict == "none" && feedsresult[j].title.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\'\"\’]/g," ").capitalize().indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) >=0 && frequentenglish.indexOf(finalWordsArray[i].name.replace(/\s/g, '').capitalize()) <0 ){  //here
-									feedsresult[j].dict = finalWordsArray[i].name
-									mysubstr += strip(feedsresult[j].title).replace(/<strong>/g,'') + '. ' + strip(feedsresult[j].content).replace(/<strong>/g,'') + '. '
-									mysubstr = mysubstr.replace(/Dr. /g,'Dr ').replace(/Mr. /g,'Mr ').replace(/M. /g,'M ').replace(/Mrs. /g,'Mrs ').replace(/U.S./gm,"US").replace(/U.K./gm,"UK")
-									if (mycount == 0){
-										mystr  +=  '<li><a href="'+feedsresult[j].link+'" target="_blank">'  + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
-										mystrhome  +=  '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a>. <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small>"
-										mycount = 1
-										mykeywords.push(finalWordsArray[i].name.replace(/\s/g, '').capitalize())
-										if (finalWordsArray[i].total > mymaxcount){
-											mymaxcount = finalWordsArray[i].total
-											var destdivtitle = document.getElementById('snippets')
-											titlearticle = feedsresult[j].content.replace('undefined', '')
-											charcut = 1000
-											if (titlearticle.length >charcut) {titlearticle = titlearticle.capitalize().substring(0,charcut) + '...' } else {titlearticle = titlearticle.capitalize() }
-											destdivtitle.innerHTML = "<h1>" + '<a href="'+feedsresult[j].link+'" target="_blank">' + feedsresult[j].title.replace(/<strong>/g,'') + "</a></h1> <div style='text-align:justify' class='lettrine'><big>" + titlearticle + "</big></div>"
-											}
-										} else {
-											mystr  += '<li><a href="'+feedsresult[j].link+'" target="_blank">' + '&#9900; ' + feedsresult[j].title.replace(finalWordsArray[i].name,'<font><b>'+finalWordsArray[i].name+"</b></font>").replace(/<strong>/g,'') + " <small><font color='silver'>(" +  feedsresult[j].srcname + ")</font></small></a>" + "</li>"
-										}
-									}
-								}
-							if (mystr == ""){} else {
-								var mysubkeywords = "<b><big>" + finalWordsArray[i].name.capitalize() + "</big></b>"
-								var subwordsArray = splitByWords(mysubstr.capitalize());
-								var subwordsMap = createWordMap(subwordsArray);
-								var subfinalWordsArray = sortByCount(subwordsMap);
-								articlesbysentence = mysubstr.split('. ')
-								myexcerpt = ''
-								myexcerpt = articlesbysentence[0]
-								myconceptcount = 0
-								for (var z = 0; z < articlesbysentence.length; z++)
-								{
-									conceptsentence = 0
-									sentencecapitalized = articlesbysentence[z].replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\'\"\’]/g," ").capitalize()
-									myexcerpttry = strip (articlesbysentence[z]) 
-									for (var subi = 0; subi <subfinalWordsArray.length; subi++) {
-									if (subfinalWordsArray[subi].total >= 2 && subfinalWordsArray[subi].name.length > 4  && frequentenglish.indexOf(subfinalWordsArray[subi].name.replace(/\s/g, '').capitalize()) <0 ){
-										conceptsentence = conceptsentence + occurrences(sentencecapitalized,subfinalWordsArray[subi].name.capitalize() )^2 *(subfinalWordsArray[subi].total)^2
-									}
-									}
-									if (conceptsentence > myconceptcount)
-										{
-										myconceptcount = conceptsentence
-										myexcerpt = myexcerpttry
-										}
-								}
-								charcut = 1000
-								if (myexcerpt.length >charcut) {myexcerpt = myexcerpt.capitalize().substring(0,charcut) + '...' } else {myexcerpt = myexcerpt.capitalize() }
-								mysubkeywords += "&nbsp; " + myexcerpt  
-						divtoadd.innerHTML += "<div id = '" +finalWordsArray[i].name.capitalize() +"' class='card' ><div  onclick='showhide(\"" + finalWordsArray[i].name.capitalize() +"-subjectchild\");'>" + "<span style='margin: 0; padding: 0.5em;'>" + mysubkeywords + "</span></div>   " + "<div id='" +finalWordsArray[i].name.capitalize() + "-subjectchild' style='display: none'>" + mystr +'</div></div>'
-						myendTime = new Date();
-						var mytimeDiff = myendTime - mystartTime; 
-						mytimeDiff = Math.round(100* mytimeDiff /1000) /100
-						document.getElementById('progressline').innerHTML = '' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)'
-						document.getElementById('progresslinesplash').innerHTML = '<small><font color="silver">' + nbarticles + ' articles from ' + nbsources + ' sources (' + mytimeDiff + ' seconds)</font></small>'
-						
-						}
-					}
-				}
-			}
-		});
-	});
-});
-</script>
+	</center>
 </body>
 </html>
