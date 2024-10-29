@@ -22,7 +22,7 @@
 <body>
     <center>
 		<div class="feed">
-			<h3>Weather in <span id="locationName"></span></h3>
+			<h3><span id="locationName">Loading..</span></h3>
 			<div class="container">
 				<canvas id="weatherChart"></canvas>
 				<canvas id="windUvChart"></canvas>
@@ -41,7 +41,7 @@
 					const locationResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`);
 					const locationData = await locationResponse.json();
 					const locationName = locationData.address.city || locationData.address.town || locationData.address.village || 'Your Location';
-					document.getElementById('locationName').innerText = locationName;
+					document.getElementById('locationName').innerText = "Weather in " + locationName;
 					resolve(data.hourly);
 				}, reject);
 			});
