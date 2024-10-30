@@ -204,7 +204,7 @@
         
 		const toggleAccordion = () => {
 			const accordion = document.getElementById('accordion');
-			accordion.classList.toggle('collapsed'); // Toggle the 'collapsed' class
+			accordion.classList.toggle('collapsed'); 
 		};
 		
 		document.addEventListener('DOMContentLoaded', () => {
@@ -221,7 +221,7 @@
             const articlesPerPage = 5;
             let totalArticles = 0;
             let totalPages = 0;
-            let currentCategory = '';  // Track the selected category
+            let currentCategory = false; 
             let searchResults = [];
 			
 			let isPaginationVisible = false;
@@ -462,9 +462,9 @@
 						<div class="article-summary"><strong>Summary:</strong> ${article.summary}</div>
 						<div class="article-link"><a href="${article.link}" target="_blank">Read Full Text</a></div>
 					</div>
-				`).join(''); // Join the articles into a single HTML string
+				`).join(''); 
 
-				updatePagination(); // Update the pagination controls
+				updatePagination(); 
 			};
 
 
@@ -506,9 +506,9 @@
                         subcategoryDiv.textContent = subcategory.split(' (')[1].replace(')', ''); 
                         subcategoryDiv.onclick = () => {
                             headerTitle.textContent = `arXiv - ${subcategory.split(' (')[1].replace(')', '')}`;
-                            articlesDiv.innerHTML = 'Loading..'; // Clear previous articles
-                            currentPage = 1; // Reset to page 1
-                            currentCategory = subcategory.split(' (')[1].replace(')', ''); // Update current category
+                            articlesDiv.innerHTML = 'Loading..'; 
+                            currentPage = 1; 
+                            currentCategory = subcategory.split(' (')[1].replace(')', ''); 
                             fetchArticles(currentCategory);
                         };
                         content.appendChild(subcategoryDiv);
