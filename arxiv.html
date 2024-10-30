@@ -221,7 +221,7 @@
             const articlesPerPage = 5;
             let totalArticles = 0;
             let totalPages = 0;
-            let currentCategory = false; 
+            let currentCategory = false;  
             let searchResults = [];
 			
 			let isPaginationVisible = false;
@@ -447,7 +447,14 @@
                 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
                 return `${parseInt(day)}-${months[parseInt(month) - 1]}-${year}`;
             };
-
+			
+			
+			function highlightQueryInSummary(summary, querytext) {
+				if (!querytext) return summary; 
+				const regex = new RegExp(`(${querytext})`, 'gi');
+				return summary.replace(regex, `<span style="background-color: yellow;">$1</span>`);
+				};
+			
             const updateArticles = (isSearchResults = false) => {
 				const articles = isSearchResults ? searchResults : allArticles;
 				const start = (currentPage - 1) * articlesPerPage; 
@@ -459,7 +466,9 @@
 						<div class="article-title">${article.title}</div>
 						<div class="article-authors">Authors: <span style="color: green;">${article.authors.join(', ')}</span></div>
 						<div class="article-date">Published: <span style="color: black;">${article.published}</span> | Updated: <span style="color: black; font-weight: bold;">${article.updated}</span></div>
-						<div class="article-summary"><strong>Summary:</strong> ${article.summary}</div>
+						
+						<div class="article-summary"><strong>Summary:</strong> ${highlightQueryInSummary(article.summary, searchBox.value.trim())}</div>
+						
 						<div class="article-link"><a href="${article.link}" target="_blank">Read Full Text</a></div>
 					</div>
 				`).join(''); 
