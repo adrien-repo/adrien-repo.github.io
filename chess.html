@@ -27,9 +27,10 @@
   <script>
     window.console = window.console || function (t) {};
   </script>
+  <base href="https://chessboardjs.com/" />
 </head>
 <body translate="no">
-  <base href="https://chessboardjs.com/" />
+  
   <center>
     <h3 class="board">
       Chess Engine
@@ -43,9 +44,9 @@
   <div class="info">
     <div id="move-history" class="move-history"></div>
   </div>
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js" data-cfasync="false" defer></script>
-<script src="https://cdn.rawgit.com/lhartikk/simple-chess-ai/master/lib/js/chess.js" data-cfasync="false" defer></script>
-<script src="https://chessboardjs.com/js/chessboard.js" data-cfasync="false" defer></script>
+  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+  <script src='https://cdn.rawgit.com/lhartikk/simple-chess-ai/master/lib/js/chess.js'></script>
+  <script src='https://chessboardjs.com/js/chessboard.js'></script>
   <script id="rendered-js">
     var board,
       game = new Chess();
