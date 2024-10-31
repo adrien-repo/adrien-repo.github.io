@@ -144,7 +144,15 @@
 					totalEvaluation += 1000000; 
 				} 
 			}
-			//if (game.in_stalemate()) {}
+			if (game.in_stalemate()) {
+				if (game.turn() === 'w') {
+					
+					totalEvaluation += 10000; 
+				} else {
+					
+					totalEvaluation += -10000; 
+				}
+			}
 			
 		}
 		
