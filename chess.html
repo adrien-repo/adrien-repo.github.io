@@ -25,6 +25,11 @@
     .numeric-fc462 { top: 2px; left: 2px; }
 	#loading-spinner { display: inline-block; width: 8px; height: 8px; border: 3px solid black; border-radius: 50%; border-top-color: transparent; animation: spin 1s linear infinite; margin-right: 5px; }
 	@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+	.mute-button { display: none; }
+	.mute-label { cursor: pointer; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; background: transparent; border: none; transition: fill 0.3s; }
+	.speaker-icon { width: 100%; height: 100%; fill: lightgray; transition: fill 0.3s; }
+	.mute-button:checked + .mute-label .speaker-icon { fill: black; }
+
   </style>
   <script>
     window.console = window.console || function (t) {};
@@ -37,14 +42,20 @@
     <br><h3 class="board">
       Chess Engine
     </h3>
-    <div id="score">Rating: N/A</div>
-    <div id="loading-bar">Welcome</div>
+    <div id="score">Welcome</div>
+    <div id="loading-bar">You are playing as White. Your turn!</div>
     <br>
     <div id="board" class="board"></div>
     <br>
   </center>
   <div class="info">
-    <div id="move-history" class="move-history"></div>
+    <input type="checkbox" id="mute" class="mute-button">
+    <label for="mute" class="mute-label">
+        <svg class="speaker-icon" viewBox="0 0 24 24">
+            <path d="M3 9v6h3l5 5V4L6 9H3zm15.2 2.4c-.3 0-.5.2-.5.5v.1c0 .3.2.5.5.5s.5-.2.5-.5v-.1c0-.3-.2-.5-.5-.5zm1.8-2.2c-.3 0-.5.2-.5.5v.1c0 .3.2.5.5.5s.5-.2.5-.5v-.1c0-.3-.2-.5-.5-.5zM18 12c0-.5-.3-1-1-1s-1 .5-1 1 .5 1 1 1 1-.5 1-1z"/>
+        </svg>
+    </label>
+	<div id="move-history" class="move-history"></div>
   </div>
   <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
   <script src='https://cdn.rawgit.com/lhartikk/simple-chess-ai/master/lib/js/chess.js'></script>
@@ -309,6 +320,8 @@
 			game.ugly_move(bestMove);
 			lastComputerMove = bestMove;
 			board.position(game.fen());
+			const muteCheckbox = document.getElementById('mute');
+			if (muteCheckbox.checked) { playNotification() }
 			renderMoveHistory(game.history());
 			updateScore(evaluateBoard(game));
 			
@@ -334,9 +347,6 @@
 				$('#score').text("Game over.");
 				$('#loading-bar').text(result);
 			}
-			
-			playNotification()
-			
 			
 		}, 250);
 	};
@@ -450,7 +460,7 @@
     };
     board = ChessBoard('board', cfg);
 
-    $('#loading-bar').text('Welcome.');
+    
     board.position('start');
 
 
