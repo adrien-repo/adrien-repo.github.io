@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chess AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Include Roboto font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif; /* Use Roboto font */
+    }
+
+    .board {
+      width: 400px;
+      margin: auto;
+    }
+
+    .info {
+      width: 400px;
+      margin: auto;
+    }
+
+    .move-history {
+      height: auto; /* Remove max-height and set height to auto */
+      overflow-y: visible; /* Remove overflow-y */
+    }
+
+    #loading-bar {
+      text-align: center;
+      margin: 20px auto;
+    }
+
+    .loader {
+      border: 8px solid #f3f3f3; /* Light grey */
+      border-top: 8px solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* clearfix */
+    .clearfix-7da63 {
+      clear: both;
+    }
+
+    /* board */
+    .board-b72b1 {
+      border: 2px solid #404040;
+      -moz-box-sizing: content-box;
+      box-sizing: content-box;
+    }
+
+    /* square */
+    .square-55d63 {
+      float: left;
+      position: relative;
+      user-select: none;
+    }
+
+    /* white square */
+    .white-1e1d7 {
+      background-color: #f0d9b5;
+      color: #b58863;
+    }
+
+    /* black square */
+    .black-3c85d {
+      background-color: #b58863;
+      color: #f0d9b5;
+    }
+
+    /* highlighted square (changed to yellow) */
+    .highlight1-32417,
+    .highlight2-9c5d2 {
+      box-shadow: inset 0 0 3px 3px yellow;
+      background-color: yellow; /* Change the highlighted square color to yellow */
+    }
+
+    /* allowed move square (changed to light yellow) */
+    .allowed-move {
+      background-color: rgba(255, 255, 0, 0.5); /* Light yellow */
+    }
+
+    /* notation */
+    .notation-322f9 {
+      cursor: default;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      position: absolute;
+    }
+
+    .alpha-d2270 {
+      bottom: 1px;
+      right: 3px;
+    }
+
+    .numeric-fc462 {
+      top: 2px;
+      left: 2px;
+    }
+
+    #score {
+      margin: 20px auto;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    #loading-bar {
+      margin: 20px auto;
+      text-align: center;
+      font-size: 18px;
+    }
+
+  </style>
+
+  <script>
+    window.console = window.console || function (t) {};
+  </script>
+</head>
+
+<body translate="no">
+
+  <!-- Used to get images -->
+  <base href="https://chessboardjs.com/" />
+  <center>
+    <h3 class="board">
+      Chess Engine
+    </h3>
+    <div id="score">Rating: N/A</div>
+
+    <div id="loading-bar">Welcome</div>
+    <br>
+    <div id="board" class="board"></div>
+    <br>
+  </center>
+  <div class="info">
+    <div id="move-history" class="move-history"></div>
+  </div>
+
+  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+  <script src='https://cdn.rawgit.com/lhartikk/simple-chess-ai/master/lib/js/chess.js'></script>
+  <script src='https://chessboardjs.com/js/chessboard.js'></script>
+  <script id="rendered-js">
+    var board,
+      game = new Chess();
+    var lastComputerMove = null; // Track last computer move
+
+    // Piece values
+    var pieceValues = {
+      'p': 100,
+      'n': 300,
+      'b': 300,
+      'r': 500,
+      'q': 900,
+    };
+
+    // Minimax with Alpha-Beta Pruning
+    var calculateBestMove = function (game) {
+      var bestMove = null;
+      var bestValue = -Infinity;
+
+      // Loop through all possible moves
+      for (var move of game.ugly_moves()) {
+        game.ugly_move(move);
+        var boardValue = -minimax(game, 3, -Infinity, Infinity);
+        game.undo();
+
+        if (boardValue > bestValue) {
+          bestValue = boardValue;
+          bestMove = move;
+        }
+      }
+      return bestMove;
+    };
+
+    var minimax = function (game, depth, alpha, beta) {
+      if (depth === 0 || game.game_over()) {
+        return evaluateBoard(game);
+      }
+
+      var moves = game.ugly_moves();
+      if (game.turn() === 'w') {
+        let maxEval = -Infinity;
+        for (var move of moves) {
+          game.ugly_move(move);
+          let eval = minimax(game, depth - 1, alpha, beta);
+          game.undo();
+          maxEval = Math.max(maxEval, eval);
+          alpha = Math.max(alpha, eval);
+          if (beta <= alpha) {
+            break; // Beta cutoff
+          }
+        }
+        return maxEval;
+      } else {
+        let minEval = Infinity;
+        for (var move of moves) {
+          game.ugly_move(move);
+          let eval = minimax(game, depth - 1, alpha, beta);
+          game.undo();
+          minEval = Math.min(minEval, eval);
+          beta = Math.min(beta, eval);
+          if (beta <= alpha) {
+            break; // Alpha cutoff
+          }
+        }
+        return minEval;
+      }
+    };
+
+    var evaluateBoard = function (game) {
+      var totalEvaluation = 0;
+      for (var piece in pieceValues) {
+        var pieceCount = game.board().reduce((count, row) => {
+          return count + row.reduce((count, square) => {
+            return count + (square && square.type === piece ? (square.color === 'w' ? 1 : -1) : 0);
+          }, 0);
+        }, 0);
+        totalEvaluation += pieceCount * pieceValues[piece];
+      }
+      updateScore(totalEvaluation);
+      return totalEvaluation;
+    };
+
+    var updateScore = function (score) {
+      // Define a range for scores (for normalization)
+      const maxScore = 1000; // Assuming this is the maximum expected score
+      const minScore = -1000; // Assuming this is the minimum expected score
+
+      // Normalize scores
+      let normalizedScore = Math.max(minScore, Math.min(maxScore, score)); // Clamp score within min and max range
+      let whiteScore = ((normalizedScore + maxScore) / (2 * maxScore)) * 100; // Normalize to 0-100
+      let blackScore = ((maxScore - normalizedScore) / (2 * maxScore)) * 100; // Normalize to 0-100
+
+      // Ensure scores sum to 100
+      const totalScore = whiteScore + blackScore;
+      whiteScore = (whiteScore / totalScore) * 100;
+      blackScore = (blackScore / totalScore) * 100;
+
+      $('#score').text(`White: ${whiteScore.toFixed(1)}% | Black: ${blackScore.toFixed(1)}%`);
+    };
+
+    /* board visualization and game state handling starts here */
+    var onDragStart = function (source, piece, position, orientation) {
+      if (game.in_checkmate() === true || game.in_draw() === true ||
+        piece.search(/^b/) !== -1) {
+        return false;
+      }
+    };
+
+    var highlightAllowedMoves = function (piece) {
+      const moves = game.moves({
+        square: piece,
+        verbose: true
+      });
+
+      for (let move of moves) {
+        // Add light yellow highlight for allowed moves
+        addAllowedMoveHighlight(move.to);
+      }
+    };
+
+    var makeBestMove = function () {
+      $('#loading-bar').text('Computer is thinking...') // Show loading bar
+
+      window.setTimeout(function () {
+        var bestMove = calculateBestMove(game);
+        game.ugly_move(bestMove);
+        lastComputerMove = bestMove; // Store last computer move
+        board.position(game.fen());
+        renderMoveHistory(game.history());
+
+        $('#loading-bar').text('Your turn!') // Hide loading bar
+      }, 250);
+    };
+
+    var addAllowedMoveHighlight = function (square) {
+      const squareEl = $('#board .square-' + square);
+      squareEl.addClass('allowed-move');
+      // Optional: remove highlight after some time
+      setTimeout(function () {
+        squareEl.removeClass('allowed-move');
+      }, 1000);
+    };
+
+    var greySquare = function (square) {
+      const squareEl = $('#board .square-' + square);
+
+      // Add CSS for highlighting squares
+      squareEl.addClass('highlight1-32417');
+      setTimeout(function () {
+        squareEl.removeClass('highlight1-32417');
+      }, 1000);
+    };
+
+    var renderMoveHistory = function (moves) {
+      var moveHistoryElement = $('#move-history');
+      moveHistoryElement.empty();
+      for (var i = 0; i < moves.length; i = i + 2) {
+        moveHistoryElement.append('<span><b>' + (i/2 + 1) + '.</b> ' + moves[i] + ' ' + (moves[i + 1] ? moves[i + 1] : '') + ' </span>')
+      }
+      moveHistoryElement.scrollTop(moveHistoryElement[0].scrollHeight);
+    };
+
+    var onDrop = function (source, target) {
+      removeGreySquares();
+      // Try to make the move
+      var move = game.move({
+        from: source,
+        to: target,
+        promotion: 'q' // promote to a queen for simplicity
+      });
+
+      // Illegal move
+      if (move === null) return 'snapback';
+
+      renderMoveHistory(game.history());
+      updateScore(evaluateBoard(game));
+
+      if (game.game_over()) {
+        moveHistoryElement.append(' Game over.');
+      } else {
+        makeBestMove();
+      }
+    };
+
+    var onSnapEnd = function () {
+      board.position(game.fen());
+    };
+
+    var removeGreySquares = function () {
+      $('#board .square-55d63').removeClass('allowed-move');
+    };
+
+    var onMouseoutSquare = function (square) {
+      removeGreySquares();
+    };
+
+    var onClickSquare = function (square) {
+      removeGreySquares();
+      highlightAllowedMoves(square); // Highlight allowed moves when a piece is clicked
+    };
+
+    // Configuration for the chessboard
+    var cfg = {
+      draggable: true,
+      position: 'start',
+      onDragStart: onDragStart,
+      onDrop: onDrop,
+      onMouseoutSquare: onMouseoutSquare,
+      onClickSquare: onClickSquare,
+      onSnapEnd: onSnapEnd,
+      onChange: onChange,
+    };
+
+    // Initialize the board
+    board = ChessBoard('board', cfg);
+
+    function onChange() {
+      // Highlight possible moves when the board changes
+      const pieceSquare = game.history().length > 0 ? game.history()[game.history().length - 1].to : null;
+      if (pieceSquare) {
+        highlightAllowedMoves(pieceSquare);
+      }
+    }
+  </script>
+</body>
+
+</html>
