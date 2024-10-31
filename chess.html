@@ -10,7 +10,7 @@
     body { font-family: 'Roboto', sans-serif; }
     .board, .info { width: 400px; margin: auto; }
     .move-history { height: auto; overflow-y: visible; }
-    #loading-bar, #score { margin: 20px auto; text-align: center; font-size: 18px; }
+    #loading-bar, #score { margin: 20px auto; text-align: center; font-size: 16px; }
     .loader { border: 8px solid #f3f3f3; border-top: 8px solid #3498db; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     .clearfix-7da63 { clear: both; }
@@ -52,17 +52,35 @@
       game = new Chess();
     var lastComputerMove = null; 
     var pieceValues = {
-      'p': 100,
-      'n': 300,
-      'b': 300,
-      'r': 500,
-      'q': 900,
-    };
+	  'p': 100,
+	  'n': 300,
+	  'b': 300,
+	  'r': 500,
+	  'q': 900,
+	  'k': 5000 
+	};
+
+	var centralControlValue = {
+	  'e4': 10,
+	  'd4': 10,
+	  'e5': 10,
+	  'd5': 10,
+	  'c4': 5,
+	  'f4': 5,
+	  'c5': 5,
+	  'f5': 5
+	};
+
+	var gamescomputed = 0
+	let startTime, endTime;
+	
     var calculateBestMove = function (game) {
       var bestMove = null;
       var bestValue = -Infinity;
+	  
       for (var move of game.ugly_moves()) {
-        game.ugly_move(move);
+        
+		game.ugly_move(move);
         var boardValue = -minimax(game, 3, -Infinity, Infinity);
         game.undo();
 
@@ -76,14 +94,16 @@
 
     var minimax = function (game, depth, alpha, beta) {
       if (depth === 0 || game.game_over()) {
-        return evaluateBoard(game);
+        gamescomputed += 1
+		return evaluateBoard(game);
       }
 
       var moves = game.ugly_moves();
       if (game.turn() === 'w') {
         let maxEval = -Infinity;
         for (var move of moves) {
-          game.ugly_move(move);
+          gamescomputed += 1
+		  game.ugly_move(move);
           let eval = minimax(game, depth - 1, alpha, beta);
           game.undo();
           maxEval = Math.max(maxEval, eval);
@@ -96,7 +116,8 @@
       } else {
         let minEval = Infinity;
         for (var move of moves) {
-          game.ugly_move(move);
+          gamescomputed += 1
+		  game.ugly_move(move);
           let eval = minimax(game, depth - 1, alpha, beta);
           game.undo();
           minEval = Math.min(minEval, eval);
@@ -110,18 +131,42 @@
     };
 
     var evaluateBoard = function (game) {
-      var totalEvaluation = 0;
-      for (var piece in pieceValues) {
-        var pieceCount = game.board().reduce((count, row) => {
-          return count + row.reduce((count, square) => {
-            return count + (square && square.type === piece ? (square.color === 'w' ? 1 : -1) : 0);
-          }, 0);
-        }, 0);
-        totalEvaluation += pieceCount * pieceValues[piece];
-      }
-      updateScore(totalEvaluation);
-      return totalEvaluation;
-    };
+	  var totalEvaluation = 0;
+
+
+	  for (var piece in pieceValues) {
+		var pieceCount = game.board().reduce((count, row) => {
+		  return count + row.reduce((count, square) => {
+			return count + (square && square.type === piece ? (square.color === 'w' ? 1 : -1) : 0);
+		  }, 0);
+		}, 0);
+		totalEvaluation += pieceCount * pieceValues[piece];
+
+
+		var potentialLosses = game.ugly_moves().filter(move => {
+		  const targetSquare = move.to;
+		  return game.get(targetSquare) && game.get(targetSquare).color !== game.turn();
+		});
+
+
+		totalEvaluation -= potentialLosses.length * (pieceValues[piece] / 2); 
+	  }
+
+
+	  game.board().forEach((row, rowIndex) => {
+		row.forEach((square, colIndex) => {
+		  const squareName = String.fromCharCode(97 + colIndex) + (8 - rowIndex);
+		  if (square && square.color === 'w') {
+			totalEvaluation += centralControlValue[squareName] || 0; 
+		  } else if (square && square.color === 'b') {
+			totalEvaluation -= centralControlValue[squareName] || 0; 
+		  }
+		});
+	  });
+
+	  updateScore(totalEvaluation);
+	  return totalEvaluation;
+	};
 
     var updateScore = function (score) {
       const maxScore = 1000; 
@@ -165,18 +210,32 @@
     };
 
     var makeBestMove = function () {
-      $('#loading-bar').text('Computer is thinking...') 
-
-      window.setTimeout(function () {
-        var bestMove = calculateBestMove(game);
-        game.ugly_move(bestMove);
-        lastComputerMove = bestMove; 
-        board.position(game.fen());
-        renderMoveHistory(game.history());
-        updateScore(evaluateBoard(game));
-        $('#loading-bar').text('Your turn!') 
-      }, 250);
-    };
+		window.setTimeout(function () {
+			var bestMove = calculateBestMove(game);
+			game.ugly_move(bestMove);
+			lastComputerMove = bestMove;
+			board.position(game.fen());
+			renderMoveHistory(game.history());
+			updateScore(evaluateBoard(game));
+			
+			
+			function formatNumber(num) {
+				if (num < 1000) {
+					return num.toString(); 
+				} else if (num < 1000000) {
+					return (num / 1000).toFixed(1) + 'k'; 
+				} else if (num < 1000000000) {
+					return (num / 1000000).toFixed(1) + 'm';
+				} else {
+					return (num / 1000000000).toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + 'b'; 
+				}
+			}
+			
+			endTime = Date.now();
+			const elapsedTime = (endTime - startTime) / 1000;
+			$('#loading-bar').text(formatNumber(gamescomputed) + ' moves analyzed in ' + elapsedTime.toFixed(1) + 's. Your turn!');
+		}, 250);
+	};
 
     var addAllowedMoveHighlight = function (square) {
       const squareEl = $('#board .square-' + square);
@@ -198,11 +257,11 @@
       var moveHistoryElement = $('#move-history');
       moveHistoryElement.empty();
       for (var i = 0; i < moves.length; i = i + 2) {
-        moveHistoryElement.append('<span><b>' + (i/2 + 1) + '.</b> ' + moves[i] + ' ' + (moves[i + 1] ? moves[i + 1] : '') + '</span><br>')
+        moveHistoryElement.append('<span><b>' + (i/2 + 1) + '.</b> ' + moves[i] + ' ' + (moves[i + 1] ? moves[i + 1] : '') + '</span> ')
       }
       moveHistoryElement.scrollTop(moveHistoryElement[0].scrollHeight);
     };
-
+	
     var onDrop = function (source, target) {
       var move = game.move({
         from: source,
@@ -222,6 +281,9 @@
 			$('#score').text("Game over.");
 			$('#loading-bar').text(result);
 		} else {
+			$('#loading-bar').text('Computer is thinking...') 
+			gamescomputed = 0
+			startTime = Date.now();
 			makeBestMove();
 		}
 		updateScore(evaluateBoard(game));
@@ -232,7 +294,7 @@
     };
 
     var onSquareClick = function (square) {
-      // do nothing
+      
     };
 
     var onMouseoverSquare = function (square, piece) {
@@ -282,10 +344,10 @@
     };
     board = ChessBoard('board', cfg);
 
-    $('#loading-bar').text('Welcome! Click on a piece to see available moves.');
+    $('#loading-bar').text('Welcome.');
     board.position('start');
 
-    // Add event listener for clicking on pieces
+
     $('#board').on('click', '.piece', function () {
       const pieceSquare = $(this).parent().data('square');
       highlightAllowedMoves(pieceSquare);
