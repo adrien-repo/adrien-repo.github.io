@@ -178,7 +178,7 @@
         renderMoveHistory(game.history());
 		updateScore(evaluateBoard(game));
         $('#loading-bar').text('Your turn!') 
-      }, 250);
+      }, 500);
     };
 
     var addAllowedMoveHighlight = function (square) {
@@ -208,24 +208,30 @@
     };
 
     var onDrop = function (source, target) {
-      removeGreySquares();
-      var move = game.move({
-        from: source,
-        to: target,
-        promotion: 'q'
-      });
+		removeGreySquares();
+		var move = game.move({
+			from: source,
+			to: target,
+			promotion: 'q' // promote to queen
+		});
 
-      if (move === null) return 'snapback';
+		
+		if (move === null) return 'snapback';
 
-      renderMoveHistory(game.history());
-      updateScore(evaluateBoard(game));
+		renderMoveHistory(game.history());
+		updateScore(evaluateBoard(game));
 
-      if (game.game_over()) {
-        moveHistoryElement.append(' Game over.');
-      } else {
-        makeBestMove();
-      }
-    };
+		// Check for game over conditions after the player's move
+		if (game.game_over()) {
+			let result = game.in_checkmate() ? (game.turn() === 'w' ? "Black won." : "White won.") : "Game drawn";
+			$('#score').text("Game over.");
+			$('#loading-bar').text(result);
+		} else {
+			makeBestMove();
+		}
+		updateScore(evaluateBoard(game));
+	};
+
 
     var onSnapEnd = function () {
       board.position(game.fen());
