@@ -322,7 +322,6 @@
                 createTemperaturePrecipitationChart(weatherCtx, labels, temperatureData, precipitationData);
                 createWindUvChart(windUvCtx, labels, windSpeedData, uvIndexData);
 
-                // Prepare daily stats
                 const dailyStats = daily.time.map((date, index) => ({
                     date: new Date(date).toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' }), 
                     minTemp: daily.temperature_2m_min[index].toFixed(1),
