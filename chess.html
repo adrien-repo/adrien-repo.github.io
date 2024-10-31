@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,7 +134,22 @@
     var evaluateBoard = function (game) {
 	  var totalEvaluation = 0;
 
-
+		
+		
+		
+		if (game.game_over()) {
+			if (game.in_checkmate()) {
+			  return 10000000; 
+			} else {
+			  return -10000000; 
+			}
+		}
+		
+		
+		
+		
+		
+		
 	  for (var piece in pieceValues) {
 		var pieceCount = game.board().reduce((count, row) => {
 		  return count + row.reduce((count, square) => {
