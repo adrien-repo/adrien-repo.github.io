@@ -324,7 +324,7 @@
 
                 // Prepare daily stats
                 const dailyStats = daily.time.map((date, index) => ({
-                    date: new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }), 
+                    date: new Date(date).toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' }), 
                     minTemp: daily.temperature_2m_min[index].toFixed(1),
                     maxTemp: daily.temperature_2m_max[index].toFixed(1),
                     totalPrecip: daily.precipitation_sum[index].toFixed(1),
