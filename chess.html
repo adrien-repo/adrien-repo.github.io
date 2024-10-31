@@ -30,7 +30,6 @@
   <base href="https://chessboardjs.com/" />
 </head>
 <body translate="no">
-  
   <center>
     <br><h3 class="board">
       Chess Engine
@@ -48,10 +47,11 @@
   <script src='https://cdn.rawgit.com/lhartikk/simple-chess-ai/master/lib/js/chess.js'></script>
   <script src='https://chessboardjs.com/js/chessboard.js'></script>
   <script id="rendered-js">
-    var board,
-      game = new Chess();
+    
+	var board, game = new Chess();
     var lastComputerMove = null; 
-    var pieceValues = {
+    
+	var pieceValues = {
 	  'p': 100,
 	  'n': 300,
 	  'b': 300,
@@ -75,22 +75,22 @@
 	let startTime, endTime;
 	
     var calculateBestMove = function (game) {
-      var bestMove = null;
-      var bestValue = -Infinity;
-	  
-      for (var move of game.ugly_moves()) {
-        
-		game.ugly_move(move);
-        var boardValue = -minimax(game, 3, -Infinity, Infinity);
-        game.undo();
+		  var bestMove = null;
+		  var bestValue = -Infinity;
+		  
+		  for (var move of game.ugly_moves()) {
+			
+			game.ugly_move(move);
+			var boardValue = -minimax(game, 3, -Infinity, Infinity);
+			game.undo();
 
-        if (boardValue > bestValue) {
-          bestValue = boardValue;
-          bestMove = move;
-        }
-      }
-      return bestMove;
-    };
+			if (boardValue > bestValue) {
+			  bestValue = boardValue;
+			  bestMove = move;
+			}
+		  }
+		  return bestMove;
+		};
 
     var minimax = function (game, depth, alpha, beta) {
       if (depth === 0 || game.game_over()) {
@@ -152,7 +152,6 @@
 		totalEvaluation -= potentialLosses.length * (pieceValues[piece] / 2); 
 	  }
 
-
 	  game.board().forEach((row, rowIndex) => {
 		row.forEach((square, colIndex) => {
 		  const squareName = String.fromCharCode(97 + colIndex) + (8 - rowIndex);
@@ -163,6 +162,67 @@
 		  }
 		});
 	  });
+	  
+	  const centerSquares = ['d4', 'd5', 'e4', 'e5'];
+		centerSquares.forEach(squareName => {
+			const squarePiece = game.get(squareName);
+			if (squarePiece && squarePiece.color === 'w') {
+				totalEvaluation += 20; 
+			} else if (squarePiece && squarePiece.color === 'b') {
+				totalEvaluation -= 20; 
+			}
+		});
+	
+		var whiteKingSquare, blackKingSquare;
+
+		game.board().forEach((row, rowIndex) => {
+			row.forEach((square, colIndex) => {
+				if (square && square.type === 'k') { // 'k' for king
+					if (square.color === 'w') {
+						whiteKingSquare = String.fromCharCode(97 + colIndex) + (8 - rowIndex); // Convert to algebraic notation
+					} else {
+						blackKingSquare = String.fromCharCode(97 + colIndex) + (8 - rowIndex);
+					}
+				}
+			});
+		});
+	
+	
+		if (whiteKingSquare) {
+			const col = whiteKingSquare.charCodeAt(0) - 97; 
+			if (game.get(whiteKingSquare + 8) && game.get(whiteKingSquare + 8).type === 'p' && game.get(whiteKingSquare + 8).color === 'w') {
+				totalEvaluation += 50; 
+			}
+			if (game.get(whiteKingSquare - 8) && game.get(whiteKingSquare - 8).type === 'p' && game.get(whiteKingSquare - 8).color === 'w') {
+				totalEvaluation += 50; 
+			}
+			if (game.get(whiteKingSquare - 7) && game.get(whiteKingSquare - 7).type === 'p' && game.get(whiteKingSquare - 7).color === 'w') {
+				totalEvaluation += 30; 
+			}
+			if (game.get(whiteKingSquare + 7) && game.get(whiteKingSquare + 7).type === 'p' && game.get(whiteKingSquare + 7).color === 'w') {
+				totalEvaluation += 30; 
+			}
+			
+			totalEvaluation += (col === 3 || col === 4) ? 10 : 0; 
+		}
+
+		if (blackKingSquare) {
+			const col = blackKingSquare.charCodeAt(0) - 97; 
+			if (game.get(blackKingSquare + 8) && game.get(blackKingSquare + 8).type === 'p' && game.get(blackKingSquare + 8).color === 'b') {
+				totalEvaluation -= 50; 
+			}
+			if (game.get(blackKingSquare - 8) && game.get(blackKingSquare - 8).type === 'p' && game.get(blackKingSquare - 8).color === 'b') {
+				totalEvaluation -= 50; 
+			}
+			if (game.get(blackKingSquare - 7) && game.get(blackKingSquare - 7).type === 'p' && game.get(blackKingSquare - 7).color === 'b') {
+				totalEvaluation -= 30; 
+			}
+			if (game.get(blackKingSquare + 7) && game.get(blackKingSquare + 7).type === 'p' && game.get(blackKingSquare + 7).color === 'b') {
+				totalEvaluation -= 30; 
+			}
+
+			totalEvaluation -= (col === 3 || col === 4) ? 10 : 0; 
+		}
 
 	  updateScore(totalEvaluation);
 	  return totalEvaluation;
@@ -352,6 +412,7 @@
       const pieceSquare = $(this).parent().data('square');
       highlightAllowedMoves(pieceSquare);
     });
+	
   </script>
 </body>
 </html>
