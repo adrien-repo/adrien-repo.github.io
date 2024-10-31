@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,7 +135,18 @@
       whiteScore = (whiteScore / totalScore) * 100;
       blackScore = (blackScore / totalScore) * 100;
 
-      $('#score').text(`White: ${whiteScore.toFixed(1)}% | Black: ${blackScore.toFixed(1)}%`);
+     let scoreText;
+
+	  if (whiteScore > 50) {
+		scoreText = `Advantage White: ${whiteScore.toFixed(0)}%`;
+	  } else if (blackScore > 50) {
+		scoreText = `Advantage Black: ${blackScore.toFixed(0)}%`;
+	  } else {
+		scoreText = `Even: White ${whiteScore.toFixed(0)}% | Black ${blackScore.toFixed(0)}%`;
+	  }
+
+	  $('#score').text(scoreText);
+
     };
 
     var onDragStart = function (source, piece, position, orientation) {
@@ -164,7 +176,7 @@
         lastComputerMove = bestMove; 
         board.position(game.fen());
         renderMoveHistory(game.history());
-
+		updateScore(evaluateBoard(game));
         $('#loading-bar').text('Your turn!') 
       }, 250);
     };
