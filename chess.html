@@ -133,22 +133,22 @@
 
     var evaluateBoard = function (game) {
 	  var totalEvaluation = 0;
-
-		
-		
 		
 		if (game.game_over()) {
 			if (game.in_checkmate()) {
-			  return 10000000; 
-			} else {
-			  return -10000000; 
+			  if (game.turn() === 'w') {
+					
+					totalEvaluation += -1000000; 
+				} else {
+					
+					totalEvaluation += 1000000; 
+				} 
 			}
+			//if (game.in_stalemate()) {}
+			
 		}
 		
-		
-		
-		
-		
+
 		
 	  for (var piece in pieceValues) {
 		var pieceCount = game.board().reduce((count, row) => {
@@ -310,6 +310,14 @@
 			endTime = Date.now();
 			const elapsedTime = (endTime - startTime) / 1000;
 			$('#loading-bar').text(formatNumber(gamescomputed) + ' moves analyzed in ' + elapsedTime.toFixed(1) + 's. Your turn!');
+			
+			if (game.game_over()) {
+				let result = game.in_checkmate() ? (game.turn() === 'w' ? "Black won." : "White won.") : "Game drawn";
+				$('#score').text("Game over.");
+				$('#loading-bar').text(result);
+			}
+			
+			
 		}, 250);
 	};
 
