@@ -176,24 +176,15 @@
 	var onDragStart = function (source, piece, position, orientation) {
       if (game.in_checkmate() === true || game.in_draw() === true || piece.search(/^b/) !== -1) {return false; }
     };
-    var highlightAllowedMoves = function (piece) {
-      const moves = game.moves({
-        square: piece, verbose: true
-      });
-      for (let move of moves) {
-        addAllowedMoveHighlight(move.to);
-      }
-    };
-	// CORE
+    var highlightAllowedMoves = function (piece) { const moves = game.moves({square: piece, verbose: true }); for (let move of moves) { addAllowedMoveHighlight(move.to); } };
+    // CORE
     var makeBestMove = function () {
 		window.setTimeout(function () {
 			var bestMove = calculateBestMove(game);
 			game.ugly_move(bestMove);
 			lastComputerMove = bestMove;
 			board.position(game.fen());
-			
 			updateTakenPieces();
-			
 			function getCoordinate(y) {const x2 = ((y - 1) % 16 + 1) % 16; const x1 = 8 - Math.floor((y - x2) / 16); const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']; return `${columns[x2]}${x1}`; }
 			$('#board .highlighted-square').removeClass('highlighted-square');
 			$('#board .square-' + getCoordinate(bestMove.from)).addClass('highlighted-square'); $('#board .square-' + getCoordinate(bestMove.to)).addClass('highlighted-square');
