@@ -49,7 +49,7 @@
     </label><small><span id="sound-status" class="sound-off">Sound Off</span></small>
   </div>
   <big><div id="taken-pieces" class="move-history">Instructions</div></big>
-  <div id="move-history" class="move-history"><b>Calculations are client-side.</b> Moves take 15-30 seconds, longer for for high-entropy boards.<br><br><b>Click the speaker.</b> You will receive computer move alerts. If your browser shows a popup, wait.<br><br><b>The game allows no undo.</b> Once you move, it’s final. Engage with precision, and enjoy.</div>
+  <div id="move-history" class="move-history"><b>Calculations are client-side.</b> Moves take 15 to 30 seconds, longer for for high-entropy boards.<br><br><b>Click the speaker.</b> You will receive computer move alerts. If your browser shows a popup, wait.<br><br><b>The game allows no undo.</b> Once you move, it’s final. Engage with precision, and enjoy.</div>
     <script>
 	function playNotification() {const sound = document.getElementById('notificationSound'); sound.play().catch(error => { console.error('Error playing sound:', error); }); }
 	document.getElementById('mute').addEventListener('change', function() { var soundStatus = document.getElementById('sound-status'); if (this.checked) {soundStatus.textContent = 'Sound On';soundStatus.classList.remove('sound-off');soundStatus.classList.add('sound-on'); } else { soundStatus.textContent = 'Sound Off';soundStatus.classList.remove('sound-on');soundStatus.classList.add('sound-off'); }});
