@@ -31,32 +31,12 @@
 	.mute-label { cursor: pointer; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; background: transparent; border: none; transition: fill 0.3s; }
 	.speaker-icon { width: 100%; height: 100%; fill: lightgray; transition: fill 0.3s; }
 	.mute-button:checked + .mute-label .speaker-icon { fill: black; }
-	
 	.openingbook-on { color: black; }
-.openingbook-off { color: lightgray; }
-.openingbook { display: none; }
-.openingbook-label {
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent;
-    border: none;
-    transition: fill 0.3s;
-}
-.book-icon {
-    width: 100%;
-    height: 100%;
-    fill: lightgray;
-    transition: fill 0.3s;
-}
-.openingbook:checked + .openingbook-label .book-icon {
-    fill: black;
-}
-	
-	
+	.openingbook-off { color: lightgray; }
+	.openingbook { display: none; }
+	.openingbook-label { cursor: pointer; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; background: transparent; border: none; transition: fill 0.3s; }
+	.book-icon { width: 100%; height: 100%; fill: lightgray; transition: fill 0.3s; }
+	.openingbook:checked + .openingbook-label .book-icon { fill: black; }
 	@media (max-width: 600px) { .board, .info, #loading-bar, #score { width: 100%; margin: auto; padding: 0 10px; font-size: 14px; } 
   </style>
   <script>window.console = window.console || function (t) {};</script>
