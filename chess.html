@@ -123,8 +123,7 @@
 		const moves = game.history();
 		let totalBonus = 0;
 		for (const opening in openings) { const openingMoves = openings[opening]; const matchLength = getOpeningMatchLength(moves, openingMoves); totalBonus += matchLength; }
-		const randomMultiplier = Math.floor(Math.random() * 10) + 1; 
-    return totalBonus * randomMultiplier * 10;
+		const randomMultiplier = Math.floor(Math.random() * 10) + 1; return moves.length > 10 ? 0 : totalBonus * randomMultiplier * 10;
 	}
 	function getOpeningMatchLength(moves, openingMoves) {
 		let matchLength = 0;
