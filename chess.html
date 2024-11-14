@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -316,7 +315,7 @@
 			var opening = checkOpening(currentMoves);
 			let openingComment = '';
 			if (opening && !openingCommentAll.includes(opening)) {
-				openingComment = ` (${opening} opening)`;
+				openingComment = ` (${opening})`;
 				openingCommentAll.push(opening);
 				moveHistoryElement.append('<span><b>' + (i / 2 + 1) + '.</b> ' + moves[i] + ' ' + (moves[i + 1] ? moves[i + 1] : '') + openingComment + '</span> ');
 			} else {
