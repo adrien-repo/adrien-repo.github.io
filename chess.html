@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,14 +104,13 @@
     // OPENING BOOK
 	const openings = {"Ruy Lopez":["e4","e5","Nf3","Nc6","Bb5"],"Sicilian Defense":["e4","c5"],"Queen's Gambit":["d4","d5","c4"],"King's Indian Defense":["d4","Nf6","c4","g6"],"English Opening":["c4"],"French Defense":["e4","e6"],"Caro-Kann Defense":["e4","c6"],"Pirc Defense":["e4","d6","d4","Nf6"],"Alekhine Defense":["e4","Nf6"],"Scotch Game":["e4","e5","Nf3","Nc6","d4"],"Bishop's Opening":["e4","e5","Bc4"],"Italian Game":["e4","e5","Nf3","Nc6","Bc4"],"Petrov's Defense":["e4","e5","Nf3","Nf6"],"Dutch Defense":["d4","f5"],"Grünfeld Defense":["d4","Nf6","c4","g6"],"Benoni Defense":["d4","Nf6","c4","c5"],"Reti Opening":["Nf3","d5","c4"],"Nimzo-Indian Defense":["d4","Nf6","c4","e6","Nf3","Bb4"],"King's Gambit":["e4","e5","f4"],"Smith-Morra Gambit":["e4","c5","d4","cxd4","c3"],"London System":["d4","Nf6","Nf3","d5","Bf4"],"Tarrasch Defense":["d4","d5","c4","e6","Nc3","c5"],"Vienna Game":["e4","e5","Nc3"],"Fianchetto Variation":["d4","Nf6","g3"],"Karpov's Variation (Queen's Gambit Declined)":["d4","d5","c4","e6","Nc3","Be7"],"Slav Defense":["d4","d5","c4","c6"],"Caro-Kann Advance Variation":["e4","c6","e5"],"Modern Defense":["e4","g6"],"Symmetrical Variation":["e4","e5","Nf3","Nf6"],"Marshall Attack":["e4","e5","Nf3","Nc6","Bb5","a6","Bxc6"],"Engage Variation":["e4","e5","Nf3","Nc6","d4"],"Fried Liver Attack":["e4","e5","Nf3","Nc6","Bc4","Nf6","Ng5"],"Leningrad Dutch":["d4","f5","Nf3","Nf6","g3"],"Hedgehog System":["e4","c5","Nf3","e6","c4","a6"],"Albin Counter-Gambit":["d4","d5","c4","e5"],"Grünfeld Exchange":["d4","Nf6","c4","g6","Nc3","d5"],"Tartakower Variation":["e4","e5","Nf3","Nc6","Bb5","d6"],"English Opening: Reversed Sicilian":["c4","e5"],"King's Indian Attack":["Nf3","d6","g3","Nf6","Bg2"],"Pirc Attack":["e4","d6","d4","Nf6","Nc3","g6"],"Modern Steinitz Variation":["e4","e5","Nf3","Nc6","Bb5","a6"],"Sicilian: Dragon Variation":["e4","c5","Nf3","d6","d4","cxd4","Nxd4","Nf6","Nc3","g6"],"Boden-Kieseritzky Gambit":["e4","e5","Bc4","Bc5","Qh5"],"Blackburne Shilling Gambit":["e4","e5","Nf3","Nc6","Bc4","d6"],"Sicilian: Najdorf Variation":["e4","c5","Nf3","d6","d4","cxd4","Nxd4","Nf6","Nc3","a6"],"Sicilian: Scheveningen Variation":["e4","c5","Nf3","d6","d4","cxd4","Nxd4","Nf6","Nc3","a6"],"Caro-Kann Classical Variation":["e4","c6","Nc3","d5"],"Indian Game":["d4","Nf6"],"Petrov's Defense: Classical Variation":["e4","e5","Nf3","Nf6","Nxe5"],"King's Gambit: Accepted":["e4","e5","f4","exf4"],"Giuoco Piano":["e4","e5","Nf3","Nc6","Bc4","Bc5"],"Ruy Lopez: Berlin Defense":["e4","e5","Nf3","Nc6","Bb5","Nf6"],"Ruy Lopez: Open Spanish":["e4","e5","Nf3","Nc6","Bb5","a6","Ba4","Nf6","O-O","Be7"],"Sicilian: Accelerated Dragon":["e4","c5","Nf3","g6"],"Pirc: Classical System":["e4","d6","d4","Nf6","Nc3","g6"],"Caro-Kann: Advance Variation":["e4","c6","e5"],"Sicilian: Alapin Variation":["e4","c5","c3"],"French: Advance Variation":["e4","e6","d4","d5","e5"],"Sicilian: Hedgehog System":["e4","c5","Nf3","e6","c4","a6"],"Fianchetto Variation: King's Indian Defense":["d4","Nf6","g3","g6"],"Tarrasch Variation":["e4","e5","Nf3","Nc6","Bb5","d5"],"Indian Defense: Fianchetto Variation":["d4","Nf6","g3"],"Queen's Gambit Accepted":["d4","d5","c4","dxc4"],"English Opening: King's English":["c4","e5"],"Modern Benoni":["d4","Nf6","c4","c5","d5"],"Caro-Kann: Exchange Variation":["e4","c6","exd5","cxd5"],"Scotch Gambit":["e4","e5","Nf3","Nc6","d4","exd4","Bf4"],"Hippopotamus Defense":["e4","g6","d3","Bg7"],"Ruy Lopez: Steinitz Defense":["e4","e5","Nf3","Nc6","Bb5","d6"],"Danish Gambit":["e4","e5","d4","exd4","c3"],"Engage Variation: Petrov Defense":["e4","e5","Nf3","Nf6","Nxe5"],"Queen's Gambit Declined":["d4","d5","c4","e6"],"Grünfeld Defense: Russian System":["d4","Nf6","c4","g6","Nc3","d5"],"Vienna Gambit":["e4","e5","Nc3","f5"],"King's Indian Defense: Four Pawns Attack":["d4","Nf6","c4","g6","Nc3","Bg7","e4"],"Italian Game: Two Knights Defense":["e4","e5","Nf3","Nc6","Bc4","Nf6"],"Queen's Gambit Declined: Exchange Variation":["d4","d5","c4","e6","cxd5"],"Sicilian Defense: Kan Variation":["e4","c5","Nf3","e6","c4"],"Ruy Lopez: Berlin Wall":["e4","e5","Nf3","Nc6","Bb5","Nf6"],"Dutch: Stonewall":["d4","f5","e3","Nf6","f4"],"Pirc Defense: Modern System":["e4","d6","d4","Nf6","Nc3","g6"],"Queen's Gambit: Classical":["d4","d5","c4","e6","Nc3","Be7"]};
 	// MIN MAX CALCULATION
-	var calculateBestMove = function (game) {
+	// legacy calculateBestMove (not used)
+	var calculateBestMove_deprecated = function (game) {
 		var bestMove = null;
 		var bestValue = -Infinity;
 		for (var move of game.ugly_moves()) {
 			game.ugly_move(move);
-			const openingBonus = getOpeningBonus(game);
-			let useopeningbook = 0; const openingbookCheckbox = document.getElementById('openingbookusage'); if (openingbookCheckbox.checked) { useopeningbook = 1 }
-			const boardValue = -minimax(game, 3, -Infinity, Infinity) + openingBonus*useopeningbook;
+			const boardValue = -minimax(game, 3, -Infinity, Infinity)
 			game.undo();
 			if (boardValue > bestValue) {
 				bestValue = boardValue;
@@ -119,17 +119,68 @@
 		}
 		return bestMove;
 	};
-	function getOpeningBonus(game) {
-		const moves = game.history();
-		let totalBonus = 0;
-		for (const opening in openings) { const openingMoves = openings[opening]; const matchLength = getOpeningMatchLength(moves, openingMoves); totalBonus += matchLength; }
-		const randomMultiplier = Math.floor(Math.random() * 10) + 1; return moves.length > 10 ? 0 : totalBonus * randomMultiplier * 10;
+	// new calculateBestMove (in use)
+	var calculateBestMove = function (game) {
+		var bestMove = null;
+		var bestValue = -Infinity;
+		var possibleOpeningMoves = [];
+		let useopeningbook = 0; const openingbookCheckbox = document.getElementById('openingbookusage'); if (openingbookCheckbox.checked) { useopeningbook = 1 }
+		if (useopeningbook == 0) {
+			for (var move of game.ugly_moves()) {
+					game.ugly_move(move);
+					const boardValue = -minimax(game, 3, -Infinity, Infinity)
+					game.undo();
+					if (boardValue > bestValue) {
+						bestValue = boardValue;
+						bestMove = move;
+					}
+				}
+			return bestMove;
+		} else {
+			const history = game.history();
+			console.log("Game history:", history);
+			for (var move of game.ugly_moves()) {
+				game.ugly_move(move);
+				for (const opening of Object.values(openings)) {
+					if (opening.length > history.length) {
+						const partialOpening = opening.slice(0, history.length + 1);
+						if (arraysEqual(partialOpening, game.history())) {
+							console.log("Move matches an opening sequence:", move);
+							gamescomputed += 1;
+							possibleOpeningMoves.push(move);
+							//break; // would stop checking other openings once a match is found
+						}
+					}
+				}
+				game.undo();
+			}
+			console.log("Possible opening moves:", possibleOpeningMoves);
+			if (possibleOpeningMoves.length > 0) {
+				bestMove = possibleOpeningMoves[Math.floor(Math.random() * possibleOpeningMoves.length)];
+				console.log("Selected random move from opening:", bestMove);
+			} else {
+				for (var move of game.ugly_moves()) {
+					game.ugly_move(move);
+					const boardValue = -minimax(game, 3, -Infinity, Infinity);
+					game.undo();
+					if (boardValue > bestValue) {
+						bestValue = boardValue;
+						bestMove = move;
+					}
+				}
+				console.log("Board evaluation (no opening match): Best move:", bestMove, "with value:", bestValue);
+			}
+			return bestMove;
+		}
+	};
+	function arraysEqual(arr1, arr2) {
+		if (arr1.length !== arr2.length) return false;
+		for (let i = 0; i < arr1.length; i++) {
+			if (arr1[i] !== arr2[i]) return false;
+		}
+		return true;
 	}
-	function getOpeningMatchLength(moves, openingMoves) {
-		let matchLength = 0;
-		for (let i = 0; i < openingMoves.length; i++) { if (moves[i] === openingMoves[i]) { matchLength++; } else { break; } }
-		return matchLength;
-	}
+	// minmax function
 	var minimax = function (game, depth, alpha, beta) {
 		if (depth === 0 || game.game_over()) { gamescomputed += 1; return evaluateBoard(game); }
 		var moves = game.ugly_moves();
@@ -247,31 +298,33 @@
 	var renderMoveHistory = function (moves) {
 		var moveHistoryElement = $('#move-history');
 		moveHistoryElement.empty();
-			function checkOpening(moves) {
-				for (const opening in openings) {
-					if (moves.slice(0, openings[opening].length).join() === openings[opening].join()) {
-						return opening;
-					}
+		function checkOpening(moves) {
+			for (const opening in openings) {
+				if (moves.join() === openings[opening].join()) {
+					return opening;
 				}
-				return null;
 			}
-			const currentMoves = [];
-			let openingCommentAdded = false;  
-			for (var i = 0; i < moves.length; i = i + 2) {
-				currentMoves.push(moves[i]);
-				if (moves[i + 1]) {
-					currentMoves.push(moves[i + 1]);
-				}
-				const opening = checkOpening(currentMoves);
-				let openingComment = '';
-				if (opening && !openingCommentAdded) {  
-					openingComment = ` (${opening} opening)`;
-					openingCommentAdded = true;  
-				}
+			return null;
+		}
+		const currentMoves = [];
+		var openingCommentAll = [];
+		for (var i = 0; i < moves.length; i = i + 2) {
+			currentMoves.push(moves[i]);
+			if (moves[i + 1]) {
+				currentMoves.push(moves[i + 1]);
+			}
+			var opening = checkOpening(currentMoves);
+			let openingComment = '';
+			if (opening && !openingCommentAll.includes(opening)) {
+				openingComment = ` (${opening} opening)`;
+				openingCommentAll.push(opening);
 				moveHistoryElement.append('<span><b>' + (i / 2 + 1) + '.</b> ' + moves[i] + ' ' + (moves[i + 1] ? moves[i + 1] : '') + openingComment + '</span> ');
+			} else {
+				moveHistoryElement.append('<span><b>' + (i / 2 + 1) + '.</b> ' + moves[i] + ' ' + (moves[i + 1] ? moves[i + 1] : '') + '</span> ');
 			}
-			moveHistoryElement.scrollTop(moveHistoryElement[0].scrollHeight);
-		};
+		}
+		moveHistoryElement.scrollTop(moveHistoryElement[0].scrollHeight);
+	};
     var onDrop = function (source, target) {
       var move = game.move({ from: source, to: target, promotion: 'q' });
       $('#board .highlighted-square').removeClass('highlighted-square');
