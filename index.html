@@ -503,7 +503,7 @@
     </center>
     <script>
         function showSection(sectionId) { document.querySelectorAll('.container').forEach(section => section.classList.remove('visible')); document.getElementById(sectionId).classList.add('visible'); } document.addEventListener("DOMContentLoaded", () => { showSection('welcome'); document.querySelectorAll('a.nav-link').forEach(anchor => { anchor.addEventListener('click', (event) => { event.preventDefault(); const sectionId = anchor.getAttribute('data-section'); if (sectionId) { showSection(sectionId); } }); }); });
-	document.addEventListener("DOMContentLoaded", () => document.querySelectorAll('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', event => { event.preventDefault(); const targetElement = document.getElementById(anchor.getAttribute('href').substring(1)); if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); window.history.replaceState(null, null, window.location.origin); })));
+	    document.addEventListener("DOMContentLoaded", () => document.querySelectorAll('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', event => { event.preventDefault(); const targetElement = document.getElementById(anchor.getAttribute('href').substring(1)); if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); window.history.replaceState(null, null, window.location.origin); })));
     </script>
 </body>
 </html>
