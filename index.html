@@ -18,7 +18,9 @@
 		.visible { display: block; } .left { text-align: left; } .right { text-align: right; }
 		a:link, a:visited, a:hover, a:active { color: blue; }
         #scrollToTopBtn { position: fixed; bottom: 20px; right: 20px; background-color: #d9d9d9; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; display: none; } #scrollToTopBtn:hover { background-color: blue; }
-    </style>
+		.nav-links { white-space: nowrap; }
+		@media (max-width: 768px) { .nav-links a:nth-child(3)::after { content: ""; display: block;  margin-top: 5px;  } #separatorlargescreen { display: none; } .nav-links a:nth-child(4)::before, .nav-links a:nth-child(5)::before, .nav-links a:nth-child(6)::before { content: ""; } }
+	</style>
 </head>
 <body>
     <button id="scrollToTopBtn">Top</button>
@@ -31,14 +33,14 @@
         <div class="feed">
             <div class="topsection">
 				<h1>Adrien Lafeuille</h1>
-                <p>
-                    <a href="#" class="nav-link" data-section="welcome">Welcome</a> | 
-                    <a href="#" class="nav-link" data-section="aboutme">About me</a> | 
-                    <a href="#" class="nav-link" data-section="places">Places</a> | 
-                    <a href="#" class="nav-link" data-section="reads">Reads</a> | 
-                    <a href="#" class="nav-link" data-section="links">Links</a> | 
-                    <a href="#" class="nav-link" data-section="tools">Tools</a>
-                </p>
+                <p class="nav-links">
+				<a href="#" class="nav-link" data-section="welcome">Welcome</a> | 
+				<a href="#" class="nav-link" data-section="aboutme">About me</a> | 
+				<a href="#" class="nav-link" data-section="places">Places</a><span id="separatorlargescreen"> |</span> 
+				<a href="#" class="nav-link" data-section="reads">Reads</a> | 
+				<a href="#" class="nav-link" data-section="links">Links</a> | 
+				<a href="#" class="nav-link" data-section="tools">Tools</a>
+			</p>
             </div>
             <div class="container" id="welcome">
                 <h2>Welcome</h2>
@@ -46,7 +48,6 @@
 					I manage investment strategies and conduct research for family offices. I took detours across few continents into commodity trading, NGOs, government and military roles. 
                     <br>I am into chess, coding, astronomy, and music. I am an engineer and geographer by training, and use the Internet to dive into books, documentaries, and online courses. Free knowledge, late-night math? Count me in. 
 				</p>
-                
                 <h3> </h3>
                 <p style="text-align: justify;">
                     Collaboration, idea-sharing, and casual conversation can begin here:
@@ -503,7 +504,7 @@
     </center>
     <script>
         function showSection(sectionId) { document.querySelectorAll('.container').forEach(section => section.classList.remove('visible')); document.getElementById(sectionId).classList.add('visible'); } document.addEventListener("DOMContentLoaded", () => { showSection('welcome'); document.querySelectorAll('a.nav-link').forEach(anchor => { anchor.addEventListener('click', (event) => { event.preventDefault(); const sectionId = anchor.getAttribute('data-section'); if (sectionId) { showSection(sectionId); } }); }); });
-	    document.addEventListener("DOMContentLoaded", () => document.querySelectorAll('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', event => { event.preventDefault(); const targetElement = document.getElementById(anchor.getAttribute('href').substring(1)); if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); window.history.replaceState(null, null, window.location.origin); })));
-    </script>
+		document.addEventListener("DOMContentLoaded", () => document.querySelectorAll('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', event => { event.preventDefault(); const targetElement = document.getElementById(anchor.getAttribute('href').substring(1)); if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); window.history.replaceState(null, null, window.location.origin); })));
+	</script>
 </body>
 </html>
