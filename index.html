@@ -13,7 +13,9 @@
 		html {overflow-y: scroll;} body { font-family: Roboto, sans-serif; line-height: 1.7; }
 		.feed { margin: 0px; border: 0.1em solid white; border-radius: 0.5em; } @media only screen and (min-width: 850px) { .feed { width: 800px; } } @media only screen and (min-width: 320px) and (max-width: 849px) { .feed { width: 92vw; } }
 		.topsection { text-align: left; margin: 10px; } .bottomsection { text-align: left; margin: 10px; }
-		.container { text-align: left; margin: 10px; display: none; } .title-container { display: flex; justify-content: space-between; width: 100%; }
+		.container { text-align: left; margin: 10px; display: none; } 
+		.title-container { display: flex; justify-content: space-between; width: 100%;}
+		.hoverblock { background-color: transparent;transition: background-color 0.3s ease;} .hoverblock:hover { background-color: #f7f7f7;  }
 		.visible { display: block; } .left { text-align: left; } .right { text-align: right; }
 		a:link, a:visited, a:hover, a:active { color: blue; }
         #scrollToTopBtn { position: fixed; bottom: 20px; right: 20px; background-color: #d9d9d9; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; display: none; } #scrollToTopBtn:hover { background-color: blue; }
@@ -78,74 +80,111 @@
                 </p>
 				<h3 id="Experience">Experience</h3>
 				<p>
-					<span class="title-container"><span class="left"><b>ARAMID CAPITAL</b> <a href="https://aramid.ae/" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Dubai</span></span>
-					<span class="title-container"><span class="left"><i>Portfolio Manager</i></span><span class="right">2024 &minus; Present</span></span>
-					<span class="title-container"><span class="left"><b>UPFRONT RESEARCH</b></span><span class="right">Switzerland</span></span>
-					<span class="title-container"><span class="left"><i>Founder</i></span><span class="right">2023 &minus; 2024</span></span>
-					<span class="title-container"><span class="left"><b>DIAMOND CAPITAL f.k.a. NUTRIMENTA FINANCE &amp; INVESTMENTS</b> <a href="https://www.diamondcapital.net/" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Switzerland</span></span>
-					<span class="title-container"><span class="left"><i>Financial Analyst, Director, Portfolio Manager</i></span><span class="right">2012 &minus; 2023</span></span>
-					<span class="title-container"><span class="left"><b>NOBLE GROUP</b> <a href="https://www.thisisnoble.com/" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Switzerland, United States, Singapore</span></span>
-					<span class="title-container"><span class="left"><i>Commodities Analyst</i></span><span class="right">2010 &minus; 2012</span></span>
-					<span class="title-container"><span class="left"><b>DIRECTORATE OF MILITARY INTELLIGENCE</b> <a href="https://www.defense.gouv.fr/drm" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">France</span></span>
-					<span class="title-container"><span class="left"><i>Intelligence Analyst</i></span><span class="right">2009 &minus; 2010</span></span>
-					<span class="title-container"><span class="left"><b>AGENCY FOR TECHNICAL COOPERATION AND DEVELOPMENT</b> <a href="https://www.acted.org/en/" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Chad, Jordan, Iraq</span></span>
-					<span class="title-container"><span class="left"><i>Project Manager, Reporting Officer, Finance Manager, Area Coordinator</i></span><span class="right">2007 &minus; 2009</span></span>
+					<div class="hoverblock">
+						<span class="title-container"><span class="left"><b>ARAMID CAPITAL</b> <a href="https://aramid.ae/" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Dubai</span></span>
+						<span class="title-container"><span class="left"><i>Portfolio Manager</i></span><span class="right">2024 &minus; Present</span></span>
+					</div>
+					<div class="hoverblock">
+						<span class="title-container"><span class="left"><b>UPFRONT RESEARCH</b></span><span class="right">Switzerland</span></span>
+						<span class="title-container"><span class="left"><i>Founder</i></span><span class="right">2023 &minus; 2024</span></span>
+					</div>
+					<div class="hoverblock">
+						<span class="title-container"><span class="left"><b>DIAMOND CAPITAL f.k.a. NUTRIMENTA FINANCE &amp; INVESTMENTS</b> <a href="https://www.diamondcapital.net/" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Switzerland</span></span>
+						<span class="title-container"><span class="left"><i>Financial Analyst, Director, Portfolio Manager</i></span><span class="right">2012 &minus; 2023</span></span>
+					</div>
+					<div class="hoverblock">
+						<span class="title-container"><span class="left"><b>NOBLE GROUP</b> <a href="https://www.thisisnoble.com/" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Switzerland, United States, Singapore</span></span>
+						<span class="title-container"><span class="left"><i>Commodities Analyst</i></span><span class="right">2010 &minus; 2012</span></span>
+					</div>
+					<div class="hoverblock">
+						<span class="title-container"><span class="left"><b>DIRECTORATE OF MILITARY INTELLIGENCE</b> <a href="https://www.defense.gouv.fr/drm" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">France</span></span>
+						<span class="title-container"><span class="left"><i>Intelligence Analyst</i></span><span class="right">2009 &minus; 2010</span></span>
+					</div>
+					<div class="hoverblock">
+						<span class="title-container"><span class="left"><b>AGENCY FOR TECHNICAL COOPERATION AND DEVELOPMENT</b> <a href="https://www.acted.org/en/" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Chad, Jordan, Iraq</span></span>
+						<span class="title-container"><span class="left"><i>Project Manager, Reporting Officer, Finance Manager, Area Coordinator</i></span><span class="right">2007 &minus; 2009</span></span>
+					</div>
 				</p>
 				<h3 id="Education">Education</h3>
 				<p>
-					<span class="title-container"><span class="left"><b>ECOLE NORMALE SUPERIEURE ULM</b> <a href="https://www.ens.psl.eu/en" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Paris, France</span></span>
-					<span class="title-container"><span class="left"><i>Master&rsquo;s Degree in Geopolitics (Magna Cum Laude)</i></span><span class="right">2009 &minus; 2010</span></span>
-					<span class="title-container"><span class="left"><b>UNIVERSITE PARIS 1 PANTHEON-SORBONNE</b> <a href="https://welcome.pantheonsorbonne.fr/en" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Paris, France</span></span>
-					<span class="title-container"><span class="left"><i>Master&rsquo;s Degree in Geography (Magna Cum Laude)</i></span><span class="right">2009 &minus; 2010</span></span>
-					<span class="title-container"><span class="left"><b>ECOLE NATIONALE SUPERIEURE DES MINES</b> <a href="https://imt-nord-europe.fr/en/" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Douai, France</span></span>
-					<span class="title-container"><span class="left"><i>Generalist Engineer Master&rsquo;s Degree, Mathematics and Physics Majors</i></span><span class="right">2003 &minus; 2007</span></span>
-					<span class="title-container"><span class="left"><b>LYCEE CAMILLE JULLIAN</b></span><span class="right">Bordeaux, France</span></span>
-					<span class="title-container"><span class="left"><i>Higher School Preparatory Classes, Advanced Mathematics, Physics, and Engineering</i></span><span class="right">2002 &minus; 2003</span></span>
-					<span class="title-container"><span class="left"><i>French Baccalaureat, Scientific Stream, Mathematics Specialty (High Honors)</i></span><span class="right">2002</span></span>
+					<div class="hoverblock">
+						<span class="title-container"><span class="left"><b>ECOLE NORMALE SUPERIEURE ULM</b> <a href="https://www.ens.psl.eu/en" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Paris, France</span></span>
+						<span class="title-container"><span class="left"><i>Master&rsquo;s Degree in Geopolitics (Magna Cum Laude)</i></span><span class="right">2009 &minus; 2010</span></span>
+					</div>
+					<div class="hoverblock">
+						<span class="title-container"><span class="left"><b>UNIVERSITE PARIS 1 PANTHEON-SORBONNE</b> <a href="https://welcome.pantheonsorbonne.fr/en" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Paris, France</span></span>
+						<span class="title-container"><span class="left"><i>Master&rsquo;s Degree in Geography (Magna Cum Laude)</i></span><span class="right">2009 &minus; 2010</span></span>
+					</div>
+					<div class="hoverblock">
+						<span class="title-container"><span class="left"><b>ECOLE NATIONALE SUPERIEURE DES MINES</b> <a href="https://imt-nord-europe.fr/en/" target="_blank"><img height="16" width="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Douai, France</span></span>
+						<span class="title-container"><span class="left"><i>Generalist Engineer Master&rsquo;s Degree, Mathematics and Physics Majors</i></span><span class="right">2003 &minus; 2007</span></span>
+					</div>
+					<div class="hoverblock">
+						<span class="title-container"><span class="left"><b>LYCEE CAMILLE JULLIAN</b></span><span class="right">Bordeaux, France</span></span>
+						<span class="title-container"><span class="left"><i>Higher School Preparatory Classes, Advanced Mathematics, Physics, and Engineering</i></span><span class="right">2002 &minus; 2003</span></span>
+						<span class="title-container"><span class="left"><i>French Baccalaureat, Scientific Stream, Mathematics Specialty (High Honors)</i></span><span class="right">2002</span></span>
+					</div>
 				</p>
 				<h3 id="Skills">Skills</h3>
 					<p>
 						<b>Programming</b>
-						<br>Development: Python, R, SQL, JavaScript, HTML/CSS.
-						<br>Research: Jupyter Notebook, Advanced Excel/VBA, Bloomberg/BQL.
-						<br>Utilities: AWS (EC2/S3), PowerShell, ArcGIS.
+						<div class="hoverblock">Development: Python, R, SQL, JavaScript, HTML/CSS.</div>
+						<div class="hoverblock">Research: Jupyter Notebook, Advanced Excel/VBA, Bloomberg/BQL.</div>
+						<div class="hoverblock">Utilities: AWS (EC2/S3), PowerShell, ArcGIS.</div>
 					</p>
 					<p>
 						<b>Languages</b>
-						<br>French: Native.
-						<br>English: Fluent.
+						<div class="hoverblock">French: Native.</div>
+						<div class="hoverblock">English: Fluent.</div>
 					</p>
 				<h3 id="Accreditations">Accreditations</h3>
 					<p>
-						<span class="title-container"><span class="left"><b>UNIVERSITY OF SYDNEY, SCHOOL OF PHYSICS</b> <a href="https://www.sydney.edu.au/science/schools/school-of-physics.html" target="_blank"><img height="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Australia</span></span>
-						<span class="title-container"><span class="left"><i>Data-driven Astronomy</i></span><span class="right">2024</span></span>
-						<span class="title-container"><span class="left"><b>WEST VIRGINIA UNIVERSITY, COLLEGE OF BUSINESS AND ECONOMICS</b> <a href="https://business.wvu.edu/" target="_blank"><img height="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">United States</span></span>
-						<span class="title-container"><span class="left"><i>Forensic Accounting and Fraud Examination</i></span><span class="right">2023</span></span>
-						<span class="title-container"><span class="left"><b>SWISS ROMANDE ASSOCIATION OF FINANCIAL INTERMEDIARIES</b> <a href="https://arif.ch/en/oar-arif/qui-sommes-nous/" target="_blank"><img height="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Switzerland</span></span>
-						<span class="title-container"><span class="left"><i>Swiss Financial Market Supervisory Authority, Anti-Money Laundering</i></span><span class="right">2023</span></span>
-						<span class="title-container"><span class="left"><i>Swiss Financial Market Supervisory Authority, Code of Conduct</i></span><span class="right">2023</span></span>
-						<span class="title-container"><span class="left"><b>SWISS ASSOCIATION OF WEALTH MANAGERS</b> <a href="https://www.vsv-asg.ch/en/verband/ueber-uns" target="_blank"><img height="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Switzerland</span></span>
-						<span class="title-container"><span class="left"><i>Swiss Federal Act on Financial Services</i></span><span class="right">2021</span></span>
-						<span class="title-container"><span class="left"><i>Swiss Federal Act on Financial Institutions</i></span><span class="right">2021</span></span>
+						<div class="hoverblock">
+							<span class="title-container"><span class="left"><b>UNIVERSITY OF SYDNEY, SCHOOL OF PHYSICS</b> <a href="https://www.sydney.edu.au/science/schools/school-of-physics.html" target="_blank"><img height="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Australia</span></span>
+							<span class="title-container"><span class="left"><i>Data-driven Astronomy</i></span><span class="right">2024</span></span>
+						</div>
+						<div class="hoverblock">
+							<span class="title-container"><span class="left"><b>WEST VIRGINIA UNIVERSITY, COLLEGE OF BUSINESS AND ECONOMICS</b> <a href="https://business.wvu.edu/" target="_blank"><img height="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">United States</span></span>
+							<span class="title-container"><span class="left"><i>Forensic Accounting and Fraud Examination</i></span><span class="right">2023</span></span>
+						</div>
+						<div class="hoverblock">
+							<span class="title-container"><span class="left"><b>SWISS ROMANDE ASSOCIATION OF FINANCIAL INTERMEDIARIES</b> <a href="https://arif.ch/en/oar-arif/qui-sommes-nous/" target="_blank"><img height="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Switzerland</span></span>
+							<span class="title-container"><span class="left"><i>Swiss Financial Market Supervisory Authority, Anti-Money Laundering</i></span><span class="right">2023</span></span>
+							<span class="title-container"><span class="left"><i>Swiss Financial Market Supervisory Authority, Code of Conduct</i></span><span class="right">2023</span></span>
+						</div>
+						<div class="hoverblock">
+							<span class="title-container"><span class="left"><b>SWISS ASSOCIATION OF WEALTH MANAGERS</b> <a href="https://www.vsv-asg.ch/en/verband/ueber-uns" target="_blank"><img height="16" alt="" src="data:image/png;base64,UklGRpQBAABXRUJQVlA4WAoAAAAQAAAAHwAAHwAAQUxQSEcBAAABkBtt/9s27w+/PyXZqFKpUkNgC3UcwIGh5wQaAL2tTnc5zaItdIQObJ3xOQB/wKmPiAngb7TByYxBi/IQ3D0kYFiR9RLrDJpx+LjbNu3u+cN7bMCo6vOrq+uzI2Yca/BDhvU4G/XfMiOcPNycPumLnvM+p5LUNs22neMGMP8qaZf1BWppmZZZ8RIDO2AtfX1SG3GuNuXXBAgs1Gl+qmbAuVJTkpgZEFio05obbeNyjF8DC3VawIN2RVTWl7BQpwUHnOjRJnBeqdOCYITjQ4wxxsuP0oIABhijMN59fEUAfDYzJuElCWDAJJjhQML85ohkCjDAeNnqjDDNr0ax1TUelY/JGl2NKEksMqGMCpyrTRmZtjonDNXSMi3zbDAv06VUDzmVpLaJbiVVeB/ORhNucIaNqj6/ij6vK4xYZ0In3kPw6BCc/yUAVlA4ICYAAADQAgCdASogACAAPpFEnUqlo6KhqAgAsBIJaQAAPaOgAP74zxrAAA==" ></a></span><span class="right">Switzerland</span></span>
+							<span class="title-container"><span class="left"><i>Swiss Federal Act on Financial Services</i></span><span class="right">2021</span></span>
+							<span class="title-container"><span class="left"><i>Swiss Federal Act on Financial Institutions</i></span><span class="right">2021</span></span>
+						</div>
 					</p>
 				<h3 id="Background">Background</h3>
 					<p>
 						<b>Personal</b>
-						<br>Profile: 39 years old, married, father of one.
-						<br>Citizenship: Dual citizen of France and Switzerland.
-						<br>Interests: Chess, Astronomy, Books, Music.
+						<div class="hoverblock">Profile: <span id="myage"></span> years old, married, father of one.</div>
+						<div class="hoverblock">Citizenship: Dual citizen of France and Switzerland.</div>
+						<div class="hoverblock">Interests: Chess, Astronomy, Books, Music.</div>
 					</p>
 					<p>
 						<b>Community</b>
+						<div class="hoverblock">
 						<span class="title-container"><span class="left"><i>Member</i>, Lake Geneva Steamboats Friends Association</span><span class="right">2019 &minus; Present</span></span>
+						</div>
+						<div class="hoverblock">
 						<span class="title-container"><span class="left"><i>Member</i>, Agency for Technical Cooperation and Development</span><span class="right">2009 &minus; Present</span></span>
+						</div>
+						<div class="hoverblock">
 						<span class="title-container"><span class="left"><i>Treasurer</i>, ENS Ulm Geopolitics Symposium</span><span class="right">2009 &minus; 2010</span></span>
+						</div>
+						<div class="hoverblock">
 						<span class="title-container"><span class="left"><i>President</i>, ENSM Gala and Charity Evening</span><span class="right">2004 &minus; 2006</span></span>
+						</div>
+						<div class="hoverblock">
 						<span class="title-container"><span class="left"><i>President</i>, Correctional Facility Teaching Association</span><span class="right">2003 &minus; 2006</span></span>
+						</div>
 					</p>
 				<br>
 				<p>Last updated on October 2024.</p>
-				
 			</div>
             <div class="container" id="places">
 				<h2>Places</h2>
@@ -504,6 +543,7 @@
     <script>
         function showSection(sectionId) { document.querySelectorAll('.container').forEach(section => section.classList.remove('visible')); document.getElementById(sectionId).classList.add('visible'); } document.addEventListener("DOMContentLoaded", () => { showSection('welcome'); document.querySelectorAll('a.nav-link').forEach(anchor => { anchor.addEventListener('click', (event) => { event.preventDefault(); const sectionId = anchor.getAttribute('data-section'); if (sectionId) { showSection(sectionId); } }); }); });
 		document.addEventListener("DOMContentLoaded", () => document.querySelectorAll('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', event => { event.preventDefault(); const targetElement = document.getElementById(anchor.getAttribute('href').substring(1)); if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); window.history.replaceState(null, null, window.location.origin); })));
+		const birthDate = new Date('1985-08-24'); const today = new Date(); let age = today.getFullYear() - birthDate.getFullYear(); const monthDifference = today.getMonth() - birthDate.getMonth(); if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) { age--;  }; document.getElementById('myage').innerHTML = `${age}`;
 	</script>
 </body>
 </html>
