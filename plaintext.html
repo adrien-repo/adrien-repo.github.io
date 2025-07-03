@@ -20,11 +20,11 @@
         .editor-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; }
         .editor { flex: 1; background-color: var(--bg-color); color: var(--text-color); border: none; outline: none; font-family: 'Courier New', monospace; line-height: 1.5; resize: none; width: 100%; min-height: 100%; padding: 0; white-space: pre-wrap; word-wrap: break-word; font-size: 14px; }
         /* Heading Styles */
-        .editor h1 { font-size: var(--h1-font-size); margin: 0.67em 0; font-weight: bold; }
-        .editor h2 { font-size: var(--h2-font-size); margin: 0.83em 0; font-weight: bold; }
-        .editor h3 { font-size: var(--h3-font-size); margin: 1em 0; font-weight: bold; }
-        .editor h4 { font-size: var(--h4-font-size); margin: 1.33em 0; font-weight: bold; }
-        .editor h5 { font-size: var(--h5-font-size); margin: 1.67em 0; font-weight: bold; }
+        .editor h1 { font-size: var(--h1-font-size); margin: 0.1em 0; font-weight: bold; }
+        .editor h2 { font-size: var(--h2-font-size); margin: 0.1em 0; font-weight: bold; }
+        .editor h3 { font-size: var(--h3-font-size); margin: 0.1em 0; font-weight: bold; }
+        .editor h4 { font-size: var(--h4-font-size); margin: 0.1em 0; font-weight: bold; }
+        .editor h5 { font-size: var(--h5-font-size); margin: 0.1em 0; font-weight: bold; }
         /* Paragraph style for 'regular text' */
         .editor p { margin: 0; }
         .editor.no-wrap { white-space: pre; overflow-x: auto; }
@@ -199,69 +199,128 @@
         function importFile() {
             document.getElementById('fileInput').click();
         }
-        function handleFileImport(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const content = e.target.result;
-                let htmlContent = content
-                    .replace(/^##### (.*$)/gm, '<h5>$1</h5>') 
-                    .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
-                    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-                    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-                    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-                    .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                    .replace(/__(.*?)__/g, '<u>$1</u>')
-                    .replace(/\n/g, '<br>'); 
-                editor.innerHTML = htmlContent;
-                makeLinksClickable();
-                updateStatus();
-                statusBar.textContent = `Imported: ${file.name}`;
-                setTimeout(() => updateStatus(), 2000);
-            };
-            reader.readAsText(file);
-            event.target.value = ''; 
-        }
         function exportFile() {
-            let content = editor.innerHTML;
-            content = content
-                .replace(/<h1>(.*?)<\/h1>/g, '# $1\n')
-                .replace(/<h2>(.*?)<\/h2>/g, '## $1\n')
-                .replace(/<h3>(.*?)<\/h3>/g, '### $1\n')
-                .replace(/<h4>(.*?)<\/h4>/g, '#### $1\n')
-                .replace(/<h5>(.*?)<\/h5>/g, '##### $1\n')
-                .replace(/<p>(.*?)<\/p>/g, '$1\n') 
-                .replace(/<div[^>]*>(.*?)<\/div>/g, '$1\n') 
-                .replace(/<br\s*\/?>/g, '\n') 
-                .replace(/<strong><em>(.*?)<\/em><\/strong>/g, '***$1***')
-                .replace(/<em><strong>(.*?)<\/strong><\/em>/g, '***$1***')
-                .replace(/<strong>(.*?)<\/strong>/g, '**$1**')
-                .replace(/<b>(.*?)<\/b>/g, '**$1**')
-                .replace(/<em>(.*?)<\/em>/g, '*$1*')
-                .replace(/<i>(.*?)<\/i>/g, '*$1*')
-                .replace(/<u>(.*?)<\/u>/g, '__$1__')
-                .replace(/<a[^>]*>(.*?)<\/a>/g, '$1') 
-                .replace(/<[^>]*>/g, '') 
-                .replace(/&nbsp;/g, ' ')
-                .replace(/&lt;/g, '<')
-                .replace(/&gt;/g, '>')
-                .replace(/&amp;/g, '&');
-            content = content.replace(/\n\n+/g, '\n\n').trim();
-            const blob = new Blob([content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'note.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            statusBar.textContent = 'File exported as note.txt';
-            setTimeout(() => updateStatus(), 2000);
-        }
+			let content = editor.innerHTML;
+			content = content.replace(/<br\s*\/?>/g, '[[BR]]');
+			const tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			let processedLines = [];
+			Array.from(tempDiv.childNodes).forEach(node => {
+				if (node.nodeType === Node.TEXT_NODE) {
+					processedLines.push(node.textContent);
+				} else if (node.nodeType === Node.ELEMENT_NODE) {
+					const tagName = node.tagName.toLowerCase();
+					let elementContent = node.innerHTML; 
+					elementContent = elementContent
+						.replace(/<strong><em>(.*?)<\/em><\/strong>/g, '***$1***')
+						.replace(/<em><strong>(.*?)<\/strong><\/em>/g, '***$1***')
+						.replace(/<strong>(.*?)<\/strong>/g, '**$1**')
+						.replace(/<b>(.*?)<\/b>/g, '**$1**')
+						.replace(/<em>(.*?)<\/em>/g, '*$1*')
+						.replace(/<i>(.*?)<\/i>/g, '*$1*')
+						.replace(/<u>(.*?)<\/u>/g, '__$1__');
+					elementContent = elementContent
+						.replace(/<a[^>]*>(.*?)<\/a>/g, '$1') 
+						.replace(/<[^>]*>/g, '') 
+						.replace(/&nbsp;/g, ' ')
+						.replace(/&lt;/g, '<')
+						.replace(/&gt;/g, '>')
+						.replace(/&amp;/g, '&');
+					elementContent = elementContent.replace(/\[\[BR\]\]/g, '\n');
+					switch (tagName) {
+						case 'h1': processedLines.push('# ' + elementContent.trim()); break;
+						case 'h2': processedLines.push('## ' + elementContent.trim()); break;
+						case 'h3': processedLines.push('### ' + elementContent.trim()); break;
+						case 'h4': processedLines.push('#### ' + elementContent.trim()); break;
+						case 'h5': processedLines.push('##### ' + elementContent.trim()); break;
+						case 'p':
+							if (elementContent.trim() === '') {
+								processedLines.push('');
+							} else {
+								processedLines.push(elementContent);
+							}
+							break;
+						case 'div':
+							if (elementContent.trim() === '') {
+								 processedLines.push(''); 
+							} else {
+								processedLines.push(elementContent);
+							}
+							break;
+						default:
+							if (elementContent.trim() !== '') {
+								processedLines.push(elementContent);
+							}
+							break;
+					}
+				}
+			});
+			content = processedLines.filter(line => line !== null).join('\n');
+			content = content.replace(/\n\n\n+/g, '\n\n').trim();
+			if (content.length > 0 && !content.endsWith('\n')) {
+				content += '\n';
+			}
+			const blob = new Blob([content], { type: 'text/plain' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'note.txt';
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+			statusBar.textContent = 'File exported as note.txt';
+			setTimeout(() => updateStatus(), 2000);
+		}
+		function handleFileImport(event) {
+			const file = event.target.files[0];
+			if (!file) return;
+			const reader = new FileReader();
+			reader.onload = function(e) {
+				const content = e.target.result;
+				const lines = content.split('\n');
+				let htmlContent = '';
+				let buffer = [];
+				function flushParagraph() {
+					if (buffer.length === 0) return;
+					const para = buffer.join('\n')
+						.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
+						.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+						.replace(/\*(.*?)\*/g, '<em>$1</em>')
+						.replace(/__(.*?)__/g, '<u>$1</u>');
+					if (/^##### /.test(para)) {
+						htmlContent += `<h5>${para.slice(6)}</h5>`;
+					} else if (/^#### /.test(para)) {
+						htmlContent += `<h4>${para.slice(5)}</h4>`;
+					} else if (/^### /.test(para)) {
+						htmlContent += `<h3>${para.slice(4)}</h3>`;
+					} else if (/^## /.test(para)) {
+						htmlContent += `<h2>${para.slice(3)}</h2>`;
+					} else if (/^# /.test(para)) {
+						htmlContent += `<h1>${para.slice(2)}</h1>`;
+					} else {
+						htmlContent += `<p>${para.replace(/\n/g, '<br>')}</p>`;
+					}
+					buffer = [];
+				}
+				for (let line of lines) {
+					if (line.trim() === '') {
+						flushParagraph(); 
+						htmlContent += '<div><br></div>'; 
+					} else {
+						buffer.push(line);
+					}
+				}
+				flushParagraph(); 
+				editor.innerHTML = htmlContent;
+				makeLinksClickable();
+				updateStatus();
+				statusBar.textContent = `Imported: ${file.name}`;
+				setTimeout(() => updateStatus(), 2000);
+			};
+			reader.readAsText(file);
+			event.target.value = '';
+		}
         editor.addEventListener('paste', function(e) {
             e.preventDefault();
             const text = (e.clipboardData || window.clipboardData).getData('text');
