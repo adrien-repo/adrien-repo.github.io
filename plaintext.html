@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>PlainText</title>
+    <link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg-color: #ffffff; --text-color: #000000; --toolbar-bg: #f5f5f5; --border-color: #e0e0e0; --button-hover: #e8e8e8; --button-active: #d0d0d0; /* Heading Font Sizes */ --h1-font-size: 32px; --h2-font-size: 28px; --h3-font-size: 24px; --h4-font-size: 20px; --h5-font-size: 16px; }
+        [data-theme="dark"] { --bg-color: #1a1a1a; --text-color: #ffffff; --toolbar-bg: #2d2d2d; --border-color: #404040; --button-hover: #3d3d3d; --button-active: #505050; }
+        body { font-family: 'Courier New', monospace; background-color: var(--bg-color); color: var(--text-color); height: 100vh; display: flex; flex-direction: column; transition: background-color 0.0s, color 0.0s; }
+        .toolbar { background-color: var(--toolbar-bg); border-bottom: 1px solid var(--border-color); padding: 10px 15px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex-shrink: 0; }
+        .toolbar button { background: none; border: 1px solid var(--border-color); color: var(--text-color); padding: 5px 10px; cursor: pointer; font-family: 'Courier New', monospace; font-size: 12px; border-radius: 3px; transition: all 0.01s; }
+        .toolbar button:hover { background-color: var(--button-hover); }
+        .toolbar button:active, .toolbar button.active { background-color: var(--button-active); }
+        .toolbar .divider { width: 1px; height: 20px; background-color: var(--border-color); margin: 0 5px; }
+        .theme-toggle, .wrap-toggle { padding: 5px 8px !important; }
+        .theme-toggle { margin-left: auto; }
+        .editor-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; }
+        .editor { flex: 1; background-color: var(--bg-color); color: var(--text-color); border: none; outline: none; font-family: 'Courier New', monospace; line-height: 1.5; resize: none; width: 100%; min-height: 100%; padding: 0; white-space: pre-wrap; word-wrap: break-word; font-size: 14px; }
+        /* Heading Styles */
+        .editor h1 { font-size: var(--h1-font-size); margin: 0.67em 0; font-weight: bold; }
+        .editor h2 { font-size: var(--h2-font-size); margin: 0.83em 0; font-weight: bold; }
+        .editor h3 { font-size: var(--h3-font-size); margin: 1em 0; font-weight: bold; }
+        .editor h4 { font-size: var(--h4-font-size); margin: 1.33em 0; font-weight: bold; }
+        .editor h5 { font-size: var(--h5-font-size); margin: 1.67em 0; font-weight: bold; }
+        /* Paragraph style for 'regular text' */
+        .editor p { margin: 0; }
+        .editor.no-wrap { white-space: pre; overflow-x: auto; }
+        .editor:focus { outline: none; }
+        .hidden-input { position: absolute; left: -9999px; opacity: 0; }
+        .status-bar { background-color: var(--toolbar-bg); border-top: 1px solid var(--border-color); padding: 5px 15px; font-size: 11px; color: var(--text-color); opacity: 0.7; flex-shrink: 0; }
+        /* Link styling */
+        .link-preview { color: #0066cc; text-decoration: underline; cursor: pointer; }
+        [data-theme="dark"] .link-preview { color: #66b3ff; }
+        @media (max-width: 768px) {
+            .toolbar { padding: 8px 10px; }
+            .toolbar button { padding: 4px 8px; font-size: 11px; }
+            .editor-container { padding: 15px; }
+            .editor { font-size: 13px; }
+            .editor h1 { font-size: 28px; }
+            .editor h2 { font-size: 24px; }
+            .editor h3 { font-size: 20px; }
+            .editor h4 { font-size: 16px; }
+            .editor h5 { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <button onclick="formatText('bold')" id="boldBtn" title="Bold (Ctrl+B)">B</button>
+        <button onclick="formatText('italic')" id="italicBtn" title="Italic (Ctrl+I)">I</button>
+        <button onclick="formatText('underline')" id="underlineBtn" title="Underline (Ctrl+U)">U</button>
+        <div class="divider"></div>
+		<button onclick="applyHeading('p')" title="Regular Text">Txt</button>
+        <button onclick="applyHeading('h1')" title="Heading 1">H1</button>
+        <button onclick="applyHeading('h2')" title="Heading 2">H2</button>
+        <button onclick="applyHeading('h3')" title="Heading 3">H3</button>
+        <button onclick="applyHeading('h4')" title="Heading 4">H4</button>
+        <button onclick="applyHeading('h5')" title="Heading 5">H5</button>
+        <div class="divider"></div>
+        <button onclick="importFile()" title="Import">Open</button>
+        <button onclick="exportFile()" title="Export">Save</button>
+		<div class="divider"></div>
+        <button class="wrap-toggle" onclick="toggleWordWrap()" id="wrapBtn" title="Toggle Word Wrap">Wrap</button> <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">⚪</button>
+	</div>
+    <div class="editor-container">
+        <div class="editor" contenteditable="true" id="editor" spellcheck="false"></div>
+    </div>
+    <div class="status-bar">
+        <span id="status">Ready</span>
+    </div>
+    <input type="file" id="fileInput" class="hidden-input" accept=".txt,.md" onchange="handleFileImport(event)">
+    <script>
+        let currentTheme = 'light';
+        let editor = document.getElementById('editor');
+        let statusBar = document.getElementById('status');
+        let wrapBtn = document.getElementById('wrapBtn');
+        let themeToggleBtn = document.querySelector('.theme-toggle');
+        document.addEventListener('DOMContentLoaded', function() {
+            editor.focus();
+            updateStatus();
+            makeLinksClickable();
+            themeToggleBtn.textContent = currentTheme === 'light' ? 'Light' : 'Dark';
+            editor.classList.remove('no-wrap'); 
+            wrapBtn.textContent = 'Wrap'; 
+            wrapBtn.classList.remove('active'); 
+        });
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            themeToggleBtn.textContent = currentTheme === 'light' ? 'Light' : 'Dark';
+        }
+        function toggleWordWrap() {
+            editor.classList.toggle('no-wrap');
+        
+            wrapBtn.classList.toggle('active', editor.classList.contains('no-wrap'));
+            wrapBtn.textContent = editor.classList.contains('no-wrap') ? 'No Wrap' : 'Wrap';
+        }
+        function formatText(command) {
+            document.execCommand(command, false, null);
+            updateButtonStates();
+            editor.focus();
+        }
+        function applyHeading(headingTag) {
+            document.execCommand('formatBlock', false, headingTag);
+            editor.focus();
+        }
+        function updateButtonStates() {
+            const commands = ['bold', 'italic', 'underline'];
+            commands.forEach(command => {
+                const btn = document.getElementById(command + 'Btn');
+                if (btn) {
+                    btn.classList.toggle('active', document.queryCommandState(command));
+                }
+            });
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'b':
+                        e.preventDefault();
+                        formatText('bold');
+                        break;
+                    case 'i':
+                        e.preventDefault();
+                        formatText('italic');
+                        break;
+                    case 'u':
+                        e.preventDefault();
+                        formatText('underline');
+                        break;
+                    case 's':
+                        e.preventDefault();
+                        exportFile();
+                        break;
+                    case 'o':
+                        e.preventDefault();
+                        importFile();
+                        break;
+        
+                    case '0': 
+                        e.preventDefault();
+                        applyHeading('p');
+                        break;
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                        e.preventDefault();
+                        applyHeading('h' + e.key);
+                        break;
+                }
+            }
+        });
+        editor.addEventListener('input', function() {
+            updateStatus();
+            makeLinksClickable();
+        });
+        editor.addEventListener('keyup', updateButtonStates);
+        editor.addEventListener('mouseup', updateButtonStates);
+        function updateStatus() {
+            const text = editor.innerText;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const chars = text.length;
+            statusBar.textContent = `${words} words, ${chars} characters`;
+        }
+        function makeLinksClickable() {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            const walker = document.createTreeWalker(
+                editor,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                if (node.nodeValue.match(urlRegex)) {
+                    textNodes.push(node);
+                }
+            }
+            textNodes.forEach(textNode => {
+                const parent = textNode.parentNode;
+                if (parent && parent.tagName !== 'A') {
+                    const html = textNode.nodeValue.replace(urlRegex, '<a href="$1" class="link-preview" target="_blank" rel="noopener noreferrer">$1</a>');
+                    const wrapper = document.createElement('div');
+                    wrapper.innerHTML = html;
+                    
+                    while (wrapper.firstChild) {
+                        parent.insertBefore(wrapper.firstChild, textNode);
+                    }
+                    parent.removeChild(textNode);
+                }
+            });
+        }
+        function importFile() {
+            document.getElementById('fileInput').click();
+        }
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                let htmlContent = content
+                    .replace(/^##### (.*$)/gm, '<h5>$1</h5>') 
+                    .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
+                    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                    .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/__(.*?)__/g, '<u>$1</u>')
+                    .replace(/\n/g, '<br>'); 
+                editor.innerHTML = htmlContent;
+                makeLinksClickable();
+                updateStatus();
+                statusBar.textContent = `Imported: ${file.name}`;
+                setTimeout(() => updateStatus(), 2000);
+            };
+            reader.readAsText(file);
+            event.target.value = ''; 
+        }
+        function exportFile() {
+            let content = editor.innerHTML;
+            content = content
+                .replace(/<h1>(.*?)<\/h1>/g, '# $1\n')
+                .replace(/<h2>(.*?)<\/h2>/g, '## $1\n')
+                .replace(/<h3>(.*?)<\/h3>/g, '### $1\n')
+                .replace(/<h4>(.*?)<\/h4>/g, '#### $1\n')
+                .replace(/<h5>(.*?)<\/h5>/g, '##### $1\n')
+                .replace(/<p>(.*?)<\/p>/g, '$1\n') 
+                .replace(/<div[^>]*>(.*?)<\/div>/g, '$1\n') 
+                .replace(/<br\s*\/?>/g, '\n') 
+                .replace(/<strong><em>(.*?)<\/em><\/strong>/g, '***$1***')
+                .replace(/<em><strong>(.*?)<\/strong><\/em>/g, '***$1***')
+                .replace(/<strong>(.*?)<\/strong>/g, '**$1**')
+                .replace(/<b>(.*?)<\/b>/g, '**$1**')
+                .replace(/<em>(.*?)<\/em>/g, '*$1*')
+                .replace(/<i>(.*?)<\/i>/g, '*$1*')
+                .replace(/<u>(.*?)<\/u>/g, '__$1__')
+                .replace(/<a[^>]*>(.*?)<\/a>/g, '$1') 
+                .replace(/<[^>]*>/g, '') 
+                .replace(/&nbsp;/g, ' ')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>')
+                .replace(/&amp;/g, '&');
+            content = content.replace(/\n\n+/g, '\n\n').trim();
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'note.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            statusBar.textContent = 'File exported as note.txt';
+            setTimeout(() => updateStatus(), 2000);
+        }
+        editor.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const text = (e.clipboardData || window.clipboardData).getData('text');
+            document.execCommand('insertText', false, text);
+            setTimeout(() => {
+                makeLinksClickable();
+                updateStatus();
+            }, 10);
+        });
+    </script>
+</body>
+</html>
