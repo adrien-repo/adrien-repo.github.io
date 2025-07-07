@@ -3,332 +3,1170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>PlainText</title>
+    <title>PlainText</title>
     <link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --bg-color: #ffffff; --text-color: #000000; --toolbar-bg: #f5f5f5; --border-color: #e0e0e0; --button-hover: #e8e8e8; --button-active: #d0d0d0; /* Heading Font Sizes */ --h1-font-size: 32px; --h2-font-size: 28px; --h3-font-size: 24px; --h4-font-size: 20px; --h5-font-size: 16px; }
-        [data-theme="dark"] { --bg-color: #1a1a1a; --text-color: #ffffff; --toolbar-bg: #2d2d2d; --border-color: #404040; --button-hover: #3d3d3d; --button-active: #505050; }
-        body { font-family: 'Courier New', monospace; background-color: var(--bg-color); color: var(--text-color); height: 100vh; display: flex; flex-direction: column; transition: background-color 0.0s, color 0.0s; }
-        .toolbar { background-color: var(--toolbar-bg); border-bottom: 1px solid var(--border-color); padding: 10px 15px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex-shrink: 0; }
-        .toolbar button { background: none; border: 1px solid var(--border-color); color: var(--text-color); padding: 5px 10px; cursor: pointer; font-family: 'Courier New', monospace; font-size: 12px; border-radius: 3px; transition: all 0.01s; }
-        .toolbar button:hover { background-color: var(--button-hover); }
-        .toolbar button:active, .toolbar button.active { background-color: var(--button-active); }
-        .toolbar .divider { width: 1px; height: 20px; background-color: var(--border-color); margin: 0 5px; }
-        .theme-toggle, .wrap-toggle { padding: 5px 8px !important; }
-        .theme-toggle { margin-left: auto; }
-        .editor-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; }
-        .editor { flex: 1; background-color: var(--bg-color); color: var(--text-color); border: none; outline: none; font-family: 'Courier New', monospace; line-height: 1.5; resize: none; width: 100%; min-height: 100%; padding: 0; white-space: pre-wrap; word-wrap: break-word; font-size: 14px; }
-        /* Heading Styles */
-        .editor h1 { font-size: var(--h1-font-size); margin: 0.1em 0; font-weight: bold; }
-        .editor h2 { font-size: var(--h2-font-size); margin: 0.1em 0; font-weight: bold; }
-        .editor h3 { font-size: var(--h3-font-size); margin: 0.1em 0; font-weight: bold; }
-        .editor h4 { font-size: var(--h4-font-size); margin: 0.1em 0; font-weight: bold; }
-        .editor h5 { font-size: var(--h5-font-size); margin: 0.1em 0; font-weight: bold; }
-        /* Paragraph style for 'regular text' */
-        .editor p { margin: 0; }
-        .editor.no-wrap { white-space: pre; overflow-x: auto; }
-        .editor:focus { outline: none; }
-        .hidden-input { position: absolute; left: -9999px; opacity: 0; }
-        .status-bar { background-color: var(--toolbar-bg); border-top: 1px solid var(--border-color); padding: 5px 15px; font-size: 11px; color: var(--text-color); opacity: 0.7; flex-shrink: 0; }
-        /* Link styling */
-        .link-preview { color: #0066cc; text-decoration: underline; cursor: pointer; }
-        [data-theme="dark"] .link-preview { color: #66b3ff; }
-        @media (max-width: 768px) {
-            .toolbar { padding: 8px 10px; }
-            .toolbar button { padding: 4px 8px; font-size: 11px; }
-            .editor-container { padding: 15px; }
-            .editor { font-size: 13px; }
-            .editor h1 { font-size: 28px; }
-            .editor h2 { font-size: 24px; }
-            .editor h3 { font-size: 20px; }
-            .editor h4 { font-size: 16px; }
-            .editor h5 { font-size: 14px; }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<style>
+        /* --- CSS STYLES --- */
+        /* Ensure HTML and BODY take full height and have no default margins/padding */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%; /* Crucial for fixed-position elements to correctly cover the viewport */
+            overflow: hidden; /* Prevent body scrollbars, especially important for full-screen apps */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: #282c34; /* Dark background for overall app */
+            color: #abb2bf; /* Light text color */
+        }
+
+        header {
+            background-color: #21252b;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            flex-wrap: wrap; /* Allow controls to wrap on smaller screens */
+            z-index: 10; /* Ensure header is above tabs if they somehow overlap */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.6em;
+            color: #61afef; /* A nice blue for the title */
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px; /* Space between control elements */
+            flex-wrap: wrap;
+            margin-top: 5px; /* Add some space if wrapping */
+        }
+
+        .controls button, 
+        .controls select {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #3e4451;
+            color: #abb2bf;
+            font-size: 0.95em;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .controls button:hover, 
+        .controls select:hover {
+            background-color: #525c6c;
+            transform: translateY(-1px);
+        }
+
+        .controls button:active {
+            transform: translateY(0);
+        }
+
+        /* --- Tabs Container --- */
+        .tab-bar {
+            display: flex;
+            background-color: #21252b;
+            border-bottom: 1px solid #3e4451;
+            padding: 0 10px;
+            overflow-x: auto; /* Allow horizontal scrolling if many tabs */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            white-space: nowrap; /* Prevent tabs from wrapping */
+            flex-shrink: 0; /* Don't shrink when content-area expands */
+            max-width: 100%;
+        }
+
+        /* Custom Scrollbar for tab-bar */
+        .tab-bar::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .tab-bar::-webkit-scrollbar-track {
+            background: #21252b; /* Match tab bar background */
+        }
+
+        .tab-bar::-webkit-scrollbar-thumb {
+            background: #5c6370;
+            border-radius: 3px;
+        }
+        /* For Firefox */
+        .tab-bar {
+            scrollbar-width: thin;
+            scrollbar-color: #5c6370 #21252b;
+        }
+
+
+        .tab {
+            padding: 8px 15px;
+            cursor: pointer;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            background-color: #3e4451;
+            color: #abb2bf;
+            margin-right: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            transition: background-color 0.2s, color 0.2s;
+            flex-shrink: 0; /* Prevent tabs from shrinking too much */
+            max-width: 200px; /* Max width for a tab */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Add ellipsis for long tab names */
+        }
+
+        .tab:hover:not(.active) {
+            background-color: #525c6c;
+            color: #ffffff;
+        }
+
+        .tab.active {
+            background-color: #282c34; /* Match editor background */
+            color: #61afef; /* Active tab color */
+            border-bottom: 2px solid #61afef; /* Highlight active tab */
+            margin-bottom: -1px; /* Overlap border-bottom of tab-bar */
+        }
+
+        .tab-close {
+            background: none;
+            border: none;
+            color: #abb2bf;
+            font-size: 0.8em;
+            cursor: pointer;
+            margin-left: 5px;
+            padding: 2px;
+            border-radius: 3px;
+            transition: color 0.2s, background-color 0.2s;
+            line-height: 1; /* Prevent extra space below icon */
+            display: flex; /* For proper centering of icon */
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tab.active .tab-close {
+            color: #61afef; /* Active tab close button color */
+        }
+
+        .tab-close:hover {
+            color: #e06c75; /* Red on hover */
+            background-color: rgba(224, 108, 117, 0.2);
+        }
+
+        /* Indicate unsaved changes */
+        .tab-unsaved::before {
+            content: "\2022"; /* Large dot character */
+            color: #e5c07b; /* Yellow dot */
+            font-size: 1.5em;
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            line-height: 0;
+        }
+        .tab-unsaved {
+            padding-left: 20px; /* Make space for the dot */
+        }
+
+
+        /* Container for editor and preview to manage their visibility */
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            position: relative; /* For absolute positioning of children */
+            width: 100%;
+        }
+
+        #editor {
+            position: absolute; /* Take full space, then toggle visibility */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 16px;
+            line-height: 1.5;
+            transition: border 0.2s ease-in-out; /* For drag-and-drop visual feedback */
+            border: 2px solid transparent; /* Default transparent border */
+            visibility: visible; /* Default to visible */
+            opacity: 1;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        #markdownPreview {
+            position: absolute; /* Take full space, then toggle visibility */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 20px; /* Add padding for readability */
+            box-sizing: border-box; /* Include padding in width/height */
+            overflow: auto; /* Enable scrolling for long content */
+            background-color: #282c34; /* Match body background */
+            color: #abb2bf; /* Match body text */
+            visibility: hidden; /* Default to hidden */
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        /* Styles for rendered Markdown elements within the preview */
+        #markdownPreview h1, #markdownPreview h2, #markdownPreview h3,
+        #markdownPreview h4, #markdownPreview h5, #markdownPreview h6 {
+            color: #61afef; /* Headings in a nice blue */
+            border-bottom: 1px solid #3e4451;
+            padding-bottom: 0.3em;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+        }
+        #markdownPreview h1 { font-size: 2em; }
+        #markdownPreview h2 { font-size: 1.7em; }
+        #markdownPreview h3 { font-size: 1.4em; }
+
+        #markdownPreview p {
+            line-height: 1.6;
+            margin-bottom: 1em;
+        }
+
+        #markdownPreview strong, #markdownPreview b {
+            color: #e5c07b; /* Bold text in a warm yellow */
+        }
+        #markdownPreview em, #markdownPreview i {
+            color: #c678dd; /* Italic text in a purple */
+        }
+
+        #markdownPreview a {
+            color: #98c379; /* Links in a pleasant green */
+            text-decoration: none;
+        }
+        #markdownPreview a:hover {
+            text-decoration: underline;
+        }
+
+        #markdownPreview ul, #markdownPreview ol {
+            margin-left: 20px;
+            margin-bottom: 1em;
+        }
+
+        #markdownPreview code {
+            background-color: #3e4451;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+            color: #e06c75; /* Code snippets in red */
+            /* New: Apply word wrap to inline code */
+            white-space: pre-wrap; 
+            word-break: break-word; /* Ensure long words break */
+        }
+
+        #markdownPreview pre {
+            background-color: #21252b;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto; /* Keep auto overflow for very long lines if desired, or set hidden */
+            margin-bottom: 1em;
+            /* New: Apply word wrap to code blocks */
+            white-space: pre-wrap; 
+            word-break: break-word; /* Ensure long words break within pre */
+        }
+
+        #markdownPreview pre code {
+            display: block; /* Make code block take full width */
+            padding: 0; /* Remove inner padding */
+            background-color: transparent; /* No background for inner code */
+            color: #abb2bf; /* Match main text color for code blocks */
+            /* These should inherit from pre, but explicitly define if needed */
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        #markdownPreview blockquote {
+            border-left: 4px solid #5c6370;
+            padding-left: 15px;
+            color: #5c6370;
+            margin-left: 0;
+            margin-bottom: 1em;
+        }
+
+        #markdownPreview hr {
+            border: 0;
+            border-top: 1px solid #3e4451;
+            margin: 1em 0;
+        }
+        
+        /* Drag-and-drop visual feedback */
+        #editor.drag-over {
+            border: 2px dashed #61afef; /* Blue dashed border when dragging over */
+            background-color: rgba(97, 175, 239, 0.1); /* Light blue overlay */
+        }
+
+        /* Editor/Preview visibility toggles */
+        #editor.hidden {
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        #markdownPreview.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* --- MODAL STYLES (GENERIC) --- */
+        .modal-overlay {
+            position: fixed; /* Ensures it's positioned relative to the viewport */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; /* Ensures it covers the entire viewport */
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;   /* Center vertically */
+            z-index: 1000; /* Ensure it's on top of everything */
+            
+            /* Crucial for initial hidden state and smooth transition */
+            visibility: hidden; 
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #21252b;
+            color: #abb2bf;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            min-width: 300px;
+            max-width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            
+            /* Initial slight offset for fade-in animation */
+            transform: translateY(-20px); 
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .modal-overlay.visible .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-content h3 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #61afef;
+        }
+
+        .modal-content p {
+            margin: 0;
+            font-size: 1em;
+            line-height: 1.4;
+        }
+
+        .modal-content input[type="text"] {
+            padding: 10px;
+            border: 1px solid #3e4451;
+            border-radius: 4px;
+            background-color: #3e4451;
+            color: #abb2bf;
+            font-size: 1em;
+            width: calc(100% - 22px); /* Account for padding+border */
+            outline: none;
+        }
+
+        .modal-content input[type="text"]:focus {
+            border-color: #61afef;
+            box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.3);
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal-buttons button {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .modal-buttons button.primary {
+            background-color: #61afef;
+            color: #21252b;
+        }
+
+        .modal-buttons button.primary:hover {
+            background-color: #52a0e0;
+        }
+
+        .modal-buttons button.secondary {
+            background-color: #3e4451;
+            color: #abb2bf;
+        }
+
+        .modal-buttons button.secondary:hover {
+            background-color: #525c6c;
         }
     </style>
 </head>
 <body>
-    <div class="toolbar">
-        <button onclick="formatText('bold')" id="boldBtn" title="Bold (Ctrl+B)">B</button>
-        <button onclick="formatText('italic')" id="italicBtn" title="Italic (Ctrl+I)">I</button>
-        <button onclick="formatText('underline')" id="underlineBtn" title="Underline (Ctrl+U)">U</button>
-        <div class="divider"></div>
-		<button onclick="applyHeading('p')" title="Regular Text">Txt</button>
-        <button onclick="applyHeading('h1')" title="Heading 1">H1</button>
-        <button onclick="applyHeading('h2')" title="Heading 2">H2</button>
-        <button onclick="applyHeading('h3')" title="Heading 3">H3</button>
-        <button onclick="applyHeading('h4')" title="Heading 4">H4</button>
-        <button onclick="applyHeading('h5')" title="Heading 5">H5</button>
-        <div class="divider"></div>
-        <button onclick="importFile()" title="Import">Open</button>
-        <button onclick="exportFile()" title="Export">Save</button>
-		<div class="divider"></div>
-        <button class="wrap-toggle" onclick="toggleWordWrap()" id="wrapBtn" title="Toggle Word Wrap">Wrap</button> <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">⚪</button>
-	</div>
-    <div class="editor-container">
-        <div class="editor" contenteditable="true" id="editor" spellcheck="false"></div>
+    <header>
+        <h1>PlainText</h1>
+		<span id="notificationsTxt"></span>
+        <div class="controls">
+            <button id="newFileBtn">New</button>
+            <button id="saveBtn">Save</button>
+            <button id="openBtn">Open</button> 
+            <input type="file" id="fileInput" accept=".txt,.js,.html,.css,.py,.java,.php,.json,.md,.xml,.ts,.scss,.less,.sql" style="display: none;" multiple>
+
+            <select id="languageSelect">
+                <option value="plain_text">Plain Text</option>
+                <option value="markdown">Markdown</option>
+				<option value="javascript">JavaScript</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="python">Python</option>
+                <option value="java">Java</option>
+                <option value="php">PHP</option>
+                <option value="json">JSON</option>
+                <option value="xml">XML</option>
+                <option value="typescript">TypeScript</option>
+                <option value="scss">SCSS</option>
+                <option value="less">LESS</option>
+                <option value="sql">SQL</option>
+                <option value="jsx">JSX</option>
+                <option value="tsx">TSX</option>
+                <option value="ruby">Ruby</option>
+                <option value="go">Go</option>
+                <option value="rust">Rust</option>
+                <option value="csharp">C#</option>
+                <option value="cpp">C++</option>
+                <option value="json5">JSON5</option>
+                <option value="yaml">YAML</option>
+                <option value="sh">Shell Script</option>
+            </select>
+            <select id="themeSelect">
+                <option value="ace/theme/chrome">Chrome (Light)</option>
+                <option value="ace/theme/clouds">Clouds (Light)</option>
+                <option value="ace/theme/crimson_editor">Crimson Editor (Light)</option>
+                <option value="ace/theme/dawn">Dawn (Light)</option>
+                <option value="ace/theme/dreamweaver">Dreamweaver (Light)</option>
+                <option value="ace/theme/github">GitHub (Light)</option>
+                <option value="ace/theme/kuroir">Kuroir (Light)</option>
+                <option value="ace/theme/solarized_light">Solarized Light</option>
+                <option value="ace/theme/textmate">TextMate (Light)</option>
+                <option value="ace/theme/tomorrow">Tomorrow (Light)</option>
+                <option value="ace/theme/xcode">Xcode (Light)</option>
+
+                <option value="ace/theme/ambiance">Ambiance (Dark)</option>
+                <option value="ace/theme/chaos">Chaos (Dark)</option>
+                <option value="ace/theme/clouds_midnight">Clouds Midnight (Dark)</option>
+                <option value="ace/theme/cobalt">Cobalt (Dark)</option>
+                <option value="ace/theme/dracula">Dracula (Dark)</option>
+                <option value="ace/theme/gob">Gob (Dark)</option>
+                <option value="ace/theme/gruvbox">Gruvbox (Dark)</option>
+                <option value="ace/theme/idle_fingers">Idle Fingers (Dark)</option>
+                <option value="ace/theme/kr_theme">KR Theme (Dark)</option>
+                <option value="ace/theme/merbivore">Merbivore (Dark)</option>
+                <option value="ace/theme/mono_industrial">Mono Industrial (Dark)</option>
+                <option value="ace/theme/monokai">Monokai (Dark)</option>
+                <option value="ace/theme/pastel_on_dark">Pastel on Dark (Dark)</option>
+                <option value="ace/theme/solarized_dark">Solarized Dark</option>
+                <option value="ace/theme/terminal">Terminal (Dark)</option>
+                <option value="ace/theme/tomorrow_night">Tomorrow Night (Dark)</option>
+                <option value="ace/theme/tomorrow_night_blue">Tomorrow Night Blue (Dark)</option>
+                <option value="ace/theme/tomorrow_night_bright">Tomorrow Night Bright (Dark)</option>
+                <option value="ace/theme/tomorrow_night_eighties">Tomorrow Night 80s (Dark)</option>
+                <option value="ace/theme/twilight">Twilight (Dark)</option>
+                <option value="ace/theme/vibrant_ink">Vibrant Ink (Dark)</option>
+            </select>
+            <button id="toggleWrapBtn">Word Wrap</button>
+            <button id="togglePreviewBtn" style="display: none;">Show Preview</button>
+        </div>
+    </header>
+
+    <div id="tabBar" class="tab-bar">
+        </div>
+    
+    <div class="content-area">
+        <div id="editor"></div>
+        <div id="markdownPreview"></div>
     </div>
-    <div class="status-bar">
-        <span id="status">Ready</span>
+
+    <div id="customModalOverlay" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="customModalTitle"></h3>
+            <p id="customModalMessage"></p> <input type="text" id="customModalInput" spellcheck="false" style="display: none;"> <div class="modal-buttons">
+                <button id="customModalOkBtn" class="primary">OK</button>
+                <button id="customModalCancelBtn" class="secondary">Cancel</button>
+            </div>
+        </div>
     </div>
-    <input type="file" id="fileInput" class="hidden-input" accept=".txt,.md" onchange="handleFileImport(event)">
+
     <script>
-        let currentTheme = 'light';
-        let editor = document.getElementById('editor');
-        let statusBar = document.getElementById('status');
-        let wrapBtn = document.getElementById('wrapBtn');
-        let themeToggleBtn = document.querySelector('.theme-toggle');
-        document.addEventListener('DOMContentLoaded', function() {
-            editor.focus();
-            updateStatus();
-            makeLinksClickable();
-            themeToggleBtn.textContent = currentTheme === 'light' ? 'Light' : 'Dark';
-            editor.classList.remove('no-wrap'); 
-            wrapBtn.textContent = 'Wrap'; 
-            wrapBtn.classList.remove('active'); 
-        });
-        function toggleTheme() {
-            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            themeToggleBtn.textContent = currentTheme === 'light' ? 'Light' : 'Dark';
-        }
-        function toggleWordWrap() {
-            editor.classList.toggle('no-wrap');
-        
-            wrapBtn.classList.toggle('active', editor.classList.contains('no-wrap'));
-            wrapBtn.textContent = editor.classList.contains('no-wrap') ? 'No Wrap' : 'Wrap';
-        }
-        function formatText(command) {
-            document.execCommand(command, false, null);
-            updateButtonStates();
-            editor.focus();
-        }
-        function applyHeading(headingTag) {
-            document.execCommand('formatBlock', false, headingTag);
-            editor.focus();
-        }
-        function updateButtonStates() {
-            const commands = ['bold', 'italic', 'underline'];
-            commands.forEach(command => {
-                const btn = document.getElementById(command + 'Btn');
-                if (btn) {
-                    btn.classList.toggle('active', document.queryCommandState(command));
-                }
-            });
-        }
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey || e.metaKey) {
-                switch(e.key) {
-                    case 'b':
-                        e.preventDefault();
-                        formatText('bold');
-                        break;
-                    case 'i':
-                        e.preventDefault();
-                        formatText('italic');
-                        break;
-                    case 'u':
-                        e.preventDefault();
-                        formatText('underline');
-                        break;
-                    case 's':
-                        e.preventDefault();
-                        exportFile();
-                        break;
-                    case 'o':
-                        e.preventDefault();
-                        importFile();
-                        break;
-        
-                    case '0': 
-                        e.preventDefault();
-                        applyHeading('p');
-                        break;
-                    case '1':
-                    case '2':
-                    case '3':
-                    case '4':
-                    case '5':
-                        e.preventDefault();
-                        applyHeading('h' + e.key);
-                        break;
-                }
-            }
-        });
-        editor.addEventListener('input', function() {
-            updateStatus();
-            makeLinksClickable();
-        });
-        editor.addEventListener('keyup', updateButtonStates);
-        editor.addEventListener('mouseup', updateButtonStates);
-        function updateStatus() {
-            const text = editor.innerText;
-            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-            const chars = text.length;
-            statusBar.textContent = `${words} words, ${chars} characters`;
-        }
-        function makeLinksClickable() {
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
-            const walker = document.createTreeWalker(
-                editor,
-                NodeFilter.SHOW_TEXT,
-                null,
-                false
-            );
-            const textNodes = [];
-            let node;
-            while (node = walker.nextNode()) {
-                if (node.nodeValue.match(urlRegex)) {
-                    textNodes.push(node);
-                }
-            }
-            textNodes.forEach(textNode => {
-                const parent = textNode.parentNode;
-                if (parent && parent.tagName !== 'A') {
-                    const html = textNode.nodeValue.replace(urlRegex, '<a href="$1" class="link-preview" target="_blank" rel="noopener noreferrer">$1</a>');
-                    const wrapper = document.createElement('div');
-                    wrapper.innerHTML = html;
-                    
-                    while (wrapper.firstChild) {
-                        parent.insertBefore(wrapper.firstChild, textNode);
-                    }
-                    parent.removeChild(textNode);
-                }
-            });
-        }
-        function importFile() {
-            document.getElementById('fileInput').click();
-        }
-        function exportFile() {
-			let content = editor.innerHTML;
-			content = content.replace(/<br\s*\/?>/g, '[[BR]]');
-			const tempDiv = document.createElement('div');
-			tempDiv.innerHTML = content;
-			let processedLines = [];
-			Array.from(tempDiv.childNodes).forEach(node => {
-				if (node.nodeType === Node.TEXT_NODE) {
-					processedLines.push(node.textContent);
-				} else if (node.nodeType === Node.ELEMENT_NODE) {
-					const tagName = node.tagName.toLowerCase();
-					let elementContent = node.innerHTML; 
-					elementContent = elementContent
-						.replace(/<strong><em>(.*?)<\/em><\/strong>/g, '***$1***')
-						.replace(/<em><strong>(.*?)<\/strong><\/em>/g, '***$1***')
-						.replace(/<strong>(.*?)<\/strong>/g, '**$1**')
-						.replace(/<b>(.*?)<\/b>/g, '**$1**')
-						.replace(/<em>(.*?)<\/em>/g, '*$1*')
-						.replace(/<i>(.*?)<\/i>/g, '*$1*')
-						.replace(/<u>(.*?)<\/u>/g, '__$1__');
-					elementContent = elementContent
-						.replace(/<a[^>]*>(.*?)<\/a>/g, '$1') 
-						.replace(/<[^>]*>/g, '') 
-						.replace(/&nbsp;/g, ' ')
-						.replace(/&lt;/g, '<')
-						.replace(/&gt;/g, '>')
-						.replace(/&amp;/g, '&');
-					elementContent = elementContent.replace(/\[\[BR\]\]/g, '\n');
-					switch (tagName) {
-						case 'h1': processedLines.push('# ' + elementContent.trim()); break;
-						case 'h2': processedLines.push('## ' + elementContent.trim()); break;
-						case 'h3': processedLines.push('### ' + elementContent.trim()); break;
-						case 'h4': processedLines.push('#### ' + elementContent.trim()); break;
-						case 'h5': processedLines.push('##### ' + elementContent.trim()); break;
-						case 'p':
-							if (elementContent.trim() === '') {
-								processedLines.push('');
-							} else {
-								processedLines.push(elementContent);
-							}
-							break;
-						case 'div':
-							if (elementContent.trim() === '') {
-								 processedLines.push(''); 
-							} else {
-								processedLines.push(elementContent);
-							}
-							break;
-						default:
-							if (elementContent.trim() !== '') {
-								processedLines.push(elementContent);
-							}
-							break;
-					}
-				}
-			});
-			content = processedLines.filter(line => line !== null).join('\n');
-			content = content.replace(/\n\n\n+/g, '\n\n').trim();
-			if (content.length > 0 && !content.endsWith('\n')) {
-				content += '\n';
+        /* --- JAVASCRIPT LOGIC --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const editorDiv = document.getElementById("editor");
+            const markdownPreviewDiv = document.getElementById("markdownPreview");
+            const editor = ace.edit(editorDiv);
+
+            // Get references to control elements
+            const languageSelect = document.getElementById('languageSelect');
+            const themeSelect = document.getElementById('themeSelect');
+            const newFileBtn = document.getElementById('newFileBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const openBtn = document.getElementById('openBtn');
+            const fileInput = document.getElementById('fileInput');
+            const toggleWrapBtn = document.getElementById('toggleWrapBtn');
+            const togglePreviewBtn = document.getElementById('togglePreviewBtn');
+            const tabBar = document.getElementById('tabBar');
+
+            // Get references to generic modal elements
+            const customModalOverlay = document.getElementById('customModalOverlay');
+            const customModalTitle = document.getElementById('customModalTitle');
+            const customModalMessage = document.getElementById('customModalMessage');
+            const customModalInput = document.getElementById('customModalInput');
+            const customModalOkBtn = document.getElementById('customModalOkBtn');
+            const customModalCancelBtn = document.getElementById('customModalCancelBtn');
+
+            // Store original title for notification fallback
+            const originalTitle = document.title;
+            let titleNotificationTimeout;
+            let currentModalCallback = null;
+            
+            // --- Tab Management Variables ---
+            // Each entry will be { id: string, name: string, content: string, mode: string, isUnsaved: boolean, isWordWrapEnabled: boolean, isMarkdownPreviewVisible: boolean }
+            let openFiles = [];
+            let activeFileId = null;
+
+            // --- Ace Editor Initialization and Configuration ---
+            const defaultTheme = localStorage.getItem('notepadTheme') || "ace/theme/tomorrow_night_eighties";
+            editor.setTheme(defaultTheme);
+            editor.setShowPrintMargin(false);
+
+            // --- Utility Functions ---
+            function showTitleNotification(message, duration = 3000) {
+				const originalTitle = document.title;
+				const notificationsEl = document.getElementById("notificationsTxt");
+				const originalText = notificationsEl.innerHTML;
+
+				//document.title = message;
+				notificationsEl.innerHTML = message;
+
+				clearTimeout(titleNotificationTimeout);
+				titleNotificationTimeout = setTimeout(() => {
+					//document.title = originalTitle;
+					notificationsEl.innerHTML = originalText;
+				}, duration);
 			}
-			const blob = new Blob([content], { type: 'text/plain' });
-			const url = URL.createObjectURL(blob);
-			const a = document.createElement('a');
-			a.href = url;
-			a.download = 'note.txt';
-			document.body.appendChild(a);
-			a.click();
-			document.body.removeChild(a);
-			URL.revokeObjectURL(url);
-			statusBar.textContent = 'File exported as note.txt';
-			setTimeout(() => updateStatus(), 2000);
-		}
-		function handleFileImport(event) {
-			const file = event.target.files[0];
-			if (!file) return;
-			const reader = new FileReader();
-			reader.onload = function(e) {
-				const content = e.target.result;
-				const lines = content.split('\n');
-				let htmlContent = '';
-				let buffer = [];
-				function flushParagraph() {
-					if (buffer.length === 0) return;
-					const para = buffer.join('\n')
-						.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
-						.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-						.replace(/\*(.*?)\*/g, '<em>$1</em>')
-						.replace(/__(.*?)__/g, '<u>$1</u>');
-					if (/^##### /.test(para)) {
-						htmlContent += `<h5>${para.slice(6)}</h5>`;
-					} else if (/^#### /.test(para)) {
-						htmlContent += `<h4>${para.slice(5)}</h4>`;
-					} else if (/^### /.test(para)) {
-						htmlContent += `<h3>${para.slice(4)}</h3>`;
-					} else if (/^## /.test(para)) {
-						htmlContent += `<h2>${para.slice(3)}</h2>`;
-					} else if (/^# /.test(para)) {
-						htmlContent += `<h1>${para.slice(2)}</h1>`;
-					} else {
-						htmlContent += `<p>${para.replace(/\n/g, '<br>')}</p>`;
-					}
-					buffer = [];
-				}
-				for (let line of lines) {
-					if (line.trim() === '') {
-						flushParagraph(); 
-						htmlContent += '<div><br></div>'; 
-					} else {
-						buffer.push(line);
-					}
-				}
-				flushParagraph(); 
-				editor.innerHTML = htmlContent;
-				makeLinksClickable();
-				updateStatus();
-				statusBar.textContent = `Imported: ${file.name}`;
-				setTimeout(() => updateStatus(), 2000);
-			};
-			reader.readAsText(file);
-			event.target.value = '';
-		}
-        editor.addEventListener('paste', function(e) {
-            e.preventDefault();
-            const text = (e.clipboardData || window.clipboardData).getData('text');
-            document.execCommand('insertText', false, text);
-            setTimeout(() => {
-                makeLinksClickable();
-                updateStatus();
-            }, 10);
+
+            function showCustomModal(options) {
+                customModalTitle.textContent = options.title;
+
+                if (options.message) {
+                    customModalMessage.textContent = options.message;
+                    customModalMessage.style.display = 'block';
+                } else {
+                    customModalMessage.style.display = 'none';
+                }
+
+                if (options.showInput) {
+                    customModalInput.value = options.defaultValue || '';
+                    customModalInput.style.display = 'block';
+                    customModalInput.focus();
+                    customModalInput.select();
+                } else {
+                    customModalInput.style.display = 'none';
+                }
+                
+                customModalOverlay.classList.add('visible');
+                customModalOkBtn.style.display = options.showOkButton !== false ? 'inline-block' : 'none';
+                customModalCancelBtn.style.display = options.showCancelButton !== false ? 'inline-block' : 'none';
+
+                currentModalCallback = options.callback;
+
+                if (!options.showInput) {
+                    customModalOkBtn.focus();
+                }
+            }
+
+            function showCustomPrompt(title, defaultValue, callback) {
+                showCustomModal({ title: title, defaultValue: defaultValue, showInput: true, callback: callback });
+            }
+
+            function showCustomConfirm(title, message, callback) {
+                showCustomModal({ title: title, message: message, showInput: false, callback: callback });
+            }
+
+            function hideModal() {
+                customModalOverlay.classList.remove('visible');
+                currentModalCallback = null;
+            }
+
+            // Event listeners for modal buttons
+            customModalOkBtn.addEventListener('click', () => {
+                if (currentModalCallback) {
+                    currentModalCallback(customModalInput.style.display === 'block' ? customModalInput.value : true);
+                }
+                hideModal();
+            });
+
+            customModalCancelBtn.addEventListener('click', () => {
+                if (currentModalCallback) {
+                    currentModalCallback(null);
+                }
+                hideModal();
+            });
+
+            customModalInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    customModalOkBtn.click();
+                } else if (e.key === 'Escape') {
+                    customModalCancelBtn.click();
+                }
+            });
+
+            customModalOverlay.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && customModalOverlay.classList.contains('visible') && customModalInput.style.display === 'none') {
+                    customModalCancelBtn.click();
+                }
+            });
+
+            function renderMarkdownPreview() {
+                const activeFile = openFiles.find(f => f.id === activeFileId);
+                if (activeFile && activeFile.mode === 'ace/mode/markdown') {
+                    markdownPreviewDiv.innerHTML = marked.parse(activeFile.content);
+                } else {
+                    markdownPreviewDiv.innerHTML = "<h3>Markdown Preview</h3><p>Switch to a Markdown file to see its preview here.</p>";
+                }
+            }
+
+            function toggleMarkdownPreview() {
+                const activeFile = openFiles.find(f => f.id === activeFileId);
+                if (!activeFile) return;
+
+                if (activeFile.isMarkdownPreviewVisible) {
+                    editorDiv.classList.remove('hidden');
+                    markdownPreviewDiv.classList.remove('visible');
+                    togglePreviewBtn.textContent = 'Show Preview';
+                    editor.focus();
+                    activeFile.isMarkdownPreviewVisible = false;
+                } else {
+                    editorDiv.classList.add('hidden');
+                    markdownPreviewDiv.classList.add('visible');
+                    renderMarkdownPreview();
+                    togglePreviewBtn.textContent = 'Hide Preview';
+                }
+                activeFile.isMarkdownPreviewVisible = !activeFile.isMarkdownPreviewVisible; // Correctly toggle
+                saveOpenFiles();
+                updateTabDisplay(activeFile.id);
+            }
+
+            // --- File & Tab Management Logic ---
+
+            // Generate a unique ID for each file/tab
+            function generateFileId() {
+                return 'file-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            }
+
+            // Update the UI based on the active file
+            function updateUIForActiveFile() {
+                const activeFile = openFiles.find(f => f.id === activeFileId);
+
+                if (!activeFile) {
+                    editor.setValue('', -1);
+                    editor.session.setMode("ace/mode/plain_text");
+                    languageSelect.value = 'plain_text'; // Set to actual dropdown value
+                    themeSelect.value = localStorage.getItem('notepadTheme') || "ace/theme/tomorrow_night_eighties";
+                    editor.session.setUseWrapMode(true);
+                    toggleWrapBtn.textContent = 'Wrap: ON';
+                    togglePreviewBtn.style.display = 'none';
+                    editorDiv.classList.remove('hidden');
+                    markdownPreviewDiv.classList.remove('visible');
+                    document.title = originalTitle;
+                    return;
+                }
+
+                // Update editor content and settings
+                editor.setValue(activeFile.content, -1);
+                editor.session.setMode(activeFile.mode);
+                editor.session.setUseWrapMode(activeFile.isWordWrapEnabled);
+
+                // Update controls
+                // CORRECTED: Set languageSelect value by stripping "ace/mode/" prefix
+                languageSelect.value = activeFile.mode.replace('ace/mode/', ''); 
+                // Ensure the selected option is actually available
+                if (!languageSelect.value) {
+                    languageSelect.value = 'plain_text'; // Fallback if mode not found in dropdown
+                    activeFile.mode = 'ace/mode/plain_text'; // Also update the file object
+                }
+
+
+                toggleWrapBtn.textContent = activeFile.isWordWrapEnabled ? 'Wrap: ON' : 'Wrap: OFF';
+
+                // Handle Markdown Preview
+                if (activeFile.mode === 'ace/mode/markdown') {
+                    togglePreviewBtn.style.display = 'inline-block';
+                    if (activeFile.isMarkdownPreviewVisible) {
+                        editorDiv.classList.add('hidden');
+                        markdownPreviewDiv.classList.add('visible');
+                        togglePreviewBtn.textContent = 'Hide Preview';
+                        renderMarkdownPreview();
+                    } else {
+                        editorDiv.classList.remove('hidden');
+                        markdownPreviewDiv.classList.remove('visible');
+                        togglePreviewBtn.textContent = 'Show Preview';
+                    }
+                } else {
+                    togglePreviewBtn.style.display = 'none';
+                    if (activeFile.isMarkdownPreviewVisible) {
+                        activeFile.isMarkdownPreviewVisible = false;
+                        editorDiv.classList.remove('hidden');
+                        markdownPreviewDiv.classList.remove('visible');
+                    }
+                }
+                
+                editor.focus();
+                updateTabDisplay(activeFile.id);
+                document.title = activeFile.name + " - PlainText";
+            }
+
+            // Create a new file/tab
+            function createNewFile(name = "untitled", content = "", mode = "ace/mode/plain_text", activate = true) {
+                const newFile = {
+                    id: generateFileId(),
+                    name: name,
+                    content: content,
+                    mode: mode,
+                    isUnsaved: false,
+                    isWordWrapEnabled: true,
+                    isMarkdownPreviewVisible: false
+                };
+                openFiles.push(newFile);
+                
+                addTabToUI(newFile);
+
+                if (activate) {
+                    setActiveFile(newFile.id);
+                }
+                saveOpenFiles();
+                return newFile;
+            }
+
+            // Set a file as active (switch tab)
+            function setActiveFile(fileId) {
+                if (activeFileId === fileId) return;
+
+                // Save current file's state before switching
+                const prevActiveFile = openFiles.find(f => f.id === activeFileId);
+                if (prevActiveFile) {
+                    prevActiveFile.content = editor.getValue();
+                    prevActiveFile.mode = editor.session.getMode().$id;
+                    prevActiveFile.isWordWrapEnabled = editor.session.getUseWrapMode();
+                    // isMarkdownPreviewVisible is updated by toggleMarkdownPreview
+                }
+                
+                activeFileId = fileId;
+                updateUIForActiveFile();
+                saveOpenFiles();
+            }
+
+            // Add a tab element to the UI
+            function addTabToUI(file) {
+                const tabElement = document.createElement('div');
+                tabElement.className = 'tab';
+                tabElement.dataset.fileId = file.id;
+                tabElement.innerHTML = `
+                    <span class="tab-name" title="${file.name}">${file.name}</span>
+                    <button class="tab-close"><i class="fas fa-times"></i></button>
+                `;
+                tabBar.appendChild(tabElement);
+
+                tabElement.querySelector('.tab-name').addEventListener('click', (e) => {
+                    setActiveFile(file.id);
+                });
+
+                tabElement.querySelector('.tab-close').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    closeFile(file.id);
+                });
+
+                updateTabDisplay(file.id);
+            }
+
+            // Update tab element's active class and unsaved indicator
+            function updateTabDisplay(fileId) {
+                document.querySelectorAll('.tab').forEach(tabEl => {
+                    if (tabEl.dataset.fileId === fileId) {
+                        tabEl.classList.add('active');
+                        const file = openFiles.find(f => f.id === fileId);
+                        if (file && file.isUnsaved) {
+                            tabEl.classList.add('tab-unsaved');
+                        } else {
+                            tabEl.classList.remove('tab-unsaved');
+                        }
+                    } else {
+                        tabEl.classList.remove('active');
+                    }
+                });
+            }
+
+            // Close a file/tab
+            async function closeFile(fileId) {
+                const fileToClose = openFiles.find(f => f.id === fileId);
+                if (!fileToClose) return;
+
+                if (fileToClose.isUnsaved) {
+                    const result = await new Promise(resolve => {
+                        showCustomConfirm(
+                            "Unsaved Changes",
+                            `"${fileToClose.name}" has unsaved changes. Close anyway?`,
+                            (res) => resolve(res)
+                        );
+                    });
+
+                    if (!result) {
+                        return;
+                    }
+                }
+
+                openFiles = openFiles.filter(f => f.id !== fileId);
+
+                const tabElement = document.querySelector(`.tab[data-file-id="${fileId}"]`);
+                if (tabElement) {
+                    tabElement.remove();
+                }
+
+                if (activeFileId === fileId) {
+                    if (openFiles.length > 0) {
+                        setActiveFile(openFiles[openFiles.length - 1].id);
+                    } else {
+                        createNewFile("untitled", "", "ace/mode/plain_text", true);
+                    }
+                }
+                saveOpenFiles();
+            }
+
+            // Save all open files to local storage
+            function saveOpenFiles() {
+                localStorage.setItem('openFiles', JSON.stringify(openFiles));
+                localStorage.setItem('activeFileId', activeFileId);
+            }
+
+            // Load open files from local storage
+            function loadOpenFiles() {
+                const savedOpenFiles = localStorage.getItem('openFiles');
+                const savedActiveFileId = localStorage.getItem('activeFileId');
+
+                if (savedOpenFiles) {
+                    openFiles = JSON.parse(savedOpenFiles);
+                    if (openFiles.length > 0) {
+                        openFiles.forEach(file => addTabToUI(file));
+                        activeFileId = openFiles.some(f => f.id === savedActiveFileId) ? savedActiveFileId : openFiles[0].id;
+                        setActiveFile(activeFileId);
+                    } else {
+                        createNewFile();
+                    }
+                } else {
+                    createNewFile();
+                }
+            }
+
+
+            // --- Core Editor Event Handling (Adapted for multiple files) ---
+
+            editor.session.on('change', () => {
+                const activeFile = openFiles.find(f => f.id === activeFileId);
+                if (activeFile) {
+                    activeFile.content = editor.getValue();
+                    if (!activeFile.isUnsaved) {
+                        activeFile.isUnsaved = true;
+                        updateTabDisplay(activeFile.id);
+                    }
+                    saveOpenFiles();
+                }
+
+                if (activeFile && activeFile.isMarkdownPreviewVisible && activeFile.mode === "ace/mode/markdown") {
+                    renderMarkdownPreview();
+                }
+            });
+
+            languageSelect.addEventListener('change', (event) => {
+                const modeValue = event.target.value; // e.g., 'javascript'
+                const modePath = `ace/mode/${modeValue}`; // e.g., 'ace/mode/javascript'
+                
+                editor.session.setMode(modePath);
+                
+                const activeFile = openFiles.find(f => f.id === activeFileId);
+                if (activeFile) {
+                    activeFile.mode = modePath; // Store full path
+                    activeFile.isUnsaved = true;
+                    updateTabDisplay(activeFile.id);
+                    saveOpenFiles();
+                }
+                
+                showTitleNotification(`Language: ${modeValue.replace('_', ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`);
+
+                if (modeValue === 'markdown') {
+                    togglePreviewBtn.style.display = 'inline-block';
+                    if (!activeFile.isMarkdownPreviewVisible) {
+                         togglePreviewBtn.textContent = 'Show Preview';
+                    }
+                } else {
+                    togglePreviewBtn.style.display = 'none';
+                    if (activeFile.isMarkdownPreviewVisible) {
+                        toggleMarkdownPreview();
+                    }
+                }
+            });
+
+            themeSelect.addEventListener('change', (event) => {
+                const theme = event.target.value;
+                editor.setTheme(theme);
+                localStorage.setItem('notepadTheme', theme);
+                const themeName = theme.replace('ace/theme/', '').replace(/_/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                showTitleNotification(`Theme: ${themeName}`);
+            });
+
+            newFileBtn.addEventListener('click', () => {
+                createNewFile("untitled", "", "ace/mode/plain_text", true);
+                showTitleNotification("New file created.");
+            });
+
+            saveBtn.addEventListener('click', () => {
+                const activeFile = openFiles.find(f => f.id === activeFileId);
+                if (!activeFile) {
+                    showTitleNotification("No file open to save.");
+                    return;
+                }
+
+                const content = activeFile.content;
+                const currentLanguage = activeFile.mode.replace('ace/mode/', '');
+                let fileExtension = 'txt';
+                const extensionToModeMap = {
+                    'javascript': 'js', 'html': 'html', 'css': 'css', 'python': 'py',
+                    'java': 'java', 'php': 'php', 'json': 'json', 'markdown': 'md',
+                    'xml': 'xml', 'typescript': 'ts', 'scss': 'scss', 'less': 'less',
+                    'sql': 'sql', 'jsx': 'jsx', 'tsx': 'tsx', 'ruby': 'rb', 'go': 'go',
+                    'rust': 'rs', 'csharp': 'cs', 'cpp': 'cpp', 'json5': 'json5',
+                    'yaml': 'yaml', 'sh': 'sh', 'plain_text': 'txt'
+                };
+                fileExtension = extensionToModeMap[currentLanguage] || 'txt';
+
+                const defaultFilename = activeFile.name.includes('untitled') ? `untitled.${fileExtension}` : activeFile.name;
+                
+                showCustomPrompt("Enter Filename for Download", defaultFilename, (filename) => {
+                    if (filename) {
+                        const blob = new Blob([content], { type: 'text/plain' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                        
+                        activeFile.name = filename;
+                        activeFile.isUnsaved = false;
+                        updateTabDisplay(activeFile.id);
+                        saveOpenFiles();
+                        updateUIForActiveFile();
+                        showTitleNotification(`Saved & Downloaded: ${filename}`);
+                    } else {
+                        showTitleNotification("Download canceled.");
+                    }
+                });
+            });
+
+            openBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', async (event) => {
+                const files = event.target.files;
+                if (!files.length) {
+                    showTitleNotification("No file selected.");
+                    return;
+                }
+
+                for (const file of Array.from(files)) {
+                    if (openFiles.some(f => f.name === file.name)) {
+                        const confirmReplace = await new Promise(resolve => {
+                            showCustomConfirm(
+                                "File Already Open",
+                                `A file named "${file.name}" is already open. Do you want to open it again (this will create a duplicate tab)?`,
+                                (res) => resolve(res)
+                            );
+                        });
+                        if (!confirmReplace) {
+                            showTitleNotification(`Skipped opening duplicate: ${file.name}`);
+                            continue;
+                        }
+                    }
+
+                    if (openFiles.length === 1 && openFiles[0].isUnsaved && files.length === 1) {
+                        const activeFile = openFiles[0];
+                        const confirmLoad = await new Promise(resolve => {
+                            showCustomConfirm(
+                                "Unsaved Changes",
+                                `The current file "${activeFile.name}" has unsaved changes. Opening "${file.name}" will create a new tab. Continue?`,
+                                (res) => resolve(res)
+                            );
+                        });
+                        if (!confirmLoad) {
+                            showTitleNotification("Open file canceled.");
+                            event.target.value = '';
+                            return;
+                        }
+                    }
+                    
+                    await loadFileIntoEditor(file, true);
+                }
+                event.target.value = '';
+            });
+
+            editorDiv.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                editorDiv.classList.add('drag-over');
+            });
+
+            editorDiv.addEventListener('dragleave', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                editorDiv.classList.remove('drag-over');
+            });
+
+            editorDiv.addEventListener('drop', async (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                editorDiv.classList.remove('drag-over');
+
+                const files = event.dataTransfer.files;
+                if (!files.length) {
+                    showTitleNotification("No file dropped.");
+                    return;
+                }
+
+                for (const file of Array.from(files)) {
+                    if (openFiles.some(f => f.name === file.name)) {
+                        const confirmReplace = await new Promise(resolve => {
+                            showCustomConfirm(
+                                "File Already Open",
+                                `A file named "${file.name}" is already open. Do you want to open it again (this will create a duplicate tab)?`,
+                                (res) => resolve(res)
+                            );
+                        });
+                        if (!confirmReplace) {
+                            showTitleNotification(`Skipped opening duplicate: ${file.name}`);
+                            continue;
+                        }
+                    }
+
+                    if (openFiles.length === 1 && openFiles[0].isUnsaved && openFiles[0].name === "untitled") {
+                         const confirmLoad = await new Promise(resolve => {
+                            showCustomConfirm(
+                                "Unsaved Changes",
+                                `The current untitled file has unsaved changes. Opening "${file.name}" will create a new tab. Continue?`,
+                                (res) => resolve(res)
+                            );
+                        });
+                        if (!confirmLoad) {
+                            showTitleNotification("Open file canceled.");
+                            return;
+                        }
+                    }
+
+                    await loadFileIntoEditor(file, true);
+                }
+            });
+
+            async function loadFileIntoEditor(file, activateNewTab = false) {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+
+                    reader.onload = (e) => {
+                        const fileName = file.name;
+                        const fileExtension = fileName.split('.').pop().toLowerCase();
+                        let inferredMode = 'plain_text';
+
+                        const extensionToModeMap = {
+                            'js': 'javascript', 'html': 'html', 'htm': 'html', 'css': 'css',
+                            'py': 'python', 'java': 'java', 'php': 'php', 'json': 'json',
+                            'md': 'markdown', 'xml': 'xml', 'ts': 'typescript', 'scss': 'scss',
+                            'less': 'less', 'sql': 'sql', 'txt': 'plain_text', 'jsx': 'jsx',
+                            'tsx': 'tsx', 'rb': 'ruby', 'go': 'go', 'rs': 'rust', 'cs': 'csharp',
+                            'cpp': 'cpp', 'json5': 'json5', 'yaml': 'yaml', 'yml': 'yaml', 'sh': 'sh'
+                        };
+
+                        if (extensionToModeMap[fileExtension]) {
+                            inferredMode = extensionToModeMap[fileExtension];
+                        }
+                        
+                        const newModePath = `ace/mode/${inferredMode}`;
+                        
+                        const newFile = createNewFile(fileName, e.target.result, newModePath, activateNewTab);
+                        newFile.isUnsaved = false;
+                        updateTabDisplay(newFile.id);
+                        saveOpenFiles();
+
+                        showTitleNotification(`File loaded: ${fileName}`);
+                        resolve();
+                    };
+
+                    reader.onerror = () => {
+                        showTitleNotification("Error reading file!");
+                        resolve();
+                    };
+
+                    reader.readAsText(file);
+                });
+            }
+
+            toggleWrapBtn.addEventListener('click', () => {
+                const activeFile = openFiles.find(f => f.id === activeFileId);
+                if (!activeFile) return;
+
+                activeFile.isWordWrapEnabled = !activeFile.isWordWrapEnabled;
+                editor.session.setUseWrapMode(activeFile.isWordWrapEnabled);
+                toggleWrapBtn.textContent = activeFile.isWordWrapEnabled ? 'Wrap: ON' : 'Wrap: OFF';
+                // Word wrap state is part of the file's configuration, but it's not a 'content' change.
+                // So, no need to mark as unsaved for word wrap change.
+                // activeFile.isUnsaved = true; // REMOVED THIS LINE
+                updateTabDisplay(activeFile.id);
+                saveOpenFiles();
+                showTitleNotification(`Word Wrap: ${activeFile.isWordWrapEnabled ? 'ON' : 'OFF'}`);
+            });
+
+            togglePreviewBtn.addEventListener('click', toggleMarkdownPreview);
+
+            // Basic keyboard shortcut for Save (Ctrl+S / Cmd+S)
+            editor.commands.addCommand({
+                name: "saveFile",
+                bindKey: { win: "Ctrl-S", mac: "Command-S" },
+                exec: () => saveBtn.click(),
+            });
+
+            loadOpenFiles();
         });
     </script>
 </body>
