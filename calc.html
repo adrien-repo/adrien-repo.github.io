@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator with History</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for a distinct scientific calculator feel on a light background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light grey background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .calculator-container {
+            background-color: #ffffff; /* White calculator body */
+            border: 1px solid #e2e8f0; /* Light border */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            max-width: 400px; /* Increased max-width for more buttons */
+            width: 100%;
+        }
+
+        .history-display {
+            font-family: 'Roboto Mono', monospace; /* Monospaced font for history */
+            background-color: #e2e8f0; /* Light grey for history area */
+            color: #4a5568; /* Darker grey text for history */
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            text-align: right;
+            min-height: 50px; /* Minimum height for history */
+            max-height: 150px; /* Max height for history */
+            overflow-y: auto; /* Scroll for long history */
+            border-bottom: 1px solid #cbd5e0;
+            display: flex;
+            flex-direction: column; /* Changed to column to show oldest first, newest at bottom */
+            gap: 0.25rem; /* Space between history items */
+            border-radius: 0.375rem 0.375rem 0 0; /* Rounded top corners */
+        }
+
+        .history-item {
+            cursor: pointer;
+            padding: 0.1rem 0.2rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.2s;
+        }
+
+        .history-item:hover {
+            background-color: #cbd5e0; /* Highlight on hover */
+        }
+
+        .history-expression {
+            color: #718096; /* Lighter grey for expression */
+        }
+
+        .history-result {
+            font-weight: bold;
+            color: #2d3748; /* Darker for result */
+        }
+
+        .display {
+            font-family: 'Roboto Mono', monospace; /* Monospaced font for display */
+            background-color: #f7fafc; /* Very light grey for the display area */
+            color: #2d3748; /* Dark text for contrast */
+            border: 1px solid #cbd5e0; /* Light border */
+            padding: 1rem;
+            font-size: 2.2rem; /* Slightly larger font */
+            text-align: right;
+            outline: none; /* Remove default focus outline */
+            caret-color: #4299e1; /* Blue caret */
+            height: 4rem; /* Fixed height for display */
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            border-radius: 0 0 0.375rem 0.375rem; /* Rounded bottom corners */
+        }
+
+        .button {
+            background-color: #e2e8f0; /* Light grey buttons */
+            color: #2d3748; /* Dark text on buttons */
+            font-size: 1.2rem; /* Slightly smaller font for more buttons */
+            padding: 1rem 0.5rem; /* Adjusted padding */
+            border: 1px solid #f7fafc; /* Lighter border for separation */
+            transition: background-color 0.2s, color 0.2s;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button:hover {
+            background-color: #cbd5e0; /* Medium light grey on hover */
+        }
+
+        .button.operator {
+            background-color: #a0aec0; /* Blue-grey for operators */
+            color: #ffffff; /* White text on operators */
+        }
+
+        .button.operator:hover {
+            background-color: #cdd5e0; /* Lighter blue-grey on hover */
+            color: #2d3748; /* Dark text on hover */
+        }
+
+        .button.scientific {
+            background-color: #bee3f8; /* Lighter blue for scientific functions */
+            color: #2c5282; /* Darker blue text */
+        }
+
+        .button.scientific:hover {
+            background-color: #90cdf4; /* Even lighter blue on hover */
+        }
+
+        .button.equals {
+            background-color: #48bb78; /* Green for equals */
+            color: #ffffff; /* White text */
+            grid-column: span 2; /* Make equals button span two columns */
+        }
+
+        .button.equals:hover {
+            background-color: #68d391; /* Lighter green on hover */
+        }
+
+        .button.clear {
+            background-color: #e53e3e; /* Red for clear */
+            color: #ffffff; /* White text */
+        }
+
+        .button.clear:hover {
+            background-color: #fc8181; /* Lighter red on hover */
+        }
+
+        .button.history-clear {
+            background-color: #f6ad55; /* Orange for history clear */
+            color: #ffffff;
+        }
+
+        .button.history-clear:hover {
+            background-color: #fbd38d;
+        }
+
+        /* Ensure all elements have rounded corners as per instructions */
+        .calculator-container, .display, .button {
+            border-radius: 0.375rem; /* Tailwind's rounded-md */
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container rounded-md overflow-hidden">
+        <div id="historyDisplay" class="history-display rounded-t-md">
+            <!-- History items will be inserted here by JavaScript -->
+        </div>
+        <input type="text" id="display" class="display w-full mb-2" value="0">
+        <div class="grid grid-cols-5 gap-1 p-2">
+            <!-- Scientific Functions Row 1 -->
+            <button class="button scientific" data-value="sin(">sin</button>
+            <button class="button scientific" data-value="cos(">cos</button>
+            <button class="button scientific" data-value="tan(">tan</button>
+            <button class="button scientific" data-value="sqrt(">sqrt</button>
+            <button class="button operator" data-value="(">(</button>
+
+            <!-- Scientific Functions Row 2 -->
+            <button class="button scientific" data-value="log(">log</button>
+            <button class="button scientific" data-value="ln(">ln</button>
+            <button class="button scientific" data-value="^">^</button>
+            <button class="button scientific" data-value="PI">PI</button>
+            <button class="button operator" data-value=")">)</button>
+
+            <!-- Standard Calculator Buttons -->
+            <button class="button clear" data-value="C">C</button>
+            <button class="button operator" data-value="DEL">DEL</button>
+            <button class="button operator" data-value="%">%</button>
+            <button class="button operator" data-value="/">/</button>
+            <button class="button scientific" data-value="e">e</button>
+
+            <button class="button" data-value="7">7</button>
+            <button class="button" data-value="8">8</button>
+            <button class="button" data-value="9">9</button>
+            <button class="button operator" data-value="*">*</button>
+            <button class="button history-clear" data-value="historyClear">Clear</button>
+
+            <button class="button" data-value="4">4</button>
+            <button class="button" data-value="5">5</button>
+            <button class="button" data-value="6">6</button>
+            <button class="button operator" data-value="-">-</button>
+            <button class="button scientific" data-value="abs(">abs</button>
+
+            <button class="button" data-value="1">1</button>
+            <button class="button" data-value="2">2</button>
+            <button class="button" data-value="3">3</button>
+            <button class="button operator" data-value="+">+</button>
+            <button class="button scientific" data-value="round(">round</button>
+
+            <button class="button" data-value="0">0</button>
+            <button class="button" data-value=".">.</button>
+            <button class="button equals" data-value="=">=</button>
+            <button class="button scientific" data-value="exp(">exp</button>
+        </div>
+    </div>
+
+    <script>
+        // Get references to the display input and all calculator buttons
+        const display = document.getElementById('display');
+        const historyDisplay = document.getElementById('historyDisplay');
+        const buttons = document.querySelectorAll('.button');
+
+        // Initialize the current expression string. This will now be primarily synced with display.value
+        let currentExpression = '';
+        // Flag to indicate if the last operation was an equals, to clear display on next number input
+        let lastOperationEquals = false;
+        // Array to store calculation history
+        let calculationHistory = [];
+
+        /**
+         * Updates the calculator display with the given value.
+         * If no value is provided, it defaults to the current expression or '0' if empty.
+         * @param {string} value - The string to display.
+         */
+        function updateDisplay(value = currentExpression) {
+            display.value = value === '' ? '0' : value;
+            // Move cursor to end after update for better typing experience
+            display.selectionStart = display.selectionEnd = display.value.length;
+        }
+
+        /**
+         * Renders the calculation history in the history display area.
+         */
+        function renderHistory() {
+            historyDisplay.innerHTML = ''; // Clear existing history
+            // Iterate through history and append items
+            calculationHistory.forEach((item, index) => {
+                const historyItemDiv = document.createElement('div');
+                historyItemDiv.classList.add('history-item');
+                historyItemDiv.dataset.index = index; // Store index for editing
+
+                const expressionSpan = document.createElement('span');
+                expressionSpan.classList.add('history-expression');
+                expressionSpan.textContent = item.expression + ' = ';
+
+                const resultSpan = document.createElement('span');
+                resultSpan.classList.add('history-result');
+                // Display result with thousands separators
+                resultSpan.textContent = formatNumberWithThousandsSeparators(item.result);
+
+                historyItemDiv.appendChild(expressionSpan);
+                historyItemDiv.appendChild(resultSpan);
+
+                historyDisplay.appendChild(historyItemDiv);
+            });
+            // Ensure the scrollbar stays at the bottom by default.
+            historyDisplay.scrollTop = historyDisplay.scrollHeight;
+        }
+
+        /**
+         * Formats a number string with thousands separators.
+         * @param {string} numberString - The number string to format.
+         * @returns {string} The formatted number string.
+         */
+        function formatNumberWithThousandsSeparators(numberString) {
+            // Check if it's a valid number before formatting
+            const num = parseFloat(numberString);
+            if (isNaN(num)) {
+                return numberString; // Return as is if not a valid number
+            }
+            // Use toLocaleString for number formatting, which handles thousands separators
+            return num.toLocaleString('en-US'); // 'en-US' typically uses commas for thousands
+        }
+
+        /**
+         * Preprocesses the expression string to replace scientific function names
+         * with their JavaScript Math object equivalents for eval().
+         * @param {string} expr - The expression string to preprocess.
+         * @returns {string} The preprocessed expression string.
+         */
+        function preprocessExpression(expr) {
+            let processedExpr = expr;
+
+            // Replace common math constants
+            processedExpr = processedExpr.replace(/PI/g, 'Math.PI');
+            processedExpr = processedExpr.replace(/e/g, 'Math.E');
+
+            // Replace scientific functions. Order matters for log/ln.
+            // Use regex with word boundaries where appropriate to avoid partial matches
+            processedExpr = processedExpr.replace(/sin\(/g, 'Math.sin(');
+            processedExpr = processedExpr.replace(/cos\(/g, 'Math.cos(');
+            processedExpr = processedExpr.replace(/tan\(/g, 'Math.tan(');
+            processedExpr = processedExpr.replace(/sqrt\(/g, 'Math.sqrt(');
+            processedExpr = processedExpr.replace(/ln\(/g, 'Math.log('); // Natural logarithm
+            processedExpr = processedExpr.replace(/log\(/g, 'Math.log10('); // Base 10 logarithm
+
+            // New functions
+            processedExpr = processedExpr.replace(/abs\(/g, 'Math.abs(');
+            processedExpr = processedExpr.replace(/round\(/g, 'Math.round(');
+            processedExpr = processedExpr.replace(/exp\(/g, 'Math.exp(');
+
+
+            // Replace power operator '^' with JavaScript's '**'
+            processedExpr = processedExpr.replace(/\^/g, '**');
+
+            // Insert multiplication sign if missing (e.g., 2(3+4) -> 2*(3+4), )( -> )*( )
+            processedExpr = processedExpr.replace(/(\d+)\(/g, '$1*(');
+            processedExpr = processedExpr.replace(/\)\(/g, ')*(');
+            // Handle cases like 'PI(' or 'e('
+            processedExpr = processedExpr.replace(/([A-Z])\(/g, '$1*('); // For PI( or e(
+
+            return processedExpr;
+        }
+
+        /**
+         * Evaluates the current mathematical expression.
+         * Uses eval() for flexible expression parsing, but includes a try-catch for error handling.
+         * WARNING: eval() can be a security risk if used with untrusted input in a production environment.
+         * For this isolated app, it's used for simplicity to meet the "raw things" requirement.
+         */
+        function evaluateExpression() {
+            // Get the current value directly from the display field
+            let expressionToEvaluate = display.value;
+            const originalExpression = expressionToEvaluate; // Store original for history
+
+            // Preprocess the expression for scientific functions and other syntax
+            expressionToEvaluate = preprocessExpression(expressionToEvaluate);
+
+            try {
+                // Evaluate the expression
+                const result = eval(expressionToEvaluate);
+
+                // Check if the result is a valid number, otherwise display 'Error'
+                if (isNaN(result) || !isFinite(result)) {
+                    updateDisplay('Error');
+                    currentExpression = ''; // Reset expression on error
+                } else {
+                    // Convert result to string and update display
+                    currentExpression = result.toString();
+                    updateDisplay(formatNumberWithThousandsSeparators(currentExpression)); // Format display result
+                    // Add to history if calculation was successful and not an error
+                    calculationHistory.push({ expression: originalExpression, result: currentExpression });
+                    renderHistory();
+                }
+            } catch (error) {
+                // Catch any JavaScript errors during evaluation (e.g., syntax errors)
+                updateDisplay('Error');
+                currentExpression = ''; // Reset expression on error
+                console.error("Calculation Error:", error);
+            }
+            lastOperationEquals = true; // Set flag after equals operation
+        }
+
+        /**
+         * Handles clicks on calculator buttons.
+         * @param {Event} event - The click event object.
+         */
+        function handleButtonClick(event) {
+            const value = event.target.dataset.value; // Get the value from the data-value attribute
+
+            if (!value) return; // Ignore clicks on non-button elements
+
+            // Ensure currentExpression is synced with display.value before processing button click
+            // This is crucial since the user can now type directly.
+            // When a button is clicked, if the display is '0' and the button is not '.', clear it.
+            // Otherwise, use the current display value.
+            currentExpression = display.value === '0' && value !== '.' ? '' : display.value;
+            // If the display contains a formatted number (with commas), remove them before appending.
+            currentExpression = currentExpression.replace(/,/g, '');
+
+
+            if (value === 'C') {
+                // Clear the expression and reset display
+                currentExpression = '';
+                updateDisplay();
+                lastOperationEquals = false;
+            } else if (value === 'DEL') {
+                // Remove the last character from the expression
+                currentExpression = currentExpression.slice(0, -1);
+                updateDisplay();
+                lastOperationEquals = false;
+            } else if (value === '=') {
+                // Evaluate the expression when '=' is pressed
+                evaluateExpression();
+            } else if (value === 'historyClear') {
+                // Clear history
+                calculationHistory = [];
+                renderHistory();
+            }
+            else {
+                // For numbers, operators, and scientific functions
+                if (lastOperationEquals && (!isNaN(parseFloat(value)) || value === '(' || value === 'PI' || value === 'e')) {
+                    // If last operation was equals and next input is a number, opening parenthesis, or constant, start a new calculation
+                    currentExpression = value;
+                } else {
+                    currentExpression += value; // Append value to the expression
+                }
+                updateDisplay();
+                lastOperationEquals = false;
+            }
+        }
+
+        /**
+         * Handles keyboard input for direct expression typing.
+         * @param {KeyboardEvent} event - The keyboard event object.
+         */
+        function handleKeyboardInput(event) {
+            const key = event.key;
+
+            // Allowed keys for direct typing
+            // This list is more permissive as the user is typing directly
+            // Allowing letters so scientific functions can be typed (e.g., 'sin', 'log')
+            const allowedKeys = '0123456789+-*/.%()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+            if (key === 'Enter') {
+                event.preventDefault(); // Prevent default form submission behavior
+                // The currentExpression is already synced via the 'input' event listener
+                evaluateExpression();
+            } else if (key === 'Backspace' || key === 'Delete') {
+                // These are handled natively by the input field, but we keep the currentExpression synced
+                // The 'input' event listener will handle the sync after the native action
+                lastOperationEquals = false; // Typing new input clears the 'last equals' flag
+            } else if (key.length === 1 && !event.ctrlKey && !event.altKey && !event.metaKey) {
+                // For regular character input, the 'input' event listener will handle syncing currentExpression
+                // No need to preventDefault here unless we want to filter characters at keydown
+                lastOperationEquals = false; // Typing new input clears the 'last equals' flag
+            }
+        }
+
+        /**
+         * Handles clicks on history items to load them into the main display.
+         * @param {Event} event - The click event object.
+         */
+        function handleHistoryClick(event) {
+            const historyItemDiv = event.target.closest('.history-item');
+            if (historyItemDiv) {
+                const index = parseInt(historyItemDiv.dataset.index);
+                if (!isNaN(index) && calculationHistory[index]) {
+                    currentExpression = calculationHistory[index].expression;
+                    updateDisplay();
+                    lastOperationEquals = false; // Clear flag as we're editing
+                }
+            }
+        }
+
+        // Add event listeners
+        buttons.forEach(button => {
+            button.addEventListener('click', handleButtonClick);
+        });
+
+        // Listen for keyboard input on the display field
+        display.addEventListener('input', () => {
+            // Sync internal expression with display value as user types
+            currentExpression = display.value;
+            lastOperationEquals = false; // Typing new input clears the 'last equals' flag
+        });
+        display.addEventListener('keydown', handleKeyboardInput);
+
+        // Listen for clicks on the history display area
+        historyDisplay.addEventListener('click', handleHistoryClick);
+
+        // Initialize display on load
+        updateDisplay();
+        renderHistory(); // Render empty history on load
+    </script>
+</body>
+</html>
