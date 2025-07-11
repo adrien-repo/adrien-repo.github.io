@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Explorer</title>
+    <style>
+        /* Basic Reset & Box-Sizing */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* --- NEW: Prevent text selection for all elements --- */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* IE 10+ */
+            user-select: none;         /* Standard */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Common system font */
+            background-color: #ECEFF1; /* Light grey background */
+            color: #333;
+            overflow: hidden; /* Prevent body scroll */
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Top Bar - Header */
+        .top-bar {
+            background-color: #4A4A4A; /* Darker grey, reminiscent of Linux title bars */
+            color: #fff;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-bottom: 1px solid #333;
+            flex-shrink: 0;
+        }
+
+        .top-bar .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Main Content Area */
+        .explorer-container {
+            display: flex;
+            flex-grow: 1; /* Takes up remaining height */
+            background-color: #fff;
+            border: 1px solid #ccc;
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden; /* For inner scrollbars */
+            border-radius: 5px;
+        }
+
+        /* Sidebar - Tree View */
+        .sidebar {
+            width: 250px;
+            background-color: #f7f7f7;
+            border-right: 1px solid #eee;
+            padding: 15px 0;
+            overflow-y: auto; /* Scroll for long tree */
+            flex-shrink: 0;
+        }
+
+        .sidebar h3 {
+            font-size: 1em;
+            color: #555;
+            padding: 0 15px 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+
+        .tree-view ul {
+            list-style: none;
+            padding-left: 15px;
+        }
+
+        .tree-view li {
+            padding: 5px 0;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+        }
+
+        .tree-view li:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tree-view li.active {
+            background-color: #e6f0fa; /* Light blue for active folder */
+            font-weight: bold;
+            color: #2196F3; /* Blue text */
+        }
+
+        /* Tree view specific styles for indentation */
+        .tree-view ul li {
+            padding-left: 0; /* Reset default li padding */
+        }
+
+        .tree-view ul ul {
+            padding-left: 20px; /* Indent sub-folders */
+        }
+
+        .tree-view .folder-icon, .tree-view .file-icon {
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+
+        /* Main Content - File List */
+        .main-content {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto; /* Scroll for long file lists */
+        }
+
+        .path-bar {
+            background-color: #f0f0f0;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            border-radius: 3px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .path-bar span {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .file-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Responsive grid */
+            gap: 15px;
+        }
+
+        .file-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #f0f0f0;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .file-item:hover {
+            background-color: #f5f5f5;
+            border-color: #e0e0e0;
+        }
+
+        .file-item.folder .icon, .file-item.file .icon {
+            font-size: 3em; /* Larger icons for main view */
+            margin-bottom: 5px;
+            color: #777; /* Default icon color */
+        }
+
+        .file-item.folder .icon {
+            color: #e7c01f; /* Folder color */
+        }
+
+        .file-item.file .icon.txt { color: #6bb0e0; } /* Text file */
+        .file-item.file .icon.img { color: #8bc34a; } /* Image file */
+        .file-item.file .icon.pdf { color: #e57373; } /* PDF file */
+        .file-item.file .icon.js { color: #ffd700; } /* JS file */
+        .file-item.file .icon.css { color: #2196F3; } /* CSS file */
+        .file-item.file .icon.html { color: #ff9800; } /* HTML file */
+        .file-item.file .icon.zip { color: #9c27b0; } /* Zip file */
+
+        .file-item .name {
+            font-size: 0.9em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%; /* Ensure text ellipsis works */
+        }
+
+        /* Generic Icons (using unicode or simple characters for now) */
+        .icon {
+            font-family: 'monospace'; /* Simple square/circle for now, ideally font awesome */
+        }
+        .icon.folder:before { content: "📁"; }
+        .icon.file:before { content: "📄"; }
+        .icon.txt:before { content: "📝"; }
+        .icon.img:before { content: "🖼️"; }
+        .icon.pdf:before { content: "📄"; } /* For simplicity, reuse file icon */
+        .icon.js:before { content: "JS"; font-size: 0.8em; } /* Simple text representation */
+        .icon.css:before { content: "CSS"; font-size: 0.8em; }
+        .icon.html:before { content: "HTML"; font-size: 0.8em; }
+        .icon.zip:before { content: "📦"; }
+
+        /* Fallback for general file type */
+        .icon.unknown:before { content: "❓"; }
+
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <span class="icon folder"></span> File Explorer
+    </div>
+
+    <div class="explorer-container">
+        <div class="sidebar">
+            <h3>Locations</h3>
+            <div id="tree-view" class="tree-view">
+                </div>
+        </div>
+
+        <div class="main-content">
+            <div id="path-bar" class="path-bar">Current Path: <span>/</span></div>
+            <div id="file-list" class="file-list">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // --- FILE SYSTEM DEFINITION ---
+        // This file system will now be read from the parent window (main.html)
+        let fileSystem = null;
+
+        let currentPath = []; // Stores the current path as an array of folder names
+        let currentDirectory = null; // Reference to the current folder object
+
+        // --- DOM ELEMENTS ---
+        const treeViewElement = document.getElementById('tree-view');
+        const pathBarElement = document.getElementById('path-bar').querySelector('span');
+        const fileListElement = document.getElementById('file-list');
+
+        // --- HELPER FUNCTIONS ---
+
+        // Gets the icon class based on type and extension
+        function getIconClass(type, extension) {
+            if (type === 'folder') return 'folder';
+            if (type === 'file') {
+                switch (extension) {
+                    case 'txt': return 'file txt';
+                    case 'img': return 'file img';
+                    case 'pdf': return 'file pdf';
+                    case 'js': return 'file js';
+                    case 'css': return 'file css';
+                    case 'html': return 'file html';
+                    case 'zip': return 'file zip';
+                    default: return 'file unknown';
+                }
+            }
+            return 'file'; // Fallback
+        }
+
+        // --- RENDERING FUNCTIONS ---
+
+        // Renders the tree view (sidebar)
+        function renderTreeView(directory, ulElement, pathSegments = []) {
+            if (!directory.contents) return;
+
+            // Sort folders alphabetically for the tree view
+            const sortedContents = [...directory.contents].sort((a, b) => a.name.localeCompare(b.name));
+
+            sortedContents.forEach(item => {
+                if (item.type === 'folder') { // ONLY render folders in the tree view
+                    const li = document.createElement('li');
+                    li.classList.add('tree-item', 'folder');
+                    li.setAttribute('data-path-segment', item.name);
+
+                    const iconSpan = document.createElement('span');
+                    iconSpan.classList.add('icon', 'folder-icon');
+                    li.appendChild(iconSpan);
+
+                    const textSpan = document.createElement('span');
+                    textSpan.textContent = item.name;
+                    li.appendChild(textSpan);
+
+                    const fullPath = [...pathSegments, item.name];
+                    li.onclick = () => navigateTo(fullPath);
+
+                    // Add active class if this is the current directory
+                    if (currentPath.join('/') === fullPath.join('/')) {
+                        li.classList.add('active');
+                    }
+
+                    ulElement.appendChild(li);
+
+                    // Determine if this folder should be expanded (i.e., if it's an ancestor of the current path)
+                    let shouldExpand = false;
+                    if (currentPath.length >= fullPath.length) {
+                        const currentPathPrefix = currentPath.slice(0, fullPath.length).join('/');
+                        if (currentPathPrefix === fullPath.join('/')) {
+                            shouldExpand = true;
+                        }
+                    }
+
+                    // Recursively render subfolders if they should be expanded
+                    if (item.contents && item.contents.length > 0 && shouldExpand) {
+                        const subUl = document.createElement('ul');
+                        ulElement.appendChild(subUl);
+                        renderTreeView(item, subUl, fullPath);
+                    }
+                }
+            });
+        }
+
+        // Renders the file list (main content)
+        function renderFileList(directory) {
+            fileListElement.innerHTML = ''; // Clear previous content
+            if (!directory || !directory.contents) {
+                fileListElement.innerHTML = '<p>No contents in this directory.</p>';
+                return;
+            }
+
+            // Sort folders first, then files, both alphabetically
+            const sortedContents = [...directory.contents].sort((a, b) => {
+                if (a.type === 'folder' && b.type !== 'folder') return -1;
+                if (a.type !== 'folder' && b.type === 'folder') return 1;
+                return a.name.localeCompare(b.name);
+            });
+
+            sortedContents.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('file-item', item.type);
+
+                const iconClasses = getIconClass(item.type, item.extension).split(' '); // Split the string into an array of class names
+                const iconSpan = document.createElement('span');
+                iconSpan.classList.add('icon', ...iconClasses); // Use spread operator to add multiple classes from the array
+                itemDiv.appendChild(iconSpan);
+
+                const nameSpan = document.createElement('span');
+                nameSpan.classList.add('name');
+                nameSpan.textContent = item.name;
+                itemDiv.appendChild(nameSpan);
+
+                if (item.type === 'folder') {
+                    itemDiv.onclick = () => { // Single click to navigate folder in file list
+                        const newPath = [...currentPath, item.name];
+                        navigateTo(newPath);
+                    };
+                } else { // This is the 'file' case
+                    itemDiv.ondblclick = () => {
+                        // Call window.parent.openWindowDirectly
+                        if (window.parent && typeof window.parent.openWindowDirectly === 'function') {
+                            const title = item.name;
+                            // Construct a dummy URL or a real one if you have a file serving mechanism
+                            const fileUrl = `https://example.com/files/${currentPath.join('/')}/${item.name}`;
+                            console.log(`Calling parent's openWindowDirectly for file: ${title} at URL: ${fileUrl}`);
+                            window.parent.openWindowDirectly(title, fileUrl, 150, 150, 800, 600); // Default sizes
+                        } else {
+                            // Fallback if parent function is not available
+                            alert(`Opening file: ${item.name}`);
+                        }
+                    };
+                }
+                fileListElement.appendChild(itemDiv);
+            });
+        }
+
+        // Updates the path bar display
+        function updatePathBar() {
+            const pathText = currentPath.length === 0 ? '/' : '/' + currentPath.join('/');
+            pathBarElement.textContent = pathText;
+        }
+
+        // --- NAVIGATION LOGIC ---
+
+        // Finds a directory object given a path array
+        function findDirectory(pathSegments) {
+            let dir = fileSystem;
+            if (!dir) return null; // Ensure fileSystem is loaded
+
+            for (const segment of pathSegments) {
+                const found = dir.contents.find(item => item.name === segment && item.type === 'folder');
+                if (found) {
+                    dir = found;
+                } else {
+                    return null; // Path not found
+                }
+            }
+            return dir;
+        }
+
+        // Navigates to a new path
+        function navigateTo(pathSegments) {
+            const targetDirectory = findDirectory(pathSegments);
+            if (targetDirectory) {
+                currentPath = pathSegments;
+                currentDirectory = targetDirectory;
+                updateView();
+            } else {
+                console.error('Directory not found:', pathSegments.join('/'));
+                // Use a custom message box instead of alert
+                showMessageBox('Error', 'Directory not found!');
+            }
+        }
+
+        // Updates both the tree view and file list
+        function updateView() {
+            // Clear and re-render the tree view entirely
+            treeViewElement.innerHTML = '';
+            const rootUl = document.createElement('ul');
+            treeViewElement.appendChild(rootUl);
+
+            // Add the root "/" item manually to the tree view
+            const rootLi = document.createElement('li');
+            rootLi.classList.add('tree-item', 'folder');
+            rootLi.setAttribute('data-path-segment', '/');
+            const rootIcon = document.createElement('span');
+            rootIcon.classList.add('icon', 'folder-icon');
+            rootLi.appendChild(rootIcon);
+            const rootText = document.createElement('span');
+            rootText.textContent = '/';
+            rootLi.appendChild(rootText);
+            rootLi.onclick = () => navigateTo([]); // Navigate to root
+            if (currentPath.length === 0) {
+                rootLi.classList.add('active');
+            }
+            rootUl.appendChild(rootLi);
+
+            // Render the rest of the tree from the fileSystem object
+            if (fileSystem) {
+                renderTreeView(fileSystem, rootUl, []); // Start from the root of the file system
+            }
+
+
+            renderFileList(currentDirectory); // This is where files and folders in the current directory are displayed
+            updatePathBar();
+
+            // Ensure the active element in the tree is visible if overflowed
+            const activeElement = treeViewElement.querySelector('.tree-item.active');
+            if (activeElement) {
+                activeElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Custom message box function (replaces alert)
+        function showMessageBox(title, message) {
+            const messageBox = document.createElement('div');
+            messageBox.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                border: 1px solid #ccc;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                padding: 20px;
+                border-radius: 8px;
+                z-index: 1000;
+                min-width: 300px;
+                text-align: center;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            `;
+            messageBox.innerHTML = `
+                <h3 style="margin-top: 0; color: #333;">${title}</h3>
+                <p>${message}</p>
+                <button style="
+                    background-color: #0078d7;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-top: 15px;
+                " onclick="this.parentNode.remove()">OK</button>
+            `;
+            document.body.appendChild(messageBox);
+        }
+
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Attempt to read fileSystem from parent window
+            if (window.parent && window.parent.fileSystemData) {
+                fileSystem = window.parent.fileSystemData;
+                navigateTo([]); // Start at the root with the parent's data
+            } else {
+                console.error("Parent's fileSystemData not found. Explorer will not function.");
+                showMessageBox('Error', 'File system data not found from main page. Please ensure `window.fileSystemData` is defined in main.html.');
+            }
+
+            // --- NEW: Prevent right-click context menu ---
+            document.body.addEventListener('contextmenu', (e) => {
+                e.preventDefault(); // Stop the default right-click behavior
+            });
+        });
+    </script>
+</body>
+</html>
