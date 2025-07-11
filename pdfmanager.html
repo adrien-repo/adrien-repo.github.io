@@ -472,7 +472,7 @@
                 const pdfBytes = await mergedPdfLibDoc.save();
                 const tempPdfJsDoc = await pdfjsLib.getDocument({ data: pdfBytes }).promise;
 
-                displayPdfInReaderPanel(tempPdfJsDoc, 1, 'Merged Document Preview');
+                displayPdfInReaderPanel(tempPdfJsDoc, 1, 'Document Preview');
 
             } catch (error) {
                 console.error('Error auto-updating merged PDF viewer:', error);
