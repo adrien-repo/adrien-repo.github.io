@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Interpreter</title>
+
+    <!-- Google Fonts for Linux feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- CodeMirror for code editing -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+
+    <!-- Showdown for Markdown rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    
+    <!-- Pyodide for Python execution -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+
+    <style>
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            background-color: #2e3436; /* Darker background, Linux feel */
+            margin: 0;
+            /* Adjusted padding-top to ensure content starts below fixed header */
+            padding: 140px 20px 20px 20px; /* This value might need minor tweaking based on final header height */
+            color: #d3d7cf; /* Lighter text for dark background */
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #eeeeec; /* Lighter header text */
+        }
+        /* Fixed header container */
+        #fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #2e3436; /* Match body background */
+            z-index: 1000; /* Ensure it's on top of scrolling content */
+            padding: 10px 0; /* Padding inside the fixed header */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow to distinguish it */
+        }
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto; /* Center the main content */
+            background-color: #343a40; /* Darker content area */
+            padding: 20px 40px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+            border-radius: 8px;
+            border: 1px solid #4e555b; /* Subtle border */
+        }
+        /* Notification message styling */
+        .notification-message {
+            text-align: center;
+            padding: 5px 15px; /* Smaller padding for reduced height */
+            margin-bottom: 20px; /* Margin below notification */
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+            /* Removed min-height, padding controls height now */
+            display: flex; /* Use flex to center content vertically */
+            align-items: center;
+            justify-content: center;
+            opacity: 0; /* Hidden by default, but occupies space */
+            pointer-events: none; /* Don't block clicks when invisible */
+            transition: opacity 0.3s ease-in-out, background-color 0.3s ease;
+            color: #eeeeec;
+            background-color: #4a5255; /* Changed to a softer, darker gray */
+        }
+        .notification-message.error {
+            background-color: #cc0000; /* Error red */
+        }
+        .cell {
+            border: 1px solid #4e554b;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 25px;
+            background-color: #40454a; /* Slightly lighter cell background */
+            transition: box-shadow 0.2s ease, transform 0.1s ease;
+        }
+        .cell:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
+        }
+        .cell-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #5e6468;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #555b60; /* Darker button */
+            color: #eeeeec;
+            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+        }
+        button:hover {
+            background-color: #60676d; /* Lighter on hover */
+            border-color: #727a80;
+            transform: translateY(-1px);
+        }
+        button.primary {
+            background-color: #3465a4; /* Linux-like blue */
+            color: white;
+            border: none;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+        }
+        button.primary:hover {
+            background-color: #4682b4; /* Lighter blue on hover */
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+        }
+        .CodeMirror {
+            border: 1px solid #5e6468;
+            border-radius: 4px;
+            height: auto;
+            min-height: 100px;
+            font-family: 'Ubuntu Mono', monospace; /* Monospace font for code */
+            font-size: 14px;
+            line-height: 1.5;
+            background-color: #2b2b2b; /* Dracula theme background */
+        }
+        .output-area {
+            background-color: #2b2b2b; /* Dark background for output */
+            color: #eeeeec; /* Light text for output */
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px solid #5e6468;
+            white-space: pre-wrap;
+            font-family: 'Ubuntu Mono', monospace; /* Monospace font for output */
+            font-size: 13px;
+        }
+        .output-area.error {
+            color: #ef2929; /* Red for errors */
+        }
+        .markdown-preview {
+            padding: 10px;
+            color: #d3d7cf; /* Light text for markdown */
+        }
+        .markdown-preview h1, .markdown-preview h2, .markdown-preview h3 {
+            border-bottom: 1px solid #5e6468;
+            padding-bottom: 5px;
+            color: #eeeeec;
+        }
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(46, 52, 54, 0.9); /* Darker overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            color: #eeeeec;
+            z-index: 1000;
+        }
+        .top-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 10px;
+            margin-bottom: 20px; /* This margin is now inside the fixed header */
+        }
+        /* Hidden file input */
+        .hidden-file-input {
+            display: none;
+        }
+        /* Margin for the cells container to push content below fixed header */
+        #cells-container {
+            margin-top: 40px; /* Increased margin to create more space */
+        }
+    </style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loading-overlay">
+    Loading Python interpreter...
+</div>
+
+<!-- Fixed Header Area -->
+<div id="fixed-header">
+    <h5 id="notification-message" class="notification-message"></h5>
+    <div class="top-actions">
+        <button onclick="addCell('code')">Add Code Cell</button>
+        <button onclick="addCell('markdown')">Add Markdown Cell</button>
+        <button onclick="document.getElementById('importPyInput').click()">Import .py</button>
+        <button onclick="document.getElementById('importIpynbInput').click()">Import .ipynb</button>
+        <button onclick="exportToipynb()">Export .ipynb</button>
+        <button onclick="exportToPy()">Export .py</button>
+        <button class="primary" onclick="runAllCells()">Run All</button>
+    </div>
+</div>
+
+<div class="main-container" id="notebook-container" style="display: none;">
+    <!-- Hidden file inputs for import functionality -->
+    <input type="file" id="importPyInput" class="hidden-file-input" accept=".py" onchange="importPyFile(event)">
+    <input type="file" id="importIpynbInput" class="hidden-file-input" accept=".ipynb" onchange="importIpynbFile(event)">
+
+    <div id="cells-container"></div>
+</div>
+
+<script>
+    let pyodide;
+    let notebookCells = [];
+    let cmInstances = {}; // Store CodeMirror instances by cell ID
+    const markdownConverter = new showdown.Converter();
+    let notificationTimeout; // To manage notification hiding
+
+    // Function to show a temporary notification message
+    function showNotification(message, isError = false) {
+        const notificationElement = document.getElementById('notification-message');
+        clearTimeout(notificationTimeout); // Clear any existing timeout
+
+        notificationElement.textContent = message;
+        notificationElement.classList.remove('error');
+        if (isError) {
+            notificationElement.classList.add('error');
+        }
+        notificationElement.style.opacity = '1'; // Make visible
+        notificationElement.style.pointerEvents = 'auto'; // Make interactive if needed (though not for simple text)
+
+
+        notificationTimeout = setTimeout(() => {
+            notificationElement.style.opacity = '0'; // Start fade out
+            notificationElement.style.pointerEvents = 'none'; // Make non-interactive after fade
+            // No need to set display: 'none' as min-height keeps space
+        }, 4000); // Display for 4 seconds
+    }
+
+    // Function to refresh all CodeMirror instances
+    function refreshAllCodeMirrors() {
+        for (const id in cmInstances) {
+            if (cmInstances.hasOwnProperty(id)) {
+                cmInstances[id].refresh();
+            }
+        }
+    }
+
+    async function loadPyodideAndLibs() {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const notebookContainer = document.getElementById('notebook-container');
+
+        try {
+            console.log('Starting Pyodide loading process...');
+            loadingOverlay.innerText = 'Initializing...';
+            
+            pyodide = await loadPyodide({
+                indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/",
+            });
+            console.log('Pyodide core loaded.');
+
+            loadingOverlay.innerText = 'Loading Python packages...';
+            await pyodide.loadPackage('micropip');
+            await pyodide.loadPackage('numpy'); // Explicitly load numpy
+            console.log('Micropip and numpy loaded.');
+            
+            loadingOverlay.style.display = 'none';
+            notebookContainer.style.display = 'block';
+            console.log('Pyodide and packages ready. Notebook displayed.');
+            showNotification('Python interpreter loaded successfully!');
+
+            // Add initial cells
+            //addCell('markdown', '# Welcome!\n\nThis is a simple in-browser Python notebook.');
+            addCell('code', 'print("Hello, World!")');
+            
+            // Crucial: Refresh CodeMirror instances after the container is visible
+            refreshAllCodeMirrors();
+
+        } catch (error) {
+            console.error("Pyodide loading failed:", error);
+            loadingOverlay.style.color = '#d9534f';
+            loadingOverlay.innerText = `Failed to load Pyodide. Please check your internet connection and browser console for details. Error: ${error.message || error}`;
+            showNotification(`Failed to load Python interpreter: ${error.message || error}`, true);
+        }
+    }
+
+    function generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+    }
+
+    function renderNotebook() {
+        const cellsContainer = document.getElementById('cells-container');
+        cellsContainer.innerHTML = '';
+        // Before clearing cmInstances, clean up old CodeMirror editors to prevent memory leaks
+        for (const id in cmInstances) {
+            if (cmInstances.hasOwnProperty(id) && cmInstances[id].toTextArea) {
+                cmInstances[id].toTextArea(); // Detach CodeMirror from textarea
+            }
+        }
+        cmInstances = {}; // Clear previous CodeMirror instances, as we're rebuilding the DOM
+        
+        notebookCells.forEach((cell, index) => {
+            const cellDiv = document.createElement('div');
+            cellDiv.classList.add('cell');
+            cellDiv.dataset.id = cell.id; // Store cell ID in data attribute
+
+            const actionsDiv = document.createElement('div');
+            actionsDiv.classList.add('cell-actions');
+            
+            const upButton = document.createElement('button');
+            upButton.textContent = '▲';
+            upButton.onclick = () => moveCell(index, -1);
+            upButton.disabled = (index === 0); // Disable if first cell
+            actionsDiv.appendChild(upButton);
+
+            const downButton = document.createElement('button');
+            downButton.textContent = '▼';
+            downButton.onclick = () => moveCell(index, 1);
+            downButton.disabled = (index === notebookCells.length - 1); // Disable if last cell
+            actionsDiv.appendChild(downButton);
+
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = () => removeCell(cell.id);
+            actionsDiv.appendChild(removeButton);
+
+            if (cell.type === 'code') {
+                const runButton = document.createElement('button');
+                runButton.classList.add('primary');
+                runButton.textContent = '▶ Run';
+                actionsDiv.appendChild(runButton);
+
+                const clearOutputButton = document.createElement('button');
+                clearOutputButton.textContent = 'Clear Output';
+                clearOutputButton.onclick = () => clearCellOutput(cell.id);
+                actionsDiv.appendChild(clearOutputButton);
+
+                const textarea = document.createElement('textarea');
+                textarea.value = cell.content;
+                cellDiv.appendChild(actionsDiv);
+                cellDiv.appendChild(textarea);
+                
+                // Synchronous CodeMirror initialization
+                const editor = CodeMirror.fromTextArea(textarea, {
+                    mode: 'python',
+                    theme: 'dracula',
+                    lineNumbers: true,
+                    indentUnit: 4,
+                    extraKeys: {
+                        "Shift-Enter": () => runCell(editor, cell.id)
+                    }
+                });
+                
+                // Update cell.content when CodeMirror editor changes
+                editor.on('change', (instance) => {
+                    cell.content = instance.getValue();
+                });
+
+                runButton.onclick = () => runCell(editor, cell.id);
+                cmInstances[cell.id] = editor; // Store for runAllCells direct access
+
+                const outputDiv = document.createElement('pre');
+                outputDiv.classList.add('output-area');
+                outputDiv.textContent = cell.output || '';
+                if (cell.error) {
+                    outputDiv.classList.add('error');
+                } else {
+                    outputDiv.classList.remove('error');
+                }
+                cellDiv.appendChild(outputDiv);
+
+            } else if (cell.type === 'markdown') {
+                const toggleButton = document.createElement('button');
+                toggleButton.textContent = cell.isEditing ? 'Preview' : 'Edit';
+                toggleButton.onclick = () => toggleMarkdownMode(cell.id);
+                actionsDiv.appendChild(toggleButton);
+                
+                cellDiv.appendChild(actionsDiv);
+                
+                if (cell.isEditing) {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = cell.content;
+                    textarea.rows = Math.max(5, cell.content.split('\n').length + 1); // Adjust rows dynamically
+                    textarea.style.width = '100%';
+                    textarea.style.boxSizing = 'border-box';
+                    textarea.oninput = (e) => {
+                        cell.content = e.target.value;
+                        e.target.rows = Math.max(5, e.target.value.split('\n').length + 1); // Adjust rows dynamically
+                    };
+                    cellDiv.appendChild(textarea);
+                } else {
+                    const previewDiv = document.createElement('div');
+                    previewDiv.classList.add('markdown-preview');
+                    previewDiv.innerHTML = markdownConverter.makeHtml(cell.content);
+                    cellDiv.appendChild(previewDiv);
+                }
+            }
+            cellsContainer.appendChild(cellDiv);
+        });
+        // Crucial: Refresh CodeMirror instances after rendering is complete
+        refreshAllCodeMirrors();
+    }
+
+    async function runCell(editorInstance, cellId) {
+        const cell = notebookCells.find(c => c.id === cellId);
+        if (!cell || !pyodide) {
+            console.error("Pyodide not loaded or cell not found.");
+            showNotification("Python interpreter not ready. Please wait.", true);
+            return;
+        }
+
+        cell.output = '...Running...';
+        cell.error = null;
+        // Update only the specific cell's output area to show "Running..."
+        const currentCellDiv = document.querySelector(`[data-id="${cellId}"]`);
+        if (currentCellDiv) {
+            const outputArea = currentCellDiv.querySelector('.output-area');
+            if (outputArea) {
+                outputArea.textContent = cell.output;
+                outputArea.classList.remove('error');
+            }
+        }
+
+        const code = editorInstance.getValue(); // Get the latest code from the editor
+        
+        try {
+            // Make the JavaScript 'code' variable directly available as a Python string variable
+            pyodide.globals.set('user_code_string', code);
+
+            const captured = await pyodide.runPythonAsync(`
+import io, sys
+from contextlib import redirect_stdout, redirect_stderr
+
+output = io.StringIO()
+error = io.StringIO()
+
+with redirect_stdout(output), redirect_stderr(error):
+    try:
+        # Execute the Python string stored in 'user_code_string'
+        # 'globals()' ensures it runs in the current Python namespace, preserving state.
+        exec(user_code_string, globals())
+    except Exception:
+        import traceback
+        traceback.print_exc()
+
+(output.getvalue(), error.getvalue())
+`);
+            
+            const [stdout, stderr] = captured.toJs();
+            
+            if (stderr) {
+                cell.output = stderr;
+                cell.error = true;
+                showNotification("Code execution failed. Check output for details.", true);
+            } else {
+                cell.output = stdout;
+                cell.error = false;
+                showNotification("Cell executed successfully!", false);
+            }
+
+        } catch (err) {
+            cell.output = `An unexpected Pyodide error during execution:\n${err.message}`;
+            cell.error = true;
+            console.error("Pyodide execution error:", err);
+            showNotification(`Pyodide execution error: ${err.message}`, true);
+        } finally {
+            // Clean up the temporary global variable in Python
+            pyodide.globals.delete('user_code_string');
+        }
+
+        // Re-render only the specific cell's output area with final result
+        if (currentCellDiv) {
+            const outputArea = currentCellDiv.querySelector('.output-area');
+            if (outputArea) {
+                outputArea.textContent = cell.output;
+                if (cell.error) {
+                    outputArea.classList.add('error');
+                } else {
+                    outputArea.classList.remove('error');
+                }
+            }
+        }
+    }
+
+    // Function to run all code cells sequentially
+    async function runAllCells() {
+        if (!pyodide) {
+            showNotification("Python interpreter not loaded yet. Please wait.", true);
+            return;
+        }
+
+        showNotification("Running all code cells...");
+        
+        // Clear all outputs in data model and then update DOM
+        notebookCells.forEach(cell => {
+            if (cell.type === 'code') {
+                cell.output = '';
+                cell.error = false;
+            }
+        });
+        // Manually clear outputs in the DOM to avoid full re-render
+        document.querySelectorAll('.output-area').forEach(outputArea => {
+            outputArea.textContent = '';
+            outputArea.classList.remove('error');
+        });
+
+
+        for (const cell of notebookCells) {
+            if (cell.type === 'code') {
+                const editorInstance = cmInstances[cell.id];
+                if (editorInstance) {
+                    await runCell(editorInstance, cell.id);
+                    // If an error occurred in a cell, stop further execution
+                    if (cell.error) {
+                        console.warn(`Execution stopped at cell ${cell.id} due to an error.`);
+                        showNotification(`Execution stopped at cell with error.`, true);
+                        break; 
+                    }
+                } else {
+                    console.warn(`CodeMirror instance not found for cell ${cell.id}. This indicates a rendering issue.`);
+                    showNotification(`Skipping cell ${cell.id}: editor not ready.`, true);
+                    // Do not break here, try to run other cells if possible, but log the warning.
+                }
+            }
+        }
+        showNotification("All code cells executed!");
+    }
+
+
+    function addCell(type, content = '', index) {
+        const newCell = {
+            id: generateId(),
+            type: type,
+            content: content,
+            output: '',
+            isEditing: type === 'markdown'
+        };
+        if (index === undefined) {
+            notebookCells.push(newCell);
+        } else {
+            notebookCells.splice(index + 1, 0, newCell);
+        }
+        renderNotebook();
+        // Scroll to the newly added cell
+        const newCellElement = document.querySelector(`[data-id="${newCell.id}"]`);
+        if (newCellElement) {
+            newCellElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        showNotification(`Added new ${type} cell.`);
+    }
+
+    function removeCell(cellId) {
+        notebookCells = notebookCells.filter(cell => cell.id !== cellId);
+        // Also remove the CodeMirror instance from our map and clean up
+        if (cmInstances[cellId]) {
+            cmInstances[cellId].toTextArea(); // Detach CodeMirror from textarea
+            delete cmInstances[cellId];
+        }
+        renderNotebook();
+        showNotification("Cell removed.");
+    }
+
+    function moveCell(fromIndex, direction) {
+        const toIndex = fromIndex + direction;
+        if (toIndex >= 0 && toIndex < notebookCells.length) {
+            const [movedCell] = notebookCells.splice(fromIndex, 1);
+            notebookCells.splice(toIndex, 0, movedCell);
+            renderNotebook();
+            // Scroll to the moved cell
+            const movedCellElement = document.querySelector(`[data-id="${movedCell.id}"]`);
+            if (movedCellElement) {
+                movedCellElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            showNotification("Cell moved.");
+        }
+    }
+
+    function clearCellOutput(cellId) {
+        const cell = notebookCells.find(c => c.id === cellId);
+        if (cell && cell.type === 'code') {
+            cell.output = '';
+            cell.error = false;
+            // Only update the specific cell's output area in the DOM
+            const currentCellDiv = document.querySelector(`[data-id="${cellId}"]`);
+            if (currentCellDiv) {
+                const outputArea = currentCellDiv.querySelector('.output-area');
+                if (outputArea) {
+                    outputArea.textContent = '';
+                    outputArea.classList.remove('error');
+                }
+            }
+            showNotification("Output cleared.");
+        }
+    }
+
+    function toggleMarkdownMode(cellId) {
+        const cell = notebookCells.find(c => c.id === cellId);
+        if (cell) {
+            cell.isEditing = !cell.isEditing;
+            renderNotebook();
+            showNotification(`Markdown cell switched to ${cell.isEditing ? 'edit' : 'preview'} mode.`);
+        }
+    }
+
+    function exportToipynb() {
+        const ipynbData = {
+            "cells": notebookCells.map(cell => {
+                const cellObject = {
+                    "cell_type": cell.type,
+                    "source": cell.content.split('\n'),
+                    "metadata": {},
+                };
+                if (cell.type === "code" && cell.output) {
+                    const outputType = cell.error ? "error" : "stream";
+                    const outputName = cell.error ? "stderr" : "stdout";
+                    cellObject.outputs = [{
+                        "output_type": outputType,
+                        "name": outputName,
+                        "text": cell.output.split('\n')
+                    }];
+                }
+                return cellObject;
+            }),
+            "metadata": {
+                "kernelspec": { "display_name": "Python 3", "language": "python", "name": "python3" },
+                "language_info": { "codemirror_mode": { "name": "ipython", "version": 3 }, "name": "python", "version": "3.10.4" }
+            },
+            "nbformat": 4,
+            "nbformat_minor": 5
+        };
+        const blob = new Blob([JSON.stringify(ipynbData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'notebook.ipynb';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showNotification("Notebook exported as .ipynb");
+    }
+
+    function exportToPy() {
+        let pyContent = '';
+        notebookCells.forEach(cell => {
+            if (cell.type === 'code') {
+                pyContent += cell.content + '\n\n';
+            } else if (cell.type === 'markdown') {
+                pyContent += cell.content.split('\n').map(line => `# ${line}`).join('\n') + '\n\n';
+            }
+        });
+        const blob = new Blob([pyContent], { type: 'text/x-python' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'notebook.py';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showNotification("Notebook exported as .py");
+    }
+
+    // --- Import Functions ---
+
+    function importPyFile(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const content = e.target.result;
+            notebookCells = []; // Clear current notebook before importing .py
+            renderNotebook(); // Re-render to show empty notebook
+            addCell('code', content);
+            showNotification("Python file imported successfully!");
+        };
+        reader.onerror = (e) => {
+            console.error("Error reading .py file:", e);
+            showNotification("Failed to read .py file.", true);
+        };
+        reader.readAsText(file);
+        event.target.value = ''; // Clear the input so same file can be selected again
+    }
+
+    function importIpynbFile(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const jsonContent = JSON.parse(e.target.result);
+                if (jsonContent.cells && Array.isArray(jsonContent.cells)) {
+                    notebookCells = []; // Clear current notebook before importing
+                    jsonContent.cells.forEach(importedCell => {
+                        // CRUCIAL FIX: Join source array with '\n' to preserve newlines
+                        const cellContent = Array.isArray(importedCell.source) ? importedCell.source.join('\n') : importedCell.source;
+                        let cellOutput = '';
+                        let cellError = false;
+
+                        // Extract output if present
+                        if (importedCell.outputs && importedCell.outputs.length > 0) {
+                            importedCell.outputs.forEach(output => {
+                                if (output.output_type === 'stream' && output.name === 'stdout' && output.text) {
+                                    cellOutput += output.text.join('');
+                                } else if (output.output_type === 'error' && output.name === 'stderr' && output.traceback) {
+                                    // For errors, traceback is usually in 'traceback' field
+                                    cellOutput += output.traceback.join('');
+                                    cellError = true;
+                                }
+                                // Handle other output types like 'execute_result' if needed
+                                else if (output.output_type === 'execute_result' && output.data && output.data['text/plain']) {
+                                    cellOutput += output.data['text/plain'].join('');
+                                }
+                            });
+                        }
+
+                        if (importedCell.cell_type === 'code' || importedCell.cell_type === 'markdown') {
+                            const newCell = {
+                                id: generateId(),
+                                type: importedCell.cell_type,
+                                content: cellContent,
+                                output: cellOutput,
+                                error: cellError,
+                                isEditing: importedCell.cell_type === 'markdown' // Default to editing for markdown on import
+                            };
+                            notebookCells.push(newCell);
+                        }
+                    });
+                    renderNotebook();
+                    showNotification("Notebook imported successfully!");
+                } else {
+                    showNotification("Invalid .ipynb file format: 'cells' array not found.", true);
+                }
+            } catch (jsonError) {
+                console.error("Error parsing .ipynb file:", jsonError);
+                showNotification("Failed to parse .ipynb file. It might be corrupted or not a valid JSON.", true);
+            }
+        };
+        reader.onerror = (e) => {
+            console.error("Error reading .ipynb file:", e);
+            showNotification("Failed to read .ipynb file.", true);
+        };
+        reader.readAsText(file);
+        event.target.value = ''; // Clear the input so same file can be selected again
+    }
+
+
+    document.addEventListener('DOMContentLoaded', loadPyodideAndLibs);
+</script>
+</body>
+</html>
