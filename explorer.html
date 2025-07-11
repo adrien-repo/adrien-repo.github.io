@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Explorer</title>
+    <title>Linux-like File Explorer</title>
     <style>
         /* Basic Reset & Box-Sizing */
         * {
@@ -345,16 +345,24 @@
                     };
                 } else { // This is the 'file' case
                     itemDiv.ondblclick = () => {
+                        // Determine the URL to open
+                        const title = item.name;
+                        let fileUrl = item.url; // Check if the item has a specific URL defined in fileSystemData
+
+                        // If no specific URL is defined, use about:blank and log a message
+                        if (!fileUrl) {
+                            fileUrl = `about:blank`;
+                            console.warn(`No specific URL defined for "${item.name}". Opening "${fileUrl}".`);
+                            showMessageBox('Info', `Opening "${item.name}". No specific content URL defined, so an empty window is opened.`);
+                        }
+
                         // Call window.parent.openWindowDirectly
                         if (window.parent && typeof window.parent.openWindowDirectly === 'function') {
-                            const title = item.name;
-                            // Construct a dummy URL or a real one if you have a file serving mechanism
-                            const fileUrl = `https://example.com/files/${currentPath.join('/')}/${item.name}`;
                             console.log(`Calling parent's openWindowDirectly for file: ${title} at URL: ${fileUrl}`);
                             window.parent.openWindowDirectly(title, fileUrl, 150, 150, 800, 600); // Default sizes
                         } else {
                             // Fallback if parent function is not available
-                            alert(`Opening file: ${item.name}`);
+                            showMessageBox('Error', `Cannot open file: ${item.name}. 'openWindowDirectly' function not found in parent window.`);
                         }
                     };
                 }
