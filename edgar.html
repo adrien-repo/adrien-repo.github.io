@@ -1013,10 +1013,25 @@
                                 let href = a.getAttribute('href');
                                 if (href) {
                                     // If the href starts with '#', it's an internal anchor link.
-                                    // We should NOT prevent its default behavior or modify its target.
+                                    // Check if this page is within an iframe
                                     if (href.startsWith('#')) {
-                                        a.target = '_self'; // Ensure it stays in the same iframe
-                                        return; // Skip to the next link, allowing default browser behavior
+                                        if (window.self !== window.top) {
+                                            // If in an iframe, prevent default and manually scroll
+                                            a.addEventListener('click', (e) => {
+                                                e.preventDefault();
+                                                const targetId = href.substring(1);
+                                                const targetElement = e.currentTarget.ownerDocument.getElementById(targetId);
+
+                                                if (targetElement) {
+                                                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                }
+                                            });
+                                            a.target = '_self'; // Ensure it stays in the same iframe
+                                        } else {
+                                            // If not in an iframe, allow default browser behavior
+                                            a.target = '_self';
+                                            return; // Skip to the next link
+                                        }
                                     }
 
                                     // For all other links, resolve the absolute URL
