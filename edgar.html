@@ -1009,62 +1009,52 @@
                             });
 
                             // Correct link paths and add event listeners for internal links
-                            iframeDoc.querySelectorAll('a').forEach(a => {
-                                let href = a.getAttribute('href');
-                                if (href) {
-                                    // If the href starts with '#', it's an internal anchor link.
-                                    // Check if this page is within an iframe
-                                    if (href.startsWith('#')) {
-                                        if (window.self !== window.top) {
-                                            // If in an iframe, prevent default and manually scroll
-                                            a.addEventListener('click', (e) => {
-                                                e.preventDefault();
-                                                const targetId = href.substring(1);
-                                                const targetElement = e.currentTarget.ownerDocument.getElementById(targetId);
+							iframeDoc.querySelectorAll('a').forEach(a => {
+								let href = a.getAttribute('href');
+								if (href) {
+									// If the href starts with '#', it's an internal anchor link.
+									if (href.startsWith('#')) {
+										// Prevent the default parent window navigation
+										a.addEventListener('click', (e) => {
+											e.preventDefault();
+											// Get the target element by ID
+											const targetId = href.substring(1);
+											const targetElement = e.currentTarget.ownerDocument.getElementById(targetId);
 
-                                                if (targetElement) {
-                                                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                                }
-                                            });
-                                            a.target = '_self'; // Ensure it stays in the same iframe
-                                        } else {
-                                            // If not in an iframe, allow default browser behavior
-                                            a.target = '_self';
-                                            return; // Skip to the next link
-                                        }
-                                    }
+											if (targetElement) {
+												// Manually scroll the iframe's document into view
+												targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+											}
+										});
+										a.target = '_self'; // Ensure it stays within the same iframe
+									} else {
+										// ... (rest of the logic for other link types)
+										let absoluteUrl;
+										try {
+											absoluteUrl = new URL(href, baseUrl).href;
+										} catch (e) {
+											console.warn(`Could not resolve link URL: ${href} relative to ${baseUrl}`, e);
+											return;
+										}
 
-                                    // For all other links, resolve the absolute URL
-                                    let absoluteUrl;
-                                    try {
-                                        absoluteUrl = new URL(href, baseUrl).href;
-                                    } catch (e) {
-                                        console.warn(`Could not resolve link URL: ${href} relative to ${baseUrl}`, e);
-                                        return; // Skip this link if URL is malformed
-                                    }
+										if (!absoluteUrl.startsWith('http://') && !absoluteUrl.startsWith('https://') || absoluteUrl.includes('sec.gov/Archives/edgar/data/')) {
+											a.setAttribute('href', absoluteUrl);
+											a.target = '_self';
 
-                                    // If it's an internal SEC document link (not a hash link, but within SEC archives)
-                                    // or a relative link that should open as a new internal tab
-                                    if (!absoluteUrl.startsWith('http://') && !absoluteUrl.startsWith('https://') || absoluteUrl.includes('sec.gov/Archives/edgar/data/')) {
-                                        a.setAttribute('href', absoluteUrl); // Ensure href is absolute
-                                        a.target = '_self'; // Ensure it opens in the same iframe initially
-
-                                        // Add event listener to intercept clicks on these internal document links
-                                        a.addEventListener('click', (e) => {
-                                            e.preventDefault(); // Prevent default navigation (which would reload the iframe or navigate away)
-                                            const linkedUrl = e.currentTarget.href;
-                                            const linkedTitle = `${currentCompanyTicker ? currentCompanyTicker + ' - ' : ''}LINK`; // Title for linked document
-                                            // Generate a unique ID for linked documents
-                                            const linkedId = `linked-${id}-${linkedUrl.split('/').pop().replace(/[^a-zA-Z0-9]/g, '')}-${Date.now()}`; // More robust ID
-                                            openFilingTab(linkedId, linkedTitle, linkedUrl, true); // Open as a new linked document tab
-                                        });
-                                    } else {
-                                        // For truly external links, ensure they open in a new browser tab
-                                        a.target = '_blank';
-                                        a.rel = 'noopener noreferrer';
-                                    }
-                                }
-                            });
+											a.addEventListener('click', (e) => {
+												e.preventDefault();
+												const linkedUrl = e.currentTarget.href;
+												const linkedTitle = `${currentCompanyTicker ? currentCompanyTicker + ' - ' : ''}LINK`;
+												const linkedId = `linked-${id}-${linkedUrl.split('/').pop().replace(/[^a-zA-Z0-9]/g, '')}-${Date.now()}`;
+												openFilingTab(linkedId, linkedTitle, linkedUrl, true);
+											});
+										} else {
+											a.target = '_blank';
+											a.rel = 'noopener noreferrer';
+										}
+									}
+								}
+							});
                         };
                     } else {
                         console.error('Iframe contentDocument not available.');
