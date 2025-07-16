@@ -375,6 +375,54 @@
             opacity: 1;
             visibility: visible;
         }
+
+
+	/* * Mobile-friendly styles 
+	 * These styles will be applied on screens up to 768px wide.
+	 */
+	@media (max-width: 768px) {
+	    /* Taskbar */
+	    #taskbar {
+	        height: 50px;
+	        padding: 0 5px;
+	    }
+	
+	    #start-menu-button {
+	        font-size: 1.2em;
+	        margin-right: 10px;
+	    }
+	
+	    #clock-container {
+	        display: none; /* Hide the clock to save space */
+	    }
+	
+	    /* Windows */
+	    .window {
+	        min-width: 90vw; /* Use viewport width for a more flexible size */
+	        min-height: 80vh; /* Use viewport height for a more flexible size */
+	        left: 5vw !important; /* Center the window horizontally */
+	        top: 5vh !important; /* Center the window vertically */
+	        width: auto !important; /* Override fixed inline widths */
+	        height: auto !important; /* Override fixed inline heights */
+	    }
+	
+	    /* Hide resize handles on mobile for better usability */
+	    .window .resize-handle {
+	        display: none;
+	    }
+	
+	    /* Desktop Icons */
+	    .desktop-icon {
+	        width: 60px; /* Reduce icon width */
+	        height: 70px; /* Reduce icon height */
+	        font-size: 0.7em;
+	    }
+	
+	    .desktop-icon img {
+	        width: 32px; /* Reduce image size */
+	        height: 32px;
+	    }
+	}
     </style>
 </head>
 <body>
