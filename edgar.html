@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDGAR Browser</title>
+	<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
+    <!-- Tailwind CSS CDN for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for Linux-app look and feel */
+        :root {
+            --bg-color-light: #f3f4f6;
+            --container-bg-light: #ffffff;
+            --text-color-light: #1f2937;
+            --border-color-light: #d1d5db;
+            --accent-color-light: #d1d5db; /* Indigo-500 */
+            --accent-dark-light: #d1d5db; /* Indigo-600 */
+            --header-bg-light: #e5e7eb; /* Gray-200 */
+            --card-bg-light: #f9fafb;
+            --tab-bg-light: #e0e0e0;
+            --tab-active-bg-light: #ffffff;
+            --tab-border-light: #c0c0c0;
+
+            --bg-color-dark: #2d3748; /* Dark gray */
+            --container-bg-dark: #1a202c; /* Darker gray */
+            --text-color-dark: #e2e8f0; /* Light gray */
+            --border-color-dark: #4a5568; /* Darker border */
+            --accent-color-dark: #4a5568; /* Indigo-400 */
+            --accent-dark-dark: #4a5568; /* Indigo-500 */
+            --header-bg-dark: #242c3b; /* Even darker gray */
+            --card-bg-dark: #2c3440;
+            --tab-bg-dark: #3a4454;
+            --tab-active-bg-dark: #1a202c;
+            --tab-border-dark: #4a5568;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 1rem; /* Reduced padding for more space */
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-dark);
+        }
+
+        .container {
+            background-color: var(--container-bg-light);
+            border-radius: 0.5rem; /* Slightly less rounded */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            max-width: 1400px; /* Increased max-width */
+            width: 100%;
+            display: flex;
+            flex-direction: row; /* Flex row for columns */
+            height: 95vh; /* Full viewport height */
+            overflow: hidden; /* Prevent main scrollbar */
+            border: 1px solid var(--border-color-light); /* Added border */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body.dark-mode .container {
+            background-color: var(--container-bg-dark);
+            border-color: var(--border-color-dark);
+        }
+
+        input[type="text"], select {
+            border: 1px solid var(--border-color-light);
+            background-color: var(--container-bg-light);
+            color: var(--text-color-light);
+            border-radius: 0.25rem; /* Sharper corners */
+            padding: 0.5rem 0.75rem;
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease, color 0.3s ease;
+        }
+        body.dark-mode input[type="text"], body.dark-mode select {
+            border-color: var(--border-color-dark);
+            background-color: var(--card-bg-dark); /* Slightly lighter than container for input */
+            color: var(--text-color-dark);
+        }
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color-light);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        body.dark-mode input[type="text"]:focus, body.dark-mode select:focus {
+            border-color: var(--accent-color-dark);
+            box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.2);
+        }
+
+        button {
+            background-color: var(--accent-color-light);
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem; /* Sharper corners */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            border: none;
+            flex-shrink: 0; /* Prevent button from shrinking */
+        }
+        button:hover {
+            background-color: var(--accent-dark-light);
+            transform: translateY(-1px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        body.dark-mode button {
+            background-color: var(--accent-color-dark);
+        }
+        body.dark-mode button:hover {
+            background-color: var(--accent-dark-dark);
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--accent-color-light);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            display: none;
+        }
+        body.dark-mode .loading-spinner {
+            border-left-color: var(--accent-color-dark);
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error-message {
+            color: #ef4444;
+            background-color: #fef2f2;
+            border: 1px solid #fca5a5;
+            padding: 0.75rem 1rem;
+            border-radius: 0.25rem;
+            text-align: center;
+            display: none;
+        }
+        body.dark-mode .error-message {
+            background-color: #451a1a;
+            border-color: #881e1e;
+            color: #fca5a5;
+        }
+
+        /* Column Layout */
+        .left-column {
+            width: 25%; /* 1/4 width */
+            min-width: 280px; /* Minimum width for left column */
+            max-width: 400px; /* Maximum width for left column */
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            border-right: 1px solid var(--border-color-light);
+            transition: width 0.3s ease, border-color 0.3s ease;
+        }
+        body.dark-mode .left-column {
+            border-color: var(--border-color-dark);
+        }
+
+        .left-column.hidden {
+            width: 0;
+            min-width: 0;
+            padding: 0;
+            overflow: hidden;
+            border-right: none;
+        }
+
+        .right-column {
+            flex-grow: 1; /* Takes remaining space */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Important for iframe scrolling */
+            position: relative; /* For search bar positioning */
+        }
+
+        .filings-list-container {
+            flex-grow: 1;
+            overflow-y: auto; /* Scrollable list */
+            padding-right: 0.5rem; /* Space for scrollbar */
+            margin-right: -0.5rem; /* Counteract padding-right for full width */
+        }
+
+        .filing-item {
+            background-color: var(--card-bg-light);
+            padding: 0.75rem 1rem;
+            border-radius: 0.25rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            border: 1px solid var(--border-color-light);
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, border-color 0.3s ease;
+        }
+        .filing-item:hover {
+            background-color: var(--accent-color-light);
+            color: #ffffff;
+            border-color: var(--accent-color-light);
+        }
+        .filing-item.active {
+            background-color: var(--accent-color-light);
+            color: #ffffff;
+            border-color: var(--accent-color-light);
+        }
+        body.dark-mode .filing-item {
+            background-color: var(--card-bg-dark);
+            border-color: var(--border-color-dark);
+        }
+        body.dark-mode .filing-item:hover {
+            background-color: var(--accent-color-dark);
+            color: var(--text-color-dark);
+            border-color: var(--accent-color-dark);
+        }
+        body.dark-mode .filing-item.active {
+            background-color: var(--accent-color-dark);
+            color: var(--text-color-dark);
+            border-color: var(--accent-color-dark);
+        }
+
+        .filing-item strong {
+            font-size: 1rem;
+            color: inherit; /* Inherit color from parent */
+        }
+        .filing-item p {
+            font-size: 0.8rem;
+            color: inherit; /* Inherit color from parent */
+        }
+
+        /* Visualizer Pane */
+        .visualizer-header {
+            background-color: var(--header-bg-light);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color-light);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        body.dark-mode .visualizer-header {
+            background-color: var(--header-bg-dark);
+            border-color: var(--border-color-dark);
+        }
+
+        .visualizer-header .title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-color-light);
+        }
+        body.dark-mode .visualizer-header .title {
+            color: var(--text-color-dark);
+        }
+
+        .visualizer-header .url {
+            font-size: 0.75rem;
+            color: #6b7280; /* Gray-500 */
+            word-break: break-all;
+        }
+        body.dark-mode .visualizer-header .url {
+            color: #9ca3af; /* Gray-400 */
+        }
+
+        .tab-bar {
+            display: flex;
+            flex-wrap: wrap; /* Allow tabs to wrap */
+            background-color: var(--header-bg-light);
+            border-bottom: 1px solid var(--border-color-light);
+            padding: 0.25rem 0;
+            overflow-x: auto; /* Enable horizontal scroll for many tabs */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            scrollbar-width: thin; /* Firefox */
+            scrollbar-color: var(--accent-color-light) transparent; /* Firefox */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        body.dark-mode .tab-bar {
+            background-color: var(--header-bg-dark);
+            border-color: var(--border-color-dark);
+            scrollbar-color: var(--accent-color-dark) transparent;
+        }
+
+        .tab {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            margin-right: 0.25rem;
+            background-color: var(--tab-bg-light);
+            border: 1px solid var(--tab-border-light);
+            border-bottom: none; /* No bottom border for tabs */
+            border-radius: 0.25rem 0.25rem 0 0; /* Rounded top corners */
+            cursor: pointer;
+            font-size: 0.85rem;
+            white-space: nowrap; /* Prevent text wrapping */
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+        .tab:hover {
+            background-color: var(--tab-active-bg-light);
+        }
+        .tab.active {
+            background-color: var(--tab-active-bg-light);
+            border-color: var(--tab-border-light);
+            font-weight: 600;
+        }
+        body.dark-mode .tab {
+            background-color: var(--tab-bg-dark);
+            border-color: var(--tab-border-dark);
+        }
+        body.dark-mode .tab:hover {
+            background-color: var(--tab-active-bg-dark);
+        }
+        body.dark-mode .tab.active {
+            background-color: var(--tab-active-bg-dark);
+            border-color: var(--tab-border-dark);
+        }
+
+        .tab-close-button {
+            margin-left: 0.5rem;
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 0.9rem;
+            line-height: 1;
+            padding: 0;
+            transition: color 0.2s ease;
+        }
+        .tab-close-button:hover {
+            color: #ef4444; /* Red-500 */
+        }
+        body.dark-mode .tab-close-button:hover {
+            color: #fca5a5; /* Red-300 */
+        }
+
+        .visualizer-content {
+            flex-grow: 1;
+            position: relative; /* For search bar */
+            overflow: hidden; /* Ensure iframe stays within bounds */
+        }
+
+        .visualizer-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: #ffffff; /* Default background for iframe */
+        }
+        body.dark-mode .visualizer-content iframe {
+            background-color: #1a202c; /* Dark mode background for iframe */
+        }
+
+        .search-bar-in-filing {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--container-bg-light);
+            border: 1px solid var(--border-color-light);
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 10; /* Ensure it's above iframe */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        body.dark-mode .search-bar-in-filing {
+            background-color: var(--card-bg-dark);
+            border-color: var(--border-color-dark);
+        }
+
+        .search-bar-in-filing input {
+            width: 150px; /* Fixed width for search input */
+            font-size: 0.85rem;
+            padding: 0.3rem 0.5rem;
+        }
+        .search-bar-in-filing button {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.85rem;
+        }
+
+        /* Toggle button for left column */
+        .toggle-column-button {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%) translateX(-100%); /* Position outside left edge */
+            background-color: var(--accent-color-light);
+            color: white;
+            border: none;
+            border-radius: 0.25rem 0 0 0.25rem;
+            padding: 0.5rem 0.3rem;
+            cursor: pointer;
+            z-index: 20;
+            transition: background-color 0.2s ease, transform 0.3s ease;
+        }
+        .toggle-column-button:hover {
+            background-color: var(--accent-dark-light);
+        }
+        body.dark-mode .toggle-column-button {
+            background-color: var(--accent-color-dark);
+        }
+        body.dark-mode .toggle-column-button:hover {
+            background-color: var(--accent-dark-dark);
+        }
+        .toggle-column-button.right-aligned {
+            left: auto;
+            right: 0;
+            transform: translateY(-50%) translateX(100%); /* Position outside right edge */
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 30;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                min-height: 95vh;
+            }
+            .left-column {
+                width: 100%;
+                max-width: none;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color-light);
+            }
+            body.dark-mode .left-column {
+                border-bottom-color: var(--border-color-dark);
+            }
+            .left-column.hidden {
+                height: 0;
+                min-height: 0;
+                padding: 0;
+                overflow: hidden;
+                border-bottom: none;
+            }
+            .right-column {
+                width: 100%;
+            }
+            .toggle-column-button {
+                left: 50%;
+                top: auto;
+                bottom: 0;
+                transform: translateX(-50%) translateY(100%);
+                border-radius: 0 0 0.25rem 0.25rem;
+            }
+            .toggle-column-button.right-aligned {
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%) translateY(100%);
+                border-radius: 0 0 0.25rem 0.25rem;
+            }
+        }
+    </style>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Column: Search, Filters, Filings List -->
+        <div id="leftColumn" class="left-column">
+            <h1 class="text-xl font-extrabold text-center mb-4">EDGAR Browser</h1>
+            <p class="text-center text-sm text-gray-600 mb-4">
+                Enter a Company CIK, Name, or Symbol.
+            </p>
+
+            <!-- Company Name Display -->
+            <div id="companyNameDisplay" class="text-center mb-4 hidden">
+                <h2 id="companyNameElement" class="text-lg font-semibold text-gray-600"></h2>
+            </div>
+
+            <div class="input-group flex flex-col sm:flex-row gap-2 mb-4">
+                <input type="text" id="cikInput" list="companySuggestions" placeholder="e.g., Apple Inc., AAPL" class="flex-grow">
+                <datalist id="companySuggestions"></datalist>
+                <button id="fetchButton" class="min-w-max">&nbsp;OK&nbsp;</button>
+            </div>
+
+            <div class="mb-4">
+                <label for="filingTypeFilter" class="block text-sm font-medium mb-1">Filter by Type:</label>
+                <select id="filingTypeFilter" class="w-full">
+                    <option value="">All Filings</option>
+                    <option value="10-K">10-K (Annual Report)</option>
+                    <option value="10-Q">10-Q (Quarterly Report)</option>
+                    <option value="8-K">8-K (Current Report)</option>
+                    <option value="S-1">S-1 (Registration Statement)</option>
+                    <option value="4">Form 4 (Insider Trading)</option>
+                    <option value="SC 13D">SC 13D (Beneficial Ownership)</option>
+                    <!-- Add more as needed -->
+                </select>
+            </div>
+
+            <div id="loadingSpinner" class="loading-spinner mb-4"></div>
+            <div id="errorMessage" class="error-message mb-4"></div>
+
+            <div id="filingsListContainer" class="filings-list-container">
+                <div id="filingsList">
+                    <!-- Filings will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Visualizer Pane -->
+        <div id="rightColumn" class="right-column">
+            <div class="visualizer-header">
+                <div class="flex items-center justify-between">
+                    <span id="visualizerTitle" class="title">Select a Filing to View</span>
+                    <a id="filingUrl" href="#" target="_blank" rel="noopener noreferrer" class="url hidden">
+                        <i class="fas fa-external-link-alt mr-1"></i> View on SEC.gov
+                    </a>
+                </div>
+            </div>
+
+            <div id="tabBar" class="tab-bar">
+                <!-- Tabs will be dynamically inserted here -->
+            </div>
+
+            <div id="visualizerContent" class="visualizer-content">
+                <!-- Iframe for displaying filing content -->
+                <iframe id="filingIframe" src="about:blank" class="w-full h-full"></iframe>
+
+                <!-- In-filing search bar -->
+                <div id="inFilingSearchBar" class="search-bar-in-filing hidden">
+                    <input type="text" id="inFilingSearchInput" placeholder="Search in filing...">
+                    <button id="searchPrevButton" title="Previous Result"><i class="fas fa-chevron-up"></i></button>
+                    <button id="searchNextButton" title="Next Result"><i class="fas fa-chevron-down"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toggle Button for Left Column -->
+        <button id="toggleLeftColumn" class="toggle-column-button">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <!-- Dark Mode Toggle -->
+        <button id="darkModeToggle" class="dark-mode-toggle button">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <script>
+        // Public CORS proxy for both fetching company ticker data (autocomplete) and EDGAR filing data
+        // This proxy takes the target URL as a query parameter.
+        const CORS_PROXY_URL = 'https://corsproxy.io/?';
+
+        // Base URL for SEC EDGAR API submissions
+        // The path should be /submissions/CIK<10-digit-CIK>.json
+        const SEC_API_BASE_URL = 'https://data.sec.gov/submissions/CIK';
+        // URL for SEC company tickers JSON (for autocomplete)
+        const SEC_COMPANY_TICKERS_URL = 'https://www.sec.gov/files/company_tickers.json';
+
+        // --- Initialization: All JavaScript logic now resides within window.onload ---
+        window.onload = async () => {
+            // Get references to DOM elements
+            const cikInput = document.getElementById('cikInput');
+            const fetchButton = document.getElementById('fetchButton');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const errorMessage = document.getElementById('errorMessage');
+            const filingsList = document.getElementById('filingsList');
+            const companySuggestions = document.getElementById('companySuggestions');
+            const filingTypeFilter = document.getElementById('filingTypeFilter');
+
+            const leftColumn = document.getElementById('leftColumn');
+            const rightColumn = document.getElementById('rightColumn');
+            const toggleLeftColumnButton = document.getElementById('toggleLeftColumn');
+
+            const visualizerTitle = document.getElementById('visualizerTitle');
+            const filingUrlElement = document.getElementById('filingUrl');
+            const tabBar = document.getElementById('tabBar');
+            const visualizerContent = document.getElementById('visualizerContent');
+            const filingIframe = document.getElementById('filingIframe'); // Initial iframe
+
+            const inFilingSearchBar = document.getElementById('inFilingSearchBar');
+            const inFilingSearchInput = document.getElementById('inFilingSearchInput');
+            const searchPrevButton = document.getElementById('searchPrevButton');
+            const searchNextButton = document.getElementById('searchNextButton');
+
+            const darkModeToggle = document.getElementById('darkModeToggle');
+
+            // NEW: Get references for the company name display
+            const companyNameDisplay = document.getElementById('companyNameDisplay');
+            const companyNameElement = document.getElementById('companyNameElement');
+
+
+            // Application state variables
+            let allCompanyData = [];
+            let isCompanyDataLoaded = false;
+            let currentFilings = []; // Stores the filings fetched for the current CIK
+            let openTabs = []; // Array of { id, title, url, iframeId, currentSearchTerm, currentHighlightIndex, isLinkedDocument }
+            let activeTabId = null;
+            let darkModeEnabled = false;
+            let isLeftColumnVisible = true;
+            let currentCompanyTicker = ''; // Store the current company's ticker
+
+
+            // --- Utility Functions (now defined within window.onload scope and accept elements as args) ---
+
+            /**
+             * Shows a DOM element.
+             * @param {HTMLElement} element
+             */
+            const showElement = (element) => { if (element) element.style.display = 'block'; };
+
+            /**
+             * Hides a DOM element.
+             * @param {HTMLElement} element
+             */
+            const hideElement = (element) => { if (element) element.style.display = 'none'; };
+
+            /**
+             * Clears all error messages and hides company name display.
+             */
+            const clearErrors = () => {
+                if (errorMessage) {
+                    hideElement(errorMessage);
+                    errorMessage.textContent = '';
+                }
+                if (companyNameDisplay) { // Hide company name display on new search/error
+                    hideElement(companyNameDisplay);
+                }
+            };
+
+            /**
+             * Toggles the visibility of the left column.
+             */
+            const toggleLeftColumn = () => {
+                isLeftColumnVisible = !isLeftColumnVisible;
+                if (leftColumn) leftColumn.classList.toggle('hidden', !isLeftColumnVisible);
+                if (toggleLeftColumnButton) {
+                    toggleLeftColumnButton.classList.toggle('right-aligned', !isLeftColumnVisible);
+                    toggleLeftColumnButton.innerHTML = isLeftColumnVisible ? '<i class="fas fa-chevron-left"></i>' : '<i class="fas fa-chevron-right"></i>';
+                }
+            };
+
+            /**
+             * Toggles dark mode.
+             */
+            const toggleDarkMode = () => {
+                darkModeEnabled = !darkModeEnabled;
+                document.body.classList.toggle('dark-mode', darkModeEnabled);
+                localStorage.setItem('darkMode', darkModeEnabled); // Persist setting
+                if (darkModeToggle) {
+                    darkModeToggle.innerHTML = darkModeEnabled ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                }
+            };
+
+            /**
+             * Applies the dark mode setting from localStorage on load.
+             */
+            const applyDarkModeSetting = () => {
+                const savedMode = localStorage.getItem('darkMode');
+                if (savedMode === 'true') {
+                    darkModeEnabled = true;
+                } else {
+                    darkModeEnabled = false; // Default to light mode if not set or false
+                }
+                document.body.classList.toggle('dark-mode', darkModeEnabled);
+                if (darkModeToggle) {
+                    darkModeToggle.innerHTML = darkModeEnabled ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                }
+            };
+
+            // --- Autocomplete and Data Fetching ---
+
+            /**
+             * Fetches company ticker data for autocomplete.
+             */
+            async function fetchCompanyTickers() {
+                try {
+                    const fetchUrl = `${CORS_PROXY_URL}${encodeURIComponent(SEC_COMPANY_TICKERS_URL)}`;
+                    console.log('Fetching company tickers from:', fetchUrl);
+                    const response = await fetch(fetchUrl, {
+                        method: 'GET',
+                        headers: {
+                            'User-Agent': 'EDGARBrowserApp/1.0 (your.email@example.com)'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('Raw error response for tickers:', errorText);
+                        throw new Error(`HTTP error! Status: ${response.status} fetching company tickers.`);
+                    }
+
+                    const data = await response.json();
+                    allCompanyData = Object.values(data);
+                    isCompanyDataLoaded = true;
+                    console.log('Company ticker data loaded for autocomplete.');
+                } catch (error) {
+                    console.error('Error fetching company ticker data:', error);
+                    if (errorMessage) {
+                        errorMessage.textContent = `Failed to load autocomplete data: ${error.message}. Autocomplete may not work. Please try refreshing or using a different browser.`;
+                        showElement(errorMessage);
+                    }
+                }
+            }
+
+            /**
+             * Populates the datalist with autocomplete suggestions based on input.
+             */
+            const populateCompanySuggestions = () => {
+                const inputValue = cikInput.value.trim().toLowerCase();
+                if (companySuggestions) companySuggestions.innerHTML = '';
+
+                if (inputValue.length < 2 || !isCompanyDataLoaded) {
+                    return;
+                }
+
+                const filteredCompanies = allCompanyData.filter(company => {
+                    const title = company.title ? String(company.title).toLowerCase() : '';
+                    const ticker = company.ticker ? String(company.ticker).toLowerCase() : '';
+                    const cikStr = company.cik_str ? String(company.cik_str).padStart(10, '0') : '';
+
+                    return title.includes(inputValue) ||
+                           ticker.includes(inputValue) ||
+                           cikStr.includes(inputValue);
+                }).slice(0, 20);
+
+                filteredCompanies.forEach(company => {
+                    const option = document.createElement('option');
+                    const displayCik = String(company.cik_str || '').padStart(10, '0');
+                    option.value = `${company.title} (${company.ticker}) - ${displayCik}`;
+                    option.dataset.cik = displayCik;
+                    option.dataset.ticker = company.ticker; // Store ticker for later use
+                    if (companySuggestions) companySuggestions.appendChild(option);
+                });
+            };
+
+            /**
+             * Fetches EDGAR filings for a given CIK.
+             * @param {string} cik - The 10-digit CIK.
+             * @param {string} ticker - The company ticker.
+             */
+            async function fetchFilings(cik, ticker) {
+                clearErrors(); // This now also hides companyNameDisplay
+                if (filingsList) filingsList.innerHTML = '';
+
+                showElement(loadingSpinner);
+
+                currentCompanyTicker = ticker; // Store the ticker
+
+                try {
+                    const targetUrl = `${SEC_API_BASE_URL}${cik}.json`;
+                    console.log('Target SEC URL for filings:', targetUrl);
+                    const fetchUrl = `${CORS_PROXY_URL}${encodeURIComponent(targetUrl)}`;
+                    console.log('Final Fetch URL (with filings proxy):', fetchUrl);
+
+                    const response = await fetch(fetchUrl, {
+                        method: 'GET',
+                        headers: {
+                            'User-Agent': 'EDGARBrowserApp/1.0 (your.email@example.com)'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('Raw error response for filings:', errorText);
+                        if (response.status === 403) {
+                            throw new Error(`Access Denied (HTTP ${response.status}). This often indicates a missing or incorrect User-Agent header, or a CORS issue.`);
+                        } else if (response.status === 404) {
+                            throw new Error(`CIK not found (HTTP ${response.status}). Please check the CIK and try again.`);
+                        } else {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                    }
+
+                    const rawResponseText = await response.text();
+                    console.log('Raw response text for filings:', rawResponseText);
+
+                    let data;
+                    try {
+                        data = JSON.parse(rawResponseText);
+                    } catch (jsonError) {
+                        console.error('JSON parsing error:', jsonError);
+                        throw new Error('Failed to parse JSON response from SEC. Response might not be valid JSON.');
+                    }
+
+                    // *** IMPROVED VALIDATION: Check for data.filings.recent and its required array properties ***
+                    const recentFilings = data.filings?.recent;
+                    // Removed 'primaryDocumentDescription' from required keys
+                    const requiredRecentKeys = ['accessionNumber', 'form', 'filingDate', 'reportDate', 'primaryDocument'];
+
+                    const allRecentKeysPresentAndArrays = recentFilings && requiredRecentKeys.every(key => Array.isArray(recentFilings[key]));
+
+                    if (!data || !data.name || !allRecentKeysPresentAndArrays) {
+                        console.error('Parsed data structure missing expected properties or recent filings data is malformed:', data);
+                        throw new Error('Could not parse company data or recent filings data is incomplete/malformed.');
+                    }
+
+                    // Check for consistent lengths of the arrays within recentFilings
+                    const accessionNumberLength = recentFilings.accessionNumber.length;
+                    const consistentLengths = requiredRecentKeys.every(key => recentFilings[key].length === accessionNumberLength);
+
+                    // Add a check for primaryDocumentDescription length if it exists, but don't strictly require it
+                    if (recentFilings.primaryDocumentDescription && recentFilings.primaryDocumentDescription.length !== accessionNumberLength) {
+                        console.warn('primaryDocumentDescription array has inconsistent length with other recent filing arrays. Proceeding with caution.');
+                        // We won't throw an error here, just log a warning.
+                    }
+
+
+                    if (companyNameElement) companyNameElement.textContent = data.name;
+                    if (companyNameDisplay) showElement(companyNameDisplay); // Show the display container
+                    currentFilings = recentFilings; // Store all recent filings
+                    renderFilingsList(); // Render the list with potential filters
+
+                } catch (error) {
+                    console.error('Error fetching EDGAR data:', error);
+                    if (errorMessage) {
+                        errorMessage.textContent = `Failed to fetch data: ${error.message}. Please try again. If the issue persists, public CORS proxies might be unstable.`;
+                        showElement(errorMessage);
+                    }
+                } finally {
+                    hideElement(loadingSpinner);
+                }
+            }
+
+            /**
+             * Renders the filings list based on currentFilings and filter.
+             */
+            function renderFilingsList() {
+                if (filingsList) filingsList.innerHTML = ''; // Clear existing list
+                const selectedType = filingTypeFilter ? filingTypeFilter.value : '';
+
+                // Defensive check for currentFilings before accessing its properties
+                // This check is now less critical due to improved validation in fetchFilings,
+                // but still good for robustness.
+                if (!currentFilings || !currentFilings.accessionNumber || !Array.isArray(currentFilings.accessionNumber)) {
+                    console.error('currentFilings or currentFilings.accessionNumber is undefined or not an array. Cannot render filings list.');
+                    if (filingsList) filingsList.innerHTML = '<p class="text-gray-500">No filings data available to display.</p>';
+                    return;
+                }
+
+                const filteredFilings = currentFilings.accessionNumber.filter((_, i) => {
+                    // Ensure currentFilings.form[i] exists before accessing it
+                    return selectedType === '' || (currentFilings.form && currentFilings.form[i] === selectedType);
+                });
+
+                if (filteredFilings.length === 0) {
+                    if (filingsList) filingsList.innerHTML = '<p class="text-gray-500">No recent filings found for this CIK or matching the selected filter.</p>';
+                    return;
+                }
+
+                // Display up to 50 recent filings (or filtered)
+                const maxFilingsToShow = Math.min(filteredFilings.length, 99999999);
+
+                for (let i = 0; i < maxFilingsToShow; i++) {
+                    // Find the original index of the filtered filing to get all its properties
+                    // This assumes accessionNumber are unique and accurately reflect the original index.
+                    const originalIndex = currentFilings.accessionNumber.indexOf(filteredFilings[i]);
+
+                    // Defensive checks for each property access
+                    const accessionNumber = currentFilings.accessionNumber[originalIndex];
+                    const filingDate = currentFilings.filingDate?.[originalIndex] || 'N/A';
+                    const form = currentFilings.form?.[originalIndex] || 'N/A';
+                    const primaryDocument = currentFilings.primaryDocument?.[originalIndex] || '';
+                    // This line remains the same, handling optional primaryDocumentDescription gracefully
+                    const primaryDocumentDescription = currentFilings.primaryDocumentDescription?.[originalIndex] || 'Document';
+
+                    const cik = cikInput.value.match(/ - (\d{10})$/)?.[1] || cikInput.value; // Get CIK from input or autocomplete
+                    const secLink = `https://www.sec.gov/Archives/edgar/data/${parseInt(cik)}/${accessionNumber.replace(/-/g, '')}/${primaryDocument}`;
+
+                    const filingItem = document.createElement('div');
+                    filingItem.className = 'filing-item';
+                    filingItem.dataset.filingUrl = secLink;
+                    // Tab title format: TICKER - FORM (Filing Date)
+                    filingItem.dataset.filingTitle = `${currentCompanyTicker ? currentCompanyTicker + ' - ' : ''}${form} (${filingDate})`;
+                    filingItem.dataset.filingId = accessionNumber; // Unique ID for tab management
+                    filingItem.dataset.isLinkedDocument = 'false'; // Mark as a primary filing
+
+                    // UPDATED: Simplified display for the list item to two lines
+                    filingItem.innerHTML = `
+                        <strong>${form}</strong>
+                        <p>Filing Date: ${filingDate}</p>
+                    `;
+                    if (filingsList) filingsList.appendChild(filingItem);
+                }
+            }
+
+
+            // --- Tab Management ---
+
+            /**
+             * Opens a filing or linked document in a new tab or switches to an existing tab.
+             * @param {string} id - Unique ID for the tab (accessionNumber or a generated ID for linked docs).
+             * @param {string} title - Title for the tab and visualizer header.
+             * @param {string} url - The full URL of the document to load.
+             * @param {boolean} isLinkedDocument - True if this is a document opened from a link within another filing.
+             */
+            async function openFilingTab(id, title, url, isLinkedDocument = false) {
+                // Check if tab already exists
+                const existingTab = openTabs.find(tab => tab.id === id);
+
+                if (existingTab) {
+                    // If tab exists, just switch to it
+                    switchTab(id);
+                    return;
+                }
+
+                // Create new tab object
+                const newTab = {
+                    id: id,
+                    title: title,
+                    url: url,
+                    iframeId: `iframe-${id}`,
+                    currentSearchTerm: '',
+                    currentHighlightIndex: -1,
+                    isLinkedDocument: isLinkedDocument
+                };
+                openTabs.push(newTab);
+
+                // Create tab button
+                const tabButton = document.createElement('div');
+                tabButton.className = 'tab';
+                tabButton.dataset.tabId = id;
+                tabButton.innerHTML = `
+                    <span>${title}</span>
+                    <button class="tab-close-button" data-tab-id="${id}">x</button>
+                `;
+                if (tabBar) tabBar.appendChild(tabButton);
+
+                // Create iframe for the new tab
+                const newIframe = document.createElement('iframe');
+                newIframe.id = newTab.iframeId;
+                newIframe.src = 'about:blank'; // Start with about:blank
+                newIframe.className = 'w-full h-full hidden'; // Hidden by default
+                if (visualizerContent) visualizerContent.appendChild(newIframe);
+
+                // Add event listener for tab close button
+                if (tabButton.querySelector('.tab-close-button')) {
+                    tabButton.querySelector('.tab-close-button').addEventListener('click', (e) => {
+                        e.stopPropagation(); // Prevent tab switch when closing
+                        closeFilingTab(id);
+                    });
+                }
+
+                // Add event listener for tab switch
+                tabButton.addEventListener('click', () => switchTab(id));
+
+                // Switch to the newly opened tab
+                switchTab(id);
+
+                // --- Fetch and inject content into iframe ---
+                try {
+                    const fetchUrl = `${CORS_PROXY_URL}${encodeURIComponent(url)}`;
+                    console.log('Fetching filing content from:', fetchUrl);
+
+                    const response = await fetch(fetchUrl, {
+                        method: 'GET',
+                        headers: {
+                            'User-Agent': 'EDGARBrowserApp/1.0 (your.email@example.com)'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('Raw error response for filing content:', errorText);
+                        throw new Error(`HTTP error! Status: ${response.status} fetching filing content.`);
+                    }
+
+                    let htmlContent = await response.text();
+                    console.log('Filing HTML content fetched successfully.');
+
+                    // Write content into the iframe's document
+                    if (newIframe.contentDocument) {
+                        newIframe.contentDocument.open();
+                        newIframe.contentDocument.write(htmlContent);
+                        newIframe.contentDocument.close();
+
+                        // IMPORTANT: Add load listener to the iframe to ensure content is fully parsed
+                        // before attempting to modify its DOM or attach event listeners.
+                        newIframe.onload = () => {
+                            const iframeDoc = newIframe.contentDocument;
+                            if (!iframeDoc) {
+                                console.error('Iframe contentDocument not available after load.');
+                                return;
+                            }
+
+                            // Base URL for SEC archives, used to resolve relative paths
+                            const baseUrl = url.substring(0, url.lastIndexOf('/') + 1);
+
+                            // Correct image paths
+                            iframeDoc.querySelectorAll('img').forEach(img => {
+                                let src = img.getAttribute('src');
+                                if (src) {
+                                    if (!src.startsWith('http://') && !src.startsWith('https://')) {
+                                        try {
+                                            const absoluteUrl = new URL(src, baseUrl).href;
+                                            img.setAttribute('src', absoluteUrl);
+                                        } catch (e) {
+                                            console.warn(`Could not resolve image URL: ${src} relative to ${baseUrl}`, e);
+                                        }
+                                    }
+                                }
+                            });
+
+                            // Correct link paths and add event listeners for internal links
+                            iframeDoc.querySelectorAll('a').forEach(a => {
+                                let href = a.getAttribute('href');
+                                if (href) {
+                                    // If the href starts with '#', it's an internal anchor link.
+                                    // We should NOT prevent its default behavior or modify its target.
+                                    if (href.startsWith('#')) {
+                                        a.target = '_self'; // Ensure it stays in the same iframe
+                                        return; // Skip to the next link, allowing default browser behavior
+                                    }
+
+                                    // For all other links, resolve the absolute URL
+                                    let absoluteUrl;
+                                    try {
+                                        absoluteUrl = new URL(href, baseUrl).href;
+                                    } catch (e) {
+                                        console.warn(`Could not resolve link URL: ${href} relative to ${baseUrl}`, e);
+                                        return; // Skip this link if URL is malformed
+                                    }
+
+                                    // If it's an internal SEC document link (not a hash link, but within SEC archives)
+                                    // or a relative link that should open as a new internal tab
+                                    if (!absoluteUrl.startsWith('http://') && !absoluteUrl.startsWith('https://') || absoluteUrl.includes('sec.gov/Archives/edgar/data/')) {
+                                        a.setAttribute('href', absoluteUrl); // Ensure href is absolute
+                                        a.target = '_self'; // Ensure it opens in the same iframe initially
+
+                                        // Add event listener to intercept clicks on these internal document links
+                                        a.addEventListener('click', (e) => {
+                                            e.preventDefault(); // Prevent default navigation (which would reload the iframe or navigate away)
+                                            const linkedUrl = e.currentTarget.href;
+                                            const linkedTitle = `${currentCompanyTicker ? currentCompanyTicker + ' - ' : ''}LINK`; // Title for linked document
+                                            // Generate a unique ID for linked documents
+                                            const linkedId = `linked-${id}-${linkedUrl.split('/').pop().replace(/[^a-zA-Z0-9]/g, '')}-${Date.now()}`; // More robust ID
+                                            openFilingTab(linkedId, linkedTitle, linkedUrl, true); // Open as a new linked document tab
+                                        });
+                                    } else {
+                                        // For truly external links, ensure they open in a new browser tab
+                                        a.target = '_blank';
+                                        a.rel = 'noopener noreferrer';
+                                    }
+                                }
+                            });
+                        };
+                    } else {
+                        console.error('Iframe contentDocument not available.');
+                    }
+
+                } catch (error) {
+                    console.error('Error fetching or displaying filing content:', error);
+                    // Display error within the iframe or a message in the main app
+                    if (newIframe.contentDocument) {
+                        newIframe.contentDocument.open();
+                        newIframe.contentDocument.write(`
+                            <body class="text-center p-8 dark:bg-gray-800 dark:text-gray-200">
+                                <h1 class="text-xl font-bold text-red-500 mb-4">Error Loading Filing</h1>
+                                <p class="text-gray-700 dark:text-gray-300">Failed to load content for: <strong>${title}</strong></p>
+                                <p class="text-gray-700 dark:text-gray-300">Reason: ${error.message}</p>
+                                <p class="text-gray-700 dark:text-gray-300 mt-4">This might be due to network issues, or the SEC server refusing the connection even through the proxy for direct content embedding. You can try viewing it directly on SEC.gov using the link above.</p>
+                            </body>
+                        `);
+                        newIframe.contentDocument.close();
+                    }
+                }
+            }
+
+            /**
+             * Switches to a specified tab.
+             * @param {string} tabId
+             */
+            function switchTab(tabId) {
+                activeTabId = tabId;
+
+                // Update tab buttons active state
+                document.querySelectorAll('.tab').forEach(tabButton => {
+                    if (tabButton.dataset.tabId === tabId) {
+                        tabButton.classList.add('active');
+                    } else {
+                        tabButton.classList.remove('active');
+                    }
+                });
+
+                // Update iframe visibility
+                document.querySelectorAll('.visualizer-content iframe').forEach(iframe => {
+                    if (iframe.id === `iframe-${tabId}`) {
+                        showElement(iframe);
+                    } else {
+                        hideElement(iframe);
+                    }
+                });
+
+                // Update header info
+                const activeTab = openTabs.find(tab => tab.id === tabId);
+                if (activeTab) {
+                    if (visualizerTitle) visualizerTitle.textContent = activeTab.title;
+                    if (filingUrlElement) {
+                        filingUrlElement.href = activeTab.url;
+                        showElement(filingUrlElement);
+                    }
+                    if (inFilingSearchBar) showElement(inFilingSearchBar); // Show search bar when a tab is active
+
+                    // Restore search state for the active tab
+                    if (inFilingSearchInput) inFilingSearchInput.value = activeTab.currentSearchTerm;
+                    // Note: window.find() state is global to the window, not per iframe.
+                    // Re-executing search might be needed if switching tabs and expecting highlights.
+                    // For simplicity, we'll just restore the input value.
+                } else {
+                    if (visualizerTitle) visualizerTitle.textContent = 'Select a Filing to View';
+                    if (filingUrlElement) {
+                        filingUrlElement.href = '#';
+                        hideElement(filingUrlElement);
+                    }
+                    if (inFilingSearchBar) hideElement(inFilingSearchBar);
+                }
+            }
+
+            /**
+             * Closes a specified tab.
+             * @param {string} tabId
+             */
+            function closeFilingTab(tabId) {
+                // Remove from openTabs array
+                openTabs = openTabs.filter(tab => tab.id !== tabId);
+
+                // Remove tab button
+                const tabButton = document.querySelector(`.tab[data-tab-id="${tabId}"]`);
+                if (tabButton) {
+                    tabButton.remove();
+                }
+
+                // Remove iframe
+                const iframe = document.getElementById(`iframe-${tabId}`);
+                if (iframe) {
+                    iframe.remove();
+                }
+
+                // If the closed tab was active, switch to another tab or clear visualizer
+                if (activeTabId === tabId) {
+                    if (openTabs.length > 0) {
+                        switchTab(openTabs[openTabs.length - 1].id); // Switch to last open tab
+                    } else {
+                        activeTabId = null;
+                        if (visualizerTitle) visualizerTitle.textContent = 'Select a Filing to View';
+                        if (filingUrlElement) {
+                            filingUrlElement.href = '#';
+                            hideElement(filingUrlElement);
+                        }
+                        if (inFilingSearchBar) hideElement(inFilingSearchBar);
+                    }
+                }
+            }
+
+            // --- In-Filing Search ---
+
+            /**
+             * Performs a search within the active iframe.
+             * @param {boolean} next - true for next, false for previous.
+             */
+            function searchInFiling(next) {
+                const searchTerm = inFilingSearchInput ? inFilingSearchInput.value.trim() : '';
+                if (!searchTerm || !activeTabId) {
+                    return;
+                }
+
+                const activeIframe = document.getElementById(`iframe-${activeTabId}`);
+                if (!activeIframe || !activeIframe.contentWindow) {
+                    console.warn('Iframe not ready or contentWindow not accessible.');
+                    return;
+                }
+
+                const activeTab = openTabs.find(tab => tab.id === activeTabId);
+                if (activeTab) {
+                    // Update the search term for the current tab
+                    activeTab.currentSearchTerm = searchTerm;
+
+                    // window.find() is a browser-native search.
+                    // It highlights and scrolls to results.
+                    // Arguments: string, caseSensitive, backwards, wrapAround, wholeWord, searchInFrames, showDialog
+                    const found = activeIframe.contentWindow.find(
+                        searchTerm,
+                        false, // caseSensitive
+                        !next, // backwards
+                        true,  // wrapAround (search from start if end reached)
+                        false, // wholeWord
+                        true,  // searchInFrames (important!)
+                        false  // showDialog
+                    );
+
+                    if (!found) {
+                        // If no more results in the current direction, try wrapping around from the other end
+                        // This is handled by wrapAround=true, but a message can be useful
+                        console.log('No more results or wrapped around.');
+                    }
+                }
+            }
+
+            // --- Event Listeners ---
+            if (cikInput) {
+                cikInput.addEventListener('input', populateCompanySuggestions);
+                cikInput.addEventListener('change', (e) => {
+                    // When a datalist option is selected, update the currentCompanyTicker
+                    const selectedOption = Array.from(companySuggestions.options).find(
+                        option => option.value === e.target.value
+                    );
+                    if (selectedOption) {
+                        currentCompanyTicker = selectedOption.dataset.ticker || '';
+                    } else {
+                        currentCompanyTicker = ''; // Clear if no valid selection
+                    }
+                });
+            }
+
+            if (fetchButton) fetchButton.addEventListener('click', async () => {
+                const inputValue = cikInput ? cikInput.value.trim() : '';
+                let cik = '';
+                let ticker = '';
+
+                const match = inputValue.match(/ - (\d{10})$/);
+                if (match) {
+                    cik = match[1];
+                    const tickerMatch = inputValue.match(/\(([^)]+)\)/);
+                    ticker = tickerMatch ? tickerMatch[1] : '';
+                } else if (/^\d{10}$/.test(inputValue)) {
+                    cik = inputValue;
+                    // Try to find ticker by CIK if direct CIK is entered
+                    const foundCompany = allCompanyData.find(company =>
+                        String(company.cik_str || '').padStart(10, '0') === cik
+                    );
+                    if (foundCompany) {
+                        ticker = foundCompany.ticker;
+                    }
+                } else {
+                    const foundCompany = allCompanyData.find(company =>
+                        (company.title ? String(company.title).toLowerCase() : '') === inputValue.toLowerCase() ||
+                        (company.ticker ? String(company.ticker).toLowerCase() : '') === inputValue.toLowerCase()
+                    );
+                    if (foundCompany) {
+                        cik = String(foundCompany.cik_str || '').padStart(10, '0');
+                        ticker = foundCompany.ticker;
+                    }
+                }
+
+                if (!cik) {
+                    if (errorMessage) {
+                        errorMessage.textContent = 'Could not determine a valid 10-digit CIK from your input. Please use a valid CIK or select from autocomplete suggestions.';
+                        showElement(errorMessage);
+                    }
+                    return;
+                }
+
+                await fetchFilings(cik, ticker);
+            });
+
+            if (filingsList) filingsList.addEventListener('click', (e) => {
+                const filingItem = e.target.closest('.filing-item');
+                if (filingItem) {
+                    document.querySelectorAll('.filing-item').forEach(item => item.classList.remove('active'));
+                    filingItem.classList.add('active');
+
+                    const url = filingItem.dataset.filingUrl;
+                    const title = filingItem.dataset.filingTitle;
+                    const id = filingItem.dataset.filingId;
+                    openFilingTab(id, title, url, filingItem.dataset.isLinkedDocument === 'true');
+                }
+            });
+
+            if (filingTypeFilter) filingTypeFilter.addEventListener('change', renderFilingsList);
+
+            if (inFilingSearchInput) inFilingSearchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchInFiling(true);
+                }
+            });
+            if (searchNextButton) searchNextButton.addEventListener('click', () => searchInFiling(true));
+            if (searchPrevButton) searchPrevButton.addEventListener('click', () => searchInFiling(false));
+
+            if (darkModeToggle) darkModeToggle.addEventListener('click', toggleDarkMode);
+            if (toggleLeftColumnButton) toggleLeftColumnButton.addEventListener('click', toggleLeftColumn);
+
+
+            // Initial setup calls
+            applyDarkModeSetting(); // Apply dark mode preference
+            await fetchCompanyTickers(); // Load company data for autocomplete
+        };
+    </script>
+</body>
+</html>
