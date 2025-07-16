@@ -949,14 +949,9 @@ import dateutil # For datetime operations
 import pytz # For timezone handling
 import six # For Python 2 and 3 compatibility
 
+print(f"Preloaded with: micropip {micropip.__version__}, numpy {np.__version__}, packaging {packaging.__version__}, pandas {pd.__version__}, dateutil {dateutil.__version__}, pytz {pytz.__version__}, six {six.__version__}")
 print("Hello, World!")
-print(f"micropip version: {micropip.__version__}")
-print(f"Numpy version: {np.__version__}")
-print(f"Packaging version: {packaging.__version__}")
-print(f"Pandas version: {pd.__version__}")
-print(f"Dateutil version: {dateutil.__version__}")
-print(f"Pytz version: {pytz.__version__}")
-print(f"Six version: {six.__version__}")
+
 `);
             
             // Crucial: Refresh CodeMirror instances after the container is visible
