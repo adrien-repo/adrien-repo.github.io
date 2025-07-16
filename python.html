@@ -6,8 +6,8 @@
     <title>Python Interpreter</title>
      <link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
 
-    <!-- Google Fonts for a digital feel, similar to Matrix -->
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Google Fonts for a digital feel (Matrix) and Linux feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Press+Start+2P&family=Ubuntu:wght@400;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- CodeMirror for code editing -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
@@ -23,7 +23,7 @@
     <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 
     <style>
-        /* Matrix Style Definitions */
+        /* Matrix Style Definitions (Default) */
         :root {
             --matrix-green: #00ff41; /* Bright green */
             --matrix-dark-green: #004d00; /* Darker green for accents */
@@ -31,8 +31,22 @@
             --matrix-grey: #1a1a1a; /* Dark grey for backgrounds */
             --matrix-light-grey: #2a2a2a; /* Slightly lighter grey */
             --matrix-error-red: #ff0000; /* Bright red for errors */
+
+            /* Linux theme colors */
+            --linux-bg: #2e3436;
+            --linux-text: #d3d7cf;
+            --linux-dark-border: #4e555b;
+            --linux-cell-bg: #40454a;
+            --linux-button-bg: #555b60;
+            --linux-button-border: #5e6468;
+            --linux-button-text: #eeeeec;
+            --linux-primary-button-bg: #3465a4;
+            --linux-primary-button-hover: #4682b4;
+            --linux-codemirror-bg: #2b2b2b;
+            --linux-error-red: #cc0000;
         }
 
+        /* Base styles for Matrix mode (will be overridden by Linux mode) */
         body {
             font-family: 'Share Tech Mono', monospace; /* Digital monospace font */
             background-color: var(--matrix-black);
@@ -54,19 +68,33 @@
             height: 100%;
             background: repeating-linear-gradient(
                 to bottom,
-                rgba(0, 255, 65, 0.05), /* Subtle green lines */
-                rgba(0, 255, 65, 0.05) 2px,
+                rgba(0, 255, 65, 0.02), /* Even more subtle green lines */
+                rgba(0, 255, 65, 0.02) 2px,
                 transparent 2px,
                 transparent 40px
             );
             animation: digitalRain 30s linear infinite;
-            z-index: -1; /* Behind content */
+            z-index: -1; /* Behind content, but above matrix-rain-canvas */
             pointer-events: none; /* Do not interfere with clicks */
         }
 
         @keyframes digitalRain {
             from { background-position: 0 0; }
             to { background-position: 0 100%; }
+        }
+
+        /* Matrix Rain Canvas Styling */
+        #matrix-rain-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* Furthest back */
+            pointer-events: none;
+            background-color: transparent; /* Ensure it's transparent to show body background */
+            opacity: 0.5; /* Changed opacity for the canvas itself to 50% */
+            transition: opacity 0.5s ease-in-out; /* Smooth transition for toggle */
         }
 
         .header {
@@ -90,7 +118,7 @@
         .main-container {
             max-width: 1000px;
             margin: 0 auto;
-            background-color: rgba(10, 10, 10, 0.9); /* Slightly transparent dark background */
+            background-color: rgba(10, 10, 10, 0.95); /* Increased opacity for main content background */
             padding: 20px 40px;
             box-shadow: 0 0 20px rgba(0, 255, 65, 0.3); /* Green glow */
             border-radius: 8px;
@@ -177,8 +205,8 @@
             height: auto;
             min-height: 100px;
             font-family: 'Share Tech Mono', monospace; /* Monospace font for code */
-            font-size: 14px;
-            line-height: 1.5;
+            font-size: 16px; /* Increased font size for visibility */
+            line-height: 1.6; /* Increased line height for readability */
             background-color: var(--matrix-black); /* CodeMirror background */
             color: var(--matrix-green); /* Default text color */
             text-shadow: 0 0 3px var(--matrix-dark-green);
@@ -233,7 +261,8 @@
             border: 1px solid var(--matrix-dark-green);
             white-space: pre-wrap;
             font-family: 'Share Tech Mono', monospace;
-            font-size: 13px;
+            font-size: 15px; /* Increased font size for visibility */
+            line-height: 1.6; /* Increased line height for readability */
             text-shadow: 0 0 3px var(--matrix-dark-green);
         }
         .output-area.error {
@@ -244,6 +273,8 @@
         .markdown-preview {
             padding: 10px;
             color: var(--matrix-green);
+            font-size: 16px; /* Increased font size for visibility */
+            line-height: 1.6; /* Increased line height for readability */
             text-shadow: 0 0 3px var(--matrix-dark-green);
         }
         .markdown-preview h1, .markdown-preview h2, .markdown-preview h3 {
@@ -282,9 +313,149 @@
         #cells-container {
             margin-top: 40px;
         }
+
+        /* Linux Mode Specific Styles */
+        body[data-theme="linux"] {
+            font-family: 'Ubuntu', sans-serif;
+            background-color: var(--linux-bg); /* Darker background, Linux feel */
+            color: var(--linux-text); /* Lighter text for dark background */
+            text-shadow: none; /* Remove glow */
+        }
+
+        body[data-theme="linux"]::before {
+            display: none; /* Hide digital rain lines */
+        }
+
+        body[data-theme="linux"] #matrix-rain-canvas {
+            opacity: 0 !important; /* Ensure canvas is off */
+        }
+
+        body[data-theme="linux"] #fixed-header {
+            background-color: var(--linux-bg); /* Match body background */
+            box-shadow: none;
+            border-bottom: 1px solid var(--linux-dark-border);
+        }
+
+        body[data-theme="linux"] .main-container {
+            background-color: #343a40; /* Darker content area */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+            border: 1px solid var(--linux-dark-border); /* Subtle border */
+        }
+
+        body[data-theme="linux"] .notification-message {
+            background-color: #4a5255;
+            border: 1px solid var(--linux-dark-border);
+            color: var(--linux-button-text);
+            text-shadow: none;
+        }
+        body[data-theme="linux"] .notification-message.error {
+            background-color: var(--linux-error-red); /* Error red */
+            color: white;
+            border-color: var(--linux-error-red);
+            text-shadow: none;
+        }
+
+        body[data-theme="linux"] .cell {
+            border: 1px solid #4e554b;
+            background-color: var(--linux-cell-bg);
+            box-shadow: none;
+        }
+        body[data-theme="linux"] .cell:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        body[data-theme="linux"] button {
+            border: 1px solid var(--linux-button-border);
+            background-color: var(--linux-button-bg);
+            color: var(--linux-button-text);
+            box-shadow: none;
+            text-shadow: none;
+        }
+        body[data-theme="linux"] button:hover {
+            background-color: #60676d;
+            border-color: #727a80;
+            box-shadow: none;
+        }
+        body[data-theme="linux"] button.primary {
+            background-color: var(--linux-primary-button-bg); /* Linux-like blue */
+            color: white;
+            border: none;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+        }
+        body[data-theme="linux"] button.primary:hover {
+            background-color: var(--linux-primary-button-hover);
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        body[data-theme="linux"] .CodeMirror {
+            border: 1px solid var(--linux-button-border);
+            font-family: 'Ubuntu Mono', monospace;
+            background-color: var(--linux-codemirror-bg);
+            color: var(--linux-text); /* Lighter text for dark background */
+            text-shadow: none;
+        }
+        body[data-theme="linux"] .CodeMirror-lines {
+            color: var(--linux-text);
+        }
+        body[data-theme="linux"] .CodeMirror-gutters {
+            background-color: var(--linux-codemirror-bg) !important;
+            border-right: 1px solid var(--linux-button-border) !important;
+        }
+        body[data-theme="linux"] .CodeMirror-linenumber {
+            color: #888 !important; /* Default CodeMirror line number color */
+        }
+        /* Revert CodeMirror syntax highlighting to a more standard theme for Linux mode */
+        body[data-theme="linux"] .cm-keyword { color: #89ddff !important; } /* Example: light blue */
+        body[data-theme="linux"] .cm-atom { color: #f08282 !important; } /* Example: light red */
+        body[data-theme="linux"] .cm-number { color: #f08282 !important; }
+        body[data-theme="linux"] .cm-def { color: #89ddff !important; }
+        body[data-theme="linux"] .cm-variable { color: var(--linux-text) !important; }
+        body[data-theme="linux"] .cm-variable-2 { color: #a9b7c6 !important; }
+        body[data-theme="linux"] .cm-property { color: #89ddff !important; }
+        body[data-theme="linux"] .cm-string { color: #a5d6a7 !important; } /* Example: light green */
+        body[data-theme="linux"] .cm-string-2 { color: #a5d6a7 !important; }
+        body[data-theme="linux"] .cm-comment { color: #616161 !important; } /* Dark grey comments */
+        body[data-theme="linux"] .cm-meta { color: #89ddff !important; }
+        body[data-theme="linux"] .cm-qualifier { color: #f08282 !important; }
+        body[data-theme="linux"] .cm-builtin { color: #89ddff !important; }
+        body[data-theme="linux"] .cm-bracket { color: var(--linux-text) !important; }
+        body[data-theme="linux"] .cm-tag { color: #89ddff !important; }
+        body[data-theme="linux"] .cm-attribute { color: #f08282 !important; }
+        body[data-theme="linux"] .cm-hr { color: #f08282 !important; }
+        body[data-theme="linux"] .cm-link { color: #89ddff !important; }
+        body[data-theme="linux"] .CodeMirror-cursor { border-left: 1px solid var(--linux-text) !important; }
+        body[data-theme="linux"] .CodeMirror-activeline-background { background: rgba(128, 128, 128, 0.1) !important; }
+
+
+        body[data-theme="linux"] .output-area {
+            background-color: var(--linux-codemirror-bg);
+            color: var(--linux-button-text);
+            border: 1px solid var(--linux-button-border);
+            font-family: 'Ubuntu Mono', monospace;
+            text-shadow: none;
+        }
+        body[data-theme="linux"] .output-area.error {
+            color: #ef2929;
+            text-shadow: none;
+            border-color: #ef2929;
+        }
+
+        body[data-theme="linux"] .markdown-preview {
+            color: var(--linux-text);
+            text-shadow: none;
+        }
+        body[data-theme="linux"] .markdown-preview h1,
+        body[data-theme="linux"] .markdown-preview h2,
+        body[data-theme="linux"] .markdown-preview h3 {
+            border-bottom: 1px solid var(--linux-button-border);
+            color: var(--linux-button-text);
+            text-shadow: none;
+        }
     </style>
 </head>
-<body>
+<body data-theme="linux"> <!-- Changed default theme to linux -->
+
+<canvas id="matrix-rain-canvas"></canvas>
 
 <div class="loading-overlay" id="loading-overlay">
     Loading Python interpreter...
@@ -301,6 +472,7 @@
         <button onclick="exportToipynb()">Export .ipynb</button>
         <button onclick="exportToPy()">Export .py</button>
         <button class="primary" onclick="runAllCells()">Run All</button>
+        <button id="toggleModeButton" onclick="toggleMatrixMode()">Matrix Mode: Off</button> <!-- Changed initial button text -->
     </div>
 </div>
 
@@ -318,6 +490,102 @@
     let cmInstances = {}; // Store CodeMirror instances by cell ID
     const markdownConverter = new showdown.Converter();
     let notificationTimeout; // To manage notification hiding
+    let matrixRainInterval; // To store the interval ID for matrix rain
+
+    // Matrix Rain Canvas Logic
+    const canvas = document.getElementById('matrix-rain-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let W = window.innerWidth;
+    let H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
+
+    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+{}[]|:;"<>,.?/~`';
+    const font_size = 15; // Smaller font size for rain
+    const columns = Math.floor(W / font_size);
+    const drops = []; // Array to store y-position of each drop
+
+    for (let i = 0; i < columns; i++) {
+        drops[i] = 1; // Start drops at the top
+    }
+
+    function drawMatrixRain() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.fillStyle = '#00ff41'; // Matrix green color
+        ctx.font = `${font_size}px 'Share Tech Mono'`;
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = characters.charAt(Math.floor(Math.random() * characters.length));
+            ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+            // Send the drop back to the top randomly
+            if (drops[i] * font_size > H && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+
+            // Increment y-position
+            drops[i]++;
+        }
+    }
+
+    // Function to toggle Matrix Mode (themes and wallpaper)
+    function toggleMatrixMode() {
+        const body = document.body;
+        const toggleButton = document.getElementById('toggleModeButton');
+        const canvas = document.getElementById('matrix-rain-canvas');
+
+        if (body.dataset.theme === 'matrix') {
+            // Switch to Linux Mode
+            body.dataset.theme = 'linux';
+            canvas.style.opacity = '0'; // Turn off Matrix rain canvas
+            clearInterval(matrixRainInterval); // Stop animation
+            matrixRainInterval = null; // Clear the interval ID
+            toggleButton.textContent = 'Matrix Mode: Off';
+            showNotification('Switched to Linux Mode.');
+            // Revert CodeMirror theme for Linux mode
+            for (const id in cmInstances) {
+                if (cmInstances.hasOwnProperty(id)) {
+                    cmInstances[id].setOption('theme', 'default'); // CodeMirror default theme (or another light/dark Linux-friendly one)
+                }
+            }
+        } else {
+            // Switch to Matrix Mode
+            body.dataset.theme = 'matrix';
+            canvas.style.opacity = '0.5'; // Turn on Matrix rain canvas with 50% opacity
+            if (!matrixRainInterval) { // Only start if not already running
+                matrixRainInterval = setInterval(drawMatrixRain, 33); // Restart animation
+            }
+            toggleButton.textContent = 'Matrix Mode: On';
+            showNotification('Switched to Matrix Mode.');
+            // Set CodeMirror theme back to material-darker for Matrix mode
+            for (const id in cmInstances) {
+                if (cmInstances.hasOwnProperty(id)) {
+                    cmInstances[id].setOption('theme', 'material-darker');
+                }
+            }
+        }
+    }
+
+    // Adjust canvas size on window resize
+    window.addEventListener('resize', () => {
+        W = window.innerWidth;
+        H = window.innerHeight;
+        canvas.width = W;
+        canvas.height = H;
+        // Reinitialize drops for new column count
+        const newColumns = Math.floor(W / font_size);
+        drops.length = 0; // Clear existing drops
+        for (let i = 0; i < newColumns; i++) {
+            drops[i] = Math.floor(Math.random() * H / font_size); // Random start position
+        }
+    });
+
+    // Initial setup for Linux Mode
+    // The matrixRainInterval is NOT started here. It will be started only when Matrix Mode is turned ON.
+
 
     // Function to show a temporary notification message
     function showNotification(message, isError = false) {
@@ -352,6 +620,7 @@
     async function loadPyodideAndLibs() {
         const loadingOverlay = document.getElementById('loading-overlay');
         const notebookContainer = document.getElementById('notebook-container');
+        const canvas = document.getElementById('matrix-rain-canvas'); // Get canvas here too
 
         try {
             console.log('Starting Pyodide loading process...');
@@ -378,6 +647,18 @@
             
             // Crucial: Refresh CodeMirror instances after the container is visible
             refreshAllCodeMirrors();
+
+            // Set initial state for Linux Mode after everything is loaded
+            document.body.dataset.theme = 'linux';
+            canvas.style.opacity = '0'; // Ensure canvas is off
+            document.getElementById('toggleModeButton').textContent = 'Matrix Mode: Off';
+            // Set CodeMirror theme for Linux mode for any pre-existing cells
+            for (const id in cmInstances) {
+                if (cmInstances.hasOwnProperty(id)) {
+                    cmInstances[id].setOption('theme', 'default');
+                }
+            }
+
 
         } catch (error) {
             console.error("Pyodide loading failed:", error);
@@ -446,7 +727,7 @@
                 // Synchronous CodeMirror initialization
                 const editor = CodeMirror.fromTextArea(textarea, {
                     mode: 'python',
-                    theme: 'material-darker', /* Changed theme for Matrix style */
+                    theme: document.body.dataset.theme === 'matrix' ? 'material-darker' : 'default', /* Dynamic theme */
                     lineNumbers: true,
                     indentUnit: 4,
                     extraKeys: {
