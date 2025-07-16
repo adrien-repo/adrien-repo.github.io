@@ -1013,21 +1013,25 @@
 								let href = a.getAttribute('href');
 								if (href) {
 									// If the href starts with '#', it's an internal anchor link.
-									if (href.startsWith('#')) {
-										// Prevent the default parent window navigation
-										a.addEventListener('click', (e) => {
-											e.preventDefault();
-											// Get the target element by ID
-											const targetId = href.substring(1);
-											const targetElement = e.currentTarget.ownerDocument.getElementById(targetId);
+									 if (href.startsWith('#')) {
+                                        if (window.self !== window.top) { // Check if running inside an iframe
+                                            // If in an iframe, prevent default and manually scroll
+                                            a.addEventListener('click', (e) => {
+                                                e.preventDefault();
+                                                const targetId = href.substring(1);
+                                                const targetElement = e.currentTarget.ownerDocument.getElementById(targetId);
 
-											if (targetElement) {
-												// Manually scroll the iframe's document into view
-												targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-											}
-										});
-										a.target = '_self'; // Ensure it stays within the same iframe
-									} else {
+                                                if (targetElement) {
+                                                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                }
+                                            });
+                                            a.target = '_self'; // Ensure it stays in the same iframe
+                                        } else {
+                                            // If not in an iframe (loaded directly), allow default browser behavior
+                                            a.target = '_self';
+                                            return; // Skip to the next link
+                                        }
+                                    } else {
 										// ... (rest of the logic for other link types)
 										let absoluteUrl;
 										try {
