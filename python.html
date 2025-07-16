@@ -294,9 +294,9 @@
             justify-content: center;
             align-items: center;
             font-size: 1.2em;
-            color: var(--matrix-green);
+            color: var(--matrix-green); /* Default to matrix green */
             z-index: 1000;
-            text-shadow: 0 0 10px var(--matrix-green);
+            text-shadow: 0 0 10px var(--matrix-green); /* Default to matrix glow */
         }
         .top-actions {
             display: flex;
@@ -425,6 +425,10 @@
         body[data-theme="linux"] .cm-link { color: #89ddff !important; }
         body[data-theme="linux"] .CodeMirror-cursor { border-left: 1px solid var(--linux-text) !important; }
         body[data-theme="linux"] .CodeMirror-activeline-background { background: rgba(128, 128, 128, 0.1) !important; }
+        /* Added for CodeMirror selection background in Linux mode */
+        body[data-theme="linux"] .CodeMirror-selected {
+            background-color: rgba(52, 101, 164, 0.5) !important; /* A darker, semi-transparent blue for selection */
+        }
 
 
         body[data-theme="linux"] .output-area {
@@ -592,6 +596,11 @@
             font-size: 16px;
             margin-top: 15px;
         }
+        /* Linux mode specific styles for loading overlay */
+        body[data-theme="linux"] .loading-overlay {
+            color: var(--linux-text);
+            text-shadow: none;
+        }
     </style>
 </head>
 <body data-theme="linux"> <!-- Changed default theme to linux -->
@@ -649,11 +658,11 @@
     let selectedPackagesInModal = new Set(); // To keep track of selected packages in the modal
 
     // List of pre-built Pyodide packages (can be expanded)
-    // Added 'micropip', 'numpy', and 'pandas' to this list
+    // Reverted to hardcoded list
     const availablePackages = [
-        'micropip', // Added micropip here
-        'numpy',    // Added numpy here
-        'pandas',   // Added pandas here
+        'micropip',
+        'numpy',
+        'pandas',
         'scipy',
         'matplotlib',
         'scikit-learn',
@@ -807,13 +816,21 @@
     }
 
     // Function to populate the package selection list in the modal
-    function populatePackageList() {
+    async function populatePackageList() { // Made async because pyodide.listPackages() is async
+        if (!pyodide) {
+            showNotification("Python interpreter not loaded yet. Cannot retrieve package list.", true);
+            return;
+        }
+
         const packageListDiv = document.getElementById('package-list');
         packageListDiv.innerHTML = ''; // Clear existing items
         selectedPackagesInModal.clear(); // Clear previous selections
 
+        // Use the hardcoded availablePackages list
+        const allAvailablePackages = availablePackages;
+
         // Sort available packages alphabetically, but keep loaded ones at the top if desired
-        const sortedPackages = [...availablePackages].sort((a, b) => {
+        const sortedPackages = [...allAvailablePackages].sort((a, b) => {
             const aLoaded = loadedPackages.has(a);
             const bLoaded = loadedPackages.has(b);
             if (aLoaded && !bLoaded) return -1;
@@ -905,7 +922,8 @@
             });
             console.log('Pyodide core loaded.');
 
-            loadingOverlay.innerText = 'Loading essential Python packages (micropip, numpy, pandas)...';
+            // Changed loading text as requested
+            loadingOverlay.innerText = 'Loading essential Python packages...';
             // Load essential packages at startup
             const essentialPackages = ['micropip', 'numpy', 'pandas'];
             await pyodide.loadPackage(essentialPackages);
