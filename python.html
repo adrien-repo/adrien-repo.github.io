@@ -376,13 +376,13 @@
             border-color: #727a80;
             box-shadow: none;
         }
-        body[data-theme="linux"] button.primary {
+        button.primary {
             background-color: var(--linux-primary-button-bg); /* Linux-like blue */
             color: white;
             border: none;
             box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
         }
-        body[data-theme="linux"] button.primary:hover {
+        button.primary:hover {
             background-color: var(--linux-primary-button-hover);
             box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
         }
@@ -658,11 +658,14 @@
     let selectedPackagesInModal = new Set(); // To keep track of selected packages in the modal
 
     // List of pre-built Pyodide packages (can be expanded)
-    // Reverted to hardcoded list
     const availablePackages = [
         'micropip',
         'numpy',
         'pandas',
+        'packaging',
+        'python-dateutil',
+        'pytz',
+        'six',
         'scipy',
         'matplotlib',
         'scikit-learn',
@@ -681,9 +684,6 @@
         'openpyxl',
         'xlrd',
         'xlsxwriter',
-        'pytz',
-        'dateutil',
-        'cryptography',
         'pyyaml',
         'toml',
         'fastjsonschema',
@@ -816,7 +816,7 @@
     }
 
     // Function to populate the package selection list in the modal
-    async function populatePackageList() { // Made async because pyodide.listPackages() is async
+    async function populatePackageList() {
         if (!pyodide) {
             showNotification("Python interpreter not loaded yet. Cannot retrieve package list.", true);
             return;
@@ -826,7 +826,6 @@
         packageListDiv.innerHTML = ''; // Clear existing items
         selectedPackagesInModal.clear(); // Clear previous selections
 
-        // Use the hardcoded availablePackages list
         const allAvailablePackages = availablePackages;
 
         // Sort available packages alphabetically, but keep loaded ones at the top if desired
@@ -916,6 +915,9 @@
         try {
             console.log('Starting Pyodide loading process...');
             loadingOverlay.innerText = 'Initializing...';
+            // Apply Linux styles to loading overlay immediately
+            loadingOverlay.style.color = 'var(--linux-text)';
+            loadingOverlay.style.textShadow = 'none';
             
             pyodide = await loadPyodide({
                 indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/",
@@ -924,20 +926,38 @@
 
             // Changed loading text as requested
             loadingOverlay.innerText = 'Loading essential Python packages...';
-            // Load essential packages at startup
-            const essentialPackages = ['micropip', 'numpy', 'pandas'];
+            // Load essential packages at startup, including packaging, python-dateutil, pytz, six
+            const essentialPackages = ['micropip', 'numpy', 'pandas', 'packaging', 'python-dateutil', 'pytz', 'six'];
             await pyodide.loadPackage(essentialPackages);
             essentialPackages.forEach(pkg => loadedPackages.add(pkg)); // Add essential packages to loaded set
-            console.log('Micropip, numpy, and pandas loaded.');
+            console.log('Essential packages loaded.');
             
             loadingOverlay.style.display = 'none';
             notebookContainer.style.display = 'block';
             console.log('Pyodide and packages ready. Notebook displayed.');
             showNotification('Python interpreter loaded successfully!');
 
-            // Add initial cells
-            //addCell('markdown', '# Welcome!\n\nThis is a simple in-browser Python notebook.');
-            addCell('code', 'print("Hello, World!")');
+            // Add initial cells with imports for all loaded packages and warning suppression
+            addCell('code', `import warnings
+warnings.filterwarnings('ignore', category=DeprecationWarning) # Suppress deprecation warnings
+
+import micropip # For installing Python packages
+import numpy as np # For numerical operations
+import packaging # For Python packaging utilities
+import pandas as pd # For data manipulation and analysis
+import dateutil # For datetime operations
+import pytz # For timezone handling
+import six # For Python 2 and 3 compatibility
+
+print("Hello, World!")
+print(f"micropip version: {micropip.__version__}")
+print(f"Numpy version: {np.__version__}")
+print(f"Packaging version: {packaging.__version__}")
+print(f"Pandas version: {pd.__version__}")
+print(f"Dateutil version: {dateutil.__version__}")
+print(f"Pytz version: {pytz.__version__}")
+print(f"Six version: {six.__version__}")
+`);
             
             // Crucial: Refresh CodeMirror instances after the container is visible
             refreshAllCodeMirrors();
