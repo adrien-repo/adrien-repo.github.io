@@ -188,17 +188,25 @@
             box-shadow: 0 0 15px var(--matrix-green); /* Stronger glow on hover */
             text-shadow: none;
         }
-        button.primary {
-            background-color: var(--matrix-green); /* Primary button is bright green */
-            color: var(--matrix-black);
-            border: none;
-            box-shadow: 0 0 10px var(--matrix-green);
-            text-shadow: none;
+
+        /* Primary button styles for Matrix mode */
+        body:not([data-theme="linux"]) button.primary {
+            background-color: var(--matrix-dark-green); /* Dark green background */
+            color: var(--matrix-green); /* Bright green text */
+            border: 1px solid var(--matrix-green); /* Green border */
+            box-shadow: 0 0 12px rgba(0, 255, 65, 0.6); /* Stronger glow */
+            text-shadow: 0 0 4px var(--matrix-green); /* Stronger text shadow */
         }
-        button.primary:hover {
-            background-color: #00cc33; /* Slightly darker green on hover for primary */
-            box-shadow: 0 0 20px var(--matrix-green);
+
+        body:not([data-theme="linux"]) button.primary:hover {
+            background-color: var(--matrix-green); /* Bright green on hover */
+            color: var(--matrix-black); /* Black text on hover */
+            border-color: var(--matrix-green);
+            transform: translateY(-1px);
+            box-shadow: 0 0 20px var(--matrix-green); /* Even stronger glow on hover */
+            text-shadow: none; /* No text shadow on hover */
         }
+
         .CodeMirror {
             border: 1px solid var(--matrix-dark-green);
             border-radius: 4px;
@@ -376,13 +384,13 @@
             border-color: #727a80;
             box-shadow: none;
         }
-        button.primary {
+        body[data-theme="linux"] button.primary {
             background-color: var(--linux-primary-button-bg); /* Linux-like blue */
             color: white;
             border: none;
             box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
         }
-        button.primary:hover {
+        body[data-theme="linux"] button.primary:hover {
             background-color: var(--linux-primary-button-hover);
             box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
         }
@@ -1120,6 +1128,8 @@ print("Hello, World!")
             const captured = await pyodide.runPythonAsync(`
 import io, sys
 from contextlib import redirect_stdout, redirect_stderr
+import warnings
+warnings.filterwarnings('ignore', category=DeprecationWarning)
 
 output = io.StringIO()
 error = io.StringIO()
