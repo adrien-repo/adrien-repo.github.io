@@ -1018,11 +1018,18 @@
                                             // If in an iframe, prevent default and manually scroll
                                             a.addEventListener('click', (e) => {
                                                 e.preventDefault();
-                                                const targetId = href.substring(1);
-                                                const targetElement = e.currentTarget.ownerDocument.getElementById(targetId);
+                                                const targetAnchor = href.substring(1);
+                                                let targetElement = e.currentTarget.ownerDocument.getElementById(targetAnchor);
+
+                                                // If not found by ID, try finding an <a> tag with a matching name attribute
+                                                if (!targetElement) {
+                                                    targetElement = e.currentTarget.ownerDocument.querySelector(`a[name="${targetAnchor}"]`);
+                                                }
 
                                                 if (targetElement) {
                                                     targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                                } else {
+                                                    console.warn(`Target element for hash "${targetAnchor}" not found by ID or NAME in iframe document.`);
                                                 }
                                             });
                                             a.target = '_self'; // Ensure it stays in the same iframe
