@@ -940,7 +940,6 @@
             // Add initial cells with imports for all loaded packages and warning suppression
             addCell('code', `import warnings
 warnings.filterwarnings('ignore', category=DeprecationWarning) # Suppress deprecation warnings
-
 import micropip # For installing Python packages
 import numpy as np # For numerical operations
 import packaging # For Python packaging utilities
@@ -948,10 +947,8 @@ import pandas as pd # For data manipulation and analysis
 import dateutil # For datetime operations
 import pytz # For timezone handling
 import six # For Python 2 and 3 compatibility
-
 print(f"Preloaded with: micropip {micropip.__version__}, numpy {np.__version__}, packaging {packaging.__version__}, pandas {pd.__version__}, dateutil {dateutil.__version__}, pytz {pytz.__version__}, six {six.__version__}")
 print("Hello, World!")
-
 `);
             
             // Crucial: Refresh CodeMirror instances after the container is visible
