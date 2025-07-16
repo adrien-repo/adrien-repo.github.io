@@ -6,12 +6,13 @@
     <title>Python Interpreter</title>
      <link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
 
-    <!-- Google Fonts for Linux feel -->
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts for a digital feel, similar to Matrix -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <!-- CodeMirror for code editing -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+    <!-- Using a darker, more suitable CodeMirror theme like 'material-darker' or 'monokai' -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/material-darker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
 
@@ -22,70 +23,115 @@
     <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 
     <style>
-        body {
-            font-family: 'Ubuntu', sans-serif;
-            background-color: #2e3436; /* Darker background, Linux feel */
-            margin: 0;
-            /* Adjusted padding-top to ensure content starts below fixed header */
-            padding: 140px 20px 20px 20px; /* This value might need minor tweaking based on final header height */
-            color: #d3d7cf; /* Lighter text for dark background */
+        /* Matrix Style Definitions */
+        :root {
+            --matrix-green: #00ff41; /* Bright green */
+            --matrix-dark-green: #004d00; /* Darker green for accents */
+            --matrix-black: #0a0a0a; /* Almost black */
+            --matrix-grey: #1a1a1a; /* Dark grey for backgrounds */
+            --matrix-light-grey: #2a2a2a; /* Slightly lighter grey */
+            --matrix-error-red: #ff0000; /* Bright red for errors */
         }
+
+        body {
+            font-family: 'Share Tech Mono', monospace; /* Digital monospace font */
+            background-color: var(--matrix-black);
+            color: var(--matrix-green);
+            margin: 0;
+            padding: 140px 20px 20px 20px;
+            overflow-x: hidden; /* Prevent horizontal scroll due to potential overflow */
+            position: relative; /* For pseudo-element background */
+            text-shadow: 0 0 5px var(--matrix-dark-green); /* Subtle glow */
+        }
+
+        /* Digital Rain Effect (Subtle version) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(0, 255, 65, 0.05), /* Subtle green lines */
+                rgba(0, 255, 65, 0.05) 2px,
+                transparent 2px,
+                transparent 40px
+            );
+            animation: digitalRain 30s linear infinite;
+            z-index: -1; /* Behind content */
+            pointer-events: none; /* Do not interfere with clicks */
+        }
+
+        @keyframes digitalRain {
+            from { background-position: 0 0; }
+            to { background-position: 0 100%; }
+        }
+
         .header {
             text-align: center;
             margin-bottom: 20px;
-            color: #eeeeec; /* Lighter header text */
+            color: var(--matrix-green);
+            text-shadow: 0 0 8px var(--matrix-green);
         }
-        /* Fixed header container */
+        
         #fixed-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #2e3436; /* Match body background */
-            z-index: 1000; /* Ensure it's on top of scrolling content */
-            padding: 10px 0; /* Padding inside the fixed header */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow to distinguish it */
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+            z-index: 1000;
+            padding: 10px 0;
+            box-shadow: 0 0 15px var(--matrix-dark-green); /* Green glow shadow */
+            border-bottom: 1px solid var(--matrix-dark-green);
         }
         .main-container {
             max-width: 1000px;
-            margin: 0 auto; /* Center the main content */
-            background-color: #343a40; /* Darker content area */
+            margin: 0 auto;
+            background-color: rgba(10, 10, 10, 0.9); /* Slightly transparent dark background */
             padding: 20px 40px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3); /* Green glow */
             border-radius: 8px;
-            border: 1px solid #4e555b; /* Subtle border */
+            border: 1px solid var(--matrix-dark-green);
         }
-        /* Notification message styling */
+        
         .notification-message {
             text-align: center;
-            padding: 5px 15px; /* Smaller padding for reduced height */
-            margin-bottom: 20px; /* Margin below notification */
+            padding: 5px 15px;
+            margin-bottom: 20px;
             border-radius: 5px;
             font-size: 0.9em;
             font-weight: bold;
-            /* Removed min-height, padding controls height now */
-            display: flex; /* Use flex to center content vertically */
+            display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0; /* Hidden by default, but occupies space */
-            pointer-events: none; /* Don't block clicks when invisible */
+            opacity: 0;
+            pointer-events: none;
             transition: opacity 0.3s ease-in-out, background-color 0.3s ease;
-            color: #eeeeec;
-            background-color: #4a5255; /* Changed to a softer, darker gray */
+            color: var(--matrix-green);
+            background-color: var(--matrix-light-grey);
+            border: 1px solid var(--matrix-dark-green);
+            text-shadow: none; /* Remove body text-shadow */
         }
         .notification-message.error {
-            background-color: #cc0000; /* Error red */
+            background-color: var(--matrix-error-red);
+            color: white;
+            border-color: #8b0000;
+            text-shadow: 0 0 5px #ff4444;
         }
         .cell {
-            border: 1px solid #4e554b;
+            border: 1px solid var(--matrix-dark-green);
             border-radius: 6px;
             padding: 15px;
             margin-bottom: 25px;
-            background-color: #40454a; /* Slightly lighter cell background */
+            background-color: var(--matrix-grey);
             transition: box-shadow 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.15); /* Subtle cell glow */
         }
         .cell:hover {
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5); /* Stronger glow on hover */
             transform: translateY(-2px);
         }
         .cell-actions {
@@ -97,60 +143,114 @@
         button {
             padding: 8px 12px;
             font-size: 14px;
-            border: 1px solid #5e6468;
+            border: 1px solid var(--matrix-green);
             border-radius: 4px;
             cursor: pointer;
-            background-color: #555b60; /* Darker button */
-            color: #eeeeec;
-            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+            background-color: var(--matrix-dark-green); /* Dark green button */
+            color: var(--matrix-green);
+            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            box-shadow: 0 0 8px rgba(0, 255, 65, 0.4); /* Button glow */
+            text-shadow: 0 0 3px var(--matrix-green);
         }
         button:hover {
-            background-color: #60676d; /* Lighter on hover */
-            border-color: #727a80;
+            background-color: var(--matrix-green); /* Bright green on hover */
+            color: var(--matrix-black);
+            border-color: var(--matrix-green);
             transform: translateY(-1px);
+            box-shadow: 0 0 15px var(--matrix-green); /* Stronger glow on hover */
+            text-shadow: none;
         }
         button.primary {
-            background-color: #3465a4; /* Linux-like blue */
-            color: white;
+            background-color: var(--matrix-green); /* Primary button is bright green */
+            color: var(--matrix-black);
             border: none;
-            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 10px var(--matrix-green);
+            text-shadow: none;
         }
         button.primary:hover {
-            background-color: #4682b4; /* Lighter blue on hover */
-            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+            background-color: #00cc33; /* Slightly darker green on hover for primary */
+            box-shadow: 0 0 20px var(--matrix-green);
         }
         .CodeMirror {
-            border: 1px solid #5e6468;
+            border: 1px solid var(--matrix-dark-green);
             border-radius: 4px;
             height: auto;
             min-height: 100px;
-            font-family: 'Ubuntu Mono', monospace; /* Monospace font for code */
+            font-family: 'Share Tech Mono', monospace; /* Monospace font for code */
             font-size: 14px;
             line-height: 1.5;
-            background-color: #2b2b2b; /* Dracula theme background */
+            background-color: var(--matrix-black); /* CodeMirror background */
+            color: var(--matrix-green); /* Default text color */
+            text-shadow: 0 0 3px var(--matrix-dark-green);
         }
+        /* Override CodeMirror Dracula theme specific colors for Matrix feel */
+        .CodeMirror-lines {
+            color: var(--matrix-green);
+        }
+        .CodeMirror-gutters {
+            background-color: var(--matrix-black) !important;
+            border-right: 1px solid var(--matrix-dark-green) !important;
+        }
+        .CodeMirror-linenumber {
+            color: var(--matrix-dark-green) !important;
+        }
+        .cm-keyword { color: #00cc33 !important; } /* Green keywords */
+        .cm-atom { color: #00ff41 !important; } /* Green atoms */
+        .cm-number { color: #00ff41 !important; } /* Green numbers */
+        .cm-def { color: #00cc33 !important; } /* Green definitions */
+        .cm-variable { color: var(--matrix-green) !important; }
+        .cm-variable-2 { color: #009922 !important; }
+        .cm-property { color: #00cc33 !important; }
+        .cm-string { color: #00ff41 !important; } /* Bright green strings */
+        .cm-string-2 { color: #00ff41 !important; }
+        .cm-comment { color: #006600 !important; } /* Darker green comments */
+        .cm-meta { color: #00cc33 !important; }
+        .cm-qualifier { color: #00ff41 !important; }
+        .cm-builtin { color: #00cc33 !important; }
+        .cm-bracket { color: var(--matrix-green) !important; }
+        .cm-tag { color: #00cc33 !important; }
+        .cm-attribute { color: #00ff41 !important; }
+        .cm-hr { color: #00ff41 !important; }
+        .cm-link { color: #00ff41 !important; }
+        .cm-error { color: var(--matrix-error-red) !important; }
+        .cm-header { color: #00ff41 !important; }
+        .cm-quote { color: #00ff41 !important; }
+        .cm-negative { color: var(--matrix-error-red) !important; }
+        .cm-positive { color: #00ff41 !important; }
+        .cm-strong { font-weight: bold; color: #00ff41 !important; }
+        .cm-em { font-style: italic; color: #00ff41 !important; }
+        .cm-link { color: #00ff41 !important; text-decoration: underline; }
+        .CodeMirror-cursor { border-left: 1px solid var(--matrix-green) !important; } /* Green cursor */
+        .CodeMirror-activeline-background { background: rgba(0, 255, 65, 0.1) !important; } /* Subtle active line */
+
+
         .output-area {
-            background-color: #2b2b2b; /* Dark background for output */
-            color: #eeeeec; /* Light text for output */
+            background-color: var(--matrix-black);
+            color: var(--matrix-green);
             border-radius: 4px;
             padding: 10px;
             margin-top: 15px;
-            border: 1px solid #5e6468;
+            border: 1px solid var(--matrix-dark-green);
             white-space: pre-wrap;
-            font-family: 'Ubuntu Mono', monospace; /* Monospace font for output */
+            font-family: 'Share Tech Mono', monospace;
             font-size: 13px;
+            text-shadow: 0 0 3px var(--matrix-dark-green);
         }
         .output-area.error {
-            color: #ef2929; /* Red for errors */
+            color: var(--matrix-error-red); /* Red for errors */
+            text-shadow: 0 0 5px #ff4444;
+            border-color: #8b0000;
         }
         .markdown-preview {
             padding: 10px;
-            color: #d3d7cf; /* Light text for markdown */
+            color: var(--matrix-green);
+            text-shadow: 0 0 3px var(--matrix-dark-green);
         }
         .markdown-preview h1, .markdown-preview h2, .markdown-preview h3 {
-            border-bottom: 1px solid #5e6468;
+            border-bottom: 1px solid var(--matrix-dark-green);
             padding-bottom: 5px;
-            color: #eeeeec;
+            color: var(--matrix-green);
+            text-shadow: 0 0 8px var(--matrix-green);
         }
         .loading-overlay {
             position: fixed;
@@ -158,20 +258,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(46, 52, 54, 0.9); /* Darker overlay */
+            background-color: rgba(0, 0, 0, 0.95); /* Very dark overlay */
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 1.2em;
-            color: #eeeeec;
+            color: var(--matrix-green);
             z-index: 1000;
+            text-shadow: 0 0 10px var(--matrix-green);
         }
         .top-actions {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 20px; /* This margin is now inside the fixed header */
+            margin-bottom: 20px;
         }
         /* Hidden file input */
         .hidden-file-input {
@@ -179,7 +280,7 @@
         }
         /* Margin for the cells container to push content below fixed header */
         #cells-container {
-            margin-top: 40px; /* Increased margin to create more space */
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -345,7 +446,7 @@
                 // Synchronous CodeMirror initialization
                 const editor = CodeMirror.fromTextArea(textarea, {
                     mode: 'python',
-                    theme: 'dracula',
+                    theme: 'material-darker', /* Changed theme for Matrix style */
                     lineNumbers: true,
                     indentUnit: 4,
                     extraKeys: {
