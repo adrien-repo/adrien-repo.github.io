@@ -451,6 +451,147 @@
             color: var(--linux-button-text);
             text-shadow: none;
         }
+
+        /* Styles for the modal popup */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001; /* Above everything else */
+            display: none; /* Hidden by default */
+        }
+
+        .modal-content {
+            background-color: var(--matrix-grey);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5); /* Matrix glow */
+            border: 1px solid var(--matrix-green);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            color: var(--matrix-green);
+            font-family: 'Share Tech Mono', monospace;
+            text-shadow: 0 0 5px var(--matrix-dark-green);
+        }
+        body[data-theme="linux"] .modal-content {
+            background-color: var(--linux-cell-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--linux-dark-border);
+            color: var(--linux-text);
+            font-family: 'Ubuntu', sans-serif;
+            text-shadow: none;
+        }
+
+        .modal-close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--matrix-green);
+            line-height: 1;
+            padding: 5px;
+            transition: color 0.2s ease;
+        }
+        .modal-close-button:hover {
+            color: #ff0000; /* Red on hover */
+        }
+        body[data-theme="linux"] .modal-close-button {
+            color: var(--linux-text);
+        }
+        body[data-theme="linux"] .modal-close-button:hover {
+            color: #ef2929;
+        }
+
+
+        .package-selection-header {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+            color: var(--matrix-green);
+            text-shadow: 0 0 8px var(--matrix-green);
+        }
+        body[data-theme="linux"] .package-selection-header {
+            color: var(--linux-text);
+            text-shadow: none;
+        }
+
+        .package-selection-list {
+            width: 100%;
+            height: 200px; /* Fixed height for scrollability */
+            overflow-y: auto; /* Enable scrolling */
+            border: 1px solid var(--matrix-dark-green);
+            border-radius: 4px;
+            margin-bottom: 15px;
+            background-color: var(--matrix-black);
+            color: var(--matrix-green);
+            padding: 5px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
+        body[data-theme="linux"] .package-selection-list {
+            border: 1px solid var(--linux-dark-border);
+            background-color: var(--linux-codemirror-bg);
+            color: var(--linux-text);
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        .package-item {
+            padding: 5px 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .package-item.selected {
+            background-color: var(--matrix-dark-green);
+            color: white;
+        }
+        .package-item.loaded {
+            color: #888; /* Dim loaded packages */
+            cursor: default;
+        }
+        .package-item:not(.loaded):hover {
+            background-color: rgba(0, 255, 65, 0.1); /* Subtle hover for Matrix */
+        }
+        body[data-theme="linux"] .package-item.selected {
+            background-color: var(--linux-primary-button-bg);
+            color: white;
+        }
+        body[data-theme="linux"] .package-item.loaded {
+            color: #888;
+        }
+        body[data-theme="linux"] .package-item:not(.loaded):hover {
+            background-color: rgba(52, 101, 164, 0.2); /* Subtle hover for Linux */
+        }
+
+        .package-status {
+            font-size: 0.8em;
+            font-style: italic;
+            color: #00cc33; /* Green for loaded status */
+        }
+        body[data-theme="linux"] .package-status {
+            color: #a5d6a7; /* Lighter green for Linux loaded status */
+        }
+
+        .package-install-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body data-theme="linux"> <!-- Changed default theme to linux -->
@@ -473,6 +614,7 @@
         <button onclick="exportToPy()">Export .py</button>
         <button class="primary" onclick="runAllCells()">Run All</button>
         <button id="toggleModeButton" onclick="toggleMatrixMode()">Matrix Mode: Off</button> <!-- Changed initial button text -->
+        <button onclick="openPackageModal()">Manage Packages</button>
     </div>
 </div>
 
@@ -484,6 +626,18 @@
     <div id="cells-container"></div>
 </div>
 
+<!-- Package Selection Modal -->
+<div id="package-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close-button" onclick="closePackageModal()">&times;</button>
+        <h2 class="package-selection-header">Manage Python Packages</h2>
+        <div id="package-list" class="package-selection-list">
+            <!-- Package items will be populated here by JS -->
+        </div>
+        <button class="primary package-install-button" onclick="installSelectedPackages()">Install Selected Packages</button>
+    </div>
+</div>
+
 <script>
     let pyodide;
     let notebookCells = [];
@@ -491,6 +645,45 @@
     const markdownConverter = new showdown.Converter();
     let notificationTimeout; // To manage notification hiding
     let matrixRainInterval; // To store the interval ID for matrix rain
+    let loadedPackages = new Set(); // To keep track of loaded packages
+    let selectedPackagesInModal = new Set(); // To keep track of selected packages in the modal
+
+    // List of pre-built Pyodide packages (can be expanded)
+    // Added 'micropip', 'numpy', and 'pandas' to this list
+    const availablePackages = [
+        'micropip', // Added micropip here
+        'numpy',    // Added numpy here
+        'pandas',   // Added pandas here
+        'scipy',
+        'matplotlib',
+        'scikit-learn',
+        'sympy',
+        'requests',
+        'Pillow',
+        'statsmodels',
+        'networkx',
+        'beautifulsoup4',
+        'lxml',
+        'plotly',
+        'bokeh',
+        'altair',
+        'seaborn',
+        'numexpr',
+        'openpyxl',
+        'xlrd',
+        'xlsxwriter',
+        'pytz',
+        'dateutil',
+        'cryptography',
+        'pyyaml',
+        'toml',
+        'fastjsonschema',
+        'pygments',
+        'markdown',
+        'ipywidgets',
+        'tqdm'
+    ];
+
 
     // Matrix Rain Canvas Logic
     const canvas = document.getElementById('matrix-rain-canvas');
@@ -583,10 +776,6 @@
         }
     });
 
-    // Initial setup for Linux Mode
-    // The matrixRainInterval is NOT started here. It will be started only when Matrix Mode is turned ON.
-
-
     // Function to show a temporary notification message
     function showNotification(message, isError = false) {
         const notificationElement = document.getElementById('notification-message');
@@ -617,6 +806,91 @@
         }
     }
 
+    // Function to populate the package selection list in the modal
+    function populatePackageList() {
+        const packageListDiv = document.getElementById('package-list');
+        packageListDiv.innerHTML = ''; // Clear existing items
+        selectedPackagesInModal.clear(); // Clear previous selections
+
+        // Sort available packages alphabetically, but keep loaded ones at the top if desired
+        const sortedPackages = [...availablePackages].sort((a, b) => {
+            const aLoaded = loadedPackages.has(a);
+            const bLoaded = loadedPackages.has(b);
+            if (aLoaded && !bLoaded) return -1;
+            if (!aLoaded && bLoaded) return 1;
+            return a.localeCompare(b);
+        });
+
+        sortedPackages.forEach(pkg => {
+            const packageItem = document.createElement('div');
+            packageItem.classList.add('package-item');
+            packageItem.dataset.packageName = pkg;
+
+            const packageNameSpan = document.createElement('span');
+            packageNameSpan.textContent = pkg;
+            packageItem.appendChild(packageNameSpan);
+
+            const statusSpan = document.createElement('span');
+            statusSpan.classList.add('package-status');
+
+            if (loadedPackages.has(pkg)) {
+                statusSpan.textContent = '[Loaded]';
+                packageItem.classList.add('loaded');
+                packageItem.style.cursor = 'default'; // Indicate it's not selectable
+            } else {
+                packageItem.onclick = () => {
+                    if (selectedPackagesInModal.has(pkg)) {
+                        selectedPackagesInModal.delete(pkg);
+                        packageItem.classList.remove('selected');
+                    } else {
+                        selectedPackagesInModal.add(pkg);
+                        packageItem.classList.add('selected');
+                    }
+                };
+            }
+            packageItem.appendChild(statusSpan);
+            packageListDiv.appendChild(packageItem);
+        });
+    }
+
+    // Function to install selected packages from the modal
+    async function installSelectedPackages() {
+        if (!pyodide) {
+            showNotification("Python interpreter not loaded yet. Please wait.", true);
+            return;
+        }
+
+        const packagesToInstall = Array.from(selectedPackagesInModal);
+
+        if (packagesToInstall.length === 0) {
+            showNotification("No packages selected to install.", true);
+            return;
+        }
+
+        showNotification(`Installing ${packagesToInstall.join(', ')}... This may take a moment.`);
+        try {
+            await pyodide.loadPackage(packagesToInstall);
+            packagesToInstall.forEach(pkg => loadedPackages.add(pkg)); // Add to loaded set
+            showNotification(`Successfully installed: ${packagesToInstall.join(', ')}`);
+            populatePackageList(); // Refresh the modal list to show new status
+            selectedPackagesInModal.clear(); // Clear selections after installation
+        } catch (error) {
+            console.error("Failed to install packages:", error);
+            showNotification(`Failed to install packages: ${error.message || error}`, true);
+        }
+    }
+
+    // Functions to open and close the package modal
+    function openPackageModal() {
+        populatePackageList(); // Always refresh list when opening
+        document.getElementById('package-modal').style.display = 'flex';
+    }
+
+    function closePackageModal() {
+        document.getElementById('package-modal').style.display = 'none';
+    }
+
+
     async function loadPyodideAndLibs() {
         const loadingOverlay = document.getElementById('loading-overlay');
         const notebookContainer = document.getElementById('notebook-container');
@@ -631,10 +905,12 @@
             });
             console.log('Pyodide core loaded.');
 
-            loadingOverlay.innerText = 'Loading Python packages...';
-            await pyodide.loadPackage('micropip');
-            await pyodide.loadPackage('numpy'); // Explicitly load numpy
-            console.log('Micropip and numpy loaded.');
+            loadingOverlay.innerText = 'Loading essential Python packages (micropip, numpy, pandas)...';
+            // Load essential packages at startup
+            const essentialPackages = ['micropip', 'numpy', 'pandas'];
+            await pyodide.loadPackage(essentialPackages);
+            essentialPackages.forEach(pkg => loadedPackages.add(pkg)); // Add essential packages to loaded set
+            console.log('Micropip, numpy, and pandas loaded.');
             
             loadingOverlay.style.display = 'none';
             notebookContainer.style.display = 'block';
@@ -1131,7 +1407,9 @@ with redirect_stdout(output), redirect_stderr(error):
     }
 
 
-    document.addEventListener('DOMContentLoaded', loadPyodideAndLibs);
+    document.addEventListener('DOMContentLoaded', () => {
+        loadPyodideAndLibs(); // Then load Pyodide and essential libs
+    });
 </script>
 </body>
 </html>
