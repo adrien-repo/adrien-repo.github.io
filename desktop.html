@@ -13,9 +13,14 @@
             background-color: #3C3C3C; /* Dark grey for desktop background */
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100%;
             color: #eee;
         }
+	.body-main-container {
+	  height: 100dvh; /* Use dynamic viewport height */
+	  display: flex;
+	  flex-direction: column;
+	}
         /* Desktop Background */
         #desktop {
             flex-grow: 1;
@@ -381,45 +386,48 @@
     </style>
 </head>
 <body>
-    <div id="desktop">
-        </div>
-    <div id="taskbar">
-        <div id="start-menu-button" class="taskbar-item">
-            Start
-            <div id="start-menu">
-                </div>
-        </div>
-        <div id="taskbar-left-arrow" class="taskbar-arrow disabled">&lt;</div>
-        <div id="taskbar-windows">
-            </div>
-        <div id="taskbar-right-arrow" class="taskbar-arrow disabled">&gt;</div>
-        <div id="clock-container" class="taskbar-item">
-            <div id="clock"></div>
-            <div id="date"></div>
-            <div id="calendar-popover">
-                <h4>July 2025</h4>
-                <div id="calendar-grid">
-                    <div class="day-name">Mon</div>
-                    <div class="day-name">Tue</div>
-                    <div class="day-name">Wed</div>
-                    <div class="day-name">Thu</div>
-                    <div class="day-name">Fri</div>
-                    <div class="day-name">Sat</div>
-                    <div class="day-name">Sun</div>
-                    </div>
-            </div>
-        </div>
-    </div>
-    <div id="desktop-context-menu">
-        <div class="context-menu-item" id="change-wallpaper-option">Change Wallpaper</div>
-        </div>
-    <!-- New Taskbar Button Context Menu -->
-    <div id="taskbar-button-context-menu">
-        <div class="context-menu-item" id="taskbar-context-minimize-restore">Minimize</div>
-        <div class="context-menu-item" id="taskbar-context-close">Close</div>
-    </div>
-	
-	<div id="screensaver"></div>
+    
+	<div class="body-main-container">
+		<div id="desktop">
+			</div>
+		<div id="taskbar">
+			<div id="start-menu-button" class="taskbar-item">
+				Start
+				<div id="start-menu">
+					</div>
+			</div>
+			<div id="taskbar-left-arrow" class="taskbar-arrow disabled">&lt;</div>
+			<div id="taskbar-windows">
+				</div>
+			<div id="taskbar-right-arrow" class="taskbar-arrow disabled">&gt;</div>
+			<div id="clock-container" class="taskbar-item">
+				<div id="clock"></div>
+				<div id="date"></div>
+				<div id="calendar-popover">
+					<h4>July 2025</h4>
+					<div id="calendar-grid">
+						<div class="day-name">Mon</div>
+						<div class="day-name">Tue</div>
+						<div class="day-name">Wed</div>
+						<div class="day-name">Thu</div>
+						<div class="day-name">Fri</div>
+						<div class="day-name">Sat</div>
+						<div class="day-name">Sun</div>
+						</div>
+				</div>
+			</div>
+		</div>
+		<div id="desktop-context-menu">
+			<div class="context-menu-item" id="change-wallpaper-option">Change Wallpaper</div>
+			</div>
+		<!-- New Taskbar Button Context Menu -->
+		<div id="taskbar-button-context-menu">
+			<div class="context-menu-item" id="taskbar-context-minimize-restore">Minimize</div>
+			<div class="context-menu-item" id="taskbar-context-close">Close</div>
+		</div>
+		
+		<div id="screensaver"></div>
+	</div>
 	
 	<script>
         // Get the screensaver element
