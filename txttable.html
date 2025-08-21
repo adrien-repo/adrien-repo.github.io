@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TXT to Table</title>
+     <link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon" />
+    <!-- Google Fonts - Ubuntu -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* CSS for a Linux application feel - Light Mode */
+        body {
+            font-family: 'Ubuntu', sans-serif; /* Ubuntu font for general UI */
+            background-color: #e0e0e0; /* Light grey background */
+            color: #333; /* Dark text for contrast */
+            margin: 0;
+            padding: 0; /* Removed padding to allow container to take full space */
+            display: flex; /* Use flexbox for centering content */
+            flex-direction: column; /* Stack content vertically */
+            justify-content: center; /* Center horizontally (initial state) */
+            align-items: center; /* Center vertically (initial state) */
+            min-height: 100vh; /* Full viewport height */
+            transition: all 0.3s ease; /* Smooth transition for layout changes */
+        }
+
+        .container {
+            background-color: #f8f8f8; /* Off-white container background */
+            border: 1px solid #ccc; /* Lighter border */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+            padding: 25px; /* Increased padding for a more spacious feel */
+            border-radius: 5px;
+            width: 100%;
+            max-width: 100%; /* Allow full width */
+            height: 100%; /* Allow full height */
+            box-sizing: border-box; /* Include padding in width */
+            transition: all 0.3s ease; /* Smooth transition for container changes */
+            flex-grow: 1; /* Allow container to grow and fill space */
+            display: flex; /* Make container a flex column to manage its children */
+            flex-direction: column;
+        }
+
+        /* Removed H1 styling as the element is removed */
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap; /* Allow controls to wrap on smaller screens */
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            gap: 10px; /* Space between control elements */
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        select {
+            background-color: #fff; /* White background for inputs/selects */
+            border: 1px solid #bbb; /* Lighter border */
+            color: #333; /* Dark text */
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        /* Styling for the file input button (hidden by JS, but good to keep for fallback) */
+        input[type="file"]::file-selector-button,
+        .pagination-button {
+            background-color: #007bff; /* Blue button */
+            color: #fff; /* White text */
+            border: 1px solid #0056b3; /* Darker blue border */
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        input[type="file"]::file-selector-button:hover,
+        .pagination-button:hover:not(:disabled) {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .pagination-button:disabled {
+            background-color: #cccccc;
+            border-color: #aaaaaa;
+            cursor: not-allowed;
+            color: #666666;
+        }
+
+        /* Initial Drop Zone Styling - Sleek, Web 3.0, Glass-like */
+        #file-input-area.initial-drop-zone {
+            position: relative; /* For absolute positioning of input */
+            width: 250px;
+            height: 250px;
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle transparent border */
+            border-radius: 15px; /* Slightly more rounded corners */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #007bff; /* Accent color for text */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 auto 20px auto; /* Center it and add bottom margin */
+            background: rgba(255, 255, 255, 0.15); /* Translucent white background */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            -webkit-backdrop-filter: blur(10px); /* Safari support */
+        }
+
+        #file-input-area.initial-drop-zone:hover {
+            border-color: rgba(255, 255, 255, 0.5); /* Slightly brighter border on hover */
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.2); /* More prominent shadow on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        #file-input-area.initial-drop-zone #file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0; /* Make the actual input invisible */
+            cursor: pointer;
+            z-index: 2; /* Ensure it's above the label */
+        }
+
+        #file-input-area.initial-drop-zone #file-path {
+            display: none; /* Hide file path initially in drop zone */
+        }
+
+        #initial-message { /* The label itself, now just containing the icon */
+            display: flex; /* Use flex to center icon vertically */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Stack icon and potential text vertically */
+            height: 100%; /* Take full height of parent */
+            width: 100%; /* Take full width of parent */
+        }
+
+        #initial-message i { /* Styling for the Font Awesome icon */
+            font-size: 4em; /* Larger icon size */
+            /* Removed margin-bottom as text is gone */
+            color: #999999; /* Icon color */
+        }
+
+        #initial-message span { /* Styling for the text below the icon */
+            display: none; /* Hide the text span */
+        }
+
+
+        /* Styling for file input area AFTER file is loaded */
+        #file-input-area.active-display {
+            border: none; /* Remove glassmorphism borders/shadows */
+            border-radius: 0; /* Remove border-radius */
+            width: auto; /* Allow width to be determined by content */
+            height: auto; /* Allow height to be determined by content */
+            padding: 0; /* Remove padding */
+            margin: 0; /* Remove margin */
+            background-color: transparent; /* Remove background */
+            box-shadow: none; /* Remove box shadow */
+            backdrop-filter: none; /* Remove backdrop filter */
+            -webkit-backdrop-filter: none; /* Remove Safari support */
+            display: flex; /* Keep flex display */
+            flex-direction: row; /* Change to row */
+            align-items: center;
+            justify-content: flex-start; /* Align to start */
+            flex-grow: 1; /* Allow it to grow */
+        }
+
+        #file-input-area.active-display #file-input {
+            position: static; /* Reset positioning */
+            width: auto;
+            height: auto;
+            opacity: 1; /* Make it visible again */
+            cursor: pointer;
+            z-index: auto;
+            display: block; /* Make it a block element */
+            margin-right: 10px; /* Space between input and path */
+        }
+        
+        #file-input-area.active-display #file-input::file-selector-button {
+            /* Keep original button styling */
+            background-color: #007bff;
+            color: #fff;
+            border: 1px solid #0056b3;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        #file-input-area.active-display #initial-message {
+            display: none; /* Hide initial message */
+        }
+
+        #file-path {
+            flex-grow: 1;
+            padding: 5px;
+            border-radius: 3px;
+            background-color: #fff; /* White background */
+            color: #333; /* Dark text */
+            border: 1px solid #bbb; /* Lighter border */
+            min-width: 150px; /* Ensure it doesn't collapse too much */
+            font-family: 'monospace'; /* Keep monospace for file path display */
+        }
+        
+        #search {
+            width: 250px;
+            min-width: 150px; /* Ensure search input is usable */
+            font-family: 'monospace'; /* Keep monospace for search input */
+        }
+
+        #delimiter-select, #custom-delimiter {
+            font-family: 'Ubuntu', sans-serif; /* Ubuntu for delimiter controls */
+        }
+
+        .table-container {
+            flex-grow: 1; /* Allow table container to fill remaining vertical space */
+            overflow-y: auto;
+            border: 1px solid #ccc; /* Lighter border */
+            border-radius: 3px;
+            margin-top: 15px; /* Add some space above the table */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Ensures columns don't resize weirdly */
+            font-family: 'monospace', 'Courier New', Courier; /* Monospace for table content */
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc; /* Lighter border */
+            text-align: left;
+            white-space: nowrap; /* Prevent text wrap */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Add ellipsis for long text */
+        }
+
+        th {
+            background-color: #e9ecef; /* Light grey-blue for headers */
+            color: #333; /* Dark text */
+            cursor: pointer;
+            user-select: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            position: relative; /* Needed for resizer positioning */
+        }
+
+        th:hover {
+            background-color: #dee2e6; /* Slightly darker on hover */
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2; /* Alternate row background */
+        }
+
+        tbody tr:hover {
+            background-color: #e9ecef; /* Hover background for rows */
+        }
+
+        .sort-indicator {
+            float: right;
+            margin-left: 5px;
+            color: #007bff; /* Blue sort indicator */
+        }
+
+        /* Column resizer styles */
+        .resizer {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 5px; /* Draggable area width */
+            height: 100%;
+            background: rgba(0, 123, 255, 0.2); /* Semi-transparent blue for visibility */
+            cursor: col-resize; /* Resize cursor */
+            user-select: none;
+            z-index: 1; /* Ensure it's above other content in TH */
+        }
+
+        .resizer:hover {
+            background: #007bff; /* Solid blue on hover */
+        }
+
+        /* Active state for resizer */
+        .resizing .resizer {
+            background: #007bff;
+        }
+
+        #status-bar {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e9ecef; /* Light grey-blue for status bar */
+            border: 1px solid #ccc; /* Lighter border */
+            border-radius: 3px;
+            font-size: 0.9em;
+            color: #333; /* Dark text */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        /* Initial state specific styles */
+        .hidden-on-load {
+            display: none !important; /* Use !important to ensure override */
+        }
+
+        .initial-container-layout {
+            /* These styles are applied when the container is in its initial centered state */
+            justify-content: center;
+            align-items: center;
+            padding: 25px; /* Keep padding for initial state */
+        }
+
+        /* When active, remove initial centering and allow elements to stack */
+        .container:not(.initial-container-layout) {
+            padding: 20px; /* Slightly less padding when active for more content space */
+            align-items: stretch; /* Allow children to stretch horizontally */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container initial-container-layout">
+        <!-- The file input area, which acts as the drop zone initially -->
+        <div class="control-group initial-drop-zone" id="file-input-area">
+            <label for="file-input" id="initial-message">
+                <i class="fa-regular fa-file"></i> <!-- Font Awesome text file icon -->
+            </label>
+            <input type="file" id="file-input" accept=".txt, .csv, .tsv">
+            <span id="file-path" class="hidden-on-load">No file selected</span>
+        </div>
+
+        <!-- The rest of the controls, initially hidden -->
+        <div class="controls hidden-on-load" id="active-controls-container">
+            <div class="control-group" id="delimiter-controls">
+                <label for="delimiter-select">Delimiter:</label>
+                <select id="delimiter-select">
+                    <option value="auto">Auto-detect</option>
+                    <option value=",">Comma (,)</option>
+                    <option value="\t">Tab (\t)</option>
+                    <option value=";">Semicolon (;)</option>
+                    <option value=" ">Space ( )</option>
+                    <option value="|">Pipe (|)</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <input type="text" id="custom-delimiter" placeholder="Custom" style="display: none;">
+            </div>
+            <input type="text" id="search" placeholder="Search table..." class="hidden-on-load">
+        </div>
+
+        <div class="table-container hidden-on-load">
+            <table id="data-table">
+                <thead>
+                    <tr id="table-header"></tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr><td colspan="100%" style="text-align: center;">Drop or select a file to view its contents as a table.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="status-bar" class="hidden-on-load">
+            <span id="status-message"></span>
+            <div class="pagination-controls hidden-on-load">
+                <button id="first-page" class="pagination-button" disabled>First</button>
+                <button id="prev-page" class="pagination-button" disabled>Previous</button>
+                <span id="page-info"></span>
+                <button id="next-page" class="pagination-button" disabled>Next</button>
+                <button id="last-page" class="pagination-button" disabled>Last</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const searchInput = document.getElementById('search');
+        const tableBody = document.getElementById('table-body');
+        const tableHeader = document.getElementById('table-header');
+        const filePathSpan = document.getElementById('file-path');
+        const statusBar = document.getElementById('status-bar');
+        const statusMessage = document.getElementById('status-message');
+        const delimiterSelect = document.getElementById('delimiter-select');
+        const customDelimiterInput = document.getElementById('custom-delimiter');
+
+        // Elements for controlling visibility and layout
+        const fileInputArea = document.getElementById('file-input-area'); // The main div for file input
+        const initialMessage = document.getElementById('initial-message'); // The "Drag & Drop" label
+        const activeControlsContainer = document.getElementById('active-controls-container'); // Container for delimiter and search
+        const delimiterControls = document.getElementById('delimiter-controls');
+        const tableContainer = document.querySelector('.table-container');
+        const initialContainer = document.querySelector('.container');
+        const paginationControlsDiv = document.querySelector('.pagination-controls'); // Get the pagination controls div
+
+
+        // Pagination elements
+        const firstPageBtn = document.getElementById('first-page');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        const lastPageBtn = document.getElementById('last-page');
+        const pageInfoSpan = document.getElementById('page-info');
+
+        let currentFile = null; // Store the currently loaded file
+        let rawTableData = []; // Stores all parsed data
+        let filteredTableData = []; // Stores data after search filter
+        let tableData = []; // Stores data after sorting (used for pagination)
+
+        let sortColumn = -1;
+        let sortDirection = 'asc';
+
+        const rowsPerPage = 100;
+        let currentPage = 1;
+        let totalPages = 0;
+
+        // Column resizing variables
+        let currentResizableTh = null;
+        let startX = 0;
+        let startWidth = 0;
+        const MIN_COLUMN_WIDTH = 50; // Minimum width for a column
+        let columnWidths = []; // Stores the current width of each column
+
+        // Function to show all hidden controls and transition to active layout
+        function showTableControls() {
+            // Hide initial drop zone styling
+            fileInputArea.classList.remove('initial-drop-zone');
+            fileInputArea.classList.add('active-display');
+            initialMessage.classList.add('hidden-on-load'); // Hide the initial "Drag & Drop" message
+            filePathSpan.classList.remove('hidden-on-load'); // Show the file path display
+
+            // Show other controls
+            activeControlsContainer.classList.remove('hidden-on-load');
+            delimiterControls.classList.remove('hidden-on-load');
+            searchInput.classList.remove('hidden-on-load');
+            tableContainer.classList.remove('hidden-on-load');
+            statusBar.classList.remove('hidden-on-load');
+            paginationControlsDiv.classList.remove('hidden-on-load'); // Show pagination controls
+
+            // Adjust container and body layout
+            initialContainer.classList.remove('initial-container-layout');
+            // Ensure body's justify-content is flex-start when table is active
+            document.body.style.justifyContent = 'flex-start';
+            document.body.style.alignItems = 'flex-start';
+            statusMessage.textContent = 'Status: Ready.'; // Set initial status message when controls are shown
+        }
+
+        // Function to hide all controls and reset to initial state
+        function hideTableControls() {
+            // Reset file input area to initial drop zone styling
+            fileInputArea.classList.remove('active-display');
+            fileInputArea.classList.add('initial-drop-zone');
+            initialMessage.classList.remove('hidden-on-load'); // Show the initial "Drag & Drop" message
+            filePathSpan.classList.add('hidden-on-load'); // Hide the file path display
+
+            // Hide other controls
+            activeControlsContainer.classList.add('hidden-on-load');
+            delimiterControls.classList.add('hidden-on-load');
+            customDelimiterInput.style.display = 'none'; // Ensure custom delimiter is hidden
+            searchInput.classList.add('hidden-on-load');
+            tableContainer.classList.add('hidden-on-load');
+            statusBar.classList.add('hidden-on-load');
+            paginationControlsDiv.classList.add('hidden-on-load'); // Hide pagination controls
+
+            // Adjust container and body layout
+            initialContainer.classList.add('initial-container-layout');
+            // Revert body's justify-content to center for initial state
+            document.body.style.justifyContent = 'center';
+            document.body.style.alignItems = 'center';
+            statusMessage.textContent = ''; // Clear status message when hidden
+            pageInfoSpan.textContent = ''; // Clear page info when hidden
+        }
+
+
+        // Drag and drop functionality for the fileInputArea (the initial drop zone)
+        fileInputArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // Apply hover styles to the drop zone itself
+            fileInputArea.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+            fileInputArea.style.boxShadow = '0 4px 40px rgba(0, 0, 0, 0.2)';
+            fileInputArea.style.transform = 'translateY(-2px)';
+        });
+
+        fileInputArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // Revert hover styles
+            fileInputArea.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            fileInputArea.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
+            fileInputArea.style.transform = 'translateY(0)';
+        });
+
+        fileInputArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // Revert hover styles
+            fileInputArea.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            fileInputArea.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
+            fileInputArea.style.transform = 'translateY(0)';
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                fileInput.files = e.dataTransfer.files; // Set the file input's files for consistency
+                processFile(file);
+            }
+        });
+        
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                processFile(file);
+            } else {
+                // If file selection is cancelled, reset to initial state
+                hideTableControls();
+                filePathSpan.textContent = 'No file selected';
+                tableBody.innerHTML = '<tr><td colspan="100%" style="text-align: center;">Drop or select a file to view its contents as a table.</td></tr>';
+                tableHeader.innerHTML = '';
+                rawTableData = [];
+                filteredTableData = [];
+                tableData = [];
+                columnWidths = [];
+            }
+        });
+
+        searchInput.addEventListener('input', (event) => {
+            filterTable(event.target.value.toLowerCase());
+        });
+
+        delimiterSelect.addEventListener('change', () => {
+            if (delimiterSelect.value === 'custom') {
+                customDelimiterInput.style.display = 'inline-block';
+                customDelimiterInput.focus();
+            } else {
+                customDelimiterInput.style.display = 'none';
+            }
+            if (currentFile) { // Re-process if a file is already loaded
+                processFile(currentFile);
+            }
+        });
+
+        customDelimiterInput.addEventListener('input', () => {
+            if (currentFile) { // Re-process if a file is already loaded
+                processFile(currentFile);
+            }
+        });
+
+        // Pagination event listeners
+        firstPageBtn.addEventListener('click', () => {
+            currentPage = 1;
+            renderPaginatedTable();
+        });
+
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderPaginatedTable();
+            }
+        });
+
+        nextPageBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderPaginatedTable();
+            }
+        });
+
+        lastPageBtn.addEventListener('click', () => {
+            currentPage = totalPages;
+            renderPaginatedTable();
+        });
+
+        // Column resizing event handlers
+        function onMouseDown(e) {
+            // Prevent text selection during drag
+            e.preventDefault(); 
+            // Only resize if clicking on the resizer element
+            if (!e.target.classList.contains('resizer')) return;
+
+            currentResizableTh = e.target.closest('th');
+            if (!currentResizableTh) return; // Should not happen if target is resizer
+
+            startX = e.clientX;
+            // Get the current width of the TH, including padding and border
+            startWidth = currentResizableTh.offsetWidth; 
+
+            // Add 'resizing' class to body to change cursor globally
+            document.body.classList.add('resizing');
+            // Add 'resizing' class to the TH for visual feedback
+            currentResizableTh.classList.add('resizing');
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        }
+
+        function onMouseMove(e) {
+            if (!currentResizableTh) return;
+
+            const deltaX = e.clientX - startX;
+            let newWidth = startWidth + deltaX;
+
+            // Ensure minimum width
+            if (newWidth < MIN_COLUMN_WIDTH) {
+                newWidth = MIN_COLUMN_WIDTH;
+            }
+
+            const columnIndex = parseInt(currentResizableTh.getAttribute('data-index'));
+            columnWidths[columnIndex] = newWidth; // Store the new width persistently
+
+            // Apply width to the header
+            currentResizableTh.style.width = `${newWidth}px`;
+
+            // Apply width to all cells in the same column (for currently rendered rows)
+            const tableRows = document.querySelectorAll('#data-table tr');
+            tableRows.forEach(row => {
+                if (row.children[columnIndex]) {
+                    row.children[columnIndex].style.width = `${newWidth}px`;
+                }
+            });
+        }
+
+        function onMouseUp() {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+            document.body.classList.remove('resizing');
+            if (currentResizableTh) {
+                currentResizableTh.classList.remove('resizing');
+            }
+            currentResizableTh = null;
+        }
+
+        function addResizableHeaders() {
+            const headers = tableHeader.querySelectorAll('th');
+            headers.forEach((th, index) => {
+                // Remove existing resizers to prevent duplicates on re-render
+                const existingResizer = th.querySelector('.resizer');
+                if (existingResizer) {
+                    existingResizer.remove();
+                }
+
+                // Initialize column width if not already set, or apply stored width
+                if (!columnWidths[index]) {
+                    columnWidths[index] = 150; // Default width if not previously set
+                }
+                th.style.width = `${columnWidths[index]}px`;
+
+                // Add resizer to all but the last column (or if it's the only column)
+                if (index < headers.length - 1) {
+                    const resizer = document.createElement('div');
+                    resizer.classList.add('resizer');
+                    resizer.addEventListener('mousedown', onMouseDown);
+                    th.appendChild(resizer);
+                }
+            });
+        }
+
+
+        function processFile(file) {
+            currentFile = file; // Store the file
+            statusMessage.textContent = `Status: Reading file '${file.name}'...`;
+            filePathSpan.textContent = file.name;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const text = e.target.result;
+                parseAndRenderTable(text, file.name);
+                showTableControls(); // Show controls after successful file load
+                statusMessage.textContent = `Status: File '${file.name}' loaded successfully.`;
+            };
+            reader.onerror = (e) => {
+                statusMessage.textContent = `Status: Error reading file.`;
+                console.error('File reading error:', e);
+                hideTableControls(); // Hide controls if there's an error
+            };
+            reader.readAsText(file);
+        }
+
+        function getDelimiter(fileName, fileContent) {
+            const selectedDelimiterOption = delimiterSelect.value;
+            let chosenDelimiter = null;
+
+            if (selectedDelimiterOption === 'custom') {
+                chosenDelimiter = customDelimiterInput.value;
+            } else if (selectedDelimiterOption !== 'auto') {
+                // Use selected predefined delimiter
+                chosenDelimiter = selectedDelimiterOption === '\\t' ? '\t' : selectedDelimiterOption;
+            }
+
+            // If no explicit delimiter or 'auto' is selected, use heuristics
+            if (!chosenDelimiter || chosenDelimiter === 'auto') {
+                const lines = fileContent.split('\n').filter(line => line.trim() !== '');
+                if (lines.length > 0) {
+                    const firstLine = lines[0];
+                    const counts = {
+                        ',': (firstLine.match(/,/g) || []).length,
+                        '\t': (firstLine.match(/\t/g) || []).length,
+                        ';': (firstLine.match(/;/g) || []).length,
+                        ' ': (firstLine.match(/ /g) || []).length,
+                        '|': (firstLine.match(/\|/g) || []).length
+                    };
+
+                    let maxCount = -1;
+                    let bestDelimiter = ','; // Default to comma if no clear winner
+
+                    for (const d in counts) {
+                        if (counts[d] > maxCount) {
+                            maxCount = counts[d];
+                            bestDelimiter = d;
+                        }
+                    }
+                    chosenDelimiter = bestDelimiter;
+                } else {
+                    chosenDelimiter = ','; // Default if file is empty or only has one line
+                }
+            }
+            return chosenDelimiter;
+        }
+
+
+        function parseAndRenderTable(text, fileName) {
+            const delimiter = getDelimiter(fileName, text);
+            console.log(`Using delimiter: '${delimiter}' for file: ${fileName}`); // Debugging
+
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            if (lines.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="100%" style="text-align: center;">File is empty or could not be parsed.</td></tr>';
+                tableHeader.innerHTML = '';
+                rawTableData = [];
+                filteredTableData = [];
+                tableData = [];
+                columnWidths = []; // Reset column widths on new file
+                updatePaginationControls(); // This will update page info to "0 of 0"
+                return;
+            }
+
+            const headers = lines[0].split(delimiter).map(h => h.trim());
+            // Filter out rows that might be empty after splitting, or have incorrect number of columns
+            rawTableData = lines.slice(1).map(line => line.split(delimiter).map(cell => cell.trim()))
+                                    .filter(row => row.length === headers.length); // Ensure consistent column count
+            
+            // Initialize filtered and sorted data with raw data
+            filteredTableData = [...rawTableData];
+            tableData = [...filteredTableData]; // Data to be paginated
+
+            // Clear previous table
+            tableHeader.innerHTML = '';
+            tableBody.innerHTML = '';
+
+            // Reset column widths and initialize for new headers
+            columnWidths = new Array(headers.length).fill(150); // Default to 150px for new columns
+
+            // Create header row
+            if (headers.length > 0 && headers[0] !== '') { // Only render headers if they exist
+                headers.forEach((header, index) => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    th.setAttribute('data-index', index);
+                    th.addEventListener('click', () => {
+                        sortTable(index);
+                    });
+                    tableHeader.appendChild(th);
+                });
+            } else {
+                // If headers are empty or malformed, generate generic headers
+                for (let i = 0; i < tableData[0].length; i++) {
+                    const th = document.createElement('th');
+                    th.textContent = `Column ${i + 1}`;
+                    th.setAttribute('data-index', i);
+                    th.addEventListener('click', () => {
+                        sortTable(i);
+                    });
+                    tableHeader.appendChild(th);
+                }
+            }
+
+            // Add resizers to headers after they are created and widths are set
+            addResizableHeaders();
+
+            currentPage = 1; // Reset to first page on new file load
+            renderPaginatedTable();
+        }
+
+        function renderPaginatedTable() {
+            totalPages = Math.ceil(tableData.length / rowsPerPage);
+            if (currentPage > totalPages && totalPages > 0) {
+                currentPage = totalPages; // Adjust current page if it's out of bounds
+            } else if (totalPages === 0) {
+                currentPage = 0; // No pages if no data
+            }
+
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const dataToRender = tableData.slice(startIndex, endIndex);
+
+            tableBody.innerHTML = '';
+            if (dataToRender.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="100%" style="text-align: center;">No data to display for this page.</td></tr>';
+            } else {
+                dataToRender.forEach(row => {
+                    const tr = document.createElement('tr');
+                    row.forEach((cell, cellIndex) => {
+                        const td = document.createElement('td');
+                        td.textContent = cell;
+                        td.title = cell; // Add this line for tooltip
+                        // Apply the width from the stored columnWidths
+                        if (columnWidths[cellIndex]) {
+                            td.style.width = `${columnWidths[cellIndex]}px`;
+                        }
+                        tr.appendChild(td);
+                    });
+                    tableBody.appendChild(tr);
+                });
+            }
+            updatePaginationControls();
+        }
+
+        function updatePaginationControls() {
+            pageInfoSpan.textContent = `Page ${currentPage} of ${totalPages} (Total rows: ${filteredTableData.length})`;
+
+            firstPageBtn.disabled = currentPage === 1 || totalPages === 0;
+            prevPageBtn.disabled = currentPage === 1 || totalPages === 0;
+            nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+            lastPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+        }
+
+
+        function sortTable(columnIndex) {
+            const currentHeader = document.querySelector(`th[data-index="${columnIndex}"]`);
+            const allHeaders = document.querySelectorAll('th');
+
+            // Clear all other sort indicators
+            allHeaders.forEach(th => {
+                const indicator = th.querySelector('.sort-indicator');
+                if (indicator) {
+                    indicator.remove();
+                }
+            });
+
+            if (sortColumn === columnIndex) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = columnIndex;
+                sortDirection = 'asc';
+            }
+
+            // Determine if the column is numeric based on the first few non-empty values
+            let isNumeric = false;
+            if (filteredTableData.length > 0 && filteredTableData[0].length > columnIndex) {
+                for (let i = 0; i < filteredTableData.length && i < 100; i++) { // Check up to 100 rows
+                    const value = filteredTableData[i][columnIndex];
+                    if (value !== undefined && value !== '') {
+                        if (!isNaN(parseFloat(value)) && isFinite(value)) {
+                            isNumeric = true;
+                        } else {
+                            isNumeric = false; // If any non-numeric value is found, treat as string
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Sort the filtered data, then update tableData for pagination
+            filteredTableData.sort((a, b) => {
+                let valA = a[columnIndex];
+                let valB = b[columnIndex];
+
+                if (isNumeric) {
+                    valA = parseFloat(valA);
+                    valB = parseFloat(valB);
+                } else {
+                    valA = (valA || '').toLowerCase(); // Handle undefined/null values
+                    valB = (valB || '').toLowerCase(); // Handle undefined/null values
+                }
+
+                if (valA < valB) return sortDirection === 'asc' ? -1 : 1;
+                if (valA > valB) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+            tableData = [...filteredTableData]; // Update tableData after sorting
+
+            // Add sort indicator
+            const indicator = document.createElement('span');
+            indicator.className = 'sort-indicator';
+            indicator.textContent = sortDirection === 'asc' ? '▲' : '▼';
+            currentHeader.appendChild(indicator);
+
+            currentPage = 1; // Reset to first page after sorting
+            renderPaginatedTable();
+        }
+
+        function filterTable(searchText) {
+            filteredTableData = rawTableData.filter(row =>
+                row.some(cell => (cell || '').toLowerCase().includes(searchText)) // Handle undefined/null cells
+            );
+            tableData = [...filteredTableData]; // Update tableData for pagination based on filter
+            currentPage = 1; // Reset to first page after filtering
+            sortColumn = -1; // Reset sort indicators
+            document.querySelectorAll('.sort-indicator').forEach(el => el.remove());
+
+            renderPaginatedTable();
+            statusMessage.textContent = `Status: Found ${filteredTableData.length} matching rows.`;
+        }
+
+        // Initial setup on page load
+        hideTableControls(); // Ensure controls are hidden initially
+        filePathSpan.textContent = 'No file selected'; // Set initial text for file path
+        tableBody.innerHTML = '<tr><td colspan="100%" style="text-align: center;">Drop or select a file to view its contents as a table.</td></tr>'; // Initial table message
+
+    </script>
+</body>
+</html>
