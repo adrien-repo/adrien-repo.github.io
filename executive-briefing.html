@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Briefing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: white;
+            color: black;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+        }
+
+        .memo-header {
+            border-bottom: 2px solid black;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .memo-header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .memo-meta {
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .memo-meta div {
+            margin-bottom: 5px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            border-bottom: 1px solid black;
+            padding-bottom: 5px;
+        }
+
+        .briefing-content {
+            font-size: 13px;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .briefing-content p {
+            margin-bottom: 15px;
+        }
+
+        .citation {
+            font-size: 10px;
+            vertical-align: super;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+        .references {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid black;
+        }
+
+        .references-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .reference-item {
+            font-size: 11px;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            text-indent: -20px;
+        }
+
+        .reference-item a {
+            color: black;
+            text-decoration: underline;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 14px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #000;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            color: #cc0000;
+            padding: 20px;
+            border: 1px solid #cc0000;
+            margin-bottom: 20px;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+            }
+            .container {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .memo-header h1 {
+                font-size: 20px;
+            }
+            .section-title {
+                font-size: 14px;
+            }
+            .briefing-content {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loading" id="loading">
+            <p>EXECUTIVE BRIEFING</p>
+            <div class="spinner"></div>
+            <p id="progress">Initializing...</p>
+        </div>
+        <div id="content" style="display: none;"></div>
+    </div>
+
+    <script>
+        const feedsLibrary = {
+            feed001: ["https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss","Bloomberg - The Editors","news"],
+            feed002: ["https://feeds.a.dj.com/rss/RSSWorldNews.xml","Wall Street Journal","news"],
+            feed003: ["https://www.ft.com/news-feed?format=rss","Financial Times","news"],
+            feed004: ["http://www.ft.com/rss/lex","Financial Times - Lex","markets"],
+            feed005: ["http://piketty.blog.lemonde.fr/feed/","Thomas Piketty","blogs"],
+            feed006: ["http://www.laviedesidees.fr/spip.php?page=backend","La vie des idees","periodics"],
+            feed007: ["http://www.theage.com.au/rssheadlines/top.xml","The Age","periodics"],
+            feed008: ["http://longform.org/feed.rss","Long Form","periodics"],
+            feed009: ["https://www.theatlantic.com/feed/best-of/","The Atlantic","periodics"],
+            feed010: ["http://www.newyorker.com/feed/everything","The New Yorker","periodics"],
+            feed011: ["http://feeds.feedburner.com/nybooks","The New York review of Books","bookreviews"],
+            feed012: ["https://www.lrb.co.uk/blog/feed","The London review of Books","bookreviews"],
+            feed013: ["http://feeds2.feedburner.com/PhilosophicalReviews/News","Philosophical Reviews","bookreviews"],
+            feed014: ["http://harpers.org/feed/","Harpers Magazine","periodics"],
+            feed015: ["https://www.quantamagazine.org/feed/","Quanta Magazine","science"],
+            feed016: ["http://www.symmetrymagazine.org/feed","Symmetry Magazine","science"],
+            feed017: ["https://www.edge.org/feed","Edge Magazine","periodics"],
+            feed018: ["http://www.cnbc.com/id/100003114/device/rss/rss.html","CNBC","news"],
+            feed019: ["https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss","Bloomberg - Matt Levine","markets"],
+            feed020: ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml","New York Times","news"],
+            feed021: ["https://www.project-syndicate.org/rss","Project Syndicate","news"],
+            feed022: ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss","Google Blog","blogs"],
+            feed023: ["http://www.gatesnotes.com/rss","Gates notes","blogs"],
+            feed024: ["http://www.salon.com/feed/","Salon","periodics"],
+            feed025: ["https://theintercept.com/feed/?rss","The Intercept","periodics"],
+            feed026: ["http://feeds.feedburner.com/zerohedge/feed","ZeroHedge","markets"],
+            feed027: ["https://www.vanityfair.com/feed/rss","VanityFair","periodics"],
+            feed028: ["https://www.vox.com/rss/index.xml","Vox","periodics"],
+            feed029: ["http://www.cbsnews.com/latest/rss/main","CBS News","news"],
+            feed030: ["https://www.sec.gov/news/pressreleases.rss","SEC releases","markets"],
+            feed031: ["https://www.thefelderreport.com/feed/","The Felder Report","markets"],
+            feed032: ["http://rss.sciam.com/ScientificAmerican-Global","Scientific American","science"],
+            feed033: ["http://stratechery.com/feed/","Stratechery","periodics"],
+            feed034: ["http://feeds.propublica.org/propublica/main","Pro Publica","periodics"],
+            feed035: ["http://evonomics.com/feed/","Evonomics","markets"],
+            feed036: ["https://aeon.co/feed.rss","Aeon","periodics"],
+            feed037: ["https://prospect.org/api/rss/all.rss","The American Prospect","periodics"],
+            feed038: ["http://aldaily.com/feed/","Arts and Letters Daily","bookreviews"],
+            feed039: ["https://magazine.atavist.com/feed/","The Atavist","periodics"],
+            feed040: ["https://www.mcsweeneys.net/rss","Mc Sweeneys","periodics"],
+            feed041: ["https://xkcd.com/rss.xml","XKCD","blogs"],
+            feed042: ["https://news.ycombinator.com/rss","Hacker News","periodics"],
+            feed043: ["https://phys.org/rss-feed/breaking/","Phys Org","science"],
+            feed044: ["https://webb-site.com/rss.asp","Webb","markets"],
+            feed045: ["http://www.sciencemag.org/rss/news_current.xml","ScienceMag","science"],
+            feed046: ["https://timesofindia.indiatimes.com/rssfeeds/296589292.cms","Times of India","news"],
+            feed047: ["https://www.npr.org/rss/rss.php?id=1004","NPR","news"],
+            feed048: ["https://www.smh.com.au/rss/world.xml","Sydney Morning Herald","news"],
+            feed049: ["https://www.france24.com/en/rss","France24","news"],
+            feed050: ["https://unherd.com/feed/","UnHerd","news"],
+            feed051: ["https://www.aljazeera.com/xml/rss/all.xml","Al Jazeera","news"],
+            feed052: ["http://www.globaltimes.cn/rss/outbrain.xml","Global Times","news"],
+            feed053: ["https://thecritic.co.uk/feed/","The Critic","periodics"],
+            feed054: ["https://www.citationneeded.news/rss/","Citation Needed","blogs"]
+        };
+
+        // CORS proxy - using allorigins.win
+        const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+
+        let allArticles = [];
+        let references = [];
+
+        function updateProgress(message) {
+            document.getElementById('progress').textContent = message;
+        }
+
+        async function fetchFeed(url, sourceName) {
+            try {
+                // Add timeout to prevent hanging
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+                
+                const response = await fetch(CORS_PROXY + encodeURIComponent(url), {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                
+                const text = await response.text();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(text, 'text/xml');
+                
+                const items = xml.querySelectorAll('item, entry');
+                const articles = [];
+                
+                items.forEach((item, index) => {
+                    if (index < 3) { // Reduced to 3 articles per feed for speed
+                        const title = item.querySelector('title')?.textContent || '';
+                        const link = item.querySelector('link')?.textContent || 
+                                   item.querySelector('link')?.getAttribute('href') || '';
+                        const description = item.querySelector('description, summary, content')?.textContent || '';
+                        const pubDate = item.querySelector('pubDate, published, updated')?.textContent || '';
+                        
+                        if (title && link) {
+                            articles.push({
+                                title: cleanText(title),
+                                link: link,
+                                description: cleanText(description).substring(0, 400),
+                                source: sourceName,
+                                pubDate: pubDate
+                            });
+                        }
+                    }
+                });
+                
+                return articles;
+            } catch (error) {
+                console.error(`Error fetching ${sourceName}:`, error);
+                return [];
+            }
+        }
+
+        function cleanText(text) {
+            return text
+                .replace(/<[^>]*>/g, '')
+                .replace(/&nbsp;/g, ' ')
+                .replace(/&amp;/g, '&')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"')
+                .replace(/&#39;/g, "'")
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        async function aggregateFeeds() {
+            updateProgress('Fetching RSS feeds in parallel...');
+            
+            // Select diverse feeds across categories
+            const selectedFeeds = [
+                'feed002', 'feed003', 'feed020', // News: WSJ, FT, NYT
+                'feed019', 'feed030', // Markets (reduced)
+                'feed015', 'feed032', // Science (reduced)
+                'feed009', 'feed021'  // Analysis/Opinion (reduced)
+            ];
+
+            // Fetch all feeds in parallel for maximum speed
+            const feedPromises = selectedFeeds.map(feedKey => {
+                const [url, name, category] = feedsLibrary[feedKey];
+                return fetchFeed(url, name);
+            });
+
+            updateProgress(`Fetching ${selectedFeeds.length} feeds in parallel...`);
+            
+            // Use Promise.allSettled to handle failures gracefully
+            const results = await Promise.allSettled(feedPromises);
+            
+            // Collect successful results
+            results.forEach((result, index) => {
+                if (result.status === 'fulfilled' && result.value.length > 0) {
+                    allArticles.push(...result.value);
+                    const [url, name] = feedsLibrary[selectedFeeds[index]];
+                    console.log(`✓ Loaded ${result.value.length} articles from ${name}`);
+                } else if (result.status === 'rejected') {
+                    const [url, name] = feedsLibrary[selectedFeeds[index]];
+                    console.log(`✗ Failed to load ${name}`);
+                }
+            });
+
+            updateProgress(`Retrieved ${allArticles.length} articles. Generating briefing...`);
+        }
+
+        async function generateBriefing() {
+            // Prepare article summaries for Claude
+            const articleList = allArticles.map((article, index) => {
+                references.push(article);
+                return `[${index + 1}] ${article.title} - ${article.source}\n${article.description}`;
+            }).join('\n\n');
+
+            const prompt = `You are an executive briefing analyst. Based on the following news articles, create a concise 2-page executive briefing.
+
+The briefing should:
+1. Identify 3-4 major themes or trends across the articles
+2. For each theme, provide a clear summary with key insights
+3. Use citation numbers [1], [2], etc. to reference specific articles
+4. Be written in professional, analytical prose
+5. Focus on actionable insights and strategic implications
+6. Be approximately 400-600 words total
+
+Articles:
+${articleList.substring(0, 15000)}
+
+Format your response as:
+THEME 1: [Title]
+[Summary with citations]
+
+THEME 2: [Title]
+[Summary with citations]
+
+etc.`;
+
+            try {
+                const response = await fetch("https://api.anthropic.com/v1/messages", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        model: "claude-sonnet-4-20250514",
+                        max_tokens: 2000,
+                        messages: [{
+                            role: "user",
+                            content: prompt
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const briefingText = data.content[0].text;
+                
+                displayBriefing(briefingText);
+            } catch (error) {
+                console.error('Error generating briefing:', error);
+                document.getElementById('content').innerHTML = `
+                    <div class="error">
+                        <strong>Error generating briefing:</strong> ${error.message}
+                        <br><br>
+                        Please check your connection and try again.
+                    </div>
+                `;
+                document.getElementById('content').style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function displayBriefing(briefingText) {
+            const today = new Date().toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+
+            // Parse briefing into sections
+            const sections = briefingText.split(/THEME \d+:/i).filter(s => s.trim());
+            const themeMatches = briefingText.match(/THEME \d+:[^\n]+/gi) || [];
+
+            let sectionsHTML = '';
+            sections.forEach((section, index) => {
+                if (index < themeMatches.length) {
+                    const theme = themeMatches[index].replace(/THEME \d+:\s*/i, '').trim();
+                    const content = section.trim();
+                    
+                    // Convert citation markers to clickable links
+                    const contentWithCitations = content.replace(/\[(\d+)\]/g, 
+                        '<a href="#ref$1" class="citation">[$1]</a>');
+                    
+                    sectionsHTML += `
+                        <div class="section">
+                            <div class="section-title">${theme}</div>
+                            <div class="briefing-content">
+                                <p>${contentWithCitations.replace(/\n\n/g, '</p><p>')}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            // Generate references
+            let referencesHTML = '';
+            references.forEach((ref, index) => {
+                referencesHTML += `
+                    <div class="reference-item" id="ref${index + 1}">
+                        [${index + 1}] ${ref.source}. "${ref.title}." 
+                        <a href="${ref.link}" target="_blank">${ref.link}</a>
+                    </div>
+                `;
+            });
+
+            const html = `
+                <div class="memo-header">
+                    <h1>Executive Briefing</h1>
+                    <div class="memo-meta">
+                        <div><strong>TO:</strong> Executive Leadership</div>
+                        <div><strong>FROM:</strong> Strategic Intelligence Unit</div>
+                        <div><strong>DATE:</strong> ${today}</div>
+                        <div><strong>RE:</strong> Daily News Intelligence Summary</div>
+                        <div><strong>SOURCES:</strong> ${references.length} articles across ${new Set(references.map(r => r.source)).size} publications</div>
+                    </div>
+                </div>
+
+                ${sectionsHTML}
+
+                <div class="references">
+                    <div class="references-title">References</div>
+                    ${referencesHTML}
+                </div>
+            `;
+
+            document.getElementById('content').innerHTML = html;
+            document.getElementById('content').style.display = 'block';
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Initialize
+        async function init() {
+            try {
+                await aggregateFeeds();
+                await generateBriefing();
+            } catch (error) {
+                console.error('Initialization error:', error);
+                document.getElementById('content').innerHTML = `
+                    <div class="error">
+                        <strong>Error:</strong> ${error.message}
+                    </div>
+                `;
+                document.getElementById('content').style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // Start the application
+        init();
+    </script>
+</body>
+</html>
