@@ -568,7 +568,7 @@
                             // Only add if within 72 hours
                             if (isWithin72Hours(pubDate)) {
                                 newItems.push({
-                                    title: entry.title.replace(/<[^>]*>/g, '').trim(),
+                                    title: entry.title.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").trim(),
                                     link: entry.link,
                                     pubDate: pubDate,
                                     source: feed.name,
