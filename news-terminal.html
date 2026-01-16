@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,17 +15,22 @@
         body {
             background-color: #000000;
             color: #ff8800;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            line-height: 1.4;
-            padding: 20px;
+            font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            line-height: 1.2;
+            padding: 0;
+            margin: 0;
             overflow-x: hidden;
         }
 
         .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: #000000;
             border-bottom: 2px solid #ff8800;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            padding: 15px 20px;
+            margin-bottom: 0;
         }
 
         .header h1 {
@@ -35,18 +41,74 @@
         .status {
             font-size: 12px;
             margin-top: 5px;
+            margin-bottom: 10px;
             color: #ff8800;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-text {
+            display: flex;
+            gap: 10px;
+        }
+
+        .status-details {
+            display: inline;
+        }
+
+        @media (max-width: 768px) {
+            .status-details {
+                display: none;
+            }
+        }
+
+        .live-indicator {
+            width: 10px;
+            height: 10px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 8px 12px;
+            background-color: #ff8800;
+            color: #000000;
+            border: none;
+            font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .search-box::placeholder {
+            color: #333333;
         }
 
         .news-container {
             max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 10px 20px;
         }
 
         .news-item {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            padding: 8px 0;
+            padding: 4px 0;
             border-bottom: 1px solid #333333;
             cursor: pointer;
             text-decoration: none;
@@ -58,12 +120,28 @@
             background-color: #1a1a1a;
         }
 
+        .news-item.breaking {
+            background-color: #cc0000;
+            color: #ffffff;
+        }
+
+        .news-item.breaking:hover {
+            background-color: #990000;
+        }
+
+        .news-item.breaking .news-title,
+        .news-item.breaking .news-source,
+        .news-item.breaking .news-date {
+            color: #ffffff;
+        }
+
         .news-title {
             flex: 1;
             padding-right: 20px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-size: 15px;
         }
 
         .news-meta {
@@ -71,6 +149,7 @@
             gap: 15px;
             white-space: nowrap;
             font-size: 13px;
+            flex-shrink: 0;
         }
 
         .news-source {
@@ -80,6 +159,16 @@
 
         .news-date {
             color: #ff8800;
+        }
+
+        @media (max-width: 768px) {
+            .news-date {
+                display: none;
+            }
+            
+            .news-meta {
+                gap: 0;
+            }
         }
 
         .loading {
@@ -119,21 +208,48 @@
 </head>
 <body>
     <div class="header">
-        <h1>█ NEWS TERMINAL █</h1>
-        <div class="status" id="status">INITIALIZING...</div>
+        <div class="status">
+            <div class="status-text">
+                <span>LIVE</span>
+                <span class="status-details" id="statusDetails"></span>
+                <span id="statusTime"></span>
+            </div>
+            <div class="live-indicator"></div>
+        </div>
+        <input type="text" class="search-box" id="searchBox" placeholder="SEARCH HEADLINES..." />
     </div>
 
     <div class="news-container" id="newsContainer">
         <div class="loading">LOADING FEEDS...</div>
     </div>
 
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+    <script src='https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js'></script>
     <script>
         // RSS FEEDS CONFIGURATION
         const RSS_FEEDS = [
-            { name: "BLOOMBERG-ED", url: "https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss" },
+            { name: "REUTERS", url: "https://www.reutersagency.com/feed/", breaking: true },
+            { name: "AFP", url: "https://www.afp.com/en/rss", breaking: true },
+            { name: "AP", url: "https://feedx.net/rss/ap.xml", breaking: true },
+            { name: "BBC-WORLD", url: "https://feeds.bbci.co.uk/news/world/rss.xml", breaking: true },
+            { name: "BLOOMBERG-ED", url: "https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss", breaking: true },
+            { name: "BLOOMBERG-MKT", url: "https://feeds.bloomberg.com/markets/news.rss", breaking: true },
+            { name: "FT", url: "https://www.ft.com/news-feed?format=rss", breaking: true },
+            { name: "FT-LEX", url: "http://www.ft.com/rss/lex", breaking: true },
+            { name: "CNBC", url: "http://www.cnbc.com/id/100003114/device/rss/rss.html", breaking: true },
+            { name: "CNBC-MKT", url: "https://www.cnbc.com/id/10000664/device/rss/rss.html", breaking: true },
+            { name: "NPR", url: "https://www.npr.org/rss/rss.php?id=1004", breaking: true },
+            { name: "LEVINE", url: "https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss", breaking: true },
+            { name: "MARKETWATCH", url: "http://feeds.marketwatch.com/marketwatch/topstories/" },
+            { name: "BARRONS", url: "https://feeds.a.dj.com/rss/RSSMarketsMain.xml", breaking: true },
+            { name: "SEEKINGALPHA", url: "https://seekingalpha.com/market_currents.xml" },
+            { name: "FELDER", url: "https://www.thefelderreport.com/feed/", breaking: true },
+            { name: "SEC", url: "https://www.sec.gov/news/pressreleases.rss", breaking: true },
             { name: "WSJ", url: "https://feeds.a.dj.com/rss/RSSWorldNews.xml" },
-            { name: "FT", url: "https://www.ft.com/news-feed?format=rss" },
-            { name: "FT-LEX", url: "http://www.ft.com/rss/lex" },
+            { name: "NYT", url: "http://rss.nytimes.com/services/xml/rss/nyt/US.xml" },
+            { name: "EURONEWS", url: "https://www.euronews.com/rss", breaking: true },
+            { name: "FRANCE24", url: "https://www.france24.com/en/rss", breaking: true },
+            { name: "ALJAZEERA", url: "https://www.aljazeera.com/xml/rss/all.xml", breaking: true },
             { name: "PIKETTY", url: "http://piketty.blog.lemonde.fr/feed/" },
             { name: "LAVIEDESIDEES", url: "http://www.laviedesidees.fr/spip.php?page=backend" },
             { name: "THEAGE", url: "http://www.theage.com.au/rssheadlines/top.xml" },
@@ -147,9 +263,6 @@
             { name: "QUANTA", url: "https://www.quantamagazine.org/feed/" },
             { name: "SYMMETRY", url: "http://www.symmetrymagazine.org/feed" },
             { name: "EDGE", url: "https://www.edge.org/feed" },
-            { name: "CNBC", url: "http://www.cnbc.com/id/100003114/device/rss/rss.html" },
-            { name: "LEVINE", url: "https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss" },
-            { name: "NYT", url: "http://rss.nytimes.com/services/xml/rss/nyt/US.xml" },
             { name: "PROJSYNDICATE", url: "https://www.project-syndicate.org/rss" },
             { name: "GOOGLEBLOG", url: "https://googleblog.blogspot.ch/feeds/posts/default?alt=rss" },
             { name: "GATESNOTES", url: "http://www.gatesnotes.com/rss" },
@@ -158,15 +271,12 @@
             { name: "VANITYFAIR", url: "https://www.vanityfair.com/feed/rss" },
             { name: "VOX", url: "https://www.vox.com/rss/index.xml" },
             { name: "CBS", url: "http://www.cbsnews.com/latest/rss/main" },
-            { name: "SEC", url: "https://www.sec.gov/news/pressreleases.rss" },
-            { name: "FELDER", url: "https://www.thefelderreport.com/feed/" },
             { name: "SCIAM", url: "http://rss.sciam.com/ScientificAmerican-Global" },
             { name: "STRATECHERY", url: "http://stratechery.com/feed/" },
             { name: "PROPUBLICA", url: "http://feeds.propublica.org/propublica/main" },
             { name: "EVONOMICS", url: "http://evonomics.com/feed/" },
             { name: "AEON", url: "https://aeon.co/feed.rss" },
             { name: "AMPROSPECT", url: "https://prospect.org/api/rss/all.rss" },
-            { name: "ALDAILY", url: "http://aldaily.com/feed/" },
             { name: "ATAVIST", url: "https://magazine.atavist.com/feed/" },
             { name: "MCSWEENEYS", url: "https://www.mcsweeneys.net/rss" },
             { name: "XKCD", url: "https://xkcd.com/rss.xml" },
@@ -175,85 +285,43 @@
             { name: "WEBB", url: "https://webb-site.com/rss.asp" },
             { name: "SCIENCEMAG", url: "http://www.sciencemag.org/rss/news_current.xml" },
             { name: "TOI", url: "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms" },
-            { name: "NPR", url: "https://www.npr.org/rss/rss.php?id=1004" },
             { name: "SMH", url: "https://www.smh.com.au/rss/world.xml" },
-            { name: "FRANCE24", url: "https://www.france24.com/en/rss" },
             { name: "UNHERD", url: "https://unherd.com/feed/" },
-            { name: "ALJAZEERA", url: "https://www.aljazeera.com/xml/rss/all.xml" },
             { name: "GLOBALTIMES", url: "http://www.globaltimes.cn/rss/outbrain.xml" },
             { name: "THECRITIC", url: "https://thecritic.co.uk/feed/" },
             { name: "CITATION", url: "https://www.citationneeded.news/rss/" },
-            { name: "AP", url: "https://feedx.net/rss/ap.xml" },
-            { name: "BBC-WORLD", url: "https://feeds.bbci.co.uk/news/world/rss.xml" },
-            { name: "EURONEWS", url: "https://www.euronews.com/rss" },
             { name: "LEMONDE", url: "https://www.lemonde.fr/en/rss/une.xml" },
-            { name: "TIME", url: "https://time.com/feed/" }
+            { name: "TIME", url: "https://time.com/feed/" },
+            { name: "DW", url: "https://rss.dw.com/rdf/rss-en-all", breaking: true },
+            { name: "GUARDIAN", url: "https://www.theguardian.com/world/rss", breaking: true },
+            { name: "INDEPENDENT", url: "https://www.independent.co.uk/news/world/rss", breaking: true }
         ];
 
         const newsContainer = document.getElementById('newsContainer');
-        const statusElement = document.getElementById('status');
+        const statusDetails = document.getElementById('statusDetails');
+        const statusTime = document.getElementById('statusTime');
+        const searchBox = document.getElementById('searchBox');
         let allNewsItems = [];
+        let displayedItemLinks = new Set(); // Track what's already displayed
         let loadedFeeds = 0;
+        let totalFeeds = RSS_FEEDS.length;
+        let searchQuery = '';
+        let isInitialLoad = true;
 
-        function parseRSS(xmlText, sourceName) {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-            const items = [];
+        // Add search box event listener
+        searchBox.addEventListener('input', function(e) {
+            searchQuery = e.target.value.toLowerCase();
+            displayNews(true); // Force full redraw on search
+        });
 
-            // Try RSS 2.0 format
-            let entries = xmlDoc.querySelectorAll('item');
-            
-            // Try Atom format if no items found
-            if (entries.length === 0) {
-                entries = xmlDoc.querySelectorAll('entry');
-            }
-
-            entries.forEach((entry, index) => {
-                if (index < 10) { // Limit to 10 items per feed for speed
-                    let title, link, pubDate;
-
-                    // RSS 2.0
-                    const titleEl = entry.querySelector('title');
-                    const linkEl = entry.querySelector('link');
-                    const pubDateEl = entry.querySelector('pubDate');
-                    
-                    // Atom fallback
-                    const linkAtom = entry.querySelector('link[rel="alternate"]');
-                    const updatedEl = entry.querySelector('updated');
-                    const publishedEl = entry.querySelector('published');
-
-                    title = titleEl ? titleEl.textContent : 'No title';
-                    link = linkEl ? linkEl.textContent : (linkAtom ? linkAtom.getAttribute('href') : '#');
-                    
-                    const dateStr = pubDateEl ? pubDateEl.textContent : 
-                                   (publishedEl ? publishedEl.textContent : 
-                                   (updatedEl ? updatedEl.textContent : new Date().toISOString()));
-                    
-                    pubDate = new Date(dateStr);
-
-                    items.push({
-                        title: title.trim(),
-                        link: link.trim(),
-                        pubDate: isNaN(pubDate.getTime()) ? new Date() : pubDate,
-                        source: sourceName
-                    });
+        function capitalizeTitle(title) {
+            const smallWords = ['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'from', 'in', 'into', 'near', 'nor', 'of', 'on', 'onto', 'or', 'the', 'to', 'with'];
+            return title.toLowerCase().split(' ').map((word, index) => {
+                if (index === 0 || !smallWords.includes(word)) {
+                    return word.charAt(0).toUpperCase() + word.slice(1);
                 }
-            });
-
-            return items;
-        }
-
-        async function fetchFeed(feed) {
-            try {
-                // Use allorigins.win as CORS proxy
-                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(feed.url)}`;
-                const response = await fetch(proxyUrl);
-                const xmlText = await response.text();
-                return parseRSS(xmlText, feed.name);
-            } catch (error) {
-                console.error(`Error fetching ${feed.name}:`, error);
-                return [];
-            }
+                return word;
+            }).join(' ');
         }
 
         function formatDate(date) {
@@ -266,48 +334,151 @@
             return `${year}-${month}-${day} ${hours}:${minutes}`;
         }
 
-        function displayNews() {
+        function isWithin72Hours(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffHours = diffMs / (1000 * 60 * 60);
+            return diffHours <= 72;
+        }
+
+        function createNewsItemElement(item) {
+            const link = document.createElement('a');
+            link.href = item.link;
+            link.target = '_blank';
+            link.className = 'news-item' + (item.breaking ? ' breaking' : '');
+            link.dataset.link = item.link; // Store link for tracking
+            
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'news-title';
+            titleDiv.textContent = item.breaking ? item.title.toUpperCase() : capitalizeTitle(item.title);
+            
+            const metaDiv = document.createElement('div');
+            metaDiv.className = 'news-meta';
+            
+            const sourceSpan = document.createElement('span');
+            sourceSpan.className = 'news-source';
+            sourceSpan.textContent = item.source;
+            
+            const dateSpan = document.createElement('span');
+            dateSpan.className = 'news-date';
+            dateSpan.textContent = formatDate(item.pubDate);
+            
+            metaDiv.appendChild(sourceSpan);
+            metaDiv.appendChild(dateSpan);
+            
+            link.appendChild(titleDiv);
+            link.appendChild(metaDiv);
+            
+            return link;
+        }
+
+        function displayNews(forceRedraw = false) {
             if (allNewsItems.length === 0) {
-                newsContainer.innerHTML = '<div class="error">NO FEEDS AVAILABLE</div>';
+                newsContainer.innerHTML = '<div class="loading">LOADING FEEDS...</div>';
+                statusDetails.textContent = '';
+                statusTime.textContent = '';
                 return;
             }
 
+            // Filter by 72 hours and search query
+            let filteredItems = allNewsItems.filter(item => isWithin72Hours(item.pubDate));
+            
+            if (searchQuery) {
+                filteredItems = filteredItems.filter(item => 
+                    item.title.toLowerCase().includes(searchQuery) || 
+                    item.source.toLowerCase().includes(searchQuery)
+                );
+            }
+
             // Sort by date (most recent first)
-            allNewsItems.sort((a, b) => b.pubDate - a.pubDate);
+            filteredItems.sort((a, b) => b.pubDate - a.pubDate);
 
-            newsContainer.innerHTML = allNewsItems.map(item => `
-                <a href="${item.link}" target="_blank" class="news-item">
-                    <div class="news-title">${item.title}</div>
-                    <div class="news-meta">
-                        <span class="news-source">${item.source}</span>
-                        <span class="news-date">${formatDate(item.pubDate)}</span>
-                    </div>
-                </a>
-            `).join('');
+            // On initial load or forced redraw (search), rebuild everything
+            if (isInitialLoad || forceRedraw) {
+                newsContainer.innerHTML = '';
+                displayedItemLinks.clear();
+                
+                filteredItems.forEach(item => {
+                    newsContainer.appendChild(createNewsItemElement(item));
+                    displayedItemLinks.add(item.link);
+                });
+                
+                isInitialLoad = false;
+            } else {
+                // Incremental update: only add new items at the top
+                const newItems = filteredItems.filter(item => !displayedItemLinks.has(item.link));
+                
+                if (newItems.length > 0) {
+                    // Insert new items at the beginning
+                    const fragment = document.createDocumentFragment();
+                    newItems.forEach(item => {
+                        fragment.appendChild(createNewsItemElement(item));
+                        displayedItemLinks.add(item.link);
+                    });
+                    
+                    newsContainer.insertBefore(fragment, newsContainer.firstChild);
+                }
+                
+                // Clean up old items (older than 72 hours)
+                const currentLinks = new Set(filteredItems.map(item => item.link));
+                const existingItems = newsContainer.querySelectorAll('.news-item');
+                existingItems.forEach(element => {
+                    const link = element.dataset.link;
+                    if (!currentLinks.has(link)) {
+                        element.remove();
+                        displayedItemLinks.delete(link);
+                    }
+                });
+            }
 
-            statusElement.textContent = `LIVE - ${allNewsItems.length} ITEMS - ${new Date().toLocaleString('en-US', { 
-                year: 'numeric', 
-                month: '2-digit', 
-                day: '2-digit', 
-                hour: '2-digit', 
-                minute: '2-digit',
-                hour12: false 
-            })}`;
+            statusDetails.textContent = `- ${filteredItems.length} ITEMS FROM ${loadedFeeds}/${totalFeeds} SOURCES - `;
+            statusTime.textContent = formatDate(new Date());
         }
 
-        async function loadAllFeeds() {
-            allNewsItems = [];
-            loadedFeeds = 0;
-            statusElement.textContent = 'FETCHING FEEDS...';
-
-            const promises = RSS_FEEDS.map(feed => fetchFeed(feed));
-            const results = await Promise.all(promises);
+        function loadAllFeeds() {
+            const newItems = [];
+            let feedsLoaded = 0;
             
-            results.forEach(items => {
-                allNewsItems.push(...items);
-            });
+            // For refresh, don't reset the display
+            const isRefresh = !isInitialLoad;
+            
+            if (!isRefresh) {
+                statusDetails.textContent = '- FETCHING FEEDS...';
+                statusTime.textContent = '';
+                newsContainer.innerHTML = '<div class="loading">LOADING FEEDS...</div>';
+            }
 
-            displayNews();
+            RSS_FEEDS.forEach(feed => {
+                feednami.load(feed.url, function(result) {
+                    feedsLoaded++;
+                    
+                    if (!result.error) {
+                        const entries = result.feed.entries.slice(0, 50);
+                        entries.forEach(entry => {
+                            const pubDate = new Date(entry.date || entry.publishedDate || entry.updated || new Date());
+                            // Only add if within 72 hours
+                            if (isWithin72Hours(pubDate)) {
+                                newItems.push({
+                                    title: entry.title.replace(/<[^>]*>/g, '').trim(),
+                                    link: entry.link,
+                                    pubDate: pubDate,
+                                    source: feed.name,
+                                    breaking: feed.breaking || false
+                                });
+                            }
+                        });
+                    } else {
+                        console.error(`Error loading ${feed.name}:`, result.error);
+                    }
+                    
+                    // When all feeds are loaded, update in one smooth operation
+                    if (feedsLoaded === RSS_FEEDS.length) {
+                        allNewsItems = newItems;
+                        loadedFeeds = feedsLoaded;
+                        displayNews();
+                    }
+                });
+            });
         }
 
         // Initial load
