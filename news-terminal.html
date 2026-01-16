@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Terminal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ff8800;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            border-bottom: 2px solid #ff8800;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .status {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #ff8800;
+        }
+
+        .news-container {
+            max-width: 1400px;
+        }
+
+        .news-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 8px 0;
+            border-bottom: 1px solid #333333;
+            cursor: pointer;
+            text-decoration: none;
+            color: #ff8800;
+            transition: background-color 0.2s;
+        }
+
+        .news-item:hover {
+            background-color: #1a1a1a;
+        }
+
+        .news-title {
+            flex: 1;
+            padding-right: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .news-meta {
+            display: flex;
+            gap: 15px;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        .news-source {
+            color: #ff8800;
+            font-weight: bold;
+        }
+
+        .news-date {
+            color: #ff8800;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .error {
+            color: #ff0000;
+            padding: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 12px;
+                padding: 10px;
+            }
+
+            .news-title {
+                padding-right: 10px;
+            }
+
+            .news-meta {
+                flex-direction: column;
+                gap: 2px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>█ NEWS TERMINAL █</h1>
+        <div class="status" id="status">INITIALIZING...</div>
+    </div>
+
+    <div class="news-container" id="newsContainer">
+        <div class="loading">LOADING FEEDS...</div>
+    </div>
+
+    <script>
+        // RSS FEEDS CONFIGURATION
+        const RSS_FEEDS = [
+            { name: "BLOOMBERG-ED", url: "https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss" },
+            { name: "WSJ", url: "https://feeds.a.dj.com/rss/RSSWorldNews.xml" },
+            { name: "FT", url: "https://www.ft.com/news-feed?format=rss" },
+            { name: "FT-LEX", url: "http://www.ft.com/rss/lex" },
+            { name: "PIKETTY", url: "http://piketty.blog.lemonde.fr/feed/" },
+            { name: "LAVIEDESIDEES", url: "http://www.laviedesidees.fr/spip.php?page=backend" },
+            { name: "THEAGE", url: "http://www.theage.com.au/rssheadlines/top.xml" },
+            { name: "LONGFORM", url: "http://longform.org/feed.rss" },
+            { name: "ATLANTIC", url: "https://www.theatlantic.com/feed/best-of/" },
+            { name: "NEWYORKER", url: "http://www.newyorker.com/feed/everything" },
+            { name: "NYBOOKS", url: "http://feeds.feedburner.com/nybooks" },
+            { name: "LRB", url: "https://www.lrb.co.uk/blog/feed" },
+            { name: "PHILREVIEWS", url: "http://feeds2.feedburner.com/PhilosophicalReviews/News" },
+            { name: "HARPERS", url: "http://harpers.org/feed/" },
+            { name: "QUANTA", url: "https://www.quantamagazine.org/feed/" },
+            { name: "SYMMETRY", url: "http://www.symmetrymagazine.org/feed" },
+            { name: "EDGE", url: "https://www.edge.org/feed" },
+            { name: "CNBC", url: "http://www.cnbc.com/id/100003114/device/rss/rss.html" },
+            { name: "LEVINE", url: "https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss" },
+            { name: "NYT", url: "http://rss.nytimes.com/services/xml/rss/nyt/US.xml" },
+            { name: "PROJSYNDICATE", url: "https://www.project-syndicate.org/rss" },
+            { name: "GOOGLEBLOG", url: "https://googleblog.blogspot.ch/feeds/posts/default?alt=rss" },
+            { name: "GATESNOTES", url: "http://www.gatesnotes.com/rss" },
+            { name: "SALON", url: "http://www.salon.com/feed/" },
+            { name: "INTERCEPT", url: "https://theintercept.com/feed/?rss" },
+            { name: "VANITYFAIR", url: "https://www.vanityfair.com/feed/rss" },
+            { name: "VOX", url: "https://www.vox.com/rss/index.xml" },
+            { name: "CBS", url: "http://www.cbsnews.com/latest/rss/main" },
+            { name: "SEC", url: "https://www.sec.gov/news/pressreleases.rss" },
+            { name: "FELDER", url: "https://www.thefelderreport.com/feed/" },
+            { name: "SCIAM", url: "http://rss.sciam.com/ScientificAmerican-Global" },
+            { name: "STRATECHERY", url: "http://stratechery.com/feed/" },
+            { name: "PROPUBLICA", url: "http://feeds.propublica.org/propublica/main" },
+            { name: "EVONOMICS", url: "http://evonomics.com/feed/" },
+            { name: "AEON", url: "https://aeon.co/feed.rss" },
+            { name: "AMPROSPECT", url: "https://prospect.org/api/rss/all.rss" },
+            { name: "ALDAILY", url: "http://aldaily.com/feed/" },
+            { name: "ATAVIST", url: "https://magazine.atavist.com/feed/" },
+            { name: "MCSWEENEYS", url: "https://www.mcsweeneys.net/rss" },
+            { name: "XKCD", url: "https://xkcd.com/rss.xml" },
+            { name: "HACKERNEWS", url: "https://news.ycombinator.com/rss" },
+            { name: "PHYSORG", url: "https://phys.org/rss-feed/breaking/" },
+            { name: "WEBB", url: "https://webb-site.com/rss.asp" },
+            { name: "SCIENCEMAG", url: "http://www.sciencemag.org/rss/news_current.xml" },
+            { name: "TOI", url: "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms" },
+            { name: "NPR", url: "https://www.npr.org/rss/rss.php?id=1004" },
+            { name: "SMH", url: "https://www.smh.com.au/rss/world.xml" },
+            { name: "FRANCE24", url: "https://www.france24.com/en/rss" },
+            { name: "UNHERD", url: "https://unherd.com/feed/" },
+            { name: "ALJAZEERA", url: "https://www.aljazeera.com/xml/rss/all.xml" },
+            { name: "GLOBALTIMES", url: "http://www.globaltimes.cn/rss/outbrain.xml" },
+            { name: "THECRITIC", url: "https://thecritic.co.uk/feed/" },
+            { name: "CITATION", url: "https://www.citationneeded.news/rss/" },
+            { name: "AP", url: "https://feedx.net/rss/ap.xml" },
+            { name: "BBC-WORLD", url: "https://feeds.bbci.co.uk/news/world/rss.xml" },
+            { name: "EURONEWS", url: "https://www.euronews.com/rss" },
+            { name: "LEMONDE", url: "https://www.lemonde.fr/en/rss/une.xml" },
+            { name: "TIME", url: "https://time.com/feed/" }
+        ];
+
+        const newsContainer = document.getElementById('newsContainer');
+        const statusElement = document.getElementById('status');
+        let allNewsItems = [];
+        let loadedFeeds = 0;
+
+        function parseRSS(xmlText, sourceName) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+            const items = [];
+
+            // Try RSS 2.0 format
+            let entries = xmlDoc.querySelectorAll('item');
+            
+            // Try Atom format if no items found
+            if (entries.length === 0) {
+                entries = xmlDoc.querySelectorAll('entry');
+            }
+
+            entries.forEach((entry, index) => {
+                if (index < 10) { // Limit to 10 items per feed for speed
+                    let title, link, pubDate;
+
+                    // RSS 2.0
+                    const titleEl = entry.querySelector('title');
+                    const linkEl = entry.querySelector('link');
+                    const pubDateEl = entry.querySelector('pubDate');
+                    
+                    // Atom fallback
+                    const linkAtom = entry.querySelector('link[rel="alternate"]');
+                    const updatedEl = entry.querySelector('updated');
+                    const publishedEl = entry.querySelector('published');
+
+                    title = titleEl ? titleEl.textContent : 'No title';
+                    link = linkEl ? linkEl.textContent : (linkAtom ? linkAtom.getAttribute('href') : '#');
+                    
+                    const dateStr = pubDateEl ? pubDateEl.textContent : 
+                                   (publishedEl ? publishedEl.textContent : 
+                                   (updatedEl ? updatedEl.textContent : new Date().toISOString()));
+                    
+                    pubDate = new Date(dateStr);
+
+                    items.push({
+                        title: title.trim(),
+                        link: link.trim(),
+                        pubDate: isNaN(pubDate.getTime()) ? new Date() : pubDate,
+                        source: sourceName
+                    });
+                }
+            });
+
+            return items;
+        }
+
+        async function fetchFeed(feed) {
+            try {
+                // Use allorigins.win as CORS proxy
+                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(feed.url)}`;
+                const response = await fetch(proxyUrl);
+                const xmlText = await response.text();
+                return parseRSS(xmlText, feed.name);
+            } catch (error) {
+                console.error(`Error fetching ${feed.name}:`, error);
+                return [];
+            }
+        }
+
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            
+            return `${year}-${month}-${day} ${hours}:${minutes}`;
+        }
+
+        function displayNews() {
+            if (allNewsItems.length === 0) {
+                newsContainer.innerHTML = '<div class="error">NO FEEDS AVAILABLE</div>';
+                return;
+            }
+
+            // Sort by date (most recent first)
+            allNewsItems.sort((a, b) => b.pubDate - a.pubDate);
+
+            newsContainer.innerHTML = allNewsItems.map(item => `
+                <a href="${item.link}" target="_blank" class="news-item">
+                    <div class="news-title">${item.title}</div>
+                    <div class="news-meta">
+                        <span class="news-source">${item.source}</span>
+                        <span class="news-date">${formatDate(item.pubDate)}</span>
+                    </div>
+                </a>
+            `).join('');
+
+            statusElement.textContent = `LIVE - ${allNewsItems.length} ITEMS - ${new Date().toLocaleString('en-US', { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit', 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false 
+            })}`;
+        }
+
+        async function loadAllFeeds() {
+            allNewsItems = [];
+            loadedFeeds = 0;
+            statusElement.textContent = 'FETCHING FEEDS...';
+
+            const promises = RSS_FEEDS.map(feed => fetchFeed(feed));
+            const results = await Promise.all(promises);
+            
+            results.forEach(items => {
+                allNewsItems.push(...items);
+            });
+
+            displayNews();
+        }
+
+        // Initial load
+        loadAllFeeds();
+
+        // Refresh every 5 minutes
+        setInterval(loadAllFeeds, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
