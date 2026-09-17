@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="RSS News">
+<meta name="keywords" content="curated, RSS, crawler">
+<meta name="author" content="RSS News">
+<title>RSS News</title>
+<meta property="og:title" content="RSS News">
+<meta property="og:description" content="A curated RSS crawler.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RSS News">
+<meta name="twitter:description" content="A curated RSS crawler.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CC7H2GEB7V"></script>
+<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-CC7H2GEB7V');</script>
+<style>
+:root{
+  color-scheme: light;
+  --paper:#FFFFFF; --ink:#000000; --ink-soft:#5A5A5A; --faint:#8C8C8C; --panel:#F7F7F7; --link:#0B57D0;
+  --font:"Roboto","Helvetica Neue",Arial,system-ui,sans-serif;
+}
+/* white page, black text, in both colour-scheme modes */
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --paper:#FFFFFF; --ink:#000000; } }
+:root[data-theme="dark"]{ --paper:#FFFFFF; --ink:#000000; }
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.65 var(--font);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+a{color:var(--ink);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+
+.page-wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,3vw,32px) 80px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:56px}
+@media (max-width:960px){.page-wrap{grid-template-columns:minmax(0,1fr);gap:0}.toc{display:none}}
+.toc{position:sticky;top:0;align-self:start;padding-top:48px;font-size:.9rem;max-height:100vh;overflow:auto}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li a{display:block;padding:4px 0;color:var(--ink-soft)}
+.toc li a:hover{color:var(--ink);text-decoration:none}
+.toc li a.on{color:var(--ink);font-weight:500}
+.toc li.sub a{padding-left:12px;font-size:.84rem}
+
+article{min-width:0;max-width:820px}
+.masthead{padding:48px 0 6px}
+h1{font-weight:500;font-size:clamp(1.9rem,3.8vw,2.5rem);line-height:1.1;margin:0;letter-spacing:-.015em}
+.meta{margin:14px 0 0;color:var(--ink-soft);font-size:.92rem}
+.controls{display:flex;gap:8px;align-items:center;margin:16px 0 0}
+.controls button{border:1px solid var(--ink);background:var(--paper);border-radius:4px;padding:3px 10px;cursor:pointer;font-size:.85rem;line-height:1.4}
+.controls button:hover{background:var(--panel)}
+.controls span{color:var(--ink-soft);font-size:.85rem}
+
+h2{font-weight:500;font-size:1.6rem;line-height:1.25;margin:40px 0 12px;scroll-margin-top:16px}
+h3{font-weight:500;font-size:1.1rem;margin:22px 0 6px;scroll-margin-top:16px}
+p{margin:0 0 14px}
+.note{color:var(--ink-soft)}
+.src{color:var(--faint);font-size:.85rem}
+
+/* headline ticker */
+.ticker{margin:6px 0 2px;line-height:1.9}
+.ticker a{font-style:italic}
+.ticker .dot{color:var(--faint);padding:0 8px}
+
+/* lead story */
+.lead h2{margin-top:26px}
+.lead .headline{font-weight:500;font-size:1.35rem;line-height:1.35;display:block;margin-bottom:6px}
+.lead .body{font-size:1.02rem}
+
+/* topics and sources */
+details{margin:0 0 2px}
+details > summary{cursor:pointer;list-style:none;padding:7px 0;display:block}
+details > summary::-webkit-details-marker{display:none}
+details > summary:hover{color:var(--ink-soft)}
+summary .topic{font-weight:500}
+summary .excerpt{color:var(--ink-soft)}
+summary .count{color:var(--faint);font-size:.85rem;white-space:nowrap}
+.items{list-style:none;margin:2px 0 14px;padding:0 0 0 14px}
+.items li{padding:4px 0;font-size:.96rem}
+.items .snippet{display:block;color:var(--ink-soft);font-size:.88rem;line-height:1.5;margin-top:2px;max-width:70ch}
+mark{background:none;font-weight:500;color:var(--ink)}
+
+/* loading */
+#loading{padding:120px 0 0;text-align:center}
+#loading .glyphs{font-size:1.6rem}
+#loading .bar{width:220px;height:6px;background:#E4E4E4;margin:22px auto 10px;overflow:hidden}
+#loading .bar i{display:block;height:100%;width:0;background:var(--ink);transition:width .6s linear}
+#loading .line{color:var(--ink-soft);font-size:.9rem;min-height:1.5em}
+#status-list{columns:2;column-gap:32px;font-size:.88rem;color:var(--ink-soft);margin-top:6px}
+@media (max-width:620px){#status-list{columns:1}}
+#status-list div{break-inside:avoid;padding:2px 0}
+#status-list .ok::before{content:"\2713\a0";color:var(--ink)}
+#status-list .fail::before{content:"\00d7\a0";color:var(--ink-soft)}
+#status-list .wait::before{content:"\2026\a0"}
+/* visualisations */
+.viz{margin:10px 0 6px}
+.viz svg{width:100%;height:auto;display:block;overflow:visible}
+.net{aspect-ratio:820/520}
+.viz-controls{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:8px 0 2px}
+.viz-controls button{border:1px solid var(--ink);background:var(--paper);border-radius:4px;padding:3px 10px;cursor:pointer;font-size:.85rem}
+.viz-controls button:hover{background:var(--panel)}
+.viz-controls .hint{color:var(--faint);font-size:.85rem}
+.net{touch-action:none;cursor:grab}
+.net .edge{stroke:#BFBFBF;stroke-width:1}
+.net .edge.hot{stroke:var(--ink);stroke-width:1.6}
+.net .node{cursor:pointer}
+.net .node text{font:11px var(--font);fill:var(--ink);paint-order:stroke;stroke:var(--paper);stroke-width:3px}
+.net .node.source text{fill:var(--ink-soft);font-size:10px}
+.net .node.topic circle{fill:var(--ink)}
+.net .node.topic.open circle{fill:var(--paper);stroke:var(--ink);stroke-width:2}
+.net .node.source circle{fill:var(--paper);stroke:var(--ink-soft);stroke-width:1.2}
+.net .node.dim{opacity:.25}
+.heat text{font:11px var(--font);fill:var(--ink-soft)}
+.heat text.row{fill:var(--ink)}
+.heat rect.cell{fill:var(--ink)}
+.heat rect.grid{fill:#F1F1F1}
+.bars text{font:11px var(--font);fill:var(--ink)}
+.bars text.value{fill:var(--ink-soft)}
+.bars rect{fill:var(--ink)}
+.legend{display:flex;gap:8px;align-items:center;color:var(--faint);font-size:.82rem;margin-top:6px}
+.legend i{display:block;width:76px;height:8px;background:linear-gradient(90deg,#F1F1F1,var(--ink))}
+footer{margin-top:56px;color:var(--faint);font-size:.9rem}
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="glyphs" aria-hidden="true">&#9749; &#127796;</div>
+  <p class="note" style="margin-top:10px">RSS News is reading its sources&hellip;</p>
+  <div class="bar" aria-hidden="true"><i id="progress"></i></div>
+  <p class="line" id="loading-line"></p>
+</div>
+
+<div class="page-wrap" id="page" hidden>
+<nav class="toc" aria-label="Contents">
+  <ol>
+    <li><a href="#today">Today</a></li>
+    <li><a href="#topics">Topics</a></li>
+    <li><a href="#sources">Sources</a></li>
+    <li class="sub"><a href="#news">News</a></li>
+    <li class="sub"><a href="#markets">Markets</a></li>
+    <li class="sub"><a href="#science">Science</a></li>
+    <li class="sub"><a href="#periodics">Periodicals</a></li>
+    <li class="sub"><a href="#bookreviews">Book reviews</a></li>
+    <li class="sub"><a href="#blogs">Blogs</a></li>
+    <li><a href="#map">Map of the day</a></li>
+    <li class="sub"><a href="#network">Topics and sources</a></li>
+    <li class="sub"><a href="#heat">Where topics land</a></li>
+    <li class="sub"><a href="#reach">Sources by reach</a></li>
+    <li><a href="#status">Feed status</a></li>
+  </ol>
+</nav>
+
+<article>
+<header class="masthead">
+  <h1>RSS News</h1>
+  <p class="meta"><span id="edition"></span>, reading <span id="counts"></span>.</p>
+  <div class="controls">
+    <button id="smaller" type="button" aria-label="Smaller text">A&#8722;</button>
+    <button id="larger" type="button" aria-label="Larger text">A+</button>
+    <span>Text size</span>
+  </div>
+</header>
+
+<section id="today">
+  <h2>Today</h2>
+  <div class="ticker" id="ticker"></div>
+  <div class="lead" id="lead"></div>
+</section>
+
+<section id="topics">
+  <h2>Topics</h2>
+  <p class="note">Words that appear in several headlines at once, with the articles that share them. Click a topic to see its stories.</p>
+  <div id="topic-list"></div>
+</section>
+
+<section id="sources">
+  <h2>Sources</h2>
+  <p class="note">The latest ten items from every feed, grouped by section. Click a source to open it.</p>
+  <h3 id="news">News</h3><div class="cat" id="cat-news"></div>
+  <h3 id="markets">Markets</h3><div class="cat" id="cat-markets"></div>
+  <h3 id="science">Science</h3><div class="cat" id="cat-science"></div>
+  <h3 id="periodics">Periodicals</h3><div class="cat" id="cat-periodics"></div>
+  <h3 id="bookreviews">Book reviews</h3><div class="cat" id="cat-bookreviews"></div>
+  <h3 id="blogs">Blogs</h3><div class="cat" id="cat-blogs"></div>
+</section>
+
+
+<section id="map">
+  <h2>Map of the day</h2>
+  <p class="note">Three views of the same material: who is writing about what, how the sections overlap, and which sources travel furthest across the day's topics.</p>
+
+  <h3 id="network">Topics and sources</h3>
+  <p class="note">Each filled dot is a topic, each hollow dot a source that published on it. Click a topic to open or close its sources, click a source to pull in the other topics it covers, and drag any dot to pull the map around.</p>
+  <div class="viz-controls">
+    <button id="net-expand" type="button">Open all topics</button>
+    <button id="net-reset" type="button">Reset</button>
+    <span class="hint" id="net-hint"></span>
+  </div>
+  <div class="viz"><svg id="net" class="net" viewBox="0 0 820 520" role="img" aria-label="Network of topics and the sources covering them"></svg></div>
+
+  <h3 id="heat">Where the topics land</h3>
+  <p class="note">Articles per topic in each section. A dark square means that section carried most of the coverage.</p>
+  <div class="viz"><svg id="heat-svg" class="heat" role="img" aria-label="Heat map of topics by section"></svg></div>
+  <div class="legend"><span>fewer</span><i aria-hidden="true"></i><span>more articles</span></div>
+
+  <h3 id="reach">Sources by reach</h3>
+  <p class="note">How many different topics each source touched today, and how many articles each section contributed.</p>
+  <div class="viz"><svg id="bars" class="bars" role="img" aria-label="Sources by number of topics covered, and articles per section"></svg></div>
+</section>
+
+<section id="status">
+  <h2>Feed status</h2>
+  <p class="note" id="status-summary"></p>
+  <div id="status-list"></div>
+</section>
+
+<footer>&#9749; &#127796;</footer>
+</article>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js"></script>
+<script>
+"use strict";
+
+/* ---------------- sources ---------------- */
+var FEEDS = [
+  ["https://www.bloomberg.com/opinion/authors/ASB62QVt-d0/the-editors.rss", "Bloomberg, The Editors", "news"],
+  ["https://feeds.a.dj.com/rss/RSSWorldNews.xml", "Wall Street Journal", "news"],
+  ["https://www.ft.com/news-feed?format=rss", "Financial Times", "news"],
+  ["http://www.ft.com/rss/lex", "Financial Times, Lex", "markets"],
+  ["http://piketty.blog.lemonde.fr/feed/", "Thomas Piketty", "blogs"],
+  ["http://www.laviedesidees.fr/spip.php?page=backend", "La vie des id\u00e9es", "periodics"],
+  ["http://www.theage.com.au/rssheadlines/top.xml", "The Age", "periodics"],
+  ["http://longform.org/feed.rss", "Longform", "periodics"],
+  ["https://www.theatlantic.com/feed/best-of/", "The Atlantic", "periodics"],
+  ["http://www.newyorker.com/feed/everything", "The New Yorker", "periodics"],
+  ["http://feeds.feedburner.com/nybooks", "The New York Review of Books", "bookreviews"],
+  ["https://www.lrb.co.uk/blog/feed", "The London Review of Books", "bookreviews"],
+  ["http://feeds2.feedburner.com/PhilosophicalReviews/News", "Philosophical Reviews", "bookreviews"],
+  ["http://harpers.org/feed/", "Harper's Magazine", "periodics"],
+  ["https://www.quantamagazine.org/feed/", "Quanta Magazine", "science"],
+  ["http://www.symmetrymagazine.org/feed", "Symmetry Magazine", "science"],
+  ["https://www.edge.org/feed", "Edge", "periodics"],
+  ["http://www.cnbc.com/id/100003114/device/rss/rss.html", "CNBC", "news"],
+  ["https://www.bloomberg.com/opinion/authors/ARbTQlRLRjE/matthew-s-levine.rss", "Bloomberg, Matt Levine", "markets"],
+  ["http://rss.nytimes.com/services/xml/rss/nyt/US.xml", "New York Times", "news"],
+  ["https://www.project-syndicate.org/rss", "Project Syndicate", "news"],
+  ["https://googleblog.blogspot.ch/feeds/posts/default?alt=rss", "Google Blog", "blogs"],
+  ["http://www.gatesnotes.com/rss", "Gates Notes", "blogs"],
+  ["http://www.salon.com/feed/", "Salon", "periodics"],
+  ["https://theintercept.com/feed/?rss", "The Intercept", "periodics"],
+  ["http://feeds.feedburner.com/zerohedge/feed", "ZeroHedge", "markets"],
+  ["https://www.vanityfair.com/feed/rss", "Vanity Fair", "periodics"],
+  ["https://www.vox.com/rss/index.xml", "Vox", "periodics"],
+  ["http://www.cbsnews.com/latest/rss/main", "CBS News", "news"],
+  ["https://www.sec.gov/news/pressreleases.rss", "SEC releases", "markets"],
+  ["https://www.thefelderreport.com/feed/", "The Felder Report", "markets"],
+  ["http://rss.sciam.com/ScientificAmerican-Global", "Scientific American", "science"],
+  ["http://stratechery.com/feed/", "Stratechery", "periodics"],
+  ["http://feeds.propublica.org/propublica/main", "ProPublica", "periodics"],
+  ["http://evonomics.com/feed/", "Evonomics", "markets"],
+  ["https://aeon.co/feed.rss", "Aeon", "periodics"],
+  ["https://prospect.org/api/rss/all.rss", "The American Prospect", "periodics"],
+  ["http://aldaily.com/feed/", "Arts and Letters Daily", "bookreviews"],
+  ["https://magazine.atavist.com/feed/", "The Atavist", "periodics"],
+  ["https://www.mcsweeneys.net/rss", "McSweeney's", "periodics"],
+  ["https://xkcd.com/rss.xml", "XKCD", "blogs"],
+  ["https://news.ycombinator.com/rss", "Hacker News", "periodics"],
+  ["https://phys.org/rss-feed/breaking/", "Phys.org", "science"],
+  ["https://webb-site.com/rss.asp", "Webb-site", "markets"],
+  ["http://www.sciencemag.org/rss/news_current.xml", "Science", "science"],
+  ["https://timesofindia.indiatimes.com/rssfeeds/296589292.cms", "Times of India", "news"],
+  ["https://www.npr.org/rss/rss.php?id=1004", "NPR", "news"],
+  ["https://www.smh.com.au/rss/world.xml", "Sydney Morning Herald", "news"],
+  ["https://www.france24.com/en/rss", "France 24", "news"],
+  ["https://unherd.com/feed/", "UnHerd", "news"],
+  ["https://www.aljazeera.com/xml/rss/all.xml", "Al Jazeera", "news"],
+  ["http://www.globaltimes.cn/rss/outbrain.xml", "Global Times", "news"],
+  ["https://thecritic.co.uk/feed/", "The Critic", "periodics"],
+  ["https://www.citationneeded.news/rss/", "Citation Needed", "blogs"]
+];
+
+/* words that are too common to be a topic */
+var STOP = ("about above after again against almost along already also although always among another answer anyone anything around because become becomes been before behind being below best better between beyond both bring cannot could" +
+  " during each early enough even every everyone everything expect review reviews proposes economics evonomic podcast podcasts document documents first found from further given gives going great group hardly having however inside instead into itself just keep kind known large last later least less letter like likely little long look made make making many maybe might more most much must nearly need never next night nothing number often only other others ought over part people perhaps place point possible power press probably public quite rather really report right said same says school second seems seen several shall should show since small some something sometimes soon start still such take taking than that their them then there these they thing think this those though three through time today together told took toward turn under until upon used using very want water week well went were what when where which while whole whom will with within without word work world would year years your").split(/\s+/);
+var STOPSET = {};
+STOP.forEach(function (w) { STOPSET[w.toLowerCase()] = true; });
+
+var CATS = {news: "News", markets: "Markets", science: "Science", periodics: "Periodicals", bookreviews: "Book reviews", blogs: "Blogs"};
+
+/* ---------------- helpers ---------------- */
+function strip (html) {
+  if (!html) return "";
+  var doc = new DOMParser().parseFromString(String(html), "text/html");
+  return (doc.body.textContent || "").replace(/\s+/g, " ").trim();
+}
+function esc (s) {
+  return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+    return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c];
+  });
+}
+function clip (text, n) {
+  if (text.length <= n) return text;
+  var cut = text.slice(0, n);
+  var space = cut.lastIndexOf(" ");
+  return (space > n * 0.6 ? cut.slice(0, space) : cut) + "\u2026";
+}
+function words (text) {
+  return text.replace(/[^A-Za-z\u00C0-\u024F'\- ]/g, " ").split(/\s+/).filter(Boolean);
+}
+
+/* ---------------- loading ---------------- */
+var articles = [];
+var sources = {};       // name -> {cat, items:[]}
+var statusOf = {};      // name -> "ok" | "fail" | "wait"
+var pending = FEEDS.length;
+var started = Date.now();
+var finished = false;
+
+function paintStatus () {
+  var ok = 0, fail = 0;
+  var html = "";
+  FEEDS.forEach(function (f) {
+    var state = statusOf[f[1]] || "wait";
+    if (state === "ok") ok++;
+    if (state === "fail") fail++;
+    html += '<div class="' + state + '"><a href="' + esc(f[0]) + '" target="_blank" rel="noopener">' + esc(f[1]) + "</a></div>";
+  });
+  var el = document.getElementById("status-list");
+  if (el) el.innerHTML = html;
+  var summary = document.getElementById("status-summary");
+  if (summary) summary.textContent = ok + " of " + FEEDS.length + " feeds answered" + (fail ? ", " + fail + " did not" : "") + ".";
+  document.getElementById("progress").style.width = Math.round(((ok + fail) / FEEDS.length) * 100) + "%";
+  document.getElementById("loading-line").textContent = articles.length
+    ? articles.length + " articles from " + ok + " sources\u2026"
+    : "";
+}
+
+function collect (feed, entries) {
+  var name = feed[1], cat = feed[2];
+  sources[name] = {cat: cat, items: []};
+  entries.slice(0, 10).forEach(function (e) {
+    var item = {
+      source: name,
+      cat: cat,
+      title: strip(e.title).replace(/\s+/g, " "),
+      link: e.link,
+      body: strip(e.content || e.contentSnippet || "")
+    };
+    if (!item.title) return;
+    sources[name].items.push(item);
+    articles.push(item);
+  });
+}
+
+function done () {
+  pending--;
+  paintStatus();
+  if (pending <= 0) finish();
+}
+
+FEEDS.forEach(function (feed) {
+  statusOf[feed[1]] = "wait";
+  try {
+    feednami.loadGoogleFormat(feed[0], function (result) {
+      if (result && !result.error && result.feed && result.feed.entries && result.feed.entries.length) {
+        statusOf[feed[1]] = "ok";
+        collect(feed, result.feed.entries);
+      } else {
+        statusOf[feed[1]] = "fail";
+      }
+      done();
+    });
+  } catch (err) {
+    statusOf[feed[1]] = "fail";
+    done();
+  }
+});
+window.setTimeout(function () { if (!finished) finish(); }, 20000);   // never hang on a dead feed
+paintStatus();
+
+/* ---------------- topics ---------------- */
+function buildTopics () {
+  var counts = {};
+  articles.forEach(function (a) {
+    var seen = {};
+    /* a topic is a word that turns up capitalised inside a headline: a name, a place, an institution */
+    words(a.title).forEach(function (w, i) {
+      if (w.length < 5 || i === 0 || !/^[A-Z\u00C0-\u00DE]/.test(w)) return;
+      var key = w.toLowerCase();
+      if (STOPSET[key] || seen[key]) return;
+      seen[key] = true;
+      if (!counts[key]) counts[key] = {label: w, n: 0};
+      counts[key].n++;
+    });
+  });
+
+  var ranked = Object.keys(counts).map(function (k) { return {key: k, label: counts[k].label, n: counts[k].n}; })
+    .filter(function (t) { return t.n >= 3; })
+    .sort(function (a, b) { return b.n - a.n; });
+
+  var used = {};   // an article belongs to its strongest topic only
+  var topics = [];
+  ranked.forEach(function (t) {
+    var idx = [];
+    articles.forEach(function (a, i) {
+      if (!used[i] && a.title.toLowerCase().indexOf(t.key) !== -1) idx.push(i);
+    });
+    if (idx.length < 2) return;
+    idx.forEach(function (i) { used[i] = true; });
+    topics.push({label: t.label, items: idx.map(function (i) { return articles[i]; })});
+  });
+  return topics;
+}
+
+/* the sentence in a topic's articles that carries the most of its recurring words */
+function excerptFor (topic) {
+  var pool = topic.items.map(function (a) { return a.body || a.title; }).join(" ");
+  var freq = {};
+  words(pool.toLowerCase()).forEach(function (w) {
+    if (w.length < 5 || STOPSET[w]) return;
+    freq[w] = (freq[w] || 0) + 1;
+  });
+  var sentences = pool.split(/(?<=[.!?])\s+/).filter(function (s) { return s.length > 60; });
+  var best = sentences[0] || topic.items[0].body || topic.items[0].title;
+  var bestScore = -1;
+  sentences.slice(0, 120).forEach(function (s) {
+    var score = 0;
+    words(s.toLowerCase()).forEach(function (w) { if (freq[w] > 1) score += freq[w]; });
+    score = score / Math.sqrt(s.length);
+    if (score > bestScore) { bestScore = score; best = s; }
+  });
+  return best;
+}
+
+function highlight (title, label) {
+  var re = new RegExp("(" + label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "i");
+  return esc(title).replace(re, "<mark>$1</mark>");
+}
+
+/* ---------------- rendering ---------------- */
+function renderTicker () {
+  var html = [];
+  Object.keys(CATS).forEach(function (cat) {
+    var first = articles.filter(function (a) { return a.cat === cat; })[0];
+    if (!first) return;
+    html.push('<a href="' + esc(first.link) + '" target="_blank" rel="noopener">' + esc(clip(first.title, 90)) + "</a>");
+  });
+  document.getElementById("ticker").innerHTML = html.join('<span class="dot">\u00b7</span>');
+}
+
+function renderLead (topics) {
+  var lead = topics.length ? topics[0].items[0] : articles[0];
+  if (!lead) return;
+  var body = lead.body || (topics.length ? excerptFor(topics[0]) : "");
+  document.getElementById("lead").innerHTML =
+    '<a class="headline" href="' + esc(lead.link) + '" target="_blank" rel="noopener">' + esc(lead.title) + "</a>" +
+    '<p class="body">' + esc(clip(body, 900)) + "</p>" +
+    '<p class="src">' + esc(lead.source) + "</p>";
+}
+
+function renderTopics (topics) {
+  var box = document.getElementById("topic-list");
+  if (!topics.length) { box.innerHTML = '<p class="note">No word came up often enough today to make a topic.</p>'; return; }
+  box.innerHTML = topics.slice(0, 24).map(function (t) {
+    var items = t.items.map(function (a) {
+      return "<li><a href='" + esc(a.link) + "' target='_blank' rel='noopener'>" + highlight(a.title, t.label) +
+        "</a> <span class='src'>" + esc(a.source) + "</span></li>";
+    }).join("");
+    return "<details><summary><span class='topic'>" + esc(t.label) + "</span> " +
+      "<span class='count'>" + t.items.length + " articles</span><br>" +
+      "<span class='excerpt'>" + esc(clip(excerptFor(t), 260)) + "</span></summary>" +
+      "<ul class='items'>" + items + "</ul></details>";
+  }).join("");
+}
+
+function renderSources () {
+  Object.keys(CATS).forEach(function (cat) {
+    var names = Object.keys(sources).filter(function (n) { return sources[n].cat === cat && sources[n].items.length; });
+    var box = document.getElementById("cat-" + cat);
+    if (!box) return;
+    if (!names.length) { box.innerHTML = '<p class="note">Nothing came back from these feeds.</p>'; return; }
+    box.innerHTML = names.map(function (name) {
+      var src = sources[name];
+      var items = src.items.map(function (a) {
+        return "<li><a href='" + esc(a.link) + "' target='_blank' rel='noopener'>" + esc(a.title) + "</a>" +
+          (a.body ? "<span class='snippet'>" + esc(clip(a.body, 260)) + "</span>" : "") + "</li>";
+      }).join("");
+      return "<details><summary><span class='topic'>" + esc(name) + "</span> " +
+        "<span class='src'>" + esc(clip(src.items[0].title, 80)) + "</span></summary>" +
+        "<ul class='items'>" + items + "</ul></details>";
+    }).join("");
+  });
+}
+
+function finish () {
+  if (finished) return;
+  finished = true;
+
+  var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  document.getElementById("edition").textContent = days[new Date().getDay()] + "'s edition";
+
+  var topics = buildTopics();
+  renderTicker();
+  renderLead(topics);
+  renderTopics(topics);
+  renderSources();
+  renderNetwork(topics);
+  renderHeat(topics);
+  renderBars(topics);
+  paintStatus();
+
+  var ok = Object.keys(statusOf).filter(function (k) { return statusOf[k] === "ok"; }).length;
+  var seconds = ((Date.now() - started) / 1000).toFixed(1);
+  document.getElementById("counts").textContent =
+    articles.length + " articles from " + ok + " sources, gathered in " + seconds + " seconds";
+
+  document.getElementById("loading").hidden = true;
+  var page = document.getElementById("page");
+  page.hidden = false;
+  page.style.opacity = 0;
+  page.style.transition = "opacity .4s ease";
+  window.requestAnimationFrame(function () { page.style.opacity = 1; });
+}
+
+
+/* ---------------- visualisations ---------------- */
+var SVGNS = "http://www.w3.org/2000/svg";
+function el (name, attrs) {
+  var node = document.createElementNS(SVGNS, name);
+  for (var k in attrs) if (attrs.hasOwnProperty(k)) node.setAttribute(k, attrs[k]);
+  return node;
+}
+
+/* --- network of topics and the sources that cover them --- */
+function renderNetwork (topics) {
+  var svg = document.getElementById("net");
+  var W = 820, H = 520;
+  if (!topics.length) { svg.parentNode.style.display = "none"; return; }
+
+  var nodes = {}, edges = [];
+  topics.forEach(function (t, ti) {
+    var id = "t:" + t.label;
+    nodes[id] = {id: id, kind: "topic", label: t.label, rank: ti, weight: t.items.length, r: 5 + Math.min(9, Math.sqrt(t.items.length)), links: []};
+    var perSource = {};
+    t.items.forEach(function (a) { perSource[a.source] = (perSource[a.source] || 0) + 1; });
+    /* keep the eight sources that carried a topic hardest, so the map stays readable */
+    Object.keys(perSource).sort(function (x, y) { return perSource[y] - perSource[x]; }).slice(0, 8).forEach(function (name) {
+      var sid = "s:" + name;
+      if (!nodes[sid]) nodes[sid] = {id: sid, kind: "source", label: name, weight: 0, r: 4, links: []};
+      nodes[sid].weight += perSource[name];
+      var edge = {a: id, b: sid, w: perSource[name]};
+      edges.push(edge);
+      nodes[id].links.push(edge);
+      nodes[sid].links.push(edge);
+    });
+  });
+
+  var TOP = Math.min(12, topics.length);
+  var open = {};
+  for (var i = 0; i < Math.min(3, TOP); i++) open["t:" + topics[i].label] = true;
+
+  var alpha = 1, frame = null, dragging = null, layer = null;
+  var view = {nodes: [], edges: []};
+
+  function baseVisible (id) {
+    var n = nodes[id];
+    return n.kind === "topic" && n.rank < TOP;
+  }
+  function computeView () {
+    var vis = {};
+    Object.keys(nodes).forEach(function (id) { if (baseVisible(id)) vis[id] = true; });
+    Object.keys(open).forEach(function (id) {
+      if (!open[id] || !nodes[id]) return;
+      vis[id] = true;
+      nodes[id].links.forEach(function (e) { vis[e.a] = true; vis[e.b] = true; });
+    });
+    view.nodes = Object.keys(vis).map(function (id) { return nodes[id]; });
+    view.edges = edges.filter(function (e) { return vis[e.a] && vis[e.b]; });
+    view.nodes.forEach(function (n) {
+      if (n.x === undefined) {
+        var angle = Math.random() * Math.PI * 2, radius = 60 + Math.random() * 150;
+        n.x = W / 2 + Math.cos(angle) * radius;
+        n.y = H / 2 + Math.sin(angle) * radius;
+        n.vx = 0; n.vy = 0;
+      }
+    });
+  }
+
+  function draw () {
+    svg.innerHTML = "";
+    layer = {edges: el("g"), nodes: el("g")};
+    svg.appendChild(layer.edges);
+    svg.appendChild(layer.nodes);
+
+    view.edges.forEach(function (e) {
+      e.line = el("line", {"class": "edge"});
+      layer.edges.appendChild(e.line);
+    });
+
+    view.nodes.forEach(function (n) {
+      var g = el("g", {"class": "node " + n.kind + (open[n.id] ? " open" : "")});
+      g.appendChild(el("circle", {r: n.r}));
+      var text = el("text", {x: n.r + 5, y: 4});
+      text.textContent = n.kind === "topic" ? n.label : clip(n.label, 22);
+      g.appendChild(text);
+      var title = el("title");
+      title.textContent = n.kind === "topic"
+        ? n.label + ": " + n.weight + " articles from " + n.links.length + " sources"
+        : n.label + ": " + n.links.length + " topics today";
+      g.appendChild(title);
+      g.addEventListener("click", function (ev) {
+        if (g.dataset.dragged === "1") { g.dataset.dragged = "0"; return; }
+        ev.stopPropagation();
+        open[n.id] = !open[n.id];
+        rebuild();
+      });
+      g.addEventListener("pointerdown", function (ev) {
+        dragging = n; n.fixed = true; g.dataset.dragged = "0";
+        g.setPointerCapture(ev.pointerId);
+      });
+      g.addEventListener("pointermove", function (ev) {
+        if (dragging !== n) return;
+        g.dataset.dragged = "1";
+        var box = svg.getBoundingClientRect();
+        n.x = (ev.clientX - box.left) / box.width * W;
+        n.y = (ev.clientY - box.top) / box.height * H;
+        n.vx = n.vy = 0;
+        alpha = Math.max(alpha, 0.25);
+        run();
+      });
+      g.addEventListener("pointerup", function () { dragging = null; n.fixed = false; });
+      g.addEventListener("mouseenter", function () { highlightNode(n); });
+      g.addEventListener("mouseleave", function () { highlightNode(null); });
+      n.g = g;
+      layer.nodes.appendChild(g);
+    });
+    position();
+  }
+
+  function highlightNode (n) {
+    view.nodes.forEach(function (m) { m.g.classList.toggle("dim", !!n && m !== n && !shares(n, m)); });
+    view.edges.forEach(function (e) { e.line.classList.toggle("hot", !!n && (e.a === n.id || e.b === n.id)); });
+  }
+  function shares (n, m) {
+    return n.links.some(function (e) { return e.a === m.id || e.b === m.id; });
+  }
+
+  function position () {
+    view.edges.forEach(function (e) {
+      var a = nodes[e.a], b = nodes[e.b];
+      e.line.setAttribute("x1", a.x); e.line.setAttribute("y1", a.y);
+      e.line.setAttribute("x2", b.x); e.line.setAttribute("y2", b.y);
+    });
+    view.nodes.forEach(function (n) { n.g.setAttribute("transform", "translate(" + n.x.toFixed(1) + "," + n.y.toFixed(1) + ")"); });
+  }
+
+  function step () {
+    var ns = view.nodes, i, j, n, m, dx, dy, d2, d, f;
+    for (i = 0; i < ns.length; i++) {
+      n = ns[i];
+      for (j = i + 1; j < ns.length; j++) {
+        m = ns[j];
+        dx = n.x - m.x; dy = n.y - m.y;
+        d2 = dx * dx + dy * dy || 0.01;
+        if (d2 > 90000) continue;
+        f = 2200 / d2;
+        d = Math.sqrt(d2);
+        n.vx += (dx / d) * f; n.vy += (dy / d) * f;
+        m.vx -= (dx / d) * f; m.vy -= (dy / d) * f;
+      }
+      n.vx += (W / 2 - n.x) * 0.004;
+      n.vy += (H / 2 - n.y) * 0.006;
+    }
+    view.edges.forEach(function (e) {
+      var a = nodes[e.a], b = nodes[e.b];
+      dx = b.x - a.x; dy = b.y - a.y;
+      d = Math.sqrt(dx * dx + dy * dy) || 0.01;
+      f = (d - 90) * 0.02;
+      a.vx += (dx / d) * f; a.vy += (dy / d) * f;
+      b.vx -= (dx / d) * f; b.vy -= (dy / d) * f;
+    });
+    ns.forEach(function (n) {
+      if (n.fixed) { n.vx = n.vy = 0; return; }
+      n.vx *= 0.82; n.vy *= 0.82;
+      n.x = Math.max(60, Math.min(W - 60, n.x + n.vx));
+      n.y = Math.max(20, Math.min(H - 20, n.y + n.vy));
+    });
+    alpha *= 0.985;
+  }
+
+  function run () {
+    if (frame) return;
+    frame = window.requestAnimationFrame(function tick () {
+      frame = null;
+      step(); position();
+      if (alpha > 0.02) { frame = window.requestAnimationFrame(tick); }
+    });
+  }
+
+  function rebuild () {
+    computeView();
+    draw();
+    alpha = Math.max(alpha, 0.7);
+    run();
+    var openCount = Object.keys(open).filter(function (k) { return open[k]; }).length;
+    document.getElementById("net-hint").textContent =
+      view.nodes.length + " dots on the map, " + openCount + " topics open.";
+  }
+
+  document.getElementById("net-expand").addEventListener("click", function () {
+    for (var i = 0; i < TOP; i++) open["t:" + topics[i].label] = true;
+    rebuild();
+  });
+  document.getElementById("net-reset").addEventListener("click", function () {
+    open = {};
+    Object.keys(nodes).forEach(function (id) { delete nodes[id].x; });
+    for (var i = 0; i < Math.min(3, TOP); i++) open["t:" + topics[i].label] = true;
+    rebuild();
+  });
+
+  rebuild();
+}
+
+/* --- heat map: topics against sections --- */
+function renderHeat (topics) {
+  var svg = document.getElementById("heat-svg");
+  var cats = Object.keys(CATS);
+  var rows = topics.slice(0, 12);
+  if (!rows.length) { svg.parentNode.style.display = "none"; return; }
+
+  var L = 150, T = 26, cw = 78, ch = 26, gap = 3;
+  var W = L + cats.length * cw + 46, H = T + rows.length * ch + 10;
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  svg.style.aspectRatio = W + " / " + H;
+  svg.innerHTML = "";
+
+  var max = 1;
+  var grid = rows.map(function (t) {
+    var counts = {};
+    t.items.forEach(function (a) { counts[a.cat] = (counts[a.cat] || 0) + 1; });
+    cats.forEach(function (c) { if ((counts[c] || 0) > max) max = counts[c]; });
+    return counts;
+  });
+
+  cats.forEach(function (c, i) {
+    var label = el("text", {x: L + i * cw + (cw - gap) / 2, y: T - 10, "text-anchor": "middle"});
+    label.textContent = CATS[c];
+    svg.appendChild(label);
+  });
+
+  rows.forEach(function (t, r) {
+    var name = el("text", {x: L - 10, y: T + r * ch + ch / 2 + 4, "text-anchor": "end", "class": "row"});
+    name.textContent = clip(t.label, 20);
+    svg.appendChild(name);
+
+    cats.forEach(function (c, i) {
+      var n = grid[r][c] || 0;
+      svg.appendChild(el("rect", {"class": "grid", x: L + i * cw, y: T + r * ch, width: cw - gap, height: ch - gap}));
+      if (n) {
+        var cell = el("rect", {"class": "cell", x: L + i * cw, y: T + r * ch, width: cw - gap, height: ch - gap,
+          "fill-opacity": (0.18 + 0.82 * (n / max)).toFixed(2)});
+        var title = el("title");
+        title.textContent = n + (n === 1 ? " article" : " articles") + " on " + t.label + " in " + CATS[c];
+        cell.appendChild(title);
+        svg.appendChild(cell);
+      }
+    });
+
+    var total = el("text", {x: L + cats.length * cw + 6, y: T + r * ch + ch / 2 + 4});
+    total.textContent = t.items.length;
+    svg.appendChild(total);
+  });
+}
+
+/* --- bars: sources by reach, and articles per section --- */
+function renderBars (topics) {
+  var svg = document.getElementById("bars");
+  var reach = {};
+  topics.forEach(function (t) {
+    var seen = {};
+    t.items.forEach(function (a) {
+      if (seen[a.source]) return;
+      seen[a.source] = true;
+      reach[a.source] = (reach[a.source] || 0) + 1;
+    });
+  });
+  var top = Object.keys(reach).map(function (k) { return {name: k, n: reach[k]}; })
+    .sort(function (a, b) { return b.n - a.n; }).slice(0, 10);
+
+  var perCat = Object.keys(CATS).map(function (c) {
+    return {name: CATS[c], n: articles.filter(function (a) { return a.cat === c; }).length};
+  }).sort(function (a, b) { return b.n - a.n; });
+
+  if (!top.length) { svg.parentNode.style.display = "none"; return; }
+
+  var L = 170, bw = 420, bh = 16, gap = 8, T = 22;
+  var H = T + top.length * (bh + gap) + 52 + perCat.length * (bh + gap);
+  svg.setAttribute("viewBox", "0 0 " + (L + bw + 44) + " " + H);
+  svg.style.aspectRatio = (L + bw + 44) + " / " + H;
+  svg.innerHTML = "";
+
+  function group (title, data, y0, unit) {
+    var head = el("text", {x: 0, y: y0, "class": "value"});
+    head.textContent = title;
+    svg.appendChild(head);
+    var max = Math.max.apply(null, data.map(function (d) { return d.n; })) || 1;
+    data.forEach(function (d, i) {
+      var y = y0 + 14 + i * (bh + gap);
+      var label = el("text", {x: L - 10, y: y + bh - 4, "text-anchor": "end"});
+      label.textContent = clip(d.name, 26);
+      svg.appendChild(label);
+      var bar = el("rect", {x: L, y: y, width: Math.max(2, (d.n / max) * bw), height: bh});
+      var title2 = el("title");
+      title2.textContent = d.n + " " + unit;
+      bar.appendChild(title2);
+      svg.appendChild(bar);
+      var value = el("text", {x: L + Math.max(2, (d.n / max) * bw) + 7, y: y + bh - 4, "class": "value"});
+      value.textContent = d.n;
+      svg.appendChild(value);
+    });
+  }
+
+  group("Topics covered, by source", top, T, "topics");
+  group("Articles, by section", perCat, T + top.length * (bh + gap) + 46, "articles");
+}
+
+/* ---------------- text size and contents ---------------- */
+(function () {
+  var size = parseFloat(localStorage.getItem("rss-size")) || 16;
+  function apply () { document.body.style.fontSize = size + "px"; localStorage.setItem("rss-size", size); }
+  document.getElementById("larger").addEventListener("click", function () { size = Math.min(22, size + 1); apply(); });
+  document.getElementById("smaller").addEventListener("click", function () { size = Math.max(13, size - 1); apply(); });
+  apply();
+
+  var links = [].slice.call(document.querySelectorAll(".toc a"));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); }).filter(Boolean);
+  var ticking = false;
+  function update () {
+    ticking = false;
+    var current = targets[0];
+    for (var i = 0; i < targets.length; i++) {
+      if (targets[i].getBoundingClientRect().top <= 120) current = targets[i]; else break;
+    }
+    if (current) links.forEach(function (l) { l.classList.toggle("on", l.getAttribute("href") === "#" + current.id); });
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, {passive: true});
+})();
+</script>
+</body>
+</html>
