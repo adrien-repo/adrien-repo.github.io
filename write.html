@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Page</title>
+<link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAACQAAAAAAAAAAAAADwDwAA+B8AAPw/AADsNwAAzDMAAMQjAADkJwAA4AcAAPAPAAD4HwAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA" rel="icon" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* Base arXiv Theme Variables */
+:root {
+  color-scheme: light;
+  --paper: #FFFFFF; --ink: #000000; --ink-soft: #5A5A5A; --faint: #8C8C8C; --panel: #F7F7F7; --link: #0B57D0;
+  --font: "Roboto", "Helvetica Neue", Arial, system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){ 
+  :root:not([data-theme="light"]){ --paper: #121212; --ink: #FFFFFF; --ink-soft: #B0B0B0; --panel: #1E1E1E; } 
+}
+*{ box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+
+/* Typography & Core Styles */
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.65 var(--font); -webkit-font-smoothing: antialiased; }
+button, input { font: inherit; color: inherit; }
+a { color: var(--ink); text-decoration: none; }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+
+/* Layout Structure */
+.page-wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(16px,3vw,32px) 80px; display: grid; grid-template-columns: 230px minmax(0,1fr); gap: 56px; }
+
+/* Sidebar Accordion (Document Outline) */
+.browse { position: sticky; top: 0; align-self: start; padding-top: 48px; font-size: .9rem; max-height: 100vh; overflow: auto; }
+.browse p.label { font-weight: 500; margin: 0 0 16px; font-size: 1.1rem; border-bottom: 1px solid var(--faint); padding-bottom: 8px; cursor: text; transition: outline 0.2s; }
+.browse p.label:hover { color: var(--ink-soft); }
+.browse p.label[contenteditable="true"] { outline: 1px dashed var(--faint); outline-offset: 4px; border-radius: 2px; color: var(--ink); cursor: text; }
+.browse ul { list-style: none; margin: 0; padding: 0; }
+.browse li { margin-bottom: 4px; }
+.browse li button { display: block; width: 100%; text-align: left; border: 0; background: none; padding: 3px 0; color: var(--ink-soft); cursor: pointer; font-size: .9rem; line-height: 1.4; }
+.browse li button:hover { color: var(--ink); text-decoration: underline; }
+.browse li button.h1-link { font-weight: 500; color: var(--ink); margin-top: 8px; }
+.browse li button.h2-link { padding-left: 12px; font-size: 0.85rem; }
+
+/* Editor Area */
+article { min-width: 0; max-width: 820px; padding-top: 48px; }
+
+/* Toolbar - Desktop Default */
+.toolbar { margin-bottom: 32px; position: sticky; top: 16px; z-index: 10; }
+.toolbar-toggle { display: none; }
+.toolbar-content { display: flex; flex-wrap: wrap; gap: 8px; background: var(--panel); padding: 8px 12px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); align-items: center; }
+.toolbar-content .group { display: flex; gap: 4px; border-right: 1px solid var(--faint); padding-right: 8px; }
+.toolbar-content .group:last-child { border-right: none; }
+.toolbar-content button { border: 1px solid transparent; background: transparent; border-radius: 4px; padding: 4px 10px; cursor: pointer; font-size: .88rem; font-weight: 500; transition: background 0.2s; color: var(--ink); }
+.toolbar-content button:hover { background: var(--faint); color: var(--paper); }
+
+/* Continuous Page Styling */
+.editor-page { color: var(--ink); width: 100%; min-height: 70vh; outline: none; padding-bottom: 60px; }
+.editor-page h1 { font-weight: 500; font-size: clamp(1.9rem,3.8vw,2.5rem); line-height: 1.1; margin: 0 0 16px; letter-spacing: -.015em; }
+.editor-page h2 { font-weight: 500; font-size: 1.5rem; line-height: 1.3; margin: 34px 0 10px; }
+.editor-page p, .editor-page ul, .editor-page li { margin: 0 0 14px; }
+
+/* Mobile-Friendly Adjustments */
+@media (max-width: 960px) {
+  .page-wrap { grid-template-columns: minmax(0,1fr); gap: 0; }
+  
+  /* Hide Accordion */
+  .browse { display: none; }
+  
+  /* Floating, Expandable Toolbar */
+  .toolbar { position: fixed; top: 16px; right: 16px; margin: 0; display: flex; flex-direction: column; align-items: flex-end; z-index: 100; }
+  .toolbar-toggle { display: flex; width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: var(--paper); border: none; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); justify-content: center; align-items: center; padding: 0; transition: transform 0.2s; }
+  .toolbar.expanded .toolbar-toggle { background: var(--faint); }
+  
+  .toolbar-content { display: none; flex-direction: column; background: var(--panel); padding: 12px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); gap: 12px; margin-top: 8px; width: max-content; }
+  .toolbar.expanded .toolbar-content { display: flex; }
+  
+  .toolbar-content .group { border-right: none; border-bottom: 1px solid var(--faint); padding-right: 0; padding-bottom: 8px; flex-wrap: wrap; justify-content: center; width: 100%; }
+  .toolbar-content .group:last-child { border-bottom: none; padding-bottom: 0; margin-left: 0 !important; }
+}
+
+/* Print PDF Media Query */
+@media print {
+  .browse, .toolbar { display: none !important; }
+  .page-wrap { display: block; margin: 0; padding: 0; }
+  article { max-width: 100%; padding: 0; }
+  .editor-page { min-height: 0; padding: 0; }
+  .page-break { page-break-after: always; break-after: page; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <!-- Document Outline (Left Accordion) -->
+  <nav class="browse" aria-label="Document Outline">
+    <p class="label" id="file-name" title="Double-click to rename" ondblclick="editFileName()">File Name</p>
+    <ul id="outline-list">
+      <li><span style="color:var(--faint);font-size:0.8rem;">Start typing to generate outline...</span></li>
+    </ul>
+  </nav>
+
+  <!-- Main Editor Area -->
+  <article>
+    <!-- Hidden File Input for Opening Files -->
+    <input type="file" id="file-input" accept=".txt,.md" hidden>
+
+    <div class="toolbar" id="toolbar">
+      <!-- Mobile Floating Toggle Button -->
+      <button class="toolbar-toggle" onclick="document.getElementById('toolbar').classList.toggle('expanded')" title="Toggle Toolbar">&#9998;</button>
+      
+      <!-- Toolbar Commands -->
+      <div class="toolbar-content">
+        <div class="group">
+          <button onclick="format('bold')" title="Bold"><b>B</b></button>
+          <button onclick="format('italic')" title="Italic"><i>I</i></button>
+          <button onclick="format('underline')" title="Underline"><u>U</u></button>
+          <button onclick="format('strikeThrough')" title="Strikethrough"><s>S</s></button>
+        </div>
+        <div class="group">
+          <button onclick="formatBlock('H1')" title="Title">H1</button>
+          <button onclick="formatBlock('H2')" title="Subtitle">H2</button>
+          <button onclick="formatBlock('P')" title="Normal text">¶</button>
+        </div>
+        <div class="group">
+          <button onclick="format('justifyLeft')" title="Align Left">&#9776;</button>
+          <button onclick="format('justifyCenter')" title="Align Center">&#9776;</button>
+          <button onclick="format('justifyRight')" title="Align Right">&#9776;</button>
+          <button onclick="format('justifyFull')" title="Justify">&#9776;</button>
+          <button onclick="format('insertUnorderedList')" title="List">•</button>
+        </div>
+        <div class="group" style="margin-left: auto;">
+          <button onclick="document.getElementById('file-input').click()" title="Open file">Open</button>
+          <button onclick="saveFile('txt')" title="Save as TXT">TXT</button>
+          <button onclick="saveFile('md')" title="Save as MD">MD</button>
+          <button onclick="printPDF()" title="Print as PDF">PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-page" id="editor" contenteditable="true" spellcheck="false">
+      <h1>Document Title</h1>
+      <p>Text here</p>
+    </div>
+  </article>
+</div>
+
+<script>
+  const editor = document.getElementById('editor');
+  const outlineList = document.getElementById('outline-list');
+  const fileInput = document.getElementById('file-input');
+  const fileNameLabel = document.getElementById('file-name');
+
+  // File Name Editing Logic
+  function editFileName() {
+    fileNameLabel.contentEditable = true;
+    fileNameLabel.focus();
+    document.execCommand('selectAll', false, null);
+  }
+
+  fileNameLabel.addEventListener('blur', () => {
+    fileNameLabel.contentEditable = false;
+    if (!fileNameLabel.innerText.trim()) fileNameLabel.innerText = 'File Name';
+  });
+
+  fileNameLabel.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      fileNameLabel.blur();
+    }
+  });
+
+  // Retrieves the current custom filename
+  function getActiveFileName() {
+    return fileNameLabel.innerText.trim() || 'File Name';
+  }
+
+  // Formatting commands
+  function format(cmd) { document.execCommand(cmd, false, null); editor.focus(); }
+  function formatBlock(tag) { document.execCommand('formatBlock', false, tag); editor.focus(); }
+
+  // Dynamic Outline Generator
+  function updateOutline() {
+    const headings = editor.querySelectorAll('h1, h2');
+    outlineList.innerHTML = '';
+    
+    if (headings.length === 0) {
+      outlineList.innerHTML = '<li><span style="color:var(--faint);font-size:0.8rem;">No titles found.</span></li>';
+      return;
+    }
+
+    headings.forEach((heading, index) => {
+      if (!heading.id) heading.id = 'heading-' + index;
+      
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.textContent = heading.textContent || '(Empty Title)';
+      btn.className = heading.tagName.toLowerCase() === 'h1' ? 'h1-link' : 'h2-link';
+      
+      btn.onclick = () => heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      li.appendChild(btn);
+      outlineList.appendChild(li);
+    });
+  }
+
+  let timeout;
+  editor.addEventListener('input', () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(updateOutline, 500);
+  });
+  
+  updateOutline();
+
+  // Basic HTML to Markdown parser
+  function parseToMarkdown(htmlNode) {
+    let md = htmlNode.innerHTML;
+    md = md.replace(/<div>/gi, '\n').replace(/<\/div>/gi, '');
+    md = md.replace(/<p>/gi, '').replace(/<\/p>/gi, '\n\n');
+    md = md.replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n\n');
+    md = md.replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n\n');
+    md = md.replace(/<ul>/gi, '').replace(/<\/ul>/gi, '\n');
+    md = md.replace(/<li>(.*?)<\/li>/gi, '- $1\n');
+    md = md.replace(/<b>(.*?)<\/b>/gi, '**$1**').replace(/<strong>(.*?)<\/strong>/gi, '**$1**');
+    md = md.replace(/<i>(.*?)<\/i>/gi, '*$1*').replace(/<em>(.*?)<\/em>/gi, '*$1*');
+    md = md.replace(/<s>(.*?)<\/s>/gi, '~~$1~~').replace(/<strike>(.*?)<\/strike>/gi, '~~$1~~');
+    md = md.replace(/<u>(.*?)<\/u>/gi, '$1'); 
+    md = md.replace(/&nbsp;/g, ' ').replace(/<br\s*[\/]?>/gi, '\n');
+    return md.replace(/<[^>]*>?/gm, '').trim(); 
+  }
+
+  // Basic Markdown to HTML parser
+  function parseToHTML(mdText) {
+    let html = mdText;
+    html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+    html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+    html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
+    html = html.replace(/\*\*(.*)\*\*/gim, '<b>$1</b>');
+    html = html.replace(/\*(.*)\*/gim, '<i>$1</i>');
+    html = html.replace(/~~(.*)~~/gim, '<s>$1</s>');
+    html = html.split('\n\n').map(p => {
+      if (!p.startsWith('<h') && !p.startsWith('<li')) {
+        return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+      }
+      return p;
+    }).join('');
+    html = html.replace(/(<li>.*<\/li>)/gis, '<ul>$1</ul>');
+    return html;
+  }
+
+  // Save functionality
+  function saveFile(type) {
+    let content = '';
+    if (type === 'txt') {
+      content = editor.innerText; 
+    } else if (type === 'md') {
+      content = parseToMarkdown(editor);
+    }
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${getActiveFileName()}.${type}`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // Print PDF functionality (sets title temporarily for accurate default filename)
+  function printPDF() {
+    const originalTitle = document.title;
+    document.title = getActiveFileName();
+    window.print();
+    document.title = originalTitle;
+  }
+
+  // Open functionality
+  fileInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Update filename label to match the opened file name (stripping extension)
+    const nameWithoutExt = file.name.replace(/\.[^/.]+$/, "");
+    fileNameLabel.innerText = nameWithoutExt || "File Name";
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const text = e.target.result;
+      if (file.name.endsWith('.md')) {
+        editor.innerHTML = parseToHTML(text);
+      } else {
+        editor.innerText = text;
+      }
+      updateOutline();
+    };
+    reader.readAsText(file);
+    fileInput.value = '';
+  });
+</script>
+</body>
+</html>
