@@ -26,6 +26,7 @@
   color-scheme: light;
   --paper:#FFFFFF; --ink:#000000; --ink-soft:#5A5A5A; --rule:#E3E3E3; --panel:#F7F7F7; --link:#0B57D0;
   --light-sq:#EDEDED; --dark-sq:#B3B3B3; --font:"Roboto","Helvetica Neue",Arial,system-ui,sans-serif;
+  --hl:#0B57D0; --hl-soft:rgba(11,87,208,.18); --hl-ring:rgba(11,87,208,.55);
 }
 /* white page, black text, in both colour-scheme modes */
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --paper:#FFFFFF; --ink:#000000; } }
@@ -96,9 +97,10 @@ dl.facts dd{margin:0;color:var(--ink)}
 .board-b72b1{border:1px solid var(--ink);box-sizing:content-box}
 .white-1e1d7{background-color:var(--light-sq);color:var(--ink-soft)}
 .black-3c85d{background-color:var(--dark-sq);color:var(--paper)}
-.highlight1-32417,.highlight2-9c5d2{box-shadow:inset 0 0 0 3px var(--ink)}
-.last-move{box-shadow:inset 0 0 0 3px var(--ink)}
-.legal-move{box-shadow:inset 0 0 0 3px rgba(0,0,0,.28)}
+/* highlights are blue: grey rings vanished against the dark squares */
+.highlight1-32417,.highlight2-9c5d2{box-shadow:inset 0 0 0 3px var(--hl),inset 0 0 0 99px var(--hl-soft)}
+.last-move{box-shadow:inset 0 0 0 3px var(--hl),inset 0 0 0 99px var(--hl-soft)}
+.legal-move{box-shadow:inset 0 0 0 3px var(--hl-ring),inset 0 0 0 99px var(--hl-soft)}
 .notation-322f9{font-family:var(--font);font-size:11px}
 </style>
 </head>
