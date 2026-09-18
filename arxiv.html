@@ -264,21 +264,19 @@ function load () {
   $("pager").hidden = true;
   $("state").innerHTML = '<span class="spinner"></span>Asking arXiv\u2026';
 
+  // 1. Build the original arXiv URL
   var arxivUrl = "https://export.arxiv.org/api/query?search_query=" + encodeURIComponent(buildQuery()) +
     "&sortBy=" + encodeURIComponent($("sort").value) + "&sortOrder=descending&start=0&max_results=" + MAX_RESULTS;
 
-  // Use /get instead of /raw to ensure CORS headers are always attached
-  var url = "https://api.allorigins.win/get?url=" + encodeURIComponent(arxivUrl);
+  // 2. Wrap it in a CORS proxy
+  var url = "https://api.allorigins.win/raw?url=" + encodeURIComponent(arxivUrl);
 
   fetch(url).then(function (r) {
     if (!r.ok) throw new Error("arXiv answered with " + r.status);
-    return r.json(); // 1. Parse the proxy's JSON response
-  }).then(function (data) {
-    var text = data.contents; // 2. Extract the raw XML string from the proxy payload
+    return r.text();
+  }).then(function (text) {
     var xml = new DOMParser().parseFromString(text, "text/xml");
-    
     if (xml.querySelector("parsererror")) throw new Error("The answer from arXiv could not be read.");
-    
     papers = [].slice.call(xml.querySelectorAll("entry")).map(function (e) {
       function first (sel) { var n = e.querySelector(sel); return n ? n.textContent : ""; }
       var abs = first("id");
