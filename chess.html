@@ -76,6 +76,7 @@ p{margin:0 0 14px}
 
 .panel{min-width:0}
 .captured{font-size:1.5rem;line-height:1.5;min-height:1.6em;overflow-wrap:anywhere}
+.captured-piece{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.18em;object-fit:contain}
 .captured .sep{color:var(--ink-soft);font-size:.9rem;padding-right:8px}
 .captured div{display:flex;align-items:baseline;gap:2px}
 .controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:14px 0 4px}
@@ -2173,7 +2174,10 @@ function renderCaptured () {
   });
   function render (list, white) {
     return list.sort(function (a, b) { return ORDER.indexOf(a) - ORDER.indexOf(b); })
-      .map(function (p) { return SYMBOL[white ? p.toUpperCase() : p]; }).join("");
+      .map(function (p) {
+        var piece = (white ? "w" : "b") + p.toUpperCase();
+        return '<img class="captured-piece" src="' + pieceTheme(piece) + '" alt="">';
+      }).join("");
   }
   if (!byWhite.length && !byBlack.length) {
     box.innerHTML = '<span class="empty" style="font-size:1rem">Nothing captured yet.</span>';
@@ -2247,8 +2251,8 @@ function gameOverMessage () {
   return "Draw by the fifty-move rule.";
 }
 
-function afterMove () {
-  board.position(game.fen());
+function afterMove (syncBoard) {
+  if (syncBoard !== false) board.position(game.fen());
   highlightLast();
   renderCaptured();
   renderHistory();
@@ -2275,6 +2279,7 @@ function engineMove () {
 }
 
 var dragging = false;
+var pendingEngine = false;
 function onDragStart (source, piece) {
   if (thinking || game.game_over()) return false;
   if (piece.charAt(0) !== "w" || game.turn() !== "w") return false;
@@ -2289,10 +2294,17 @@ function onDrop (source, target) {
   dragging = false;
   var move = game.move({from: source, to: target, promotion: "q"});
   if (move === null) return "snapback";
+
+  /* Let chessboard.js finish the player's drag animation first. */
   $("#board .legal-move").removeClass("legal-move");
-  afterMove();
-  if (game.game_over()) { setMessage(gameOverMessage()); return; }
-  engineMove();
+  afterMove(false);
+
+  if (game.game_over()) {
+    setMessage(gameOverMessage());
+    return;
+  }
+
+  pendingEngine = true;
 }
 
 function onMouseoverSquare (square) {
@@ -2303,7 +2315,18 @@ function onMouseoverSquare (square) {
 }
 
 function onMouseoutSquare () { $("#board .legal-move").removeClass("legal-move"); }
-function onSnapEnd () { board.position(game.fen()); highlightLast(); }
+function onSnapEnd () {
+  /* The player's piece has reached its destination. Now force a complete,
+     non-animated board refresh so captures/castling are fully settled before
+     the engine starts calculating. */
+  board.position(game.fen(), false);
+  highlightLast();
+
+  if (pendingEngine) {
+    pendingEngine = false;
+    engineMove();
+  }
+}
 
 board = Chessboard("board", {
   draggable: true,
