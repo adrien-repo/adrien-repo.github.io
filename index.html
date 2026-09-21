@@ -242,6 +242,7 @@ html {
 	<li class="sub" data-section="tools"><a href="#write">PureText</a></li>
 	<li class="sub" data-section="tools"><a href="#sky">Sky Map</a></li>
 	<li class="sub" data-section="tools"><a href="#meet">Time Zones</a></li>
+	<li class="sub" data-section="tools"><a href="#markets">Markets</a></li>
   </ol>
 </nav>
 
@@ -668,6 +669,7 @@ html {
   <li><b>PureText</b><a href="#write">Read</a><a href="write.html" target="_blank" rel="noopener">Open</a></li>
   <li><b>Sky Map</b><a href="#sky">Read</a><a href="sky.html" target="_blank" rel="noopener">Open</a></li>
   <li><b>Time Zones</b><a href="#meet">Read</a><a href="meet.html" target="_blank" rel="noopener">Open</a></li>
+  <li><b>Markets</b><a href="#markets">Read</a><a href="markets.html" target="_blank" rel="noopener">Open</a></li>
 </ul>
 
 
@@ -1265,6 +1267,55 @@ html {
   </svg>
 </div>
 <p class="link-entry">An hour-by-hour grid shows where working days overlap, so the good meeting slots stand out at a glance. It includes a search to find any city, and once you have chosen a time, you can export the meeting straight to your calendar.</p>
+<p class="back"><a href="#tools">Back</a></p>
+
+<h2 id="markets" style="border-top: 1px solid black !important; margin-top: 40px; padding-top: 10px;">Markets</h2>
+<p class="link-entry">
+<a href="markets.html" target="_blank" rel="noopener"><b>Open</b></a>
+</p>
+<p class="link-entry">A live watchlist of indices, single stocks, commodities and currencies. Each row shows the mark price, the best bid and ask, and the change over the last 24 hours, in green or red, flashing as prices tick. Click a name to open its candlestick chart, from one-minute to weekly candles, with the order book and the latest trades beside it.</p>
+
+<p class="link-entry">Everything comes straight from exchanges' public API, requested by your own browser, with no server in between. The exchanges allow each visitor a fixed budget of requests per minute, and different requests cost different amounts, so the page shares its budget out: one request refreshes every price at once, the bid and ask rotate through the names you can see, and collapsed sections cost nothing. It keeps a quarter of the allowance in reserve, pauses when the tab is hidden, and shows its own usage in a small gauge at the bottom of the page.</p>
+
+<div class="viz" style="max-width: 420px; margin: 32px auto;">
+  <svg viewBox="0 0 420 236" role="img" aria-label="How the page shares its one-minute request budget, and what each kind of request costs">
+    <text x="10" y="12" class="label">one minute of requests: what the page spends, and what it keeps in reserve</text>
+    <rect x="10.0" y="46" width="81.0" height="22" fill="#D6D6D6" stroke="#111" stroke-width="1"></rect>
+    <text x="50.5" y="38" text-anchor="middle" class="label">prices 243</text>
+    <rect x="91.0" y="46" width="90.0" height="22" fill="#FFFFFF" stroke="#111" stroke-width="1"></rect>
+    <text x="136.0" y="84" text-anchor="middle" class="label">bid / ask 270</text>
+    <rect x="181.0" y="46" width="30.0" height="22" fill="#D6D6D6" stroke="#111" stroke-width="1"></rect>
+    <text x="196.0" y="38" text-anchor="middle" class="label">book 90</text>
+    <rect x="211.0" y="46" width="63.0" height="22" fill="#FFFFFF" stroke="#111" stroke-width="1"></rect>
+    <text x="242.5" y="84" text-anchor="middle" class="label">trades 189</text>
+    <rect x="274.0" y="46" width="36.0" height="22" fill="#D6D6D6" stroke="#111" stroke-width="1"></rect>
+    <text x="292.0" y="38" text-anchor="middle" class="label">candles 108</text>
+    <rect x="310.0" y="46" width="100.0" height="22" fill="none" stroke="#9A9A9A" stroke-width="1" stroke-dasharray="3 3"></rect>
+    <text x="360.0" y="61.0" text-anchor="middle" class="label">spare</text>
+    <line x1="310.0" y1="42" x2="310.0" y2="94" stroke="#111" stroke-width="1.2" stroke-dasharray="4 3"></line>
+    <text x="306.0" y="108" text-anchor="end" class="label">900: this page's ceiling</text>
+    <line x1="410" y1="42" x2="410" y2="94" stroke="#111" stroke-width="1.8"></line>
+    <text x="410" y="108" text-anchor="end" class="label">1,200: the limit</text>
+    <text x="10" y="138" class="label">cost of a single request, in the same units</text>
+    <text x="150" y="159" text-anchor="end" class="label">prices, every name at once</text>
+    <rect x="158" y="150" width="120" height="11" fill="#D6D6D6" stroke="#111" stroke-width="1"></rect>
+    <text x="284" y="159" class="label">20</text>
+    <text x="150" y="175" text-anchor="end" class="label">bid / ask, one name</text>
+    <rect x="158" y="166" width="12" height="11" fill="#D6D6D6" stroke="#111" stroke-width="1"></rect>
+    <text x="176" y="175" class="label">2</text>
+    <text x="150" y="191" text-anchor="end" class="label">order book</text>
+    <rect x="158" y="182" width="12" height="11" fill="#D6D6D6" stroke="#111" stroke-width="1"></rect>
+    <text x="176" y="191" class="label">2</text>
+    <text x="150" y="207" text-anchor="end" class="label">trades</text>
+    <rect x="158" y="198" width="126" height="11" fill="#D6D6D6" stroke="#111" stroke-width="1"></rect>
+    <text x="290" y="207" class="label">21</text>
+    <text x="150" y="223" text-anchor="end" class="label">candles</text>
+    <rect x="158" y="214" width="174" height="11" fill="#D6D6D6" stroke="#111" stroke-width="1"></rect>
+    <text x="338" y="223" class="label">29</text>
+  </svg>
+</div>
+
+<p class="link-entry">Obviously, nobody needs a custom dashboard like this just to get live market prices. The point here is more about API limit management, and how the code balances a strict-but-permanently-shifting request budget directly within the browser. Anyone still carrying the emotional scars of battling the orange terminal's "#N/A Limit" and "#N/A Review" should appreciate the little dance happening here.</p>
 <p class="back"><a href="#tools">Back</a></p>
 
 
